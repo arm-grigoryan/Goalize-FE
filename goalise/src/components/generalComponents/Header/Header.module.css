@@ -1,0 +1,28 @@
+.header {
+  color: #a5a5a5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5vh 4vw;
+}
+.hader_menu {
+  display: flex;
+  gap: 2vw;
+}
+.link_wrapper {
+  display: flex;
+  border: solid 1px #a5a5a5;
+  padding: 2vh 2vw;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  gap: 2vw;
+}
+.link {
+  text-decoration: none;
+  color: #a5a5a5;
+}
+.logo_wrapper {
+  width: 15vw;
+  height: fit-content;
+}
