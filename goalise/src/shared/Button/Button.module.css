@@ -61,11 +61,21 @@
     cursor: pointer;
   }
 }
+
 .icon_button {
   background-color: transparent;
   border: #15191e66 1px solid;
+  background-color: #15191e66;
   border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0; /* optional: remove extra padding */
 }
+
 .icon_button_red {
   background-color: transparent;
   border: #f53a53 1px solid;

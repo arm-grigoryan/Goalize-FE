@@ -1,14 +1,14 @@
 "use client";
 import type { FC } from "react";
 import cn from "classnames";
-
+import type { StaticImageData } from "next/image";
 import styles from "./Button.module.css";
 import Image from "next/image";
 
 interface ButtonProps {
-  content: string;
   className: string;
-  icon?: string;
+  content?: string;
+  icon?: StaticImageData;
   isActive?: boolean;
   handleClick: () => void;
 }
@@ -30,7 +30,7 @@ export const Button: FC<ButtonProps> = ({
         [styles.active]: isActive,
       })}
     >
-      {icon && <Image width={10} height={10} src={icon} alt="" />}
+      {icon && <Image width={15} height={15} src={icon} alt="" />}
       {content}
     </button>
   );
