@@ -1,0 +1,10 @@
+.divider_horisontal {
+  width: 92%;
+  height: 1px;
+  margin: 0 auto;
+  background-color: #15191e66;
+}
+.divider_vertical {
+  width: 1px;
+  background-color: #15191e66;
+}

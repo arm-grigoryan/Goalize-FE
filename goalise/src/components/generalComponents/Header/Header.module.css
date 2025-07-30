@@ -26,3 +26,23 @@
   width: 15vw;
   height: fit-content;
 }
+.profile_img_wrapper {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 30px;
+  height: 30px;
+}
+.leng_and_profile_wrapper {
+  display: flex;
+  gap: 4vw;
+}
+.icon_and_leng_wrapper {
+  display: flex;
+  gap: 1vw;
+  align-items: center;
+}
+.name_and_img_wrapper {
+  display: flex;
+  gap: 1vw;
+  align-items: center;
+}

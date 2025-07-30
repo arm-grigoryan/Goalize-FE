@@ -1,0 +1,32 @@
+.Home_main_card {
+  width: 90%;
+  min-height: 50vh;
+  border: solid 1px #15191e66;
+  border-radius: 10px;
+  margin: 0 auto;
+  display: flex;
+}
+.upcoming_mutch {
+  flex: 1;
+}
+.match_wrapper {
+  flex: 3;
+}
+.unpcaming_match_title_wrapper {
+  width: 60%;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+.text_span {
+  color: #a5a5a5;
+  font-size: 14px;
+}
+.no_match_text {
+  display: block;
+  color: #a5a5a5;
+  font-size: 14px;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 20%;
+}
