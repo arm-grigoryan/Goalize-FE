@@ -30,7 +30,7 @@ export const Button: FC<ButtonProps> = ({
         [styles.active]: isActive,
       })}
     >
-      {icon && <Image width={15} height={15} src={icon} alt="" />}
+      {icon && <Image width={50} height={50} src={icon} alt="" />}
       {content}
     </button>
   );

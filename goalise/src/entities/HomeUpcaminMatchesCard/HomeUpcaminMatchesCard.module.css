@@ -1,16 +1,28 @@
 .Home_main_card {
-  width: 90%;
   min-height: 50vh;
   border: solid 1px #15191e66;
   border-radius: 10px;
-  margin: 0 auto;
   display: flex;
+  box-shadow: 0 4px 16px 0 #101010;
+  background-color: #111317b2;
 }
 .upcoming_mutch {
   flex: 1;
+  background-image: url("/pngs/nextMutchLeftBackground.png");
+  background-repeat: no-repeat;
+  background-position: left bottom;
+}
+.inner_upcoming_mutch {
+  height: 100%;
+  background-image: url("/pngs/nextMatchLeftInnerBackground.png");
+  background-repeat: no-repeat;
+  background-position: left bottom;
 }
 .match_wrapper {
   flex: 3;
+  background-image: url("/pngs/nextMatchBackground.png");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .unpcaming_match_title_wrapper {
   width: 60%;
