@@ -26,11 +26,14 @@
   width: 15vw;
   height: fit-content;
 }
-.profile_img_wrapper {
+
+.profile_img {
   border-radius: 50%;
-  overflow: hidden;
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .leng_and_profile_wrapper {
   display: flex;
