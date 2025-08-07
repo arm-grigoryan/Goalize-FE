@@ -18,16 +18,16 @@ export const Header = () => {
       <Image alt="" src={logo} className={styles.logo_wrapper} />
       <div className={styles.hader_menu}>
         <div className={styles.link_wrapper}>
-          <Link href="#" className={styles.link}>
+          <Link href="/" className={styles.link}>
             Home
           </Link>
-          <Link href="#" className={styles.link}>
+          <Link href="/leagues" className={styles.link}>
             Leagues
           </Link>
-          <Link href="#" className={styles.link}>
+          <Link href="/teams" className={styles.link}>
             Teams
           </Link>
-          <Link href="#" className={styles.link}>
+          <Link href="/events" className={styles.link}>
             Events
           </Link>
         </div>
