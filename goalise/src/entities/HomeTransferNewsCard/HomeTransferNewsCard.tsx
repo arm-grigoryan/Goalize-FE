@@ -61,15 +61,6 @@ export const HomeTransferNewsCard = () => {
           teamLogoTo={playerImg}
           teamNameTo="Team B"
         />
-        <TransferInnerCard
-          playerImage={playerImg}
-          PlayerName="Pogos Petrosyan"
-          transferDate="2023-10-01"
-          teamLogoFrom={playerImg}
-          teamNameFrom="Team A"
-          teamLogoTo={playerImg}
-          teamNameTo="Team B"
-        />
       </div>
     </div>
   );

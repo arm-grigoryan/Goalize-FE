@@ -1,5 +1,4 @@
 import HomeUpcaminMatchesCard from "@/entities/HomeUpcaminMatchesCard";
-import Header from "../components/generalComponents/Header";
 import styles from "./page.module.css";
 import HomePastMatchesCard from "@/entities/HomePastMatchesCard";
 import HomeTransferNewsCard from "@/entities/HomeTransferNewsCard";
@@ -7,7 +6,6 @@ import HomeTransferNewsCard from "@/entities/HomeTransferNewsCard";
 export default function Home() {
   return (
     <div className={styles.page}>
-      <Header />
       <HomeUpcaminMatchesCard />
       <div className={styles.Home_flex_container}>
         <HomePastMatchesCard />

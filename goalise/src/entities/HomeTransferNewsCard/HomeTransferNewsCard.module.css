@@ -43,7 +43,7 @@
 .title_description {
   color: #a5a5a5;
 }
-.no_transfer_wrapper {
+.transfer_wrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
