@@ -1,0 +1,137 @@
+.Home_main_card {
+  min-height: 50vh;
+  border: solid 1px #15191e66;
+  border-radius: 10px;
+  display: flex;
+  box-shadow: 0 4px 16px 0 #101010;
+  background-color: #111317b2;
+}
+.upcoming_mutch {
+  flex: 1;
+  background-image: url("/pngs/nextMutchLeftBackground.png");
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  border-right: solid 1px rgba(255, 255, 255, 0.1);
+}
+.inner_upcoming_mutch {
+  height: 100%;
+  background-image: url("/pngs/nextMatchLeftInnerBackground.png");
+  background-repeat: no-repeat;
+  background-position: left bottom;
+}
+.match_wrapper {
+  flex: 3;
+  display: flex;
+  justify-content: space-between;
+  background-image: url("/pngs/nextMatchBackground.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.unpcaming_match_title_wrapper {
+  width: 60%;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+.text_span {
+  color: #a5a5a5;
+  font-size: 14px;
+}
+.no_match_text {
+  display: block;
+  color: #a5a5a5;
+  font-size: 14px;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 20%;
+}
+
+.match_left_block {
+  height: 300px;
+  width: 300px;
+  background-image: url("../../assets/pngs/upComingMatchBorderRed.png");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: contain;
+}
+.match_right_block {
+  height: 300px;
+  width: 300px;
+  background-image: url("../../assets/pngs/upComingMatchBorderBlue.png");
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+}
+
+.match_inner_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.match_inner_wrapper > *:not(:first-child) {
+  margin-left: -30px;
+}
+.next_match_list_wrapper {
+  border-left: solid 1px #f3f6fa66;
+  display: flex;
+  flex-direction: column;
+}
+.title_and_day_wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+.next_matches_list_inner_wrapper {
+  max-height: 300px;
+  overflow: hidden;
+}
+
+.next_matches_list_day_wrapper {
+  border: solid 1px #f53a53;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  color: #f53a53;
+}
+
+.match_left_block_inner_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 25px;
+}
+.match_right_block_inner_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-direction: column-reverse;
+}
+.team_logo {
+  width: 200px;
+  height: fit-content;
+}
+
+.position_block_left {
+  border: solid 1px #f53a53;
+  border-radius: 50px;
+  color: #f53a53;
+  padding: 5px 10px;
+}
+.position_block_right {
+  border: solid 1px #54a2fe;
+  border-radius: 50px;
+  color: #54a2fe;
+  padding: 5px 10px;
+}
+.team_name {
+  color: white;
+  font-weight: bold;
+}
+.achievements {
+  color: #a5a5a5;
+}

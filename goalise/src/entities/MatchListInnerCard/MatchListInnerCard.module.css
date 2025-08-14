@@ -1,0 +1,8 @@
+.match_list_innerCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: solid 1px #f3f6fa66;
+  border-radius: 20px;
+  padding: 10px;
+}
