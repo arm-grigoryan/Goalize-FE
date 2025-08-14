@@ -14,7 +14,6 @@
 .player_info_wrapper {
   display: flex;
   gap: 5px;
-  border-right: solid 1px white;
   flex: 2;
 }
 .player_info_and_date {

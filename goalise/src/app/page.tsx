@@ -1,7 +1,7 @@
-import HomeUpcaminMatchesCard from "@/entities/HomeUpcaminMatchesCard";
+import HomeUpcaminMatchesCard from "@/components/HomeUpcaminMatchesCard";
 import styles from "./page.module.css";
-import HomePastMatchesCard from "@/entities/HomePastMatchesCard";
-import HomeTransferNewsCard from "@/entities/HomeTransferNewsCard";
+import HomePastMatchesCard from "@/components/HomePastMatchesCard";
+import HomeTransferNewsCard from "@/components/HomeTransferNewsCard";
 
 export default function Home() {
   return (

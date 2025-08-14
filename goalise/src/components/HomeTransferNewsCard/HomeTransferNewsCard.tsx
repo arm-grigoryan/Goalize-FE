@@ -3,7 +3,7 @@ import styles from "./HomeTransferNewsCard.module.css";
 import Button from "@/shared/Button";
 import transferIcon from "../../assets/pngs/homeTransferIcon.png";
 import Title from "@/shared/Title";
-import TransferInnerCard from "../TransferInnerCard";
+import TransferInnerCard from "../../entities/TransferInnerCard";
 import playerImg from "../../assets/pngs/teamLogo.png";
 
 export const HomeTransferNewsCard = () => {

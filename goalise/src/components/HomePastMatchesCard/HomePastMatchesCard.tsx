@@ -3,7 +3,7 @@ import styles from "./HomePastMatchesCard.module.css";
 import Button from "@/shared/Button";
 import calendarIcon from "../../assets/pngs/calendarIcon.png";
 import Title from "@/shared/Title";
-import PastMatchesInnerCard from "../PastMatchesInnerCard";
+import PastMatchesInnerCard from "../../entities/PastMatchesInnerCard";
 import winnerIcon from "../../assets/pngs/winnerIcon.png";
 import teamLogo from "../../assets/pngs/teamLogo.png";
 import drawIcon from "../../assets/pngs/drawIcon.png";
