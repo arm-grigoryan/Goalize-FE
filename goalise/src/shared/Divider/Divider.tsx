@@ -1,9 +1,23 @@
 import styles from "./Divider.module.css";
 import type { FC } from "react";
+import { Divider } from "@mui/material";
 
-interface DividerProps {
-  className: string;
+interface CustomDividerProps {
+  variant?: "middle" | "fullWidth" | "inset";
+  orientation?: "horizontal" | "vertical";
+  flexItem?: boolean;
 }
-export const Divider: FC<DividerProps> = ({ className }) => {
-  return <div className={styles[className]}></div>;
+export const CustomDivider: FC<CustomDividerProps> = ({
+  variant,
+  orientation,
+  flexItem,
+}) => {
+  return (
+    <Divider
+      className={styles.divider}
+      variant={variant}
+      orientation={orientation}
+      flexItem={flexItem}
+    />
+  );
 };

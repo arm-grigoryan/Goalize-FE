@@ -4,6 +4,8 @@ import styles from "./MatchListInnerCard.module.css";
 import Image from "next/image";
 import calendarEmpty from "../../assets/pngs/calendarIconEmpty.png";
 import clockIcon from "../../assets/pngs/clockIconRed.png";
+import CustomDivider from "@/shared/Divider";
+import vsIcon from "../../assets/pngs/vsIconRedSmall.png";
 
 interface MatchListInnerCardProps {
   teamNameHome: string;
@@ -24,18 +26,22 @@ export const MatchListInnerCard: FC<MatchListInnerCardProps> = ({
 }) => {
   return (
     <div className={styles.match_list_innerCard}>
-      <div>
+      <div className={styles.teams_info}>
         <div>
           <div className={styles.team_name}>{teamNameHome}</div>
-          <div>{homeTeamPoints}</div>
+          <div className={styles.team_points}>{homeTeamPoints}</div>
         </div>
+        <div className={styles.vs_icon}>
+          <Image src={vsIcon} alt="" />
+        </div>
+        <CustomDivider orientation="horizontal" />
         <div>
           <div className={styles.team_name}>{teamNameAway}</div>
-          <div>{awayTeamPoints}</div>
+          <div className={styles.team_points}>{awayTeamPoints}</div>
         </div>
       </div>
-      <div>
-        <div>2nd match</div>
+      <CustomDivider orientation="vertical" />
+      <div className={styles.match_date_time}>
         <Image src={calendarEmpty} alt="" />
         <div>{matchDate}</div>
         <Image src={clockIcon} alt="" />

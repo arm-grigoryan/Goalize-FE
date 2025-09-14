@@ -4,9 +4,9 @@ import Image from "next/image";
 import logo from "/public/pngs/logo/Logo.png";
 import profileImg from "/public/images/headerProfileImg.png";
 import Link from "next/link";
-import Divider from "@/shared/Divider";
 import Button from "@/shared/Button";
 import iconSearch from "../../../assets/pngs/icon-search.png";
+import { CustomDivider } from "@/shared/Divider/Divider";
 
 export const Header = () => {
   const buttonClick = () => {
@@ -37,12 +37,13 @@ export const Header = () => {
           icon={iconSearch}
         />
       </div>
+
       <div className={styles.leng_and_profile_wrapper}>
         <div className={styles.icon_and_leng_wrapper}>
           <div>icon</div>
           <div>eng</div>
         </div>
-        <Divider className="divider_vertical" />
+        <CustomDivider variant="fullWidth" orientation="vertical" flexItem />
         <div className={styles.name_and_img_wrapper}>
           <div>
             <span>name surname</span>

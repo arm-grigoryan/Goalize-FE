@@ -24,9 +24,6 @@ export const HomePastMatchesCard = () => {
         </div>
         <div className={styles.title_wrapper}>
           <Title content="Past Matches" />
-          <span className={styles.title_description}>
-            All the matches that was played in the past dates will display here.
-          </span>
         </div>
       </div>
 
@@ -57,6 +54,28 @@ export const HomePastMatchesCard = () => {
           teamLogo2={teamLogo}
           teamName2="Team B"
           teamScore2={1}
+        />
+        <PastMatchesInnerCard
+          date="2023-10-01"
+          winnerIcon={winnerIcon}
+          drawIcon={drawIcon}
+          teamLogo1={teamLogo}
+          teamName1="Team A"
+          teamScore1={0}
+          teamLogo2={teamLogo}
+          teamName2="Team B"
+          teamScore2={0}
+        />
+        <PastMatchesInnerCard
+          date="2023-10-01"
+          winnerIcon={winnerIcon}
+          drawIcon={drawIcon}
+          teamLogo1={teamLogo}
+          teamName1="Team A"
+          teamScore1={0}
+          teamLogo2={teamLogo}
+          teamName2="Team B"
+          teamScore2={0}
         />
         <PastMatchesInnerCard
           date="2023-10-01"

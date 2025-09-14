@@ -35,9 +35,24 @@
 }
 .match_wrapper {
   width: 100%;
+  max-height: 200px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  overflow-y: auto;
+}
+
+.match_wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.match_wrapper::-webkit-scrollbar-thumb {
+  background-color: #54a2fe;
+  border-radius: 4px;
+}
+
+.match_wrapper::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 
 .no_match_text {

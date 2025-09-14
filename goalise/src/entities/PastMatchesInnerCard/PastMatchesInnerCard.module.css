@@ -14,3 +14,6 @@
 .winner_wrapper {
   min-width: 100px;
 }
+.divider {
+  background-color: rgba(255, 255, 255, 0.1);
+}

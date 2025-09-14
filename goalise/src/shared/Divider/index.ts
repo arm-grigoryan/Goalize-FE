@@ -1,3 +1,3 @@
-import { Divider } from "./Divider";
+import { CustomDivider } from "./Divider";
 
-export default Divider;
+export default CustomDivider;
