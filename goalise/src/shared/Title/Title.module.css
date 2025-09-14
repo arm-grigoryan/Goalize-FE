@@ -1,4 +1,13 @@
 .title {
   color: #e8e8e8;
   font-size: 22px;
+  text-align: center;
+}
+
+.title_40 {
+  color: #e8e8e8;
+  font-size: 40px;
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 20px;
 }

@@ -1,0 +1,55 @@
+.leagues_header {
+  border: solid 1px #a5a5a544;
+  border-radius: 12px;
+  box-shadow: inset 40px 0 80px -40px rgba(110, 193, 228, 0.18),
+    inset -40px 0 80px -40px rgba(255, 143, 163, 0.15);
+}
+.leagues_header_inner {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 40px;
+  align-items: flex-end;
+}
+
+.league_name_container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.league_name {
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 24px;
+  color: #ffffff;
+}
+.league_name_and_button {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.registration_closed_container {
+  text-align: right;
+}
+.registration_closed_text {
+  color: #ffffff;
+}
+.registration_closed_text span {
+  color: #f53a53;
+}
+
+.links {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #ffffff00;
+  padding: 10px 50px;
+}
+.link {
+  text-decoration: none;
+  color: #a5a5a5;
+}

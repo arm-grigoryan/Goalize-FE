@@ -1,4 +1,4 @@
-import HomeUpcaminMatchesCard from "@/components/HomeUpcaminMatchesCard";
+import HomeUpcomingMatchesCard from "@/components/HomeUpcomingMatchesCard";
 import styles from "./page.module.css";
 import HomePastMatchesCard from "@/components/HomePastMatchesCard";
 import HomeTransferNewsCard from "@/components/HomeTransferNewsCard";
@@ -6,7 +6,7 @@ import HomeTransferNewsCard from "@/components/HomeTransferNewsCard";
 export default function Home() {
   return (
     <div className={styles.page}>
-      <HomeUpcaminMatchesCard />
+      <HomeUpcomingMatchesCard />
       <div className={styles.Home_flex_container}>
         <HomePastMatchesCard />
         <HomeTransferNewsCard />

@@ -3,7 +3,7 @@ import styles from "./TransferInnerCard.module.css";
 import type { FC } from "react";
 import Image, { StaticImageData } from "next/image";
 import transferIcon from "../../assets/pngs/transferIcon.png";
-import Divider from "@/shared/Divider";
+import { CustomDivider } from "@/shared/Divider/Divider";
 
 interface TransferInnerCardProps {
   playerImage: string | StaticImageData;
@@ -33,7 +33,7 @@ export const TransferInnerCard: FC<TransferInnerCardProps> = ({
           <span>{transferDate}</span>
         </div>
       </div>
-      <Divider className="divider_vertical" />
+      <CustomDivider variant="middle" orientation="vertical" flexItem />
       <div className={styles.transfer_info_wrapper}>
         <Image src={transferIcon} alt="" />
         <div>

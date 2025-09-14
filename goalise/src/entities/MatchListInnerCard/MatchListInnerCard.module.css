@@ -1,8 +1,30 @@
 .match_list_innerCard {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border: solid 1px #f3f6fa66;
+  border: solid 1px #ffffff1a;
   border-radius: 20px;
   padding: 10px;
+  background-color: #15191e;
+  color: #fff;
+}
+
+.teams_info {
+  flex: 1;
+}
+.match_date_time {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 8px;
+}
+.match_date_time > *:not(:first-child) {
+  margin-left: 10px; /* 👈 your desired space */
+}
+.vs_icon {
+  justify-self: flex-end;
+  margin: 0 20px -15px 10px;
+}
+
+.team_points {
+  color: #a5a5a5;
 }

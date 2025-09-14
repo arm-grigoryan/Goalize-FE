@@ -1,13 +1,16 @@
 .Home_main_card {
   min-height: 50vh;
-  border: solid 1px #15191e66;
+  border: solid 1px #ffffff1a;
   border-radius: 10px;
   display: flex;
   box-shadow: 0 4px 16px 0 #101010;
   background-color: #111317b2;
+  justify-content: space-between;
+  position: relative;
+  gap: 20px;
+  padding: 15px;
 }
 .upcoming_mutch {
-  flex: 1;
   background-image: url("/pngs/nextMutchLeftBackground.png");
   background-repeat: no-repeat;
   background-position: left bottom;
@@ -20,17 +23,11 @@
   background-position: left bottom;
 }
 .match_wrapper {
-  flex: 3;
   display: flex;
   justify-content: space-between;
   background-image: url("/pngs/nextMatchBackground.png");
   background-repeat: no-repeat;
   background-position: center;
-}
-.unpcaming_match_title_wrapper {
-  width: 60%;
-  margin: 0 auto;
-  padding: 15px;
 }
 
 .text_span {
@@ -64,28 +61,55 @@
 }
 
 .match_inner_wrapper {
+  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 100%;
+  align-self: flex-end;
 }
-.match_inner_wrapper > *:not(:first-child) {
-  margin-left: -30px;
+.title {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 15px;
+  background: #f53a53;
+  position: absolute;
+  top: -5%;
+  left: 5%;
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
+
 .next_match_list_wrapper {
-  border-left: solid 1px #f3f6fa66;
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
 .title_and_day_wrapper {
   display: flex;
-  width: 100%;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  padding: 0 15px;
 }
 .next_matches_list_inner_wrapper {
   max-height: 300px;
-  overflow: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-right: 8px;
+}
+.next_matches_list_inner_wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.next_matches_list_inner_wrapper::-webkit-scrollbar-thumb {
+  background-color: #54a2fe;
+  border-radius: 4px;
+}
+
+.next_matches_list_inner_wrapper::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 
 .next_matches_list_day_wrapper {
@@ -102,13 +126,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 25px;
+  margin-top: 30px;
 }
 .match_right_block_inner_wrapper {
   display: flex;
   flex-direction: column;
+  padding-top: 30px;
   align-items: center;
-  margin-bottom: 25px;
+
   flex-direction: column-reverse;
 }
 .team_logo {

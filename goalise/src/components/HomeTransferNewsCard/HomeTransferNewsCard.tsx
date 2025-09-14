@@ -22,9 +22,6 @@ export const HomeTransferNewsCard = () => {
         </div>
         <div className={styles.title_wrapper}>
           <Title content="Transfer News" />
-          <span className={styles.title_description}>
-            Players who transfer from 1 team to another will display here
-          </span>
         </div>
       </div>
 
@@ -34,6 +31,24 @@ export const HomeTransferNewsCard = () => {
         </span>
       </div> */}
       <div className={styles.transfer_wrapper}>
+        <TransferInnerCard
+          playerImage={playerImg}
+          PlayerName="Pogos Petrosyan"
+          transferDate="2023-10-01"
+          teamLogoFrom={playerImg}
+          teamNameFrom="Team A"
+          teamLogoTo={playerImg}
+          teamNameTo="Team B"
+        />
+        <TransferInnerCard
+          playerImage={playerImg}
+          PlayerName="Pogos Petrosyan"
+          transferDate="2023-10-01"
+          teamLogoFrom={playerImg}
+          teamNameFrom="Team A"
+          teamLogoTo={playerImg}
+          teamNameTo="Team B"
+        />
         <TransferInnerCard
           playerImage={playerImg}
           PlayerName="Pogos Petrosyan"

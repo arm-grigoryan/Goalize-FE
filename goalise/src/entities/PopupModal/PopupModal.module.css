@@ -1,0 +1,23 @@
+.popup_modal :global(.MuiDialog-paper) {
+  border-radius: 15px;
+  background: linear-gradient(
+        to right,
+        rgba(255, 0, 0, 0.01),
+        rgba(100, 180, 255, 0.02)
+      )
+      border-box,
+    #0f1011 padding-box;
+  box-shadow: 0 0 0 1px transparent,
+    inset 40px 0 80px -40px rgba(255, 0, 0, 0.1),
+    inset -40px 0 80px -40px rgba(100, 180, 255, 0.2);
+  width: 350px;
+  padding: 15px 60px;
+  border: 1px solid transparent;
+  background-clip: border-box, padding-box;
+}
+
+.popup_modal_description_wrapper {
+  text-align: center;
+  color: #a5a5a5;
+  margin-bottom: 20px;
+}

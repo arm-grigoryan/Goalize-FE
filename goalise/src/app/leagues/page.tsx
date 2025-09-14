@@ -1,3 +1,11 @@
-export default function Leagues() {
-  return <div>this is leagues page</div>;
+import LeaguesGroupContainer from "@/components/LeaguesGroupContainer";
+
+export default function LeaguesGroupPage() {
+  return (
+    <div>
+      <div>
+        <LeaguesGroupContainer />
+      </div>
+    </div>
+  );
 }

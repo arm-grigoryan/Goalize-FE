@@ -1,0 +1,53 @@
+.group_card_container {
+  width: 46vw;
+}
+.group_card {
+  border-radius: 12px;
+
+  width: 100%;
+  overflow: hidden;
+  border: solid 1px #ffffff1a;
+}
+
+.group_card_table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+.group_name {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.group_card_header {
+  background: #ffffff1a;
+}
+.group_card_header th {
+  color: #ffffff;
+  font-weight: 600;
+  padding: 10px 8px;
+  text-align: left;
+  font-size: 15px;
+}
+
+.group_card_content td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #ffffff1a;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.group_card_content:last-child td {
+  border-bottom: none;
+}
+
+.team {
+  font-weight: 500;
+  width: 50%;
+}
+
+.pts {
+  font-weight: 700;
+  color: #f5b03a !important;
+}

@@ -4,8 +4,7 @@ import type { StaticImageData } from "next/image";
 import styles from "./PastMatchesInnerCard.module.css";
 import Image from "next/image";
 import emptyCalendar from "../../assets/pngs/calendarIconEmpty.png";
-import Divider from "@/shared/Divider";
-
+import { CustomDivider } from "@/shared/Divider/Divider";
 interface PastMatchesInnerCardProps {
   date: string;
   winnerIcon: string | StaticImageData;
@@ -37,7 +36,8 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
     <div className={styles.past_matches_innerCard}>
       <Image src={emptyCalendar} alt="" />
       <div>{date}</div>
-      <Divider className="divider_vertical" />
+      <CustomDivider variant="middle" orientation="vertical" flexItem />
+
       <div className={styles.winner_wrapper}>
         {winner1 && <Image src={winnerIcon} alt="" />}
         {draw && <Image src={drawIcon} alt="" />}
