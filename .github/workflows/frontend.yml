@@ -1,0 +1,52 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Enable Docker Daemon
+      run: |
+        sudo systemctl start docker
+        docker --version
+        docker ps
+
+    - name: Build Docker Image (for validation only)
+      run: |
+        cd goalise
+        docker build -t goalize-frontend:ci .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+    steps:
+      - name: Deploy to VM
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_KEY }}
+          script: |
+            if [ -d ~/goalize-frontend/.git ]; then
+              cd ~/goalize-frontend
+              git pull
+            else
+              git clone https://github.com/${{ github.repository }}.git ~/goalize-frontend
+              cd ~/goalize-frontend
+            fi
+
+            cd goalise
+
+            docker stop goalize-frontend || true
+            docker rm goalize-frontend || true
+            docker build -t goalize-frontend .
+            docker run -d --name goalize-frontend -p 3000:3000 goalize-frontend
