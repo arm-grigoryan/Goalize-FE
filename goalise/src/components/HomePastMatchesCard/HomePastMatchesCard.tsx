@@ -7,8 +7,11 @@ import PastMatchesInnerCard from "../../entities/PastMatchesInnerCard";
 import winnerIcon from "../../assets/pngs/winnerIcon.png";
 import teamLogo from "../../assets/pngs/teamLogo.png";
 import drawIcon from "../../assets/pngs/drawIcon.png";
+import { useGetPastMatchesQuery } from "@/app/store/services/api";
 
 export const HomePastMatchesCard = () => {
+  const { data } = useGetPastMatchesQuery();
+
   const buttonClick = () => {
     console.log("clicked");
   };
@@ -33,61 +36,23 @@ export const HomePastMatchesCard = () => {
         </span>
       </div> */}
       <div className={styles.match_wrapper}>
-        <PastMatchesInnerCard
-          date="2023-10-01"
-          winnerIcon={winnerIcon}
-          drawIcon={drawIcon}
-          teamLogo1={teamLogo}
-          teamName1="Team A"
-          teamScore1={2}
-          teamLogo2={teamLogo}
-          teamName2="Team B"
-          teamScore2={3}
-        />
-        <PastMatchesInnerCard
-          date="2023-10-01"
-          winnerIcon={winnerIcon}
-          drawIcon={drawIcon}
-          teamLogo1={teamLogo}
-          teamName1="Team A"
-          teamScore1={2}
-          teamLogo2={teamLogo}
-          teamName2="Team B"
-          teamScore2={1}
-        />
-        <PastMatchesInnerCard
-          date="2023-10-01"
-          winnerIcon={winnerIcon}
-          drawIcon={drawIcon}
-          teamLogo1={teamLogo}
-          teamName1="Team A"
-          teamScore1={0}
-          teamLogo2={teamLogo}
-          teamName2="Team B"
-          teamScore2={0}
-        />
-        <PastMatchesInnerCard
-          date="2023-10-01"
-          winnerIcon={winnerIcon}
-          drawIcon={drawIcon}
-          teamLogo1={teamLogo}
-          teamName1="Team A"
-          teamScore1={0}
-          teamLogo2={teamLogo}
-          teamName2="Team B"
-          teamScore2={0}
-        />
-        <PastMatchesInnerCard
-          date="2023-10-01"
-          winnerIcon={winnerIcon}
-          drawIcon={drawIcon}
-          teamLogo1={teamLogo}
-          teamName1="Team A"
-          teamScore1={0}
-          teamLogo2={teamLogo}
-          teamName2="Team B"
-          teamScore2={0}
-        />
+        {data?.map((match) => {
+          const date = new Date(match.date).toLocaleDateString();
+          return (
+            <PastMatchesInnerCard
+              key={match.id}
+              date={date}
+              winnerIcon={winnerIcon}
+              drawIcon={drawIcon}
+              teamLogo1={teamLogo}
+              teamName1={match.homeTeam.name}
+              teamScore1={match.homeTeamScore}
+              teamLogo2={teamLogo}
+              teamName2={match.awayTeam.name}
+              teamScore2={match.awayTeamScore}
+            />
+          );
+        })}
       </div>
     </div>
   );

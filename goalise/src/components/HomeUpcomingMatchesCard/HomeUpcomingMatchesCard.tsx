@@ -6,11 +6,11 @@ import vsIcon from "../../assets/pngs/vsIcon.png";
 import teamLogoLeft from "../../assets/pngs/teamLoroLeft.png";
 import teamLogoRight from "../../assets/pngs/teamLogoRight.png";
 import MatchListInnerCard from "@/entities/MatchListInnerCard";
-import { useUpComingMatchesQuery } from "@/app/store/services/api";
+import { useGetUpComingMatchesQuery } from "@/app/store/services/api";
 import CustomDivider from "@/shared/Divider";
 
 export const HomeUpcomingMatchesCard = () => {
-  const { data } = useUpComingMatchesQuery();
+  const { data } = useGetUpComingMatchesQuery();
 
   console.log(data);
 
@@ -23,7 +23,9 @@ export const HomeUpcomingMatchesCard = () => {
         <div className={styles.match_left_block}>
           <div className={styles.match_left_block_inner_wrapper}>
             <div>
-              <span className={styles.team_name}>Team Name</span>
+              <span className={styles.team_name}>
+                {data?.[0]?.homeTeam?.name}
+              </span>
             </div>
             <div>
               <span className={styles.achievements}>Achievements</span>
@@ -37,7 +39,9 @@ export const HomeUpcomingMatchesCard = () => {
         <div className={styles.match_right_block}>
           <div className={styles.match_right_block_inner_wrapper}>
             <div>
-              <span className={styles.team_name}>Team Name</span>
+              <span className={styles.team_name}>
+                {data?.[0]?.awayTeam?.name}
+              </span>
             </div>
             <div>
               <span className={styles.achievements}>Achievements</span>
@@ -55,38 +59,21 @@ export const HomeUpcomingMatchesCard = () => {
           </div>
         </div>
         <div className={styles.next_matches_list_inner_wrapper}>
-          <MatchListInnerCard
-            teamNameHome="Home Team"
-            homeTeamPoints={2}
-            teamNameAway="Away Team"
-            awayTeamPoints={1}
-            matchDate={new Date().toDateString()}
-            matchTime={new Date().toLocaleTimeString()}
-          />
-          <MatchListInnerCard
-            teamNameHome="Home Team"
-            homeTeamPoints={2}
-            teamNameAway="Away Team"
-            awayTeamPoints={1}
-            matchDate={new Date().toDateString()}
-            matchTime={new Date().toLocaleTimeString()}
-          />
-          <MatchListInnerCard
-            teamNameHome="Home Team"
-            homeTeamPoints={2}
-            teamNameAway="Away Team"
-            awayTeamPoints={1}
-            matchDate={new Date().toDateString()}
-            matchTime={new Date().toLocaleTimeString()}
-          />
-          <MatchListInnerCard
-            teamNameHome="Home Team"
-            homeTeamPoints={2}
-            teamNameAway="Away Team"
-            awayTeamPoints={1}
-            matchDate={new Date().toDateString()}
-            matchTime={new Date().toLocaleTimeString()}
-          />
+          {data?.map((match) => {
+            const { date } = match;
+            const d = new Date(date);
+            return (
+              <MatchListInnerCard
+                key={match.id}
+                teamNameHome={match.homeTeam.name}
+                homeTeamPoints={match.homeTeamPoints}
+                teamNameAway={match.awayTeam.name}
+                awayTeamPoints={match.awayTeamPoints}
+                matchDate={d.toLocaleDateString()}
+                matchTime={d.toLocaleTimeString()}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

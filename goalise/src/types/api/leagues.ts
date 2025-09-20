@@ -3,3 +3,19 @@ export interface ILegues {
   name: string;
   logoUrl: string;
 }
+
+export interface ILeague {
+  id: number;
+  name: string;
+  logoUrl: string;
+  winner: {
+    id: number;
+    name: string;
+    logoUrl: string;
+    captainId: number;
+  };
+  state: "Registration" | "Ongoing" | "Finished";
+  maxTeamsCount: number;
+  registrationDate: "2025-09-19T17:11:07.233Z";
+  paymentPerGame: number;
+}
