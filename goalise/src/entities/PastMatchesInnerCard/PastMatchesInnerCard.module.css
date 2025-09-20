@@ -17,3 +17,24 @@
 .divider {
   background-color: rgba(255, 255, 255, 0.1);
 }
+
+.team_info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.score_wrapper {
+  display: flex;
+  gap: 8px;
+  font-weight: 700;
+}
+.team_logo {
+  max-width: 50px;
+  overflow: hidden;
+}
+.team_name {
+  max-width: 50px;
+  overflow: hidden;
+}

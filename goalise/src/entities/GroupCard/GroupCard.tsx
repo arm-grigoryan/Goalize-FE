@@ -1,9 +1,9 @@
 "use client";
+import { ILeaguesGroupItem } from "@/types/api/leaguesGroup";
 import styles from "./GroupCard.module.css";
-import { IGroupCard } from "@/types/groupCardContent/groupCard";
 
 interface GroupCardProps {
-  groupCardContent: IGroupCard[];
+  groupCardContent: ILeaguesGroupItem[];
   groupName: string;
 }
 
@@ -26,9 +26,9 @@ export const GroupCard = ({ groupCardContent, groupName }: GroupCardProps) => {
             {groupCardContent.map((card, index) => (
               <tr key={card.id} className={styles.group_card_content}>
                 <td>{index + 1}</td>
-                <td className={styles.team}>{card.name}</td>
-                <td>{card.matchPlayed}</td>
-                <td>{card.goalDifference}</td>
+                <td className={styles.team}>{card.team.name}</td>
+                <td>{card.matchesPlayed}</td>
+                <td>{card.goalsDifference}</td>
                 <td className={styles.pts}>{card.points}</td>
               </tr>
             ))}

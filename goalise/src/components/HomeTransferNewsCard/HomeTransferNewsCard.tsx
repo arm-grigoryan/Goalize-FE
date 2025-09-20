@@ -5,8 +5,11 @@ import transferIcon from "../../assets/pngs/homeTransferIcon.png";
 import Title from "@/shared/Title";
 import TransferInnerCard from "../../entities/TransferInnerCard";
 import playerImg from "../../assets/pngs/teamLogo.png";
+import { useGetTransferNewsQuery } from "@/app/store/services/api";
 
 export const HomeTransferNewsCard = () => {
+  const { data } = useGetTransferNewsQuery();
+
   const buttonClick = () => {
     console.log("clicked");
   };
@@ -31,51 +34,21 @@ export const HomeTransferNewsCard = () => {
         </span>
       </div> */}
       <div className={styles.transfer_wrapper}>
-        <TransferInnerCard
-          playerImage={playerImg}
-          PlayerName="Pogos Petrosyan"
-          transferDate="2023-10-01"
-          teamLogoFrom={playerImg}
-          teamNameFrom="Team A"
-          teamLogoTo={playerImg}
-          teamNameTo="Team B"
-        />
-        <TransferInnerCard
-          playerImage={playerImg}
-          PlayerName="Pogos Petrosyan"
-          transferDate="2023-10-01"
-          teamLogoFrom={playerImg}
-          teamNameFrom="Team A"
-          teamLogoTo={playerImg}
-          teamNameTo="Team B"
-        />
-        <TransferInnerCard
-          playerImage={playerImg}
-          PlayerName="Pogos Petrosyan"
-          transferDate="2023-10-01"
-          teamLogoFrom={playerImg}
-          teamNameFrom="Team A"
-          teamLogoTo={playerImg}
-          teamNameTo="Team B"
-        />
-        <TransferInnerCard
-          playerImage={playerImg}
-          PlayerName="Pogos Petrosyan"
-          transferDate="2023-10-01"
-          teamLogoFrom={playerImg}
-          teamNameFrom="Team A"
-          teamLogoTo={playerImg}
-          teamNameTo="Team B"
-        />
-        <TransferInnerCard
-          playerImage={playerImg}
-          PlayerName="Pogos Petrosyan"
-          transferDate="2023-10-01"
-          teamLogoFrom={playerImg}
-          teamNameFrom="Team A"
-          teamLogoTo={playerImg}
-          teamNameTo="Team B"
-        />
+        {data?.map((transfer) => {
+          const date = new Date(transfer.transferDate).toLocaleDateString();
+          return (
+            <TransferInnerCard
+              key={transfer.id}
+              playerImage={playerImg}
+              PlayerName={`${transfer.firstName} ${transfer.lastName}`}
+              transferDate={date}
+              teamLogoFrom={playerImg}
+              teamNameFrom={transfer.fromTeam.name}
+              teamLogoTo={playerImg}
+              teamNameTo={transfer.toTeam.name}
+            />
+          );
+        })}
       </div>
     </div>
   );

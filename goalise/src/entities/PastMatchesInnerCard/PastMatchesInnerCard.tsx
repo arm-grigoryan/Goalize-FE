@@ -42,12 +42,19 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
         {winner1 && <Image src={winnerIcon} alt="" />}
         {draw && <Image src={drawIcon} alt="" />}
       </div>
-      <div>{<Image src={teamLogo1} alt="" />}</div>
-      <div>{teamName1}</div>
-      <div>{teamScore1}</div>
-      <div>{teamScore2}</div>
-      <div>{teamName2}</div>
-      <div>{<Image src={teamLogo2} alt="" />}</div>
+      <div className={styles.team_info}>
+        <div className={styles.team_logo}>
+          {<Image src={teamLogo1} alt="" />}
+        </div>
+        <div className={styles.team_name}>{teamName1}</div>
+        <div className={styles.score_wrapper}>
+          <div>{teamScore1}</div>
+          <CustomDivider orientation="vertical" flexItem />
+          <div>{teamScore2}</div>
+        </div>
+        <div>{teamName2}</div>
+        <div>{<Image src={teamLogo2} alt="" />}</div>
+      </div>
       <div className={styles.winner_wrapper}>
         {winner2 && <Image src={winnerIcon} alt="" />}
         {draw && <Image src={drawIcon} alt="" />}

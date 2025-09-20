@@ -1,19 +1,38 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { UpcomingMatch } from "../../../types/api/upComingMatches";
+import { IMatchesPast } from "@/types/api/matchesPast";
+import { ITransfers } from "@/types/api/transfers";
+import { ILeague } from "@/types/api/leagues";
+import { ILeaguesGroup } from "@/types/api/leaguesGroup";
 
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://194.233.89.194:5000/api",
+    baseUrl: process.env.NEXT_PUBLIC_API_URL,
   }),
   endpoints: (builder) => ({
-    upComingMatches: builder.query<UpcomingMatch[], void>({
+    getUpComingMatches: builder.query<UpcomingMatch[], void>({
       query: () => "/matches/upcoming",
     }),
-    getPostById: builder.query<unknown, number>({
-      query: (id) => `/posts/${id}`,
+    getPastMatches: builder.query<IMatchesPast[], void>({
+      query: () => `/matches/past`,
+    }),
+    getTransferNews: builder.query<ITransfers[], void>({
+      query: () => `/transfers`,
+    }),
+    getLeagues: builder.query<ILeague[], void>({
+      query: () => `/leagues`,
+    }),
+    getLeagueGroups: builder.query<ILeaguesGroup, number>({
+      query: (leagueId) => `/leagues/${leagueId}/groups`,
     }),
   }),
 });
 
-export const { useUpComingMatchesQuery, useGetPostByIdQuery } = api;
+export const {
+  useGetUpComingMatchesQuery,
+  useGetPastMatchesQuery,
+  useGetTransferNewsQuery,
+  useGetLeaguesQuery,
+  useGetLeagueGroupsQuery,
+} = api;
