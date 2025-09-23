@@ -11,14 +11,32 @@ export const api = createApi({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
   }),
   endpoints: (builder) => ({
-    getUpComingMatches: builder.query<UpcomingMatch[], void>({
-      query: () => "/matches/upcoming",
+    getUpComingMatches: builder.query<
+      UpcomingMatch[],
+      { take: number; skip: number }
+    >({
+      query: ({ take, skip }) => ({
+        url: "/matches/upcoming",
+        params: { take, skip },
+      }),
     }),
-    getPastMatches: builder.query<IMatchesPast[], void>({
-      query: () => `/matches/past`,
+    getPastMatches: builder.query<
+      IMatchesPast[],
+      { take: number; skip: number }
+    >({
+      query: ({ take, skip }) => ({
+        url: "/matches/past",
+        params: { take, skip },
+      }),
     }),
-    getTransferNews: builder.query<ITransfers[], void>({
-      query: () => `/transfers`,
+    getTransferNews: builder.query<
+      ITransfers[],
+      { take: number; skip: number }
+    >({
+      query: ({ take, skip }) => ({
+        url: "/transfers",
+        params: { take, skip },
+      }),
     }),
     getLeagues: builder.query<ILeague[], void>({
       query: () => `/leagues`,

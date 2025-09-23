@@ -41,6 +41,9 @@ export const LeaguesHeader = () => {
         <Link className={styles.link} href="/leagues/drawStandings">
           Draw Standings
         </Link>
+        <Link className={styles.link} href="/leagues/results">
+          Results
+        </Link>
         <Link className={styles.link} href="/leagues/fixtures">
           Fixtures
         </Link>

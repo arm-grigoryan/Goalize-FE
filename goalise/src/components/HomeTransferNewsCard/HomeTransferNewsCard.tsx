@@ -6,9 +6,55 @@ import Title from "@/shared/Title";
 import TransferInnerCard from "../../entities/TransferInnerCard";
 import playerImg from "../../assets/pngs/teamLogo.png";
 import { useGetTransferNewsQuery } from "@/app/store/services/api";
+import { useEffect, useRef, useState } from "react";
+import { ITransfers } from "@/types/api/transfers";
+import { handleLongStrings } from "@/helper/handleLongStrings";
 
 export const HomeTransferNewsCard = () => {
-  const { data } = useGetTransferNewsQuery();
+  const [offset, setOffset] = useState<number>(0);
+  const [transfers, setTransfers] = useState<ITransfers[]>([]);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const { data, isFetching } = useGetTransferNewsQuery(
+    { take: 5, skip: offset },
+    { skip: !hasMore }
+  );
+
+  useEffect(() => {
+    if (data) {
+      setTransfers((prev) => {
+        const merged = [...prev, ...data];
+        const unique = merged.filter(
+          (match, index, self) =>
+            index === self.findIndex((m) => m.id === match.id)
+        );
+        return unique;
+      });
+      if (data.length < 5) {
+        setHasMore(false);
+      }
+    }
+  }, [data, offset]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const container = scrollContainerRef.current;
+      if (!container || isFetching) return;
+
+      const { scrollTop, scrollHeight, clientHeight } = container;
+
+      if (scrollTop + clientHeight >= scrollHeight) {
+        setOffset((prev) => prev + 5);
+      }
+    };
+
+    const container = scrollContainerRef.current;
+    container?.addEventListener("scroll", handleScroll);
+
+    return () => {
+      container?.removeEventListener("scroll", handleScroll);
+    };
+  }, [isFetching]);
 
   const buttonClick = () => {
     console.log("clicked");
@@ -33,8 +79,8 @@ export const HomeTransferNewsCard = () => {
           No transfer news is scheduled at the moment
         </span>
       </div> */}
-      <div className={styles.transfer_wrapper}>
-        {data?.map((transfer) => {
+      <div ref={scrollContainerRef} className={styles.transfer_wrapper}>
+        {transfers.map((transfer) => {
           const date = new Date(transfer.transferDate).toLocaleDateString();
           return (
             <TransferInnerCard
@@ -43,12 +89,17 @@ export const HomeTransferNewsCard = () => {
               PlayerName={`${transfer.firstName} ${transfer.lastName}`}
               transferDate={date}
               teamLogoFrom={playerImg}
-              teamNameFrom={transfer.fromTeam.name}
+              teamNameFrom={handleLongStrings(transfer.fromTeam.name, 8)}
               teamLogoTo={playerImg}
-              teamNameTo={transfer.toTeam.name}
+              teamNameTo={handleLongStrings(transfer.toTeam.name, 8)}
             />
           );
         })}
+        {isFetching && (
+          <div className={styles.loader_container}>
+            <div className={styles.loader}></div>
+          </div>
+        )}
       </div>
     </div>
   );
