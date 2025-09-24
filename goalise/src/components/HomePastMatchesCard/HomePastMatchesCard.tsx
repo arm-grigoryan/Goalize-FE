@@ -8,10 +8,55 @@ import winnerIcon from "../../assets/pngs/winnerIcon.png";
 import teamLogo from "../../assets/pngs/teamLogo.png";
 import drawIcon from "../../assets/pngs/drawIcon.png";
 import { useGetPastMatchesQuery } from "@/app/store/services/api";
+import { useEffect, useRef, useState } from "react";
+import { IMatchesPast } from "@/types/api/matchesPast";
+import { handleLongStrings } from "@/helper/handleLongStrings";
 
 export const HomePastMatchesCard = () => {
-  const { data } = useGetPastMatchesQuery();
+  const [offset, setOffset] = useState<number>(0);
+  const [matches, setMatches] = useState<IMatchesPast[]>([]);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const { data, isFetching } = useGetPastMatchesQuery(
+    { take: 5, skip: offset },
+    { skip: !hasMore }
+  );
 
+  useEffect(() => {
+    if (data) {
+      setMatches((prev) => {
+        const merged = [...prev, ...data];
+        const unique = merged.filter(
+          (match, index, self) =>
+            index === self.findIndex((m) => m.id === match.id)
+        );
+        return unique;
+      });
+      if (data.length < 5) {
+        setHasMore(false);
+      }
+    }
+  }, [data, offset]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const container = scrollContainerRef.current;
+      if (!container || isFetching) return;
+
+      const { scrollTop, scrollHeight, clientHeight } = container;
+
+      if (scrollTop + clientHeight >= scrollHeight) {
+        setOffset((prev) => prev + 5);
+      }
+    };
+
+    const container = scrollContainerRef.current;
+    container?.addEventListener("scroll", handleScroll);
+
+    return () => {
+      container?.removeEventListener("scroll", handleScroll);
+    };
+  }, [isFetching]);
   const buttonClick = () => {
     console.log("clicked");
   };
@@ -35,8 +80,8 @@ export const HomePastMatchesCard = () => {
           No past match is scheduled at the moment
         </span>
       </div> */}
-      <div className={styles.match_wrapper}>
-        {data?.map((match) => {
+      <div ref={scrollContainerRef} className={styles.match_wrapper}>
+        {matches.map((match) => {
           const date = new Date(match.date).toLocaleDateString();
           return (
             <PastMatchesInnerCard
@@ -45,14 +90,19 @@ export const HomePastMatchesCard = () => {
               winnerIcon={winnerIcon}
               drawIcon={drawIcon}
               teamLogo1={teamLogo}
-              teamName1={match.homeTeam.name}
+              teamName1={handleLongStrings(match.homeTeam.name, 8)}
               teamScore1={match.homeTeamScore}
               teamLogo2={teamLogo}
-              teamName2={match.awayTeam.name}
+              teamName2={handleLongStrings(match.awayTeam.name, 8)}
               teamScore2={match.awayTeamScore}
             />
           );
         })}
+        {isFetching && (
+          <div className={styles.loader_container}>
+            <div className={styles.loader}></div>
+          </div>
+        )}
       </div>
     </div>
   );

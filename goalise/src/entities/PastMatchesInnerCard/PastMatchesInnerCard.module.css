@@ -30,11 +30,7 @@
   gap: 8px;
   font-weight: 700;
 }
-.team_logo {
-  max-width: 50px;
-  overflow: hidden;
-}
-.team_name {
-  max-width: 50px;
-  overflow: hidden;
+
+.date {
+  min-width: 70px;
 }

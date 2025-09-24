@@ -14,7 +14,7 @@ export interface ILeague {
     logoUrl: string;
     captainId: number;
   };
-  state: "Registration" | "Ongoing" | "Finished";
+  state: "Registration" | "Playing" | "Finished";
   maxTeamsCount: number;
   registrationDate: "2025-09-19T17:11:07.233Z";
   paymentPerGame: number;

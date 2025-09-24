@@ -35,7 +35,7 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
   return (
     <div className={styles.past_matches_innerCard}>
       <Image src={emptyCalendar} alt="" />
-      <div>{date}</div>
+      <div className={styles.date}>{date}</div>
       <CustomDivider variant="middle" orientation="vertical" flexItem />
 
       <div className={styles.winner_wrapper}>

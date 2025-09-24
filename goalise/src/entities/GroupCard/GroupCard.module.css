@@ -1,28 +1,31 @@
 .group_card_container {
   width: 46vw;
 }
+
 .group_card {
   border-radius: 12px;
-
   width: 100%;
-  overflow: hidden;
   border: solid 1px #ffffff1a;
+  overflow: hidden;
 }
 
 .group_card_table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: auto;
+  table-layout: fixed; /* keeps header + body columns aligned */
 }
+
 .group_name {
   color: #ffffff;
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 8px;
 }
+
 .group_card_header {
   background: #ffffff1a;
 }
+
 .group_card_header th {
   color: #ffffff;
   font-weight: 600;
@@ -50,4 +53,23 @@
 .pts {
   font-weight: 700;
   color: #f5b03a !important;
+}
+
+/* Only body scrolls */
+.scrollable {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: #54a2fe;
+  border-radius: 4px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background-color: transparent;
 }

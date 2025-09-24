@@ -8,6 +8,14 @@ interface GroupCardProps {
 }
 
 export const GroupCard = ({ groupCardContent, groupName }: GroupCardProps) => {
+  const rows = groupCardContent.length;
+  const minRows = 4;
+
+  const filledRows = [
+    ...groupCardContent,
+    ...Array(Math.max(0, minRows - rows)).fill(null),
+  ];
+
   return (
     <div className={styles.group_card_container}>
       <h3 className={styles.group_name}>{groupName}</h3>
@@ -22,18 +30,32 @@ export const GroupCard = ({ groupCardContent, groupName }: GroupCardProps) => {
               <th className={styles.pts}>PTS</th>
             </tr>
           </thead>
-          <tbody>
-            {groupCardContent.map((card, index) => (
-              <tr key={card.id} className={styles.group_card_content}>
-                <td>{index + 1}</td>
-                <td className={styles.team}>{card.team.name}</td>
-                <td>{card.matchesPlayed}</td>
-                <td>{card.goalsDifference}</td>
-                <td className={styles.pts}>{card.points}</td>
-              </tr>
-            ))}
-          </tbody>
         </table>
+
+        <div className={rows > minRows ? styles.scrollable : ""}>
+          <table className={styles.group_card_table}>
+            <tbody>
+              {filledRows.map((card, index) => (
+                <tr
+                  key={card ? card.id : `empty-${index}`}
+                  className={styles.group_card_content}
+                >
+                  {card ? (
+                    <>
+                      <td>{index + 1}</td>
+                      <td className={styles.team}>{card.team.name}</td>
+                      <td>{card.matchesPlayed}</td>
+                      <td>{card.goalsDifference}</td>
+                      <td className={styles.pts}>{card.points}</td>
+                    </>
+                  ) : (
+                    <td colSpan={5}>&nbsp;</td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
