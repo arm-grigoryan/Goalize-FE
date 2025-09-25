@@ -54,6 +54,15 @@ export const api = createApi({
         params: { skip, take },
       }),
     }),
+    getLeaguesFixtures: builder.query<
+      ILeaguesResults,
+      { leagueId: number; skip: number; take: number }
+    >({
+      query: ({ leagueId, skip, take }) => ({
+        url: `/leagues/${leagueId}/fixtures`,
+        params: { skip, take },
+      }),
+    }),
   }),
 });
 
@@ -64,4 +73,5 @@ export const {
   useGetLeaguesQuery,
   useGetLeagueGroupsQuery,
   useGetLeaguesResultsQuery,
+  useGetLeaguesFixturesQuery,
 } = api;
