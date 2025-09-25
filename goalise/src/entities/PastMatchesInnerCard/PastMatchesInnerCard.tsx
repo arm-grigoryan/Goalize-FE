@@ -8,7 +8,7 @@ import { CustomDivider } from "@/shared/Divider/Divider";
 interface PastMatchesInnerCardProps {
   date: string;
   winnerIcon: string | StaticImageData;
-  drawIcon: string | StaticImageData;
+  drawIcon?: string | StaticImageData;
   teamLogo1: string | StaticImageData;
   teamName1: string;
   teamScore1: number;
@@ -52,7 +52,7 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
             style={{ width: "auto", height: "auto" }}
           />
         )}
-        {draw && (
+        {draw && drawIcon && (
           <Image
             src={drawIcon}
             alt=""
@@ -105,7 +105,7 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
             style={{ width: "auto", height: "auto" }}
           />
         )}
-        {draw && (
+        {draw && drawIcon && (
           <Image
             src={drawIcon}
             alt=""

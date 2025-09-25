@@ -1,3 +1,3 @@
-import { LeaguesResults } from "./LeaguesResults";
+import { LeaguesFixtures } from "./LeaguesFixtures";
 
-export default LeaguesResults;
+export default LeaguesFixtures;

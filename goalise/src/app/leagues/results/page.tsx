@@ -1,4 +1,4 @@
-import LeaguesResults from "@/components/LeaguesFixtures";
+import LeaguesResults from "@/components/LeaguesResults";
 
 export default function LeaguesResultsPage() {
   return (
