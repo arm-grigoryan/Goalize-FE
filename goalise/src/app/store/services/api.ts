@@ -4,6 +4,7 @@ import { IMatchesPast } from "@/types/api/matchesPast";
 import { ITransfers } from "@/types/api/transfers";
 import { ILeague } from "@/types/api/leagues";
 import { ILeaguesGroup } from "@/types/api/leaguesGroup";
+import { ILeaguesResults } from "@/types/api/leaguesResults";
 
 export const api = createApi({
   reducerPath: "api",
@@ -44,6 +45,15 @@ export const api = createApi({
     getLeagueGroups: builder.query<ILeaguesGroup, number>({
       query: (leagueId) => `/leagues/${leagueId}/groups`,
     }),
+    getLeaguesResults: builder.query<
+      ILeaguesResults,
+      { leagueId: number; skip: number; take: number }
+    >({
+      query: ({ leagueId, skip, take }) => ({
+        url: `/leagues/${leagueId}/results`,
+        params: { skip, take },
+      }),
+    }),
   }),
 });
 
@@ -53,4 +63,5 @@ export const {
   useGetTransferNewsQuery,
   useGetLeaguesQuery,
   useGetLeagueGroupsQuery,
+  useGetLeaguesResultsQuery,
 } = api;
