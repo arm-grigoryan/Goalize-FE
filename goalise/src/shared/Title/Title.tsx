@@ -11,7 +11,12 @@ interface TitleProps {
   isH1?: boolean;
 }
 
-export const Title: FC<TitleProps> = ({ content, font, className, isH1 }) => {
+export const Title: FC<TitleProps> = ({
+  content,
+  font,
+  className,
+  isH1 = false,
+}) => {
   if (isH1)
     return (
       <h1 className={cn(styles.title, styles[className ?? ""], font)}>

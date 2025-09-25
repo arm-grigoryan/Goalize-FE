@@ -1,3 +1,9 @@
+import LeaguesResults from "@/components/LeaguesFixtures";
+
 export default function LeaguesResultsPage() {
-  return <div>this is results page</div>;
+  return (
+    <div>
+      <LeaguesResults />
+    </div>
+  );
 }

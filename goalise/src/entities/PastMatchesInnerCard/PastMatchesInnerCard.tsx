@@ -15,6 +15,7 @@ interface PastMatchesInnerCardProps {
   teamLogo2: string | StaticImageData;
   teamName2: string;
   teamScore2: number;
+  isBig?: boolean;
 }
 
 export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
@@ -27,6 +28,7 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
   teamName2,
   teamScore1,
   teamScore2,
+  isBig = false,
 }) => {
   const winner1 = teamScore1 > teamScore2;
   const winner2 = teamScore2 > teamScore1;
@@ -38,13 +40,39 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
       <div className={styles.date}>{date}</div>
       <CustomDivider variant="middle" orientation="vertical" flexItem />
 
-      <div className={styles.winner_wrapper}>
-        {winner1 && <Image src={winnerIcon} alt="" />}
-        {draw && <Image src={drawIcon} alt="" />}
+      <div
+        className={isBig ? styles.winner_wrapper_big1 : styles.winner_wrapper}
+      >
+        {winner1 && (
+          <Image
+            src={winnerIcon}
+            alt=""
+            width={0}
+            height={0}
+            style={{ width: "auto", height: "auto" }}
+          />
+        )}
+        {draw && (
+          <Image
+            src={drawIcon}
+            alt=""
+            width={0}
+            height={0}
+            style={{ width: "auto", height: "auto" }}
+          />
+        )}
       </div>
       <div className={styles.team_info}>
         <div className={styles.team_logo}>
-          {<Image src={teamLogo1} alt="" />}
+          {
+            <Image
+              src={teamLogo1}
+              alt=""
+              width={0}
+              height={0}
+              style={{ width: "auto", height: "auto" }}
+            />
+          }
         </div>
         <div className={styles.team_name}>{teamName1}</div>
         <div className={styles.score_wrapper}>
@@ -53,11 +81,39 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
           <div>{teamScore2}</div>
         </div>
         <div>{teamName2}</div>
-        <div>{<Image src={teamLogo2} alt="" />}</div>
+        <div>
+          {
+            <Image
+              src={teamLogo2}
+              alt=""
+              width={0}
+              height={0}
+              style={{ width: "auto", height: "auto" }}
+            />
+          }
+        </div>
       </div>
-      <div className={styles.winner_wrapper}>
-        {winner2 && <Image src={winnerIcon} alt="" />}
-        {draw && <Image src={drawIcon} alt="" />}
+      <div
+        className={isBig ? styles.winner_wrapper_big2 : styles.winner_wrapper}
+      >
+        {winner2 && (
+          <Image
+            src={winnerIcon}
+            alt=""
+            width={0}
+            height={0}
+            style={{ width: "auto", height: "auto" }}
+          />
+        )}
+        {draw && (
+          <Image
+            src={drawIcon}
+            alt=""
+            width={0}
+            height={0}
+            style={{ width: "auto", height: "auto" }}
+          />
+        )}
       </div>
     </div>
   );
