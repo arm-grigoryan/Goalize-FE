@@ -11,8 +11,10 @@ import { useGetPastMatchesQuery } from "@/app/store/services/api";
 import { useEffect, useRef, useState } from "react";
 import { IMatchesPast } from "@/types/api/matchesPast";
 import { handleLongStrings } from "@/helper/handleLongStrings";
+import { useTranslation } from "next-i18next";
 
 export const HomePastMatchesCard = () => {
+  const { t } = useTranslation("common");
   const [offset, setOffset] = useState<number>(0);
   const [matches, setMatches] = useState<IMatchesPast[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
@@ -71,15 +73,17 @@ export const HomePastMatchesCard = () => {
           />
         </div>
         <div className={styles.title_wrapper}>
-          <Title content="Past Matches" />
+          <Title content={t("home.pastMatches.title")} />
         </div>
       </div>
+      {!data?.length && (
+        <div className={styles.no_match_wrapper}>
+          <span className={styles.no_match_text}>
+            No past match to show at the moment
+          </span>
+        </div>
+      )}
 
-      {/* <div className={styles.no_match_wrapper}>
-        <span className={styles.no_match_text}>
-          No past match is scheduled at the moment
-        </span>
-      </div> */}
       <div ref={scrollContainerRef} className={styles.match_wrapper}>
         {matches.map((match) => {
           const date = new Date(match.date).toLocaleDateString();
