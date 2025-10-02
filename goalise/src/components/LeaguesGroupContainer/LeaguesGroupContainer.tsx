@@ -29,7 +29,7 @@ export const LeaguesGroupContainer = () => {
         </div>
       )}
       {
-        !groups && (
+        !groupsData && (
           <div>Groups data unavailable.</div>
         )
       }
