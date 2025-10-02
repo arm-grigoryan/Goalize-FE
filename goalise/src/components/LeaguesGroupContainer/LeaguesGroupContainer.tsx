@@ -28,6 +28,11 @@ export const LeaguesGroupContainer = () => {
           <div className={styles.loader}></div>
         </div>
       )}
+      {
+        !groups && (
+          <div>Groups data unavailable.</div>
+        )
+      }
     </div>
   );
 };
