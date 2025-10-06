@@ -1,0 +1,27 @@
+.langBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.langFormControl {
+  width: 100px;
+  background-color: #101010;
+  border-radius: 12px;
+}
+
+.langLabel {
+  color: gray !important;
+}
+
+.langMenuTypography {
+  color: gray !important;
+}
+
+.langSelectedValue {
+  color: gray !important;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

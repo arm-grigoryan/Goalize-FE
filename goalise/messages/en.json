@@ -18,5 +18,22 @@
     "transferNews": {
       "title": "Transfer News"
     }
+  },
+  "footer": {
+    "menu": {
+      "home": "Home",
+      "leagues": "Leagues",
+      "teams": "Teams",
+      "events": "Events"
+    },
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contactInfo": {
+      "title": "Contact Info",
+      "email": "Email: contact@goalise.com",
+      "phone": "Phone: +1 (555) 123-4567"
+    },
+    "rights": "© Copyright 2025.",
+    "followUs": "Follow us"
   }
 }

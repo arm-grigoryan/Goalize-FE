@@ -1,0 +1,50 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  color: white;
+  padding: 15px;
+}
+
+.logo_wrapper {
+  width: 15vw;
+  height: fit-content;
+}
+.top_footer {
+  display: flex;
+  justify-content: space-between;
+}
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.contact_info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bottom_footer {
+  display: flex;
+  justify-content: space-between;
+}
+.privacy_terms {
+  display: flex;
+  gap: 16px;
+}
+.link {
+  text-decoration: none;
+  color: #a5a5a5;
+}
+@media (max-width: 768px) {
+  .top_footer {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+  .bottom_footer {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+}
