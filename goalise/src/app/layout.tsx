@@ -30,9 +30,11 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <NextIntlClientProvider>
-          <Header />
-          <Providers>{children}</Providers>
-          <Footer />
+          <Providers>
+            <Header />
+            {children}
+            <Footer />
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>

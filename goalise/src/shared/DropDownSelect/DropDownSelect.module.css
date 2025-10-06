@@ -1,0 +1,27 @@
+.dropdown {
+  background-color: #101010;
+  border-radius: 8px;
+  border: 1px solid gray;
+  padding: 4px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.option {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: gray;
+  user-select: none;
+}
+
+.option:hover {
+  background-color: #222;
+}
+
+.selectedOption {
+  background-color: #222;
+  color: #ccc;
+}
