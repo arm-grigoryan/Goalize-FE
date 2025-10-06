@@ -10,6 +10,13 @@
 
 .teams_info {
   flex: 1;
+  height: 100%;
+}
+.team_inner_info {
+  display: flex;
+  gap: 10px;
+  height: 50%;
+  align-items: center;
 }
 .match_date_time {
   display: flex;

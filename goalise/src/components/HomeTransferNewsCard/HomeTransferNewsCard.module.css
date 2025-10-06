@@ -6,12 +6,26 @@
   margin: 0 auto;
   display: flex;
   position: relative;
-  background-image: url("/pngs/homeTransferbackground.png");
   background-repeat: no-repeat;
   background-position: center bottom;
   box-shadow: 0 4px 16px 0 #101010;
   background-color: #111317b2;
   flex-direction: column;
+}
+.transfer_news_empty {
+  flex: 2;
+  min-height: 50vh;
+  border: solid 1px #15191e66;
+  border-radius: 10px;
+  margin: 0 auto;
+  display: flex;
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  box-shadow: 0 4px 16px 0 #101010;
+  background-color: #111317b2;
+  flex-direction: column;
+  background-image: url("/pngs/homeTransferbackground.png");
 }
 
 .button_and_title_wrapper {

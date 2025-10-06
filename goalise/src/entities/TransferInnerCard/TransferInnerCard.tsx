@@ -36,12 +36,12 @@ export const TransferInnerCard: FC<TransferInnerCardProps> = ({
       <CustomDivider variant="middle" orientation="vertical" flexItem />
       <div className={styles.transfer_info_wrapper}>
         <Image src={transferIcon} alt="" />
-        <div>
-          <div>
+        <div className={styles.teams_info_inner_wrapper}>
+          <div className={styles.team_info}>
             <Image src={teamLogoFrom} alt="" width={20} height={20} />
             <span>{teamNameFrom}</span>
           </div>
-          <div>
+          <div className={styles.team_info}>
             <Image src={teamLogoTo} alt="" width={20} height={20} />
             <span>{teamNameTo}</span>
           </div>

@@ -7,8 +7,10 @@ import Link from "next/link";
 import Button from "@/shared/Button";
 import iconSearch from "../../../assets/pngs/icon-search.png";
 import { CustomDivider } from "@/shared/Divider/Divider";
+import { useTranslations } from "next-intl";
 
 export const Header = () => {
+  const t = useTranslations();
   const buttonClick = () => {
     console.log("clicked");
   };
@@ -19,16 +21,16 @@ export const Header = () => {
       <div className={styles.hader_menu}>
         <div className={styles.link_wrapper}>
           <Link href="/" className={styles.link}>
-            Home
+            {t("header.menu.home")}
           </Link>
           <Link href="/leagues" className={styles.link}>
-            Leagues
+            {t("header.menu.leagues")}
           </Link>
           <Link href="/teams" className={styles.link}>
-            Teams
+            {t("header.menu.teams")}
           </Link>
           <Link href="/events" className={styles.link}>
-            Events
+            {t("header.menu.events")}
           </Link>
         </div>
         <Button
