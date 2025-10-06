@@ -8,6 +8,7 @@ import Button from "@/shared/Button";
 import iconSearch from "../../../assets/pngs/icon-search.png";
 import { CustomDivider } from "@/shared/Divider/Divider";
 import { useTranslations } from "next-intl";
+import LanguageSelect from "@/shared/LanguageSelect";
 
 export const Header = () => {
   const t = useTranslations();
@@ -42,8 +43,7 @@ export const Header = () => {
 
       <div className={styles.leng_and_profile_wrapper}>
         <div className={styles.icon_and_leng_wrapper}>
-          <div>icon</div>
-          <div>eng</div>
+          <LanguageSelect />
         </div>
         <CustomDivider variant="fullWidth" orientation="vertical" flexItem />
         <div className={styles.name_and_img_wrapper}>
