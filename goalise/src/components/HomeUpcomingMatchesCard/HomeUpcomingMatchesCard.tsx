@@ -10,10 +10,13 @@ import { useGetUpComingMatchesQuery } from "@/app/store/services/api";
 import CustomDivider from "@/shared/Divider";
 import { useEffect, useRef, useState } from "react";
 import { UpcomingMatch } from "@/types/api/upComingMatches";
+import { useTranslations } from "next-intl";
 
 export const HomeUpcomingMatchesCard = () => {
+  const t = useTranslations();
   const [offset, setOffset] = useState<number>(0);
   const [matches, setMatches] = useState<UpcomingMatch[]>([]);
+  const [firstMatch, setFirstMatch] = useState<UpcomingMatch | null>(null);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -30,13 +33,16 @@ export const HomeUpcomingMatchesCard = () => {
           (match, index, self) =>
             index === self.findIndex((m) => m.id === match.id)
         );
+        if (!firstMatch && unique.length > 0) {
+          setFirstMatch(unique.shift() || null);
+        }
         return unique;
       });
       if (data.length < 5) {
         setHasMore(false);
       }
     }
-  }, [data, offset]);
+  }, [data, offset, firstMatch]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,13 +68,13 @@ export const HomeUpcomingMatchesCard = () => {
     <div className={styles.Home_main_card}>
       <div className={styles.match_inner_wrapper}>
         <div>
-          <h3 className={styles.title}>Upcoming Matches</h3>
+          <h3 className={styles.title}>{t("home.upcomingMatches.title")}</h3>
         </div>
         <div className={styles.match_left_block}>
           <div className={styles.match_left_block_inner_wrapper}>
             <div>
               <span className={styles.team_name}>
-                {data?.[0]?.homeTeam?.name}
+                {firstMatch?.homeTeam?.name}
               </span>
             </div>
             <div>
@@ -84,7 +90,7 @@ export const HomeUpcomingMatchesCard = () => {
           <div className={styles.match_right_block_inner_wrapper}>
             <div>
               <span className={styles.team_name}>
-                {data?.[0]?.awayTeam?.name}
+                {firstMatch?.awayTeam?.name}
               </span>
             </div>
             <div>
@@ -97,7 +103,7 @@ export const HomeUpcomingMatchesCard = () => {
       <CustomDivider orientation="horizontal" />
       <div className={styles.next_match_list_wrapper}>
         <div className={styles.title_and_day_wrapper}>
-          <Title content="Match List" />
+          <Title content={t("home.upcomingMatches.matchList")} />
           <div className={styles.next_matches_list_day_wrapper}>
             {new Date().getDate()}
           </div>

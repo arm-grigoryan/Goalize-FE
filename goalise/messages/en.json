@@ -1,0 +1,22 @@
+{
+  "header": {
+    "menu": {
+      "home": "Home",
+      "leagues": "Leagues",
+      "teams": "Teams",
+      "events": "Events"
+    }
+  },
+  "home": {
+    "upcomingMatches": {
+      "title": "Upcoming Matches",
+      "matchList": "Match List"
+    },
+    "pastMatches": {
+      "title": "Past Matches"
+    },
+    "transferNews": {
+      "title": "Transfer News"
+    }
+  }
+}

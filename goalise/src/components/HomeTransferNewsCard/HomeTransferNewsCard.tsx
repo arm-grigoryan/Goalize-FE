@@ -9,8 +9,11 @@ import { useGetTransferNewsQuery } from "@/app/store/services/api";
 import { useEffect, useRef, useState } from "react";
 import { ITransfers } from "@/types/api/transfers";
 import { handleLongStrings } from "@/helper/handleLongStrings";
+import { useTranslations } from "next-intl";
 
 export const HomeTransferNewsCard = () => {
+  const t = useTranslations();
+
   const [offset, setOffset] = useState<number>(0);
   const [transfers, setTransfers] = useState<ITransfers[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
@@ -60,7 +63,11 @@ export const HomeTransferNewsCard = () => {
     console.log("clicked");
   };
   return (
-    <div className={styles.transfer_news}>
+    <div
+      className={
+        data?.length ? styles.transfer_news : styles.transfer_news_empty
+      }
+    >
       <div className={styles.button_and_title_wrapper}>
         <div className={styles.button_wrapper}>
           <Button
@@ -70,15 +77,17 @@ export const HomeTransferNewsCard = () => {
           />
         </div>
         <div className={styles.title_wrapper}>
-          <Title content="Transfer News" />
+          <Title content={t("home.transferNews.title")} />
         </div>
       </div>
 
-      {/* <div className={styles.no_transfer_wrapper}>
-        <span className={styles.no_transfer_text}>
-          No transfer news is scheduled at the moment
-        </span>
-      </div> */}
+      {!data?.length && (
+        <div className={styles.no_transfer_wrapper}>
+          <span className={styles.no_transfer_text}>
+            No transfer news is scheduled at the moment
+          </span>
+        </div>
+      )}
       <div ref={scrollContainerRef} className={styles.transfer_wrapper}>
         {transfers.map((transfer) => {
           const date = new Date(transfer.transferDate).toLocaleDateString();

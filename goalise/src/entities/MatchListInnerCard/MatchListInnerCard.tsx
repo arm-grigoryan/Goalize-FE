@@ -27,17 +27,17 @@ export const MatchListInnerCard: FC<MatchListInnerCardProps> = ({
   return (
     <div className={styles.match_list_innerCard}>
       <div className={styles.teams_info}>
-        <div>
+        <div className={styles.team_inner_info}>
           <div className={styles.team_name}>{teamNameHome}</div>
-          <div className={styles.team_points}>{homeTeamPoints}</div>
+          <div className={styles.team_points}>{`${homeTeamPoints} pts`}</div>
         </div>
         <div className={styles.vs_icon}>
           <Image src={vsIcon} alt="" />
         </div>
         <CustomDivider orientation="horizontal" />
-        <div>
+        <div className={styles.team_inner_info}>
           <div className={styles.team_name}>{teamNameAway}</div>
-          <div className={styles.team_points}>{awayTeamPoints}</div>
+          <div className={styles.team_points}>{`${awayTeamPoints} pts`}</div>
         </div>
       </div>
       <CustomDivider orientation="vertical" />
