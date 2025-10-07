@@ -9,9 +9,25 @@ import iconSearch from "../../../assets/pngs/icon-search.png";
 import { CustomDivider } from "@/shared/Divider/Divider";
 import { useTranslations } from "next-intl";
 import LanguageSelect from "@/shared/LanguageSelect";
+import { useGetLeaguesQuery } from "@/app/store/services/api";
+import { useRef, useState } from "react";
+import PortalDropdown from "@/shared/PortalDropdown";
 
 export const Header = () => {
   const t = useTranslations();
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedLeague, setSelectedLeague] = useState<number>();
+  const leaguesRef = useRef<HTMLSpanElement>(null);
+  const { data } = useGetLeaguesQuery();
+  const options = data
+    ? data.map((league: { id: number; name: string }) => ({
+        value: league.id,
+        label: league.name,
+      }))
+    : [];
+
+  console.log(data, "leagues data in header");
+
   const buttonClick = () => {
     console.log("clicked");
   };
@@ -24,16 +40,34 @@ export const Header = () => {
           <Link href="/" className={styles.link}>
             {t("header.menu.home")}
           </Link>
-          <Link href="/leagues" className={styles.link}>
+
+          <span
+            className={styles.link}
+            ref={leaguesRef}
+            onClick={() => setShowDropdown((prev) => !prev)}
+          >
             {t("header.menu.leagues")}
-          </Link>
+          </span>
+
           <Link href="/teams" className={styles.link}>
             {t("header.menu.teams")}
           </Link>
           <Link href="/events" className={styles.link}>
             {t("header.menu.events")}
           </Link>
+
+          {showDropdown && leaguesRef.current && (
+            <PortalDropdown
+              options={options}
+              targetRef={leaguesRef}
+              selected={selectedLeague}
+              onSelect={(val) => setSelectedLeague(val)}
+              onClose={() => setShowDropdown(false)}
+              width={200}
+            />
+          )}
         </div>
+
         <Button
           className="icon_button"
           handleClick={buttonClick}
