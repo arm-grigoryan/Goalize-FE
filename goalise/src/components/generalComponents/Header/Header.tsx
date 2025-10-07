@@ -16,7 +16,6 @@ import PortalDropdown from "@/shared/PortalDropdown";
 export const Header = () => {
   const t = useTranslations();
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedLeague, setSelectedLeague] = useState<number>();
   const leaguesRef = useRef<HTMLSpanElement>(null);
   const { data } = useGetLeaguesQuery();
   const options = data
@@ -60,8 +59,6 @@ export const Header = () => {
             <PortalDropdown
               options={options}
               targetRef={leaguesRef}
-              selected={selectedLeague}
-              onSelect={(val) => setSelectedLeague(val)}
               onClose={() => setShowDropdown(false)}
               width={200}
             />

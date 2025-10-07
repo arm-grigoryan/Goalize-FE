@@ -1,3 +1,5 @@
+"use client";
+import Link from "next/link";
 import styles from "./DropDownSelect.module.css";
 export interface DropdownOption {
   value: number;
@@ -6,27 +8,17 @@ export interface DropdownOption {
 
 interface DropDownSelectProps {
   options: DropdownOption[];
-  selected?: number;
-  onSelect?: (value: number) => void;
 }
 
-export const DropDownSelect: React.FC<DropDownSelectProps> = ({
-  options,
-  selected,
-  onSelect,
-}) => {
+export const DropDownSelect: React.FC<DropDownSelectProps> = ({ options }) => {
+  console.log(options, "options");
+
   return (
     <div className={styles.dropdown}>
       {options.map((option) => (
-        <div
-          key={option.value}
-          className={`${styles.option} ${
-            option.value === selected ? styles.selectedOption : ""
-          }`}
-          onClick={() => onSelect?.(option.value)}
-        >
+        <Link key={option.value} href={`/leagues/${option.value}`}>
           {option.label}
-        </div>
+        </Link>
       ))}
     </div>
   );
