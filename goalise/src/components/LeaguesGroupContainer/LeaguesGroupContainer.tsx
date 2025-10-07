@@ -1,17 +1,15 @@
 "use client";
 import styles from "./LeaguesGroupContainer.module.css";
 import GroupCard from "@/entities/GroupCard";
-import {
-  useGetLeagueGroupsQuery,
-  useGetLeaguesQuery,
-} from "@/app/store/services/api";
+import { useGetLeagueGroupsQuery } from "@/app/store/services/api";
+import { useParams } from "next/navigation";
 
 export const LeaguesGroupContainer = () => {
-  const { data } = useGetLeaguesQuery();
+  const { leagueId } = useParams();
   const { data: groupsData, isLoading: isLoadingGroups } =
-    useGetLeagueGroupsQuery(data ? data[0].id : 0);
+    useGetLeagueGroupsQuery(Number(leagueId));
 
-  console.log(groupsData, "groups data");
+  console.log(leagueId, "leagueId");
 
   return (
     <div className={styles.group_card}>
@@ -28,11 +26,7 @@ export const LeaguesGroupContainer = () => {
           <div className={styles.loader}></div>
         </div>
       )}
-      {
-        !groupsData && (
-          <div>Groups data unavailable.</div>
-        )
-      }
+      {!groupsData && <div>Groups data unavailable.</div>}
     </div>
   );
 };

@@ -8,8 +8,6 @@ import { DropdownOption } from "../DropDownSelect/DropDownSelect";
 interface PortalDropdownProps {
   options: DropdownOption[];
   targetRef: React.RefObject<HTMLSpanElement | null>;
-  onSelect?: (value: number) => void;
-  selected?: number;
   onClose?: () => void;
   width?: number;
 }
@@ -17,8 +15,6 @@ interface PortalDropdownProps {
 export const PortalDropdown: React.FC<PortalDropdownProps> = ({
   options,
   targetRef,
-  onSelect,
-  selected,
   onClose,
   width = 200,
 }) => {
@@ -39,8 +35,8 @@ export const PortalDropdown: React.FC<PortalDropdownProps> = ({
         onClose?.();
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, [targetRef, onClose]);
 
   if (!coords) return null;
@@ -55,11 +51,7 @@ export const PortalDropdown: React.FC<PortalDropdownProps> = ({
         width: width,
       }}
     >
-      <DropDownSelect
-        options={options}
-        selected={selected}
-        onSelect={onSelect}
-      />
+      <DropDownSelect options={options} />
     </div>,
     document.body
   );
