@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import styles from "./leaguesJoinedTeamCard.module.css";
+import styles from "./LeaguesJoinedTeamCard.module.css";
 import logo from "/public/images/Ellipse.png";
 import captainImage from "/public/images/captain.png";
 
