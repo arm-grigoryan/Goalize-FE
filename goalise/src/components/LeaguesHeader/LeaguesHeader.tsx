@@ -46,7 +46,7 @@ export const LeaguesHeader = () => {
       </div>
       {league?.state === "Registration" ? (
         <div className={styles.links}>
-          <Link className={styles.link} href="#">
+          <Link className={styles.link} href={`/leagues/${leagueId}/teams`}>
             Teams
           </Link>
         </div>

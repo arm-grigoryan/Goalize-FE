@@ -5,6 +5,7 @@ import { ITransfers } from "@/types/api/transfers";
 import { ILeague } from "@/types/api/leagues";
 import { ILeaguesGroup } from "@/types/api/leaguesGroup";
 import { ILeaguesResults } from "@/types/api/leaguesResults";
+import { ITeam } from "@/types/api/temas";
 
 export const api = createApi({
   reducerPath: "api",
@@ -63,6 +64,9 @@ export const api = createApi({
         params: { skip, take },
       }),
     }),
+    getLeaguesJoinedTeams: builder.query<ITeam[], number>({
+      query: (leagueId) => `/leagues/${leagueId}/joined-teams`,
+    }),
   }),
 });
 
@@ -74,4 +78,5 @@ export const {
   useGetLeagueGroupsQuery,
   useGetLeaguesResultsQuery,
   useGetLeaguesFixturesQuery,
+  useGetLeaguesJoinedTeamsQuery,
 } = api;
