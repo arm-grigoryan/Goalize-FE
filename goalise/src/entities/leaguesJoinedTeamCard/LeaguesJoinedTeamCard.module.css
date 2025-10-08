@@ -1,0 +1,29 @@
+.leagues_joined_team_card {
+  display: flex;
+  width: 20vw;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  color: #e0e0e0;
+  border-radius: 15px;
+  background: linear-gradient(
+        to right,
+        rgba(255, 0, 0, 0.01),
+        rgba(100, 180, 255, 0.02)
+      )
+      border-box,
+    #0f1011 padding-box;
+  box-shadow: 0 0 0 1px transparent,
+    inset 40px 0 80px -40px rgba(255, 0, 0, 0.1),
+    inset -40px 0 80px -40px rgba(100, 180, 255, 0.2);
+}
+
+.captain_info {
+  display: flex;
+  gap: 8px;
+}
+
+.team_name {
+  font-size: 24px;
+  font-weight: bold;
+}

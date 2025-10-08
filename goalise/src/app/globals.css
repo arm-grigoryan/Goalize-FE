@@ -6,3 +6,16 @@ body {
   box-shadow: inset 40px 0 80px -40px rgba(255, 0, 0, 0.1),
     inset -40px 0 80px -40px rgba(100, 180, 255, 0.2);
 }
+
+body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #54a2fe;
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: transparent;
+}

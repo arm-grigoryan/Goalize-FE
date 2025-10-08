@@ -1,0 +1,21 @@
+.teams_container {
+  max-height: 500px;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.teams_container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.teams_container::-webkit-scrollbar-thumb {
+  background-color: #54a2fe;
+  border-radius: 4px;
+}
+
+.teams_container::-webkit-scrollbar-track {
+  background-color: transparent;
+}
