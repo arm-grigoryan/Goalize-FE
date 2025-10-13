@@ -5,6 +5,8 @@ import styles from "./PastMatchesInnerCard.module.css";
 import Image from "next/image";
 import emptyCalendar from "../../assets/pngs/calendarIconEmpty.png";
 import { CustomDivider } from "@/shared/Divider/Divider";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 interface PastMatchesInnerCardProps {
   date: string;
   winnerIcon: string | StaticImageData;
@@ -30,91 +32,159 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
   teamScore2,
   isBig = false,
 }) => {
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
   const winner1 = teamScore1 > teamScore2;
   const winner2 = teamScore2 > teamScore1;
   const draw = teamScore1 === teamScore2;
 
   return (
-    <div className={styles.past_matches_innerCard}>
-      <Image src={emptyCalendar} alt="" />
-      <div className={styles.date}>{date}</div>
-      <CustomDivider variant="middle" orientation="vertical" flexItem />
+    <>
+      {isMobile ? (
+        <div className={styles.past_matches_innerCard_mobile}>
+          <div className={styles.date_wrapper}>
+            <Image
+              src={emptyCalendar}
+              alt=""
+              className={styles.empty_calendar}
+            />
+            <div className={styles.date}>{date}</div>
+          </div>
+          <div className={styles.team_info_mobile}>
+            <div className={styles.home_team_info_mobile}>
+              <Image
+                src={teamLogo1}
+                alt=""
+                className={styles.team_logo_mobile}
+              />
+              <div className={styles.team_name_mobile}>{teamName1}</div>
+            </div>
+            <div className={styles.score_wrapper_mobile}>
+              <div>{teamScore1}</div>
+              <CustomDivider orientation="vertical" flexItem />
+              <div>{teamScore2}</div>
+            </div>
+            <div className={styles.away_team_info_mobile}>
+              <div
+                className={
+                  isBig ? styles.winner_wrapper_big1 : styles.winner_wrapper
+                }
+              >
+                {winner1 && (
+                  <Image
+                    src={winnerIcon}
+                    alt=""
+                    width={0}
+                    height={0}
+                    style={{ width: "auto", height: "auto" }}
+                  />
+                )}
+                {draw && drawIcon && (
+                  <Image
+                    src={drawIcon}
+                    alt=""
+                    width={0}
+                    height={0}
+                    style={{ width: "auto", height: "auto" }}
+                  />
+                )}
+              </div>
+              <Image
+                src={teamLogo2}
+                alt=""
+                className={styles.team_logo_mobile}
+              />
+              <div>{teamName2}</div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className={styles.past_matches_innerCard}>
+          <Image src={emptyCalendar} alt="" />
+          <div className={styles.date}>{date}</div>
+          <CustomDivider variant="middle" orientation="vertical" flexItem />
 
-      <div
-        className={isBig ? styles.winner_wrapper_big1 : styles.winner_wrapper}
-      >
-        {winner1 && (
-          <Image
-            src={winnerIcon}
-            alt=""
-            width={0}
-            height={0}
-            style={{ width: "auto", height: "auto" }}
-          />
-        )}
-        {draw && drawIcon && (
-          <Image
-            src={drawIcon}
-            alt=""
-            width={0}
-            height={0}
-            style={{ width: "auto", height: "auto" }}
-          />
-        )}
-      </div>
-      <div className={styles.team_info}>
-        <div className={styles.team_logo}>
-          {
-            <Image
-              src={teamLogo1}
-              alt=""
-              width={0}
-              height={0}
-              style={{ width: "auto", height: "auto" }}
-            />
-          }
+          <div
+            className={
+              isBig ? styles.winner_wrapper_big1 : styles.winner_wrapper
+            }
+          >
+            {winner1 && (
+              <Image
+                src={winnerIcon}
+                alt=""
+                width={0}
+                height={0}
+                style={{ width: "auto", height: "auto" }}
+              />
+            )}
+            {draw && drawIcon && (
+              <Image
+                src={drawIcon}
+                alt=""
+                width={0}
+                height={0}
+                style={{ width: "auto", height: "auto" }}
+              />
+            )}
+          </div>
+          <div className={styles.team_info}>
+            <div className={styles.team_logo}>
+              {
+                <Image
+                  src={teamLogo1}
+                  alt=""
+                  width={0}
+                  height={0}
+                  style={{ width: "auto", height: "auto" }}
+                />
+              }
+            </div>
+            <div className={styles.team_name}>{teamName1}</div>
+            <div className={styles.score_wrapper}>
+              <div>{teamScore1}</div>
+              <CustomDivider orientation="vertical" flexItem />
+              <div>{teamScore2}</div>
+            </div>
+            <div>{teamName2}</div>
+            <div>
+              {
+                <Image
+                  src={teamLogo2}
+                  alt=""
+                  width={0}
+                  height={0}
+                  style={{ width: "auto", height: "auto" }}
+                />
+              }
+            </div>
+          </div>
+          <div
+            className={
+              isBig ? styles.winner_wrapper_big2 : styles.winner_wrapper
+            }
+          >
+            {winner2 && (
+              <Image
+                src={winnerIcon}
+                alt=""
+                width={0}
+                height={0}
+                style={{ width: "auto", height: "auto" }}
+              />
+            )}
+            {draw && drawIcon && (
+              <Image
+                src={drawIcon}
+                alt=""
+                width={0}
+                height={0}
+                style={{ width: "auto", height: "auto" }}
+              />
+            )}
+          </div>
         </div>
-        <div className={styles.team_name}>{teamName1}</div>
-        <div className={styles.score_wrapper}>
-          <div>{teamScore1}</div>
-          <CustomDivider orientation="vertical" flexItem />
-          <div>{teamScore2}</div>
-        </div>
-        <div>{teamName2}</div>
-        <div>
-          {
-            <Image
-              src={teamLogo2}
-              alt=""
-              width={0}
-              height={0}
-              style={{ width: "auto", height: "auto" }}
-            />
-          }
-        </div>
-      </div>
-      <div
-        className={isBig ? styles.winner_wrapper_big2 : styles.winner_wrapper}
-      >
-        {winner2 && (
-          <Image
-            src={winnerIcon}
-            alt=""
-            width={0}
-            height={0}
-            style={{ width: "auto", height: "auto" }}
-          />
-        )}
-        {draw && drawIcon && (
-          <Image
-            src={drawIcon}
-            alt=""
-            width={0}
-            height={0}
-            style={{ width: "auto", height: "auto" }}
-          />
-        )}
-      </div>
-    </div>
+      )}
+    </>
   );
 };

@@ -106,3 +106,12 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 768px) {
+  .transfer_wrapper {
+    max-height: 450px;
+  }
+  .transfer_news {
+    width: 100%;
+  }
+}

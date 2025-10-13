@@ -43,3 +43,54 @@
 .date {
   min-width: 90px;
 }
+
+/* mobile view */
+.date_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.team_info_mobile {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.past_matches_innerCard_mobile {
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  border: solid 1px #ffffff1a;
+  background-color: #15191e66;
+  border-radius: 10px;
+  padding: 12px;
+  color: #e8e8e8;
+  font-size: 30px;
+}
+.away_team_info_mobile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.home_team_info_mobile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.team_logo_mobile {
+  width: 60px;
+  height: fit-content;
+}
+.empty_calendar {
+  width: 50px;
+  height: fit-content;
+}
+.score_wrapper_mobile {
+  display: flex;
+  gap: 8px;
+  font-weight: 700;
+}

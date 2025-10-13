@@ -15,7 +15,6 @@ export const LeaguesHeader = () => {
   const { data } = useGetLeaguesQuery();
   const { leagueId } = useParams();
   const league = data?.find((league) => league.id === Number(leagueId));
-  console.log(league, "league data in header");
 
   return (
     <div className={styles.leagues_header}>

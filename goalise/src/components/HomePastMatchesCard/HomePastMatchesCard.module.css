@@ -99,3 +99,12 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 768px) {
+  .past_matches {
+    width: 100%;
+  }
+  .match_wrapper {
+    max-height: 370px;
+  }
+}

@@ -77,9 +77,6 @@ export const HomeUpcomingMatchesCard = () => {
                 {firstMatch?.homeTeam?.name}
               </span>
             </div>
-            <div>
-              <span className={styles.achievements}>Achievements</span>
-            </div>
             <Image src={teamLogoLeft} alt="" className={styles.team_logo} />
           </div>
         </div>
@@ -92,9 +89,6 @@ export const HomeUpcomingMatchesCard = () => {
               <span className={styles.team_name}>
                 {firstMatch?.awayTeam?.name}
               </span>
-            </div>
-            <div>
-              <span className={styles.achievements}>Achievements</span>
             </div>
             <Image src={teamLogoRight} alt="" className={styles.team_logo} />
           </div>
