@@ -19,7 +19,7 @@ export const HomeTransferNewsCard = () => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const { data, isFetching } = useGetTransferNewsQuery(
-    { take: 5, skip: offset },
+    { take: 10, skip: offset },
     { skip: !hasMore }
   );
 

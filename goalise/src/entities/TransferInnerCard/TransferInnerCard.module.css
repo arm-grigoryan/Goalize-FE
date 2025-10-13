@@ -1,14 +1,12 @@
 .transfer_inner_card {
   display: flex;
   align-items: center;
-  justify-content: center;
   border: solid 1px #15191e66;
   background-color: #15191e66;
   border-radius: 10px;
   padding: 6px 12px;
   color: #e8e8e8;
   gap: 10px;
-  width: 90%;
   margin: 0 auto;
 }
 .teams_info_inner_wrapper {
@@ -39,4 +37,18 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .transfer_inner_card {
+    font-size: 20px;
+    width: 90%;
+  }
+  .player_info_wrapper {
+    flex-direction: column;
+  }
+  .transfer_info_wrapper {
+    display: flex;
+    min-width: 50px;
+  }
 }

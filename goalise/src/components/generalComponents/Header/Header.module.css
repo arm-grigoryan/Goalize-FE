@@ -64,3 +64,49 @@
   gap: 1vw;
   align-items: center;
 }
+
+/* mobile view */
+
+.burger_menu_closed {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+.mobile_menu_open {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: #101010;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+}
+.logo_and_close_icon_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+.menu_wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menu {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2vh;
+  align-items: center;
+}
+.no-scroll {
+  overflow: hidden !important;
+  height: 100vh;
+}
