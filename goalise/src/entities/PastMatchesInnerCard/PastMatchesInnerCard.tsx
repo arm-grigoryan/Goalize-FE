@@ -52,6 +52,16 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
           </div>
           <div className={styles.team_info_mobile}>
             <div className={styles.home_team_info_mobile}>
+              <div
+                className={
+                  isBig
+                    ? styles.winner_wrapper_big1
+                    : styles.winner_wrapper_mobile
+                }
+              >
+                {winner1 && <Image src={winnerIcon} alt="" />}
+                {draw && drawIcon && <Image src={drawIcon} alt="" />}
+              </div>
               <Image
                 src={teamLogo1}
                 alt=""
@@ -67,27 +77,13 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
             <div className={styles.away_team_info_mobile}>
               <div
                 className={
-                  isBig ? styles.winner_wrapper_big1 : styles.winner_wrapper
+                  isBig
+                    ? styles.winner_wrapper_big2
+                    : styles.winner_wrapper_mobile
                 }
               >
-                {winner1 && (
-                  <Image
-                    src={winnerIcon}
-                    alt=""
-                    width={0}
-                    height={0}
-                    style={{ width: "auto", height: "auto" }}
-                  />
-                )}
-                {draw && drawIcon && (
-                  <Image
-                    src={drawIcon}
-                    alt=""
-                    width={0}
-                    height={0}
-                    style={{ width: "auto", height: "auto" }}
-                  />
-                )}
+                {winner2 && <Image src={winnerIcon} alt="" />}
+                {draw && drawIcon && <Image src={drawIcon} alt="" />}
               </div>
               <Image
                 src={teamLogo2}

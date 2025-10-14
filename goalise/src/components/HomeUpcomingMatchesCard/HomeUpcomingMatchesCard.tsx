@@ -98,9 +98,6 @@ export const HomeUpcomingMatchesCard = () => {
       <div className={styles.next_match_list_wrapper}>
         <div className={styles.title_and_day_wrapper}>
           <Title content={t("home.upcomingMatches.matchList")} />
-          <div className={styles.next_matches_list_day_wrapper}>
-            {new Date().getDate()}
-          </div>
         </div>
         <div
           ref={scrollContainerRef}
