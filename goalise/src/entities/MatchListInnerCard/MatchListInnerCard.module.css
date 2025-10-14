@@ -35,3 +35,21 @@
 .team_points {
   color: #a5a5a5;
 }
+
+@media (max-width: 768px) {
+  .match_list_innerCard {
+    font-size: 14px;
+    padding: 8px;
+    gap: 5px;
+  }
+  .team_inner_info {
+    gap: 5px;
+    height: 40%;
+  }
+  .match_date_time {
+    gap: 4px;
+  }
+  .vs_icon {
+    margin: 0 10px -10px 140px;
+  }
+}

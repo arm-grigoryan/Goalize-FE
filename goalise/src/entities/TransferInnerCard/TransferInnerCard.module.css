@@ -46,6 +46,7 @@
   }
   .player_info_wrapper {
     flex-direction: column;
+    max-width: 50%;
   }
   .transfer_info_wrapper {
     display: flex;
