@@ -43,6 +43,9 @@ export const api = createApi({
     getLeagues: builder.query<ILeague[], void>({
       query: () => `/leagues`,
     }),
+    getLeaguesInfo: builder.query<ILeague, number>({
+      query: (leagueId) => `/leagues/${leagueId}/info`,
+    }),
     getLeagueGroups: builder.query<ILeaguesGroup, number>({
       query: (leagueId) => `/leagues/${leagueId}/groups`,
     }),
@@ -79,4 +82,5 @@ export const {
   useGetLeaguesResultsQuery,
   useGetLeaguesFixturesQuery,
   useGetLeaguesJoinedTeamsQuery,
+  useGetLeaguesInfoQuery,
 } = api;

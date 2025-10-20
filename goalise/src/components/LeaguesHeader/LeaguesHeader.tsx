@@ -8,24 +8,31 @@ import { useState } from "react";
 import Link from "next/link";
 import PopupModal from "@/entities/PopupModal";
 import { useParams } from "next/navigation";
-import { useGetLeaguesQuery } from "@/app/store/services/api";
+import { useGetLeaguesInfoQuery } from "@/app/store/services/api";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 export const LeaguesHeader = () => {
   const [openModal, setOpenModal] = useState(false);
-  const { data } = useGetLeaguesQuery();
   const { leagueId } = useParams();
-  const league = data?.find((league) => league.id === Number(leagueId));
-
+  const { data } = useGetLeaguesInfoQuery(Number(leagueId));
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
+  const date = new Date(data?.registrationDate ?? "").toLocaleDateString();
   return (
     <div className={styles.leagues_header}>
-      <div className={styles.leagues_header_inner}>
-        <div className={styles.league_name_container}>
-          <div>
-            <Image src={championsLeagueImg} alt="champions league" />
+      {isMobile ? (
+        <div className={styles.leagues_header_inner}>
+          <div className={styles.league_name_container_mobile}>
+            <div>
+              <Image src={championsLeagueImg} alt="champions league" />
+            </div>
+            <div className={styles.league_name_and_button}>
+              <div className={styles.league_name}>{data?.name}</div>
+            </div>
           </div>
-          <div className={styles.league_name_and_button}>
-            <div className={styles.league_name}>{league?.name}</div>
-            {league?.state === "Registration" && (
+          <div className={styles.registration_closed_container_mobile}>
+            {data?.state === "Registration" && (
               <Button
                 content="Join League"
                 className="red_button_transparant_white_text"
@@ -34,16 +41,40 @@ export const LeaguesHeader = () => {
                 }}
               />
             )}
+            <p className={styles.registration_closed_text_mobile}>
+              Registrations will be closed on <span>{date}</span>
+            </p>
           </div>
         </div>
-        <div className={styles.registration_closed_container}>
-          <p className={styles.registration_closed_text}>
-            Registrations will be closed on{" "}
-            <span>{league?.registrationDate}</span>
-          </p>
+      ) : (
+        <div className={styles.leagues_header_inner}>
+          <div className={styles.league_name_container}>
+            <div>
+              <Image src={championsLeagueImg} alt="champions league" />
+            </div>
+            <div className={styles.league_name_and_button}>
+              <div className={styles.league_name}>{data?.name}</div>
+              {data?.state === "Registration" && (
+                <Button
+                  content="Join League"
+                  className="red_button_transparant_white_text"
+                  handleClick={() => {
+                    setOpenModal(true);
+                  }}
+                />
+              )}
+            </div>
+          </div>
+          <div className={styles.registration_closed_container}>
+            <p className={styles.registration_closed_text}>
+              Registrations will be closed on{" "}
+              <span>{data?.registrationDate}</span>
+            </p>
+          </div>
         </div>
-      </div>
-      {league?.state === "Registration" ? (
+      )}
+
+      {data?.state === "Registration" ? (
         <div className={styles.links}>
           <Link className={styles.link} href={`/leagues/${leagueId}/teams`}>
             Teams

@@ -15,7 +15,7 @@
   min-width: 100px;
 }
 .winner_wrapper_big1 {
-  min-width: 300px;
+  min-width: 180px;
   display: flex;
   justify-content: flex-end;
 }
@@ -38,10 +38,16 @@
   display: flex;
   gap: 8px;
   font-weight: 700;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 50px;
 }
 
 .date {
   min-width: 90px;
+}
+.team_name {
+  min-width: 60px;
 }
 
 /* mobile view */
