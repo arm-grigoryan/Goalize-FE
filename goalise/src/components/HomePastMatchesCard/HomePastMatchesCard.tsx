@@ -94,10 +94,10 @@ export const HomePastMatchesCard = () => {
               winnerIcon={winnerIcon}
               drawIcon={drawIcon}
               teamLogo1={teamLogo}
-              teamName1={handleLongStrings(match.homeTeam.name, 8)}
+              teamName1={handleLongStrings(match.homeTeam.name, 9)}
               teamScore1={match.homeTeamScore}
               teamLogo2={teamLogo}
-              teamName2={handleLongStrings(match.awayTeam.name, 8)}
+              teamName2={handleLongStrings(match.awayTeam.name, 9)}
               teamScore2={match.awayTeamScore}
             />
           );

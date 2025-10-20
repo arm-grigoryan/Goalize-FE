@@ -37,7 +37,6 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
   const winner1 = teamScore1 > teamScore2;
   const winner2 = teamScore2 > teamScore1;
   const draw = teamScore1 === teamScore2;
-
   return (
     <>
       {isMobile ? (
@@ -70,9 +69,15 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
               <div className={styles.team_name_mobile}>{teamName1}</div>
             </div>
             <div className={styles.score_wrapper_mobile}>
-              <div>{teamScore1}</div>
-              <CustomDivider orientation="vertical" flexItem />
-              <div>{teamScore2}</div>
+              {teamScore1 !== null && teamScore2 !== null ? (
+                <>
+                  <div>{teamScore1}</div>
+                  <CustomDivider orientation="vertical" flexItem />
+                  <div>{teamScore2}</div>
+                </>
+              ) : (
+                <div>vs</div>
+              )}
             </div>
             <div className={styles.away_team_info_mobile}>
               <div
@@ -105,79 +110,35 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
               isBig ? styles.winner_wrapper_big1 : styles.winner_wrapper
             }
           >
-            {winner1 && (
-              <Image
-                src={winnerIcon}
-                alt=""
-                width={0}
-                height={0}
-                style={{ width: "auto", height: "auto" }}
-              />
-            )}
-            {draw && drawIcon && (
-              <Image
-                src={drawIcon}
-                alt=""
-                width={0}
-                height={0}
-                style={{ width: "auto", height: "auto" }}
-              />
-            )}
+            {winner1 && <Image src={winnerIcon} alt="" />}
+            {draw && drawIcon && <Image src={drawIcon} alt="" />}
           </div>
           <div className={styles.team_info}>
             <div className={styles.team_logo}>
-              {
-                <Image
-                  src={teamLogo1}
-                  alt=""
-                  width={0}
-                  height={0}
-                  style={{ width: "auto", height: "auto" }}
-                />
-              }
+              {<Image src={teamLogo1} alt="" />}
             </div>
             <div className={styles.team_name}>{teamName1}</div>
             <div className={styles.score_wrapper}>
-              <div>{teamScore1}</div>
-              <CustomDivider orientation="vertical" flexItem />
-              <div>{teamScore2}</div>
+              {teamScore1 !== null && teamScore2 !== null ? (
+                <>
+                  <div>{teamScore1}</div>
+                  <CustomDivider orientation="vertical" flexItem />
+                  <div>{teamScore2}</div>
+                </>
+              ) : (
+                <div>vs</div>
+              )}
             </div>
-            <div>{teamName2}</div>
-            <div>
-              {
-                <Image
-                  src={teamLogo2}
-                  alt=""
-                  width={0}
-                  height={0}
-                  style={{ width: "auto", height: "auto" }}
-                />
-              }
-            </div>
+            <div className={styles.team_name}>{teamName2}</div>
+            <div>{<Image src={teamLogo2} alt="" />}</div>
           </div>
           <div
             className={
               isBig ? styles.winner_wrapper_big2 : styles.winner_wrapper
             }
           >
-            {winner2 && (
-              <Image
-                src={winnerIcon}
-                alt=""
-                width={0}
-                height={0}
-                style={{ width: "auto", height: "auto" }}
-              />
-            )}
-            {draw && drawIcon && (
-              <Image
-                src={drawIcon}
-                alt=""
-                width={0}
-                height={0}
-                style={{ width: "auto", height: "auto" }}
-              />
-            )}
+            {winner2 && <Image src={winnerIcon} alt="" />}
+            {draw && drawIcon && <Image src={drawIcon} alt="" />}
           </div>
         </div>
       )}
