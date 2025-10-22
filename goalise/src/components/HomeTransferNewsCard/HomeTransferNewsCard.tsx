@@ -65,7 +65,7 @@ export const HomeTransferNewsCard = () => {
   return (
     <div
       className={
-        data?.length ? styles.transfer_news : styles.transfer_news_empty
+        transfers?.length ? styles.transfer_news : styles.transfer_news_empty
       }
     >
       <div className={styles.button_and_title_wrapper}>
@@ -81,7 +81,7 @@ export const HomeTransferNewsCard = () => {
         </div>
       </div>
 
-      {!data?.length && (
+      {!transfers?.length && (
         <div className={styles.no_transfer_wrapper}>
           <span className={styles.no_transfer_text}>
             No transfer news is scheduled at the moment

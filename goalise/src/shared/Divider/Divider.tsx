@@ -21,3 +21,5 @@ export const CustomDivider: FC<CustomDividerProps> = ({
     />
   );
 };
+
+export default CustomDivider;

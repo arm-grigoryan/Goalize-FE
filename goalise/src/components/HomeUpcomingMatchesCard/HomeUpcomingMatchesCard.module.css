@@ -9,6 +9,22 @@
   gap: 20px;
   padding: 15px;
 }
+.Home_main_card_no_mutch {
+  border: solid 1px #ffffff1a;
+  border-radius: 10px;
+  display: flex;
+  box-shadow: 0 4px 16px 0 #101010;
+  background-color: #111317b2;
+  justify-content: space-between;
+  position: relative;
+  gap: 20px;
+  padding: 15px;
+  min-height: 40vh;
+
+  background-image: url("/pngs/nextMatchLeftInnerBackground.png");
+  background-repeat: no-repeat;
+  background-position: right;
+}
 .upcoming_mutch {
   background-image: url("/pngs/nextMutchLeftBackground.png");
   background-repeat: no-repeat;
@@ -190,6 +206,17 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.no_upcoming_wrapper {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.no_upcoming_text {
+  color: #a5a5a5;
+  font-size: 14px;
 }
 
 @media (max-width: 768px) {
