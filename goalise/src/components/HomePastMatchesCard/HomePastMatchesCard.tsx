@@ -20,7 +20,7 @@ export const HomePastMatchesCard = () => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const { data, isFetching } = useGetPastMatchesQuery(
-    { take: 5, skip: offset },
+    { take: 10, skip: offset },
     { skip: !hasMore }
   );
 

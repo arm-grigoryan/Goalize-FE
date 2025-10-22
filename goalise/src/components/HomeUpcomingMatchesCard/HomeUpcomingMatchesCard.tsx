@@ -21,7 +21,7 @@ export const HomeUpcomingMatchesCard = () => {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   const { data, isFetching } = useGetUpComingMatchesQuery(
-    { take: 5, skip: offset },
+    { take: 10, skip: offset },
     { skip: !hasMore }
   );
 
@@ -65,66 +65,87 @@ export const HomeUpcomingMatchesCard = () => {
   }, [isFetching]);
 
   return (
-    <div className={styles.Home_main_card}>
-      <div className={styles.match_inner_wrapper}>
-        <div>
-          <h3 className={styles.title}>{t("home.upcomingMatches.title")}</h3>
-        </div>
-        <div className={styles.match_left_block}>
-          <div className={styles.match_left_block_inner_wrapper}>
-            <div>
-              <span className={styles.team_name}>
-                {firstMatch?.homeTeam?.name}
-              </span>
-            </div>
-            <Image src={teamLogoLeft} alt="" className={styles.team_logo} />
+    <>
+      {!data?.length ? (
+        <div className={styles.Home_main_card_no_mutch}>
+          <div>
+            <h3 className={styles.title}>{t("home.upcomingMatches.title")}</h3>
+          </div>
+          <div className={styles.no_upcoming_wrapper}>
+            <span className={styles.no_upcoming_text}>
+              No upcoming matches scheduled at the moment
+            </span>
           </div>
         </div>
-        <div>
-          <Image src={vsIcon} alt="Upcoming Match" />
-        </div>
-        <div className={styles.match_right_block}>
-          <div className={styles.match_right_block_inner_wrapper}>
+      ) : (
+        <div className={styles.Home_main_card}>
+          <div className={styles.match_inner_wrapper}>
             <div>
-              <span className={styles.team_name}>
-                {firstMatch?.awayTeam?.name}
-              </span>
+              <h3 className={styles.title}>
+                {t("home.upcomingMatches.title")}
+              </h3>
             </div>
-            <Image src={teamLogoRight} alt="" className={styles.team_logo} />
+            <div className={styles.match_left_block}>
+              <div className={styles.match_left_block_inner_wrapper}>
+                <div>
+                  <span className={styles.team_name}>
+                    {firstMatch?.homeTeam?.name}
+                  </span>
+                </div>
+                <Image src={teamLogoLeft} alt="" className={styles.team_logo} />
+              </div>
+            </div>
+            <div>
+              <Image src={vsIcon} alt="Upcoming Match" />
+            </div>
+            <div className={styles.match_right_block}>
+              <div className={styles.match_right_block_inner_wrapper}>
+                <div>
+                  <span className={styles.team_name}>
+                    {firstMatch?.awayTeam?.name}
+                  </span>
+                </div>
+                <Image
+                  src={teamLogoRight}
+                  alt=""
+                  className={styles.team_logo}
+                />
+              </div>
+            </div>
+          </div>
+          <CustomDivider orientation="horizontal" variant="middle" />
+          <div className={styles.next_match_list_wrapper}>
+            <div className={styles.title_and_day_wrapper}>
+              <Title content={t("home.upcomingMatches.matchList")} />
+            </div>
+            <div
+              ref={scrollContainerRef}
+              className={styles.next_matches_list_inner_wrapper}
+            >
+              {matches.map((match) => {
+                const { date } = match;
+                const d = new Date(date);
+                return (
+                  <MatchListInnerCard
+                    key={match.id}
+                    teamNameHome={match.homeTeam.name}
+                    homeTeamPoints={match.homeTeamPoints}
+                    teamNameAway={match.awayTeam.name}
+                    awayTeamPoints={match.awayTeamPoints}
+                    matchDate={d.toLocaleDateString()}
+                    matchTime={d.toLocaleTimeString()}
+                  />
+                );
+              })}
+              {isFetching && (
+                <div className={styles.loader_container}>
+                  <div className={styles.loader}></div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <CustomDivider orientation="horizontal" />
-      <div className={styles.next_match_list_wrapper}>
-        <div className={styles.title_and_day_wrapper}>
-          <Title content={t("home.upcomingMatches.matchList")} />
-        </div>
-        <div
-          ref={scrollContainerRef}
-          className={styles.next_matches_list_inner_wrapper}
-        >
-          {matches.map((match) => {
-            const { date } = match;
-            const d = new Date(date);
-            return (
-              <MatchListInnerCard
-                key={match.id}
-                teamNameHome={match.homeTeam.name}
-                homeTeamPoints={match.homeTeamPoints}
-                teamNameAway={match.awayTeam.name}
-                awayTeamPoints={match.awayTeamPoints}
-                matchDate={d.toLocaleDateString()}
-                matchTime={d.toLocaleTimeString()}
-              />
-            );
-          })}
-          {isFetching && (
-            <div className={styles.loader_container}>
-              <div className={styles.loader}></div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
