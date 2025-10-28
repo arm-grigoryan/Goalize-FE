@@ -20,23 +20,11 @@
   gap: 20px;
   padding: 15px;
   min-height: 40vh;
-
   background-image: url("/pngs/nextMatchLeftInnerBackground.png");
   background-repeat: no-repeat;
   background-position: right;
 }
-.upcoming_mutch {
-  background-image: url("/pngs/nextMutchLeftBackground.png");
-  background-repeat: no-repeat;
-  background-position: left bottom;
-  border-right: solid 1px rgba(255, 255, 255, 0.1);
-}
-.inner_upcoming_mutch {
-  height: 100%;
-  background-image: url("/pngs/nextMatchLeftInnerBackground.png");
-  background-repeat: no-repeat;
-  background-position: left bottom;
-}
+
 .match_wrapper {
   display: flex;
   justify-content: space-between;
@@ -94,7 +82,24 @@
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }
+.title_mobile {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 15px;
+  background: #f53a53;
+  position: absolute;
+  top: -5%;
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
 
+.title_mobile_wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
 .next_match_list_wrapper {
   flex: 1;
   display: flex;

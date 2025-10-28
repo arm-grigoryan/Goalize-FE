@@ -13,9 +13,11 @@ interface PastMatchesInnerCardProps {
   drawIcon?: string | StaticImageData;
   teamLogo1: string | StaticImageData;
   teamName1: string;
+  teamName1Tooltip?: string;
   teamScore1: number;
   teamLogo2: string | StaticImageData;
   teamName2: string;
+  teamName2Tooltip?: string;
   teamScore2: number;
   isBig?: boolean;
 }
@@ -26,8 +28,10 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
   drawIcon,
   teamLogo1,
   teamName1,
+  teamName1Tooltip,
   teamLogo2,
   teamName2,
+  teamName2Tooltip,
   teamScore1,
   teamScore2,
   isBig = false,
@@ -117,7 +121,9 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
             <div className={styles.team_logo}>
               {<Image src={teamLogo1} alt="" />}
             </div>
-            <div className={styles.team_name}>{teamName1}</div>
+            <div className={styles.team_name} title={teamName1Tooltip}>
+              {teamName1}
+            </div>
             <div className={styles.score_wrapper}>
               {teamScore1 !== null && teamScore2 !== null ? (
                 <>
@@ -129,7 +135,9 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
                 <div>vs</div>
               )}
             </div>
-            <div className={styles.team_name}>{teamName2}</div>
+            <div className={styles.team_name} title={teamName2Tooltip}>
+              {teamName2}
+            </div>
             <div>{<Image src={teamLogo2} alt="" />}</div>
           </div>
           <div
