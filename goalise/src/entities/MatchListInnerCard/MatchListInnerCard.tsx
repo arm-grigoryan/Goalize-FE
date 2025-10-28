@@ -29,9 +29,9 @@ export const MatchListInnerCard: FC<MatchListInnerCardProps> = ({
       <div className={styles.teams_info}>
         <div className={styles.team_inner_info}>
           <div className={styles.team_name}>{teamNameHome}</div>
-          {homeTeamPoints ? (
+          {homeTeamPoints !== null && (
             <div className={styles.team_points}>{`${homeTeamPoints} pts`}</div>
-          ) : null}
+          )}
         </div>
         <div className={styles.vs_icon}>
           <Image src={vsIcon} alt="" />
@@ -39,9 +39,9 @@ export const MatchListInnerCard: FC<MatchListInnerCardProps> = ({
         <CustomDivider orientation="horizontal" />
         <div className={styles.team_inner_info}>
           <div className={styles.team_name}>{teamNameAway}</div>
-          {awayTeamPoints ? (
+          {awayTeamPoints !== null && (
             <div className={styles.team_points}>{`${awayTeamPoints} pts`}</div>
-          ) : null}
+          )}
         </div>
       </div>
       <CustomDivider orientation="vertical" />

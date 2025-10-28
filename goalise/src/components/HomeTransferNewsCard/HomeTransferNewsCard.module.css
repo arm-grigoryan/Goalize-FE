@@ -57,7 +57,7 @@
   color: #a5a5a5;
 }
 .transfer_wrapper {
-  max-height: 200px;
+  max-height: 35vh;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -113,5 +113,9 @@
   }
   .transfer_news {
     width: 100%;
+    flex: 1;
+  }
+  .transfer_news_empty {
+    flex: 1;
   }
 }

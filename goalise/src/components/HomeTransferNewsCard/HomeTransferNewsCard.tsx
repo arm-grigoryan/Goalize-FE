@@ -46,7 +46,7 @@ export const HomeTransferNewsCard = () => {
 
       const { scrollTop, scrollHeight, clientHeight } = container;
 
-      if (scrollTop + clientHeight >= scrollHeight) {
+      if (scrollTop + clientHeight >= scrollHeight - 4) {
         setOffset((prev) => prev + 5);
       }
     };
@@ -99,8 +99,10 @@ export const HomeTransferNewsCard = () => {
               transferDate={date}
               teamLogoFrom={playerImg}
               teamNameFrom={handleLongStrings(transfer.fromTeam.name, 8)}
+              teamNameFromTooltip={transfer.fromTeam.name}
               teamLogoTo={playerImg}
               teamNameTo={handleLongStrings(transfer.toTeam.name, 8)}
+              teamNameToTooltip={transfer.toTeam.name}
             />
           );
         })}

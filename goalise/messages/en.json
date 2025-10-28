@@ -1,4 +1,11 @@
 {
+  "common": {
+    "ProfileComplition": {
+      "title": "Please Complete your profile to enjoy all the features",
+      "introduction": "Click on a steper to directly navigate to that step.",
+      "buttonContent": "Manage Account"
+    }
+  },
   "header": {
     "menu": {
       "home": "Home",

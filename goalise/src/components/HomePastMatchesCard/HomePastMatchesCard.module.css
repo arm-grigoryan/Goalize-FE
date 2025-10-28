@@ -40,7 +40,7 @@
 }
 .match_wrapper {
   width: 100%;
-  max-height: 200px;
+  max-height: 35vh;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -103,6 +103,7 @@
 @media (max-width: 768px) {
   .past_matches {
     width: 100%;
+    flex: 1;
   }
   .match_wrapper {
     max-height: 370px;

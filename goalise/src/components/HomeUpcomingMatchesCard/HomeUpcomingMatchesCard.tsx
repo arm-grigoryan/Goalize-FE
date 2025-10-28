@@ -68,8 +68,10 @@ export const HomeUpcomingMatchesCard = () => {
     <>
       {!data?.length ? (
         <div className={styles.Home_main_card_no_mutch}>
-          <div>
-            <h3 className={styles.title}>{t("home.upcomingMatches.title")}</h3>
+          <div className={styles.title_mobile_wrapper}>
+            <h3 className={styles.title_mobile}>
+              {t("home.upcomingMatches.title")}
+            </h3>
           </div>
           <div className={styles.no_upcoming_wrapper}>
             <span className={styles.no_upcoming_text}>
@@ -133,7 +135,11 @@ export const HomeUpcomingMatchesCard = () => {
                     teamNameAway={match.awayTeam.name}
                     awayTeamPoints={match.awayTeamPoints}
                     matchDate={d.toLocaleDateString()}
-                    matchTime={d.toLocaleTimeString()}
+                    matchTime={d.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    })}
                   />
                 );
               })}
