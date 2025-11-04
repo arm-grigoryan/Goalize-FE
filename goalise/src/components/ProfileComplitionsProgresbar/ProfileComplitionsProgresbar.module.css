@@ -1,0 +1,75 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.track {
+  position: relative;
+  height: 16px;
+  width: 100%;
+  min-width: 200px;
+  max-width: 680px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  overflow: visible;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 0 auto;
+}
+
+.fill {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 999px;
+  transition: width 240ms ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.circle {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 3px solid #ffffff;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.circle_0 {
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+.circle_33 {
+  left: 33%;
+  transform: translate(-50%, -50%);
+}
+
+.circle_66 {
+  left: 66%;
+  transform: translate(-50%, -50%);
+}
+
+.circle_100 {
+  left: 100%;
+  transform: translate(-50%, -50%);
+}
+
+.circle.active {
+  background: #ffffff;
+  border: none;
+}
+
+.percent {
+  min-width: 36px;
+  text-align: right;
+  color: #0b1020;
+  font-size: 14px;
+  font-weight: 600;
+}

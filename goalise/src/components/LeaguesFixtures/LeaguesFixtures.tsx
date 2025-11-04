@@ -6,19 +6,17 @@ import winnerIcon from "../../assets/pngs/winnerIcon.png";
 import teamLogo from "../../assets/pngs/teamLogo.png";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
-import {
-  useGetLeaguesFixturesQuery,
-  useGetLeaguesQuery,
-} from "@/app/store/services/api";
+import { useGetLeaguesFixturesQuery } from "@/app/store/services/api";
 import { ILeaguesResultsItem } from "@/types/api/leaguesResults";
 import { handleLongStrings } from "@/helper/handleLongStrings";
 import { useEffect, useRef, useState } from "react";
+import { useParams, usePathname } from "next/navigation";
 
 const PAGE_SIZE = 5;
 
 export const LeaguesFixtures = () => {
-  const { data: leagues } = useGetLeaguesQuery();
-  const leagueId = leagues ? leagues[0].id : 0;
+  const { leagueId } = useParams();
+  const leagueIdNum = Number(leagueId);
 
   const [offset, setOffset] = useState<number>(0);
   const [results, setResults] = useState<Record<string, ILeaguesResultsItem[]>>(
@@ -30,9 +28,16 @@ export const LeaguesFixtures = () => {
   const isMobile = width <= MEDIA_TABLET_SMALL;
 
   const { data: resultsData, isFetching } = useGetLeaguesFixturesQuery(
-    { leagueId, skip: offset, take: PAGE_SIZE },
-    { skip: !leagueId || !hasMore }
+    { leagueId: leagueIdNum, skip: offset, take: PAGE_SIZE },
+    { skip: !leagueId }
   );
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setOffset(0);
+    setResults({});
+    setHasMore(true);
+  }, [pathname]);
 
   useEffect(() => {
     if (resultsData) {
@@ -77,12 +82,6 @@ export const LeaguesFixtures = () => {
       container?.removeEventListener("scroll", handleScroll);
     };
   }, [isFetching, hasMore]);
-
-  useEffect(() => {
-    setOffset(0);
-    setResults({});
-    setHasMore(true);
-  }, [leagueId]);
 
   return (
     <div className={styles.leagues_fixtures}>

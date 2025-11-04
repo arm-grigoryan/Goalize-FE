@@ -1,3 +1,10 @@
+.profile_complitions {
+  background-color: #f53a53;
+  color: white;
+  border-radius: 10px;
+  padding: 30px;
+  display: flex;
+}
 .info_wrapper {
   display: flex;
   flex-direction: column;

@@ -26,23 +26,33 @@ export const HomeUpcomingMatchesCard = () => {
   );
 
   useEffect(() => {
-    if (data) {
-      setMatches((prev) => {
-        const merged = [...prev, ...data];
-        const unique = merged.filter(
-          (match, index, self) =>
-            index === self.findIndex((m) => m.id === match.id)
-        );
-        if (!firstMatch && unique.length > 0) {
-          setFirstMatch(unique.shift() || null);
-        }
-        return unique;
-      });
-      if (data.length < 5) {
-        setHasMore(false);
-      }
+    if (!data) return;
+
+    const firstFromBatch = data[0] ?? null;
+
+    if (!firstMatch && firstFromBatch) {
+      setFirstMatch(firstFromBatch);
     }
-  }, [data, offset, firstMatch]);
+
+    const idToExclude = firstMatch?.id ?? firstFromBatch?.id ?? null;
+
+    const filteredIncoming = idToExclude
+      ? data.filter((m) => m.id !== idToExclude)
+      : data;
+
+    setMatches((prev) => {
+      const merged = [...prev, ...filteredIncoming];
+
+      const unique = merged.filter(
+        (item, index, self) => index === self.findIndex((m) => m.id === item.id)
+      );
+      return unique;
+    });
+
+    if (data.length < 5) {
+      setHasMore(false);
+    }
+  }, [data, firstMatch]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -127,6 +137,8 @@ export const HomeUpcomingMatchesCard = () => {
               {matches.map((match) => {
                 const { date } = match;
                 const d = new Date(date);
+                const tba = d.toLocaleDateString() === "1/1/1";
+
                 return (
                   <MatchListInnerCard
                     key={match.id}
@@ -134,12 +146,16 @@ export const HomeUpcomingMatchesCard = () => {
                     homeTeamPoints={match.homeTeamPoints}
                     teamNameAway={match.awayTeam.name}
                     awayTeamPoints={match.awayTeamPoints}
-                    matchDate={d.toLocaleDateString()}
-                    matchTime={d.toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: false,
-                    })}
+                    matchDate={tba ? "TBA" : d.toLocaleDateString()}
+                    matchTime={
+                      tba
+                        ? "TBA"
+                        : d.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false,
+                          })
+                    }
                   />
                 );
               })}
