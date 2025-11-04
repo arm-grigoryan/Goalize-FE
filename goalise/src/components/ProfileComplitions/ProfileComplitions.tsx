@@ -3,6 +3,7 @@
 import styles from "./ProfileComplitions.module.css";
 import { useTranslations } from "next-intl";
 import Button from "@/shared/Button";
+import ProfileComplitionsProgresbar from "@/components/ProfileComplitionsProgresbar";
 
 export const ProfileComplitions = () => {
   const t = useTranslations("common");
@@ -22,7 +23,9 @@ export const ProfileComplitions = () => {
           handleClick={handleCLick}
         />
       </div>
-      <div></div>
+      <div>
+        <ProfileComplitionsProgresbar value={33} />
+      </div>
     </div>
   );
 };
