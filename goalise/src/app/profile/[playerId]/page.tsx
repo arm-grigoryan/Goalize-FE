@@ -1,9 +1,5 @@
-export default function PlayerProfilePage({
-  params,
-}: {
-  params: { playerId: string };
-}) {
+export default function PlayerProfilePage() {
   return (
-    <div>this is player profile page for player ID {params.playerId} </div>
+    <div>this is player profile page for player</div>
   );
 }
