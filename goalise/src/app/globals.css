@@ -1,3 +1,6 @@
+:root {
+  font-family: var(--font-onest), sans-serif;
+}
 body {
   background-color: #101010;
   margin: 0;

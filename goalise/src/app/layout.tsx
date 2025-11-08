@@ -1,20 +1,32 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/generalComponents/Header";
 import { Providers } from "./provider";
 import { NextIntlClientProvider } from "next-intl";
 import Footer from "@/components/generalComponents/Footer";
+import localFont from "next/font/local";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const onest = localFont({
+   src: [
+    {
+      path: './fonts/onest/Onest-Regular.ttf',
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: './fonts/onest/Onest-Medium.ttf',
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: './fonts/onest/Onest-Bold.ttf',
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-onest",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,8 +39,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={onest.variable}>
+      <body>
         <NextIntlClientProvider>
           <Providers>
             <Header />
