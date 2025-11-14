@@ -96,11 +96,13 @@ export const LeaguesFixtures = () => {
           <div key={stage} className={styles.fixtures_list}>
             <Title content={stage} />
             {matches.map((match: ILeaguesResultsItem) => {
-              const date = new Date(match.date).toLocaleDateString();
+              const { date } = match;
+              const d = new Date(date);
+              const tba = d.toLocaleDateString() === "1/1/1";
               return (
                 <PastMatchesInnerCard
                   key={match.id}
-                  date={date}
+                  date={tba ? "TBA" : d.toLocaleDateString()}
                   winnerIcon={winnerIcon}
                   teamLogo1={teamLogo}
                   teamLogo2={teamLogo}
