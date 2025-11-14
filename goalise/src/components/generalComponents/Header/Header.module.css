@@ -7,11 +7,11 @@
 }
 .leagues_container {
   display: flex;
-  flex-direction: column; /* stack the dropdown below the link */
+  flex-direction: column;
 }
 
 .dropdown_wrapper {
-  margin-top: 4px; /* small spacing below the link */
+  margin-top: 4px;
   background-color: #101010;
   border: 1px solid gray;
   border-radius: 8px;
@@ -65,8 +65,6 @@
   align-items: center;
 }
 
-/* mobile view */
-
 .burger_menu_closed {
   display: flex;
   align-items: center;
@@ -109,4 +107,90 @@
 .no-scroll {
   overflow: hidden !important;
   height: 100vh;
+}
+
+.search_wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search_icon_wrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.search_input {
+  transition: width 180ms ease, opacity 180ms ease, padding 180ms ease;
+  outline: none;
+  color: #ffffff;
+  background: transparent;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 8px 12px;
+  caret-color: #ffffff;
+}
+
+.search_input_closed {
+  width: 0;
+  padding: 0;
+  opacity: 0;
+  border: none;
+  pointer-events: none;
+}
+
+.search_input_open {
+  width: 260px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.search_input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search_dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #101010;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  z-index: 9999;
+  max-height: 320px;
+  overflow: auto;
+  color: #fff;
+}
+
+.search_item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+}
+.search_item:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.mobile_search_input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  color: #fff;
+}
+.search_loading,
+.search_no_results {
+  padding: 12px;
+  color: rgba(255, 255, 255, 0.6);
 }
