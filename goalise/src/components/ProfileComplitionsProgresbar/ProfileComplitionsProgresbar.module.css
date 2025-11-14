@@ -3,8 +3,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
+.steps_name_wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
 .track {
   position: relative;
   height: 16px;
@@ -34,8 +40,7 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 3px solid #ffffff;
+  background: #ffffff;
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
@@ -47,17 +52,14 @@
 }
 
 .circle_33 {
-  left: 33%;
   transform: translate(-50%, -50%);
 }
 
 .circle_66 {
-  left: 66%;
   transform: translate(-50%, -50%);
 }
 
 .circle_100 {
-  left: 100%;
   transform: translate(-50%, -50%);
 }
 
