@@ -1,0 +1,176 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 32px 0 26px 24px;
+  background: rgba(17, 19, 23, 0.70);
+  border-radius: 15px;
+  border: 0.5px solid rgba(255, 255, 255, 0.10);
+  height: auto;
+  width: fit-content;
+  width: 100%;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+.quitTeamButtonText{
+     display: flex;
+    flex-direction: column;
+}
+.playerContainer {
+    display: flex;
+    flex-direction: row;
+    padding: 19px 0 26px 32px;
+    /* align-items: flex-start; */
+}
+.infoButtonPart{
+    display: flex;
+    flex-direction: column;
+}
+.imageInfoContainer {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 22px;
+}
+.plusIcon{
+    width: 12px;
+    height: 12px;
+}
+.imageWrapper {
+    position: relative;
+    display: inline-block;
+}
+.image {
+    width: 260px;
+    height: 100%;
+    flex-shrink: 0;
+    margin-right: 36px;
+    border-radius: 10px;
+    background: linear-gradient(272deg, #C50720 -121%, #F6465D 117%);
+}
+.playerInfoContainer {
+    display: flex;
+    flex-direction: column;
+}
+.name {
+    font-size: 36px;
+    color: #E8E8E8;
+    text-transform: capitalize;
+    padding-bottom: 10px;
+    margin-top: 15px;
+}
+.teamContainer {
+    display: flex;
+    flex-direction: column;
+}
+.teamContainer::before {
+  content: "";
+  display: flex;
+  flex-direction: column;
+  height: 1px;
+  width: 100%;
+  margin-top: 32px;
+  background: linear-gradient(to right, #A5A5A5 0%, rgba(255,255,255,0) 100%);
+}
+.team {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 17px;
+}
+.teamInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.teamImg {
+    width: 42px;
+    height: 42px;
+    border-radius: 80%;
+    margin-right: 10px;
+    background-color: #E8E8E8;
+}
+
+.infoButtons {
+    display: flex;
+    flex-direction: row;
+}
+.infoButtons > *:not(:last-child) { 
+    margin-right : 6px;
+}
+.playerInfoContainer::after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 100%;
+  margin-top: 32px;
+  background: linear-gradient(to right, #A5A5A5 0%, rgba(255,255,255,0) 100%);
+}
+
+.buttonsContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 32px;
+}  
+.buttonsContainer> *:not(:last-child) { 
+    margin-right : 13px;
+
+}
+.button {
+    display: flex;
+    padding: 10px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    border: 0.5px solid rgba(255, 255, 255, 0.10);
+    background: rgba(21, 25, 30, 0.40);
+    backdrop-filter: blur(10px);
+    color: #A5A5A5;
+    font-size: 14px;
+}
+.button > span {
+  color: #FFFFFF;
+}
+
+.playerNumberContainer {
+    display: flex;
+    align-items: flex-end;
+}
+
+.playerNumber {
+  font-size: 243px;
+  font-weight: 700;
+  line-height: 1;
+  position: relative;
+  color: transparent;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.10) 0%, transparent 100%);
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0.10));
+}
+.teamName {
+    font-size: 22px;
+    color: #FFFFFF;
+}
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+   flex: 0 0 300px;
+   min-width: 510px;
+   max-height: 470px;
+}
+.leftContainer {
+    position: relative;
+  display: flex;
+  flex-direction: column;
+   flex: 1 1 0;
+  height: 100%;     
+}
+.unassignedContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

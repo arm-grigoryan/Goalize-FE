@@ -1,0 +1,9 @@
+
+.playerProfileCard{
+    margin-bottom: 24px;
+}
+.grid {
+    display: grid;
+    grid-template-rows: auto;
+    gap: 24px;
+}
