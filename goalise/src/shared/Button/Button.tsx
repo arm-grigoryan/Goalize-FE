@@ -9,12 +9,16 @@ interface ButtonProps {
   className: string;
   content?: string;
   icon?: StaticImageData;
+  iconHeight?: number;
+  iconWidth?: number;
   isActive?: boolean;
   handleClick: () => void;
 }
 
 export const Button: FC<ButtonProps> = ({
   content,
+  iconWidth,
+  iconHeight,
   className,
   isActive,
   icon,
@@ -30,8 +34,8 @@ export const Button: FC<ButtonProps> = ({
         [styles.active]: isActive,
       })}
     >
-      {icon && <Image width={50} height={50} src={icon} alt="" />}
-      {content}
+      {icon &&<div className={styles.icon}> <Image width={iconWidth} height={iconHeight} src={icon} alt="" /></div> }
+      {<div className={styles.content}> {content} </div>}
     </button>
   );
 };

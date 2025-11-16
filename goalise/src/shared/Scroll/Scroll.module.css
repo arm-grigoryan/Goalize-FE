@@ -1,0 +1,21 @@
+.scrollWrapper {
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.scrollWrapper::-webkit-scrollbar {
+  display: none;
+}
+.scrollWrapper {
+  scrollbar-width: none;
+}
+
+.scrollThumb {
+  position: absolute;
+  right: 0;
+  width: 5px;
+  border-radius: 5px 0 0 5px;
+  background-color: #54a2fe;
+  min-height: 68px;
+}
