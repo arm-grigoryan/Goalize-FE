@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface IUsersProps {
     id?: string;
     email?: string;
@@ -28,7 +30,7 @@ export interface IUsersProps {
 }
 
 export interface IPlayerProfileProps {
-  profilePic?: string;
+  profilePic?: string | StaticImageData;
   phoneNumber?: string;
   playerNumber?: string;
   inviteButtonText?:string;

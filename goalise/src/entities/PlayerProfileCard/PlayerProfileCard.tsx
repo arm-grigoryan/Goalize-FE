@@ -32,7 +32,7 @@ import unassignedIcon from '../../assets/pngs/unassignedIcon.png';
     <div className={styles.leftContainer}>
       <div className={styles.playerContainer}>
         <div className={styles.imageWrapper}>
-          <Image src={profilePic} className={styles.image} alt={''} />
+          {profilePic && <Image src={profilePic} className={styles.image} alt={''} />}
         </div>
         <div className={styles.infoButtonPart}>
           <div className={styles.imageInfoContainer}>

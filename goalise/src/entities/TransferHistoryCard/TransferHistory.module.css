@@ -1,14 +1,17 @@
 .container {
+    display: flex;
     height: 390px;
     border-radius: 15px;
     border: 0.5px solid rgba(255, 255, 255, 0.10);
     background: rgba(17, 19, 23, 0.70);
     padding: 30px 35px 20px 30px;
+    flex-direction: column;
 }
 .titleWrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-bottom: 21px;
 }
 .icon {
     height: 47px;

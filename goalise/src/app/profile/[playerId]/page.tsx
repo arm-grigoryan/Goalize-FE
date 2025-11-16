@@ -5,10 +5,42 @@ import TransferHistoryCard from "@/entities/TransferHistoryCard/TransferHistoryC
 import tranferHistoryIcon from '../../../assets/pngs/transferHistoryIcon.png';
 import styles from './styles.module.css';
 import MatchList from "@/entities/MatchList/MatchList";
+import { ITransferItemCardProps } from "@/entities/TransferItemCard/TransferItemCard.types";
 
 const hello = () => {
   console.log("hello");
 }
+
+const TransferObj: ITransferItemCardProps[] = [
+  {
+    dateIcon: tranferHistoryIcon,
+    date: '25.06.25',
+    fromTeamLogo: tranferHistoryIcon,
+    fromTeamName: 'Team Name',
+    arrowIcon: tranferHistoryIcon,
+    toTeamLogo: tranferHistoryIcon,
+    toTeamName: 'Team Name'
+  },
+  {
+    dateIcon: tranferHistoryIcon,
+    date: '25.06.25',
+    fromTeamLogo: tranferHistoryIcon,
+    fromTeamName: 'Team Name',
+    arrowIcon: tranferHistoryIcon,
+    toTeamLogo: tranferHistoryIcon,
+    toTeamName: 'Team Name'
+  },
+  {
+    dateIcon: tranferHistoryIcon,
+    date: '25.06.25',
+    fromTeamLogo: tranferHistoryIcon,
+    fromTeamName: 'Team Name',
+    arrowIcon: tranferHistoryIcon,
+    toTeamLogo: tranferHistoryIcon,
+    toTeamName: 'Team Name'
+  },
+];
+
 export default function PlayerProfilePage() {
   return (
     <div> 
@@ -22,7 +54,6 @@ export default function PlayerProfilePage() {
           onMakeCaptainButtonClick={hello}
           onRemoveUserButtonClick={hello}
           profilePic={toBeDeleted}
-          
           fullName="Poghos Petrosyan"
           age="27"
           foot="Right"
@@ -36,6 +67,7 @@ export default function PlayerProfilePage() {
                 icon={tranferHistoryIcon}  
                 title="Transfer History" 
                 context="Players who transfer from 1 team to another will display here"
+                object={TransferObj}
             />
         </div>
         <div> 
