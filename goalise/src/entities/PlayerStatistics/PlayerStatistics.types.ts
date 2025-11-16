@@ -3,10 +3,8 @@ export interface IPlayerStatisticsProps {
     averageRate?: number;
     goals?: number;
     assists?: number;
-    shots?: number;
     shotsCompleted?: number;
     shotAccuracyPercent?: number;
-    passes?: number;
     passesCompleted?: number;
     passAccuracyPercent?: number;
     tackles?:number;

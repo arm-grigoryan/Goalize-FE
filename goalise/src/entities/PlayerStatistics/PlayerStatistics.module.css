@@ -46,7 +46,13 @@
 .button > span {
   color: #FFFFFF;
 }
-
+.label {
+  color: #A5A5A5;
+  font-size: 16px;
+  font-weight: 300;
+  display: flex;
+  justify-self: start;
+}
 .stats {
   display: flex;
   flex-direction: column;
@@ -63,7 +69,7 @@
 
 .statItem {
   display: grid;
-  grid-template-columns: 220px 1px 1fr;
+  grid-template-columns: 220px 1px auto 1fr;
   min-width: 392px;
   height: 54px;
   border-radius: 10px;
@@ -113,6 +119,15 @@
   justify-content: center;
   border-radius: 8px;
   position: relative;
+}
+
+.accuracy {
+  color: var(--Blue-Brand, #54A2FE);
+  text-align: right;
+  font-size: 14px;
+  font-weight: 400;
+  justify-self: start;
+  margin-left: 13px;
 }
 
 .redGlow::before {

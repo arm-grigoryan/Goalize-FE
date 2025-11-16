@@ -1,4 +1,3 @@
-import TransferInnerCard from "../TransferInnerCard";
 import { ITransferItemCardProps } from "./TransferItemCard.types"
 import styles from './TransferItemCard.module.css';
 import Image from "next/image";
@@ -27,10 +26,10 @@ const TransferItemCard: React.FC<ITransferItemCardProps> = ({
             <div> 
                 {arrowIcon && <Image  className={styles.arrowIcon} src={arrowIcon} alt=""/>}
             </div>
-            <div> 
+            <div className={styles.teamLogoWrapper}> 
                 {toTeamLogo && <Image src={toTeamLogo} alt=""/>}
                 <div className={styles.teamNameWrapper}>
-                    <div className={styles.to}> To </div>
+                    <div className={styles.from}> To </div>
                     <div className={styles.teamName}> {toTeamName} </div>
                 </div>
             </div>

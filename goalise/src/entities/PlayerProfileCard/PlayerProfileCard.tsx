@@ -1,6 +1,6 @@
 "use client"
 import styles from './PlayerProfileCard.module.css';
-import { IPlayerProfileProps, IUsersProps } from '@/entities/PlayerProfileCard/PlayerProfileCard.types';
+import { IPlayerProfileProps } from '@/entities/PlayerProfileCard/PlayerProfileCard.types';
 import Button from '@/shared/Button';
 import plusButtonImg from '../../assets/pngs/plusButton.png';
 import removeUserIng from '../../assets/pngs/removeUser.png';
@@ -23,6 +23,7 @@ import unassignedIcon from '../../assets/pngs/unassignedIcon.png';
   onInviteButtonClick,
   onMakeCaptainButtonClick,
   onRemoveUserButtonClick,
+  teamLogo,
   teamName,
   quitTeamButtonText,
   onQuitTeamButtonClick,
@@ -93,7 +94,7 @@ import unassignedIcon from '../../assets/pngs/unassignedIcon.png';
      <div className={styles.teamContainer}>
         <div className={styles.team}>  
           <div className={styles.teamInfo}>
-            <img className={styles.teamImg}/>
+           {teamLogo && <Image className={styles.teamImg} alt='' src={teamLogo}/> }
             <div className={styles.teamName}>{teamName}</div>
           </div>
         {onQuitTeamButtonClick && quitTeamButtonText &&  <Button
@@ -113,8 +114,8 @@ import unassignedIcon from '../../assets/pngs/unassignedIcon.png';
           goals={0}
           assists={0}
           averageRate={0}
-          shots={0}
           shotsCompleted={0}
+          shotAccuracyPercent={30}
         />
       </Scroll>
       </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styles from "./Scroll.module.css";
 import { ScrollProps } from "./Scroll.tpes";    
 

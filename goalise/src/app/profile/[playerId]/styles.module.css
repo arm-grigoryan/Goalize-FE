@@ -4,6 +4,6 @@
 }
 .grid {
     display: grid;
-    grid-template-rows: auto;
+    grid-template-columns: auto;
     gap: 24px;
 }

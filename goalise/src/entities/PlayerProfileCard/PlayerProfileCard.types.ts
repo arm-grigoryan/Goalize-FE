@@ -41,6 +41,7 @@ export interface IPlayerProfileProps {
   onInviteButtonClick?: ()=> void;
   onMakeCaptainButtonClick?:() => void;
   onRemoveUserButtonClick?: () => void;
+  teamLogo?: string | StaticImageData;
   teamName?: string;
   isCaptain?: boolean;
   quitTeamButtonText?: string;

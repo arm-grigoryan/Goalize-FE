@@ -5,23 +5,19 @@ import ballIcon from '../../assets/pngs/ballIcon.png';
 import assistsIcon from '../../assets/pngs/assistsIcon.png';
 import shotsIcon from '../../assets/pngs/shotsIcon.png';
 import passesIcon from '../../assets/pngs/passesIcon.png';
-import redCardIcon from '../../assets/pngs/redCardIcon.png';
-import yellowCardIcon from '../../assets/pngs/yellowCardIcon.png';
 import savedPenaltiesIcon from '../../assets/pngs/savedPenaltiesIcon.png';
 import savesIcon from '../../assets/pngs/savesIcon.png';
 import soccerIcon from '../../assets/pngs/soccerIcon.png';
 import Image from "next/image";
 import cardIcon from '../../assets/pngs/cardIcon.png';
-
+import interceptionsIcon from'../../assets/pngs/interceptions.png';
  const PlayerStatistics: React.FC<IPlayerStatisticsProps> = ({
     gamesPlayed,
     averageRate,
     goals,
     assists,
-    shots,
     shotsCompleted,
     shotAccuracyPercent,
-    passes,
     passesCompleted,
     passAccuracyPercent,
     tackles,
@@ -37,8 +33,10 @@ import cardIcon from '../../assets/pngs/cardIcon.png';
     { label: "Average Rate", value: averageRate, icon: startIcon},
     { label: "Goals", value: goals, icon: ballIcon},
     { label: "Assists", value: assists, icon: assistsIcon },
-    { label: "Shots Completed", value: shotsCompleted, icon: shotsIcon },
-    { label: "Passes Completed", value: passesCompleted, icon: passesIcon },
+    { label: "Shots Completed", value: shotsCompleted, icon: shotsIcon, shotsAccuracy: shotAccuracyPercent},
+    { label: "Passes Completed", value: passesCompleted, icon: passesIcon, passesAccuracy: passAccuracyPercent },
+    { label: 'Tackles', value: tackles, icon: interceptionsIcon },
+    { label: 'Interceptions', value: interceptions, icon: interceptionsIcon},
     { label: "Red Cards", value: redCards, icon: cardIcon },
     { label: "Yellow Cards", value: yellowCards, icon: cardIcon },
     { label: "Rating", value: averageGoalkeeperRate, icon: startIcon },
@@ -49,8 +47,8 @@ import cardIcon from '../../assets/pngs/cardIcon.png';
 
     return <div className={styles.container}>
             <div className={styles.titleContainer}> 
-                <div className={styles.title}> Player Statistics</div>
-                <div className={styles.button}> Games Played: <span>{gamesPlayed} </span></div>
+                <div className={styles.title}> Player Statistics {averageGoalkeeperRate && <div className={styles.label}>(Goal Keeper)</div>}</div>
+                {!averageGoalkeeperRate && <div className={styles.button}> Games Played: <span> {gamesPlayed} </span></div>}
             </div>
             <div className={styles.stats}> 
                 {stats.map(
@@ -67,6 +65,13 @@ import cardIcon from '../../assets/pngs/cardIcon.png';
                              <div className={styles.label}>{stat.label}</div>
                             </div>
                             <div className={styles.stroke}> </div>
+                            <div className={styles.accuracy}>
+                                {stat.shotsAccuracy || stat.passesAccuracy ? (
+                                    <span className={styles.bluePercent}>
+                                        {(stat.shotsAccuracy || stat.passesAccuracy) + "%"}
+                                    </span>
+                                ) : null}
+                            </div>
                             <div className={styles.value}>{stat.value}</div>
                         </div>
                 )}
