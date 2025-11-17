@@ -6,6 +6,7 @@ import tranferHistoryIcon from '../../../assets/pngs/transferHistoryIcon.png';
 import styles from './styles.module.css';
 import MatchList from "@/entities/MatchList/MatchList";
 import { ITransferItemCardProps } from "@/entities/TransferItemCard/TransferItemCard.types";
+import { IMatchCardProps } from "@/entities/MatchCard/MatchCard.types";
 
 const hello = () => {
   console.log("hello");
@@ -13,34 +14,63 @@ const hello = () => {
 
 const TransferObj: ITransferItemCardProps[] = [
   {
-    dateIcon: tranferHistoryIcon,
     date: '25.06.25',
     fromTeamLogo: tranferHistoryIcon,
     fromTeamName: 'Team Name',
-    arrowIcon: tranferHistoryIcon,
     toTeamLogo: tranferHistoryIcon,
     toTeamName: 'Team Name'
   },
   {
-    dateIcon: tranferHistoryIcon,
     date: '25.06.25',
     fromTeamLogo: tranferHistoryIcon,
     fromTeamName: 'Team Name',
-    arrowIcon: tranferHistoryIcon,
     toTeamLogo: tranferHistoryIcon,
     toTeamName: 'Team Name'
   },
   {
-    dateIcon: tranferHistoryIcon,
     date: '25.06.25',
     fromTeamLogo: tranferHistoryIcon,
     fromTeamName: 'Team Name',
-    arrowIcon: tranferHistoryIcon,
     toTeamLogo: tranferHistoryIcon,
     toTeamName: 'Team Name'
   },
 ];
 
+const MatchObject: IMatchCardProps[] = [
+  {
+    fisrtTeamName: 'Team Name',
+    firstTeamNameValue: 5,
+    secondTeamName: 'Team Name',
+    secondTeamNameValue: 6,
+    date: '25.06.25',
+    goalsCount: 5,
+    peopleCount: 2,
+    redCardsCount: 2,
+    yellowCardsCount: 2
+  },
+  {
+    fisrtTeamName: 'Team Name',
+    firstTeamNameValue: 5,
+    secondTeamName: 'Team Name',
+    secondTeamNameValue: 6,
+    date: '25.06.25',
+    goalsCount: 5,
+    peopleCount: 2,
+    redCardsCount: 2,
+    yellowCardsCount: 2
+  },
+  {
+    fisrtTeamName: 'Team Name',
+    firstTeamNameValue: 5,
+    secondTeamName: 'Team Name',
+    secondTeamNameValue: 6,
+    date: '25.06.25',
+    goalsCount: 5,
+    peopleCount: 2,
+    redCardsCount: 2,
+    yellowCardsCount: 2
+  }
+]
 export default function PlayerProfilePage() {
   return (
     <div> 
@@ -70,8 +100,11 @@ export default function PlayerProfilePage() {
                 object={TransferObj}
             />
         </div>
-        <div> 
-          <MatchList />
+        <div className={styles.matchCard}> 
+          <MatchList  
+              title="Match List"
+              object={MatchObject}
+          />
         </div>
         </div>
     </div>
