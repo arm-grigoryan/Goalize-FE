@@ -23,11 +23,9 @@ import Scroll from "@/shared/Scroll/Scroll";
                         return <> 
                             <TransferItemCard 
                                     key={i}
-                                    dateIcon={obj.dateIcon}
                                     date ={obj.date}
                                     fromTeamLogo = {obj.fromTeamLogo}
                                     fromTeamName ={ obj.fromTeamName}
-                                    arrowIcon={obj.arrowIcon}
                                     toTeamLogo={obj.toTeamLogo}
                                     toTeamName={obj.toTeamName}
                                 />

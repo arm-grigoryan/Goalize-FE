@@ -6,7 +6,6 @@
     background: rgba(17, 19, 23, 0.70);
     padding: 30px 0 20px 30px;
     flex-direction: column;
-    width: fit-content;
 }
 .titleWrapper {
     display: flex;

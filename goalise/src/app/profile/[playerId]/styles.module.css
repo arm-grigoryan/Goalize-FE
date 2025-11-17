@@ -3,7 +3,11 @@
     margin-bottom: 24px;
 }
 .grid {
-    display: grid;
-    grid-template-columns: auto;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
     gap: 24px;
+}
+.matchCard {
+    flex: auto 1;
 }

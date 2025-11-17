@@ -1,19 +1,18 @@
 import { ITransferItemCardProps } from "./TransferItemCard.types"
 import styles from './TransferItemCard.module.css';
 import Image from "next/image";
-
+import toArrowIcon from '../../assets/pngs/toarrowIcon.png';
+import calendarIcon from '../../assets/pngs/calendar.png';
 const TransferItemCard: React.FC<ITransferItemCardProps> = ({
-    dateIcon,
     date,
     fromTeamLogo,
     fromTeamName,
-    arrowIcon,
     toTeamLogo,
     toTeamName,
 }) => {
     return <div className={styles.container}>
             <div className={styles.dateWrapper}>
-                {dateIcon && <Image className={styles.dateIcon} src={dateIcon} alt=""/>}
+                {calendarIcon && <Image className={styles.dateIcon} src={calendarIcon} alt=""/>}
                 <div className={styles.date}> {date} </div>
             </div>
             <div className={styles.teamLogoWrapper}> 
@@ -23,8 +22,8 @@ const TransferItemCard: React.FC<ITransferItemCardProps> = ({
                     <div className={styles.teamName}>{fromTeamName} </div>
                 </div>
             </div>
-            <div> 
-                {arrowIcon && <Image  className={styles.arrowIcon} src={arrowIcon} alt=""/>}
+            <div className={styles.toArrow}> 
+                {toArrowIcon && <Image  className={styles.arrowIcon} src={toArrowIcon} alt=""/>}
             </div>
             <div className={styles.teamLogoWrapper}> 
                 {toTeamLogo && <Image src={toTeamLogo} alt=""/>}
