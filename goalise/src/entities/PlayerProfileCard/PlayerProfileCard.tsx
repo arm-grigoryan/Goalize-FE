@@ -8,7 +8,7 @@ import Image  from 'next/image';
 import PlayerStatistics from '../PlayerStatistics/PlayerStatistics';
 import Scroll from '@/shared/Scroll/Scroll';
 import UnassignedPlayerCard from '../UnassignedPlayerCard/UnassignedPlayerCard';
-import unassignedIcon from '../../assets/pngs/unassignedIcon.png';
+import en from '../../../messages/en.json';
 
  const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
   profilePic,
@@ -47,9 +47,9 @@ import unassignedIcon from '../../assets/pngs/unassignedIcon.png';
               />}
               <div className={styles.name}>{fullName}</div>
               <div className={styles.infoButtons}>
-                <div className={styles.button}>Age: <span> {age} </span></div>
-                <div className={styles.button}>Foot: <span> {foot} </span> </div>
-                <div className={styles.button}>Contact: <span> {phoneNumber} </span></div>
+                <div className={styles.button}>{en.playerProfile.buttons.age}: <span> {age} </span></div>
+                <div className={styles.button}>{en.playerProfile.buttons.foot}: <span> {foot} </span> </div>
+                <div className={styles.button}>{en.playerProfile.buttons.contact}: <span> {phoneNumber} </span></div>
               </div>
             </div>
           </div>
@@ -72,13 +72,7 @@ import unassignedIcon from '../../assets/pngs/unassignedIcon.png';
           </div>
           {!teamName && 
                <div className={styles.unassignedContainer}> 
-                  <UnassignedPlayerCard 
-                      icon={unassignedIcon}
-                      title='Unassigned Player'
-                      context='Player is not working or playing with any team'
-                      linkText='Send invite'
-                      link='/'
-                  />
+                  <UnassignedPlayerCard link='/'/>
                  </div>
            }
         </div>

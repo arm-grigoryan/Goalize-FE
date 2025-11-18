@@ -1,5 +1,8 @@
 
 .container {
+    padding-right: 30px;
+}
+.wrapper {
     display: flex;
     justify-content: start;
     align-items: center;

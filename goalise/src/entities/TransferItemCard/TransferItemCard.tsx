@@ -11,6 +11,7 @@ const TransferItemCard: React.FC<ITransferItemCardProps> = ({
     toTeamName,
 }) => {
     return <div className={styles.container}>
+        <div className={styles.wrapper}>
             <div className={styles.dateWrapper}>
                 {calendarIcon && <Image className={styles.dateIcon} src={calendarIcon} alt=""/>}
                 <div className={styles.date}> {date} </div>
@@ -32,7 +33,7 @@ const TransferItemCard: React.FC<ITransferItemCardProps> = ({
                     <div className={styles.teamName}> {toTeamName} </div>
                 </div>
             </div>
-
+        </div>
     </div>
 }
 

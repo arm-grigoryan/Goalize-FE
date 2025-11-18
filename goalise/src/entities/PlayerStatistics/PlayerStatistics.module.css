@@ -28,6 +28,9 @@
   font-weight: 500;
   line-height: normal;
   text-transform: capitalize;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .button {
@@ -46,12 +49,13 @@
 .button > span {
   color: #FFFFFF;
 }
-.label {
+.content {
   color: #A5A5A5;
   font-size: 16px;
   font-weight: 300;
   display: flex;
   justify-self: start;
+  margin-left: 10px;
 }
 .stats {
   display: flex;
@@ -69,7 +73,7 @@
 
 .statItem {
   display: grid;
-  grid-template-columns: 220px 1px auto 1fr;
+  grid-template-columns: 246px 1px auto 1fr;
   min-width: 392px;
   height: 54px;
   border-radius: 10px;
@@ -129,7 +133,10 @@
   justify-self: start;
   margin-left: 13px;
 }
-
+.cards {
+  width: 15px;
+  height: 23px;
+}
 .redGlow::before {
   content: '';
   position: absolute;
@@ -154,6 +161,21 @@
     circle,
     rgba(0, 144, 255, 0.55),
     rgba(0, 144, 255, 0.1),
+    transparent 70%
+  );
+  filter: blur(12px);
+  z-index: 0;
+}
+
+.yellowGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle,
+     rgba(245, 179, 0, 0.7),
+    rgba(212, 195, 6, 0.1),
     transparent 70%
   );
   filter: blur(12px);
