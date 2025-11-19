@@ -51,16 +51,11 @@ const PlayerStatistics: React.FC<IPlayerStatisticsProps> = ({
     { label: en.playerProfile.playerStatistics.saves, value: saves, icon: savesIcon, isGoalKeeper: true },
   ];
 
-  const hasGoalKeeperStats = stats.some(stat => stat.isGoalKeeper);
-
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
         <div className={styles.title}>
           {en.playerProfile.playerStatistics.title}
-          {hasGoalKeeperStats && (
-            <span className={styles.content}>{en.playerProfile.playerStatistics.label}</span>
-          )}
         </div>
 
        <div className={styles.button}>
