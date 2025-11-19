@@ -7,11 +7,12 @@ import styles from './styles.module.css';
 import MatchList from "@/entities/MatchList/MatchList";
 import { ITransferItemCardProps } from "@/entities/TransferItemCard/TransferItemCard.types";
 import { IMatchCardProps } from "@/entities/MatchCard/MatchCard.types";
+import PlayerInvitationCard from "@/entities/PlayerInvitationCard/PlayerInvitationCard";
+import { useState } from "react";
 
 const hello = () => {
   console.log("hello");
 }
-
 const TransferObj: ITransferItemCardProps[] = [
   {
     date: '25.06.25',
@@ -72,12 +73,18 @@ const MatchObject: IMatchCardProps[] = [
   }
 ]
 export default function PlayerProfilePage() {
+  const [showInvitation, setShowInvitation] = useState(true);
+
+  const onButtonClick = () => {
+    setShowInvitation(!showInvitation);
+  };
+
   return (
     <div> 
       <div className={styles.playerProfileCard}> 
     <PlayerProfileCard 
           phoneNumber=" (406) 555-0120" 
-          onInviteButtonClick={hello} 
+          onInviteButtonClick={onButtonClick} 
           playerNumber={'11'} 
           inviteButtonText="Invite"
           makeCaptainButtonText="Make Captain"
@@ -89,6 +96,8 @@ export default function PlayerProfilePage() {
           foot="Right"
           onQuitTeamButtonClick={hello}
           quitTeamButtonText="Quit Team"
+          teamName="Team Name"
+          isCaptain = {true}
       />
       </div>
       <div className={styles.grid}> 
@@ -99,6 +108,9 @@ export default function PlayerProfilePage() {
           <MatchList object={MatchObject}/>
         </div>
         </div>
+        {!showInvitation && (
+        <PlayerInvitationCard onCancelButtonClick={onButtonClick} onConfirmButtonClick={hello} />
+      )}
     </div>
   );
 }

@@ -51,8 +51,7 @@
         "contact": "Contact"
       },
       "playerStatistics": {
-        "title": "Player Statistics",
-        "label": "(Goal Keeper)",
+        "title": "Player / Keeper Stats",
         "buttonText": "Games Played",
         "avergaePlayerRate": "Average Player Rate",
         "goals": "Goals",
@@ -63,7 +62,7 @@
         "interceptions": "Interceptions",
         "redCards": "RedCards",
         "yellowCards": "YellowCards",
-        "averageGoalKeeperRate": "Average Goal Keeper Rate",
+        "averageGoalKeeperRate": "Average Keeper Rate",
         "goalsConceded": "Goals Conceded",
         "savedPenalties": "Saved Penalties",
         "saves": "Saves"
@@ -84,6 +83,12 @@
         "title": "Free Agent",
         "label": "Player is not assigned to any team at this moment.",
         "linkText": "Send Invite"
+      },
+      "playerInvitationCard": {
+        "title": "Player Invitation",
+        "label": "Invite Vrur Saghatelyan to your team? Your phone number will be visible to the player for contact.",
+        "confirmButtonText": "Confirm",
+        "cancelButtonText": "Cancel"
       }
     }
 }
