@@ -73,7 +73,7 @@
 
 .statItem {
   display: grid;
-  grid-template-columns: 246px 1px auto 1fr;
+  grid-template-columns: 226px 1px auto 1fr;
   min-width: 392px;
   height: 54px;
   border-radius: 10px;
