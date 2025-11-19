@@ -2,13 +2,29 @@ import { IMatchListprops } from "./MatchList.types";
 import styles from './MatchList.module.css';
 import MatchCard from "../MatchCard/MatchCard";
 import Scroll from "@/shared/Scroll/Scroll";
+import Image from "next/image";
+import matchesIcon from '../../assets/pngs/matches.png';
+import en from '../../../messages/en.json';
+import matchEmptyState from '../../assets/pngs/matchEmptyState.png';
+
 const MatchList: React.FC<IMatchListprops> = ({
-    title,
     object
 }) => {
     return <div className={styles.container}>
-                <div className={styles.title}> {title} </div>
-                <>
+            <div className={styles.titleWrapper}>
+                <div className={styles.iconWrapper}> 
+                <Image src={matchesIcon} alt=""  className={styles.icon}/>
+                </div>
+                <div className={styles.titleContainer}>
+                    <div className={styles.title }> {en.playerProfile.pastMatches.title} </div>
+                    <div className={styles.label}> {en.playerProfile.pastMatches.label}</div>
+                </div>
+            </div>
+                <div>
+                    {!object && <div className={styles.emptyState}> 
+                        <Image  src={matchEmptyState} alt=""/>
+                        <div className={styles.emptyText}>{en.playerProfile.pastMatches.emptyStateText}</div>
+                    </div>}
                 <Scroll maxHeight="364px"> 
                     {object?.map((obj, i)=> {
                         return <MatchCard 
@@ -25,7 +41,7 @@ const MatchList: React.FC<IMatchListprops> = ({
                         />
                     })}
                     </Scroll>
-                </>
+                </div>
          </div>
 }
 

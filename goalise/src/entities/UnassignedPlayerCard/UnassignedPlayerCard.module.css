@@ -26,9 +26,10 @@
     justify-content: center;
     align-items: center;
     border-radius: 100px;
-    border: 0.5px solid #54A2FE;
+    border:  0.5px solid rgba(84, 162, 254, 0.20);
     position: relative;
     overflow: visible;
+    z-index: 0;
 }
 
 .blueGlow::before {
@@ -50,9 +51,10 @@
   z-index: -1;
 }
 .icon {
-      margin-right: 10px;
-  position: relative;
-  z-index: 1;
+    position: relative;
+    z-index: 1;
+    width: 18px;
+    height: 18px;
 }
 
 .title {

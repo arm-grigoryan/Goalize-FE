@@ -29,24 +29,34 @@ const MatchCard: React.FC<IMatchCardProps> = ({
         </div>
         <div className={styles.rightSideContainer}>
             <div className={styles.dateWrapper}> 
-                <Image src={calendarIcon}  alt="" className={styles.dateIcon}/>
+                <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
+                    <Image src={calendarIcon}  alt="" className={styles.dateIcon}/>
+                </div>
                 <div className={styles.date}>{date}</div>
             </div>
             <div className={styles.cardsContainer}>
                 <div className={styles.cards}>
-                    <Image className={styles.icons} src={ballIcon} alt=""/>
+                    <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
+                        <Image className={styles.icons} src={ballIcon} alt=""/>
+                    </div>
                     <div className={styles.values}>{goalsCount}</div>
                 </div>
                 <div className={styles.cards}>
-                    <Image className={styles.icons} src={peopleIcon} alt=""/>
+                    <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
+                        <Image className={styles.icons} src={peopleIcon} alt=""/>
+                    </div>
                     <div className={styles.values}>{peopleCount} </div>
                 </div>
                 <div className={styles.cards}>
-                    <Image className={styles.icons} src={card} alt=""/>
+                    <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
+                        <Image className={styles.iconCard} src={card} alt=""/>
+                    </div>
                     <div className={styles.values}>{redCardsCount}</div>
                 </div>
                 <div className={styles.cards}>
-                    <Image className={styles.icons} src={card} alt=""/>
+                    <div className={`${styles.iconWrapper} ${styles.yellowGlow}`}>
+                        <Image className={styles.iconCard} src={card} alt=""/>
+                    </div>
                     <div className={styles.values}>{yellowCardsCount}</div>
                 </div>
             </div>

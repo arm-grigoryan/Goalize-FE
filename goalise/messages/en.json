@@ -42,5 +42,48 @@
     },
     "rights": "© Copyright 2025.",
     "followUs": "Follow us"
-  }
+  },
+    "playerProfile": {
+      "title": "PlayerProfile",
+      "buttons": {
+        "age": "age",
+        "foot": "Foot",
+        "contact": "Contact"
+      },
+      "playerStatistics": {
+        "title": "Player Statistics",
+        "label": "(Goal Keeper)",
+        "buttonText": "Games Played",
+        "avergaePlayerRate": "Average Player Rate",
+        "goals": "Goals",
+        "assists": "Assists",
+        "shotsCompleted": "Shots Completed",
+        "passesCompleted": "Passes Completed",
+        "tackles": "Tackles",
+        "interceptions": "Interceptions",
+        "redCards": "RedCards",
+        "yellowCards": "YellowCards",
+        "averageGoalKeeperRate": "Average Goal Keeper Rate",
+        "goalsConceded": "Goals Conceded",
+        "savedPenalties": "Saved Penalties",
+        "saves": "Saves"
+      },
+      "transferHistory" : {
+        "title": "Transfer History",
+        "label": "Transfers of the player during the career",
+        "from": "From",
+        "to": "To",
+        "emptyStateText": "No transfer news is scheduled at the moment"
+      },
+      "pastMatches": {
+        "title": "Past Matches",
+        "label": "Player's matches with highlights associated with him",
+        "emptyStateText": "No past match to show at the moment."
+      },
+      "unassigned": {
+        "title": "Free Agent",
+        "label": "Player is not assigned to any team at this moment.",
+        "linkText": "Send Invite"
+      }
+    }
 }

@@ -8,6 +8,7 @@
     align-items: stretch;
     margin-right: 24px;
     margin-bottom: 10px;
+    background: rgba(21, 25, 30, 0.40);
 }
 .leftSideContainer {
     display: flex;
@@ -87,13 +88,73 @@
     backdrop-filter: blur(10px);
 }
 .icons {
-    margin-right: 10px;
     width: 18px;
     height: 18px;
+    z-index: 1;
+}
+.iconCard{
+     width: 14px;
+     height: 19px;
+     z-index: 1;
 }
 .values {
     color: #FFF;
     font-size: 14px;
     font-weight: 700;
     line-height: normal;
+}
+.iconWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    z-index: 1;
+    margin-right: 10px;
+}
+
+.redGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle,
+    rgba(255, 0, 80, 0.55),
+    rgba(255, 0, 80, 0.1),
+    transparent 90%
+  );
+  filter: blur(6px);
+  z-index: 0;
+}
+
+.blueGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle,
+    rgba(0, 144, 255, 0.55),
+    rgba(0, 144, 255, 0.1),
+    transparent 90%
+  );
+  filter: blur(6px);
+  z-index: 0;
+}
+
+.yellowGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle,
+     rgba(245, 179, 0, 0.7),
+    rgba(212, 195, 6, 0.1),
+    transparent 90%
+  );
+  filter: blur(6px);
+  z-index: 0;
 }

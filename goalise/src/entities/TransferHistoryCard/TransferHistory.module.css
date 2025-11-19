@@ -31,9 +31,20 @@
     margin-bottom: 8px;
 }
 
-.context {
+.label {
     color: #A5A5A5;
     font-size: 14px;
     font-weight: 400;
 }
-
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.emptyStateText {
+    margin-top: 10px;
+    color: #A5A5A5;
+    font-size: 14px;
+    font-weight: 400;
+}

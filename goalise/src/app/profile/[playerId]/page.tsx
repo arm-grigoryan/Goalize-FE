@@ -93,18 +93,10 @@ export default function PlayerProfilePage() {
       </div>
       <div className={styles.grid}> 
       <div className={styles.transferHistoryCard}> 
-        <TransferHistoryCard 
-                icon={tranferHistoryIcon}  
-                title="Transfer History" 
-                context="Players who transfer from 1 team to another will display here"
-                object={TransferObj}
-            />
+        <TransferHistoryCard object={TransferObj}/>
         </div>
         <div className={styles.matchCard}> 
-          <MatchList  
-              title="Match List"
-              object={MatchObject}
-          />
+          <MatchList object={MatchObject}/>
         </div>
         </div>
     </div>
