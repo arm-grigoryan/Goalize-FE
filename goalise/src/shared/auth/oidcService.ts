@@ -25,12 +25,12 @@ export type AuthTokens = {
 };
 
 export const authConfig = {
-  authority: process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY,
-  clientId: process.env.NEXT_PUBLIC_IDENTITY_CLIENT_ID,
+  authority: process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY || "https://auth-goalize.duckdns.org",
+  clientId: process.env.NEXT_PUBLIC_IDENTITY_CLIENT_ID || "Goalize-WebApp",
   redirectUri:
-    process.env.NEXT_PUBLIC_IDENTITY_REDIRECT,
+    process.env.NEXT_PUBLIC_IDENTITY_REDIRECT || "http://localhost:3000/signin-oidc",
   postLogoutRedirectUri:
-    process.env.NEXT_PUBLIC_IDENTITY_LOGOUT_REDIRECT,
+    process.env.NEXT_PUBLIC_IDENTITY_LOGOUT_REDIRECT || "http://localhost:3000/signout-callback-oidc",
   scope:
     "openid profile email phone offline_access",
 };
