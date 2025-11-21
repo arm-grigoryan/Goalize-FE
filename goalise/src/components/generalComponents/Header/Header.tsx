@@ -15,6 +15,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import burgerIcon from "../../../assets/pngs/burgerMenu.png";
 import closeIcon from "../../../assets/pngs/arrowRightIcon.png";
+import { useAuth } from "@/shared/auth/AuthContext";
 
 export const Header = () => {
   const t = useTranslations();
@@ -33,6 +34,7 @@ export const Header = () => {
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const searchButtonRef = useRef<HTMLDivElement | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const { isAuthenticated, user, signIn, signOut, loading } = useAuth();
 
   useEffect(() => {
     const id = window.setTimeout(() => setDebouncedQuery(query.trim()), 300);
@@ -118,6 +120,22 @@ export const Header = () => {
       return next;
     });
   };
+
+  const getReturnPath = () => {
+    if (typeof window === "undefined") return "/";
+    return `${window.location.pathname}${window.location.search}`;
+  };
+
+  const onAuthClick = () => {
+    if (isAuthenticated) {
+      signOut("/");
+    } else {
+      signIn(getReturnPath());
+    }
+  };
+
+  const userLabel =
+    user?.name || user?.preferred_username || user?.email || "Guest";
 
   return (
     <>
@@ -235,6 +253,23 @@ export const Header = () => {
                       </div>
                     )}
                   </div>
+
+                  <div className={styles.mobile_auth_actions}>
+                    <button
+                      className={styles.auth_button}
+                      onClick={() => {
+                        closeMenu();
+                        onAuthClick();
+                      }}
+                      disabled={loading}
+                    >
+                      {loading
+                        ? "Loading..."
+                        : isAuthenticated
+                          ? "Sign out"
+                          : "Sign in"}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -343,8 +378,19 @@ export const Header = () => {
               flexItem
             />
             <div className={styles.name_and_img_wrapper}>
-              <div>
-                <span>name surname</span>
+              <div className={styles.profile_details}>
+                <span className={styles.user_name}>{userLabel}</span>
+                <button
+                  className={styles.auth_button}
+                  onClick={onAuthClick}
+                  disabled={loading}
+                >
+                  {loading
+                    ? "Loading..."
+                    : isAuthenticated
+                      ? "Sign out"
+                      : "Sign in"}
+                </button>
               </div>
               <div className={styles.profile_img_wrapper}>
                 <Image src={profileImg} alt="" className={styles.profile_img} />

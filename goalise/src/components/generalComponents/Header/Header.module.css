@@ -65,6 +65,38 @@
   align-items: center;
 }
 
+.profile_details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.user_name {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.auth_button {
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid #a5a5a5;
+  color: #ffffff;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, opacity 160ms ease;
+}
+
+.auth_button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth_button:not(:disabled):hover {
+  background-color: #a5a5a5;
+  color: #101010;
+}
+
 .burger_menu_closed {
   display: flex;
   align-items: center;
@@ -193,4 +225,11 @@
 .search_no_results {
   padding: 12px;
   color: rgba(255, 255, 255, 0.6);
+}
+
+.mobile_auth_actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
 }
