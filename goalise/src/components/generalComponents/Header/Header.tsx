@@ -135,7 +135,7 @@ export const Header = () => {
   };
 
   const userLabel =
-    user?.name || user?.preferred_username || user?.email || "Guest";
+    user?.name || user?.email || "Guest";
 
   return (
     <>

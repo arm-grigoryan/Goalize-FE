@@ -24,21 +24,14 @@ export type AuthTokens = {
   profile?: AuthProfile;
 };
 
-const getBaseUrl = () => {
-  if (typeof window !== "undefined") return window.location.origin;
-  return process.env.NEXT_PUBLIC_APP_BASE_URL || "https://goalize.duckdns.org";
-};
-
 export const authConfig = {
-  authority: process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY || "https://goalize.duckdns.org",
-  clientId: process.env.NEXT_PUBLIC_IDENTITY_CLIENT_ID || "Goalize-WebApp",
+  authority: process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY,
+  clientId: process.env.NEXT_PUBLIC_IDENTITY_CLIENT_ID,
   redirectUri:
-    process.env.NEXT_PUBLIC_IDENTITY_REDIRECT || `${getBaseUrl()}/signin-oidc`,
+    process.env.NEXT_PUBLIC_IDENTITY_REDIRECT,
   postLogoutRedirectUri:
-    process.env.NEXT_PUBLIC_IDENTITY_LOGOUT_REDIRECT ||
-    `${getBaseUrl()}/signout-callback-oidc`,
+    process.env.NEXT_PUBLIC_IDENTITY_LOGOUT_REDIRECT,
   scope:
-    process.env.NEXT_PUBLIC_IDENTITY_SCOPE ||
     "openid profile email phone offline_access",
 };
 
@@ -124,14 +117,16 @@ const decodeJwtPayload = (token?: string): AuthProfile | undefined => {
   if (parts.length < 2) return undefined;
   try {
     const payload = parts[1];
+    console.log(payload)
     const decoded = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
+    console.log(decoded)
     const json = JSON.parse(decoded);
+    console.log(json)
     return {
       name: json.name || json.given_name || json.family_name,
       email: json.email,
       phone_number: json.phone_number,
-      picture: json.picture,
-      preferred_username: json.preferred_username,
+      picture: json.picture
     };
   } catch (e) {
     console.error("Unable to decode id_token", e);
@@ -209,7 +204,7 @@ const requestTokens = async (code: string, codeVerifier: string) => {
   const expiresInMs = (json.expires_in ? Number(json.expires_in) : 0) * 1000;
   const expiresAt = Date.now() + expiresInMs;
 
-  const profile = decodeJwtPayload(json.id_token) || decodeJwtPayload(json.access_token);
+  const profile = decodeJwtPayload(json.id_token);
 
   const tokens: AuthTokens = {
     accessToken: json.access_token,
@@ -270,7 +265,7 @@ export const refreshTokens = async (refreshToken: string): Promise<AuthTokens> =
   const json = await response.json();
   const expiresInMs = (json.expires_in ? Number(json.expires_in) : 0) * 1000;
   const expiresAt = Date.now() + expiresInMs;
-  const profile = decodeJwtPayload(json.id_token) || decodeJwtPayload(json.access_token);
+  const profile = decodeJwtPayload(json.access_token);
 
   const tokens: AuthTokens = {
     accessToken: json.access_token,
