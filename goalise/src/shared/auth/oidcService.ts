@@ -117,11 +117,8 @@ const decodeJwtPayload = (token?: string): AuthProfile | undefined => {
   if (parts.length < 2) return undefined;
   try {
     const payload = parts[1];
-    console.log(payload)
     const decoded = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
-    console.log(decoded)
     const json = JSON.parse(decoded);
-    console.log(json)
     return {
       name: json.name || json.given_name || json.family_name,
       email: json.email,
@@ -265,7 +262,7 @@ export const refreshTokens = async (refreshToken: string): Promise<AuthTokens> =
   const json = await response.json();
   const expiresInMs = (json.expires_in ? Number(json.expires_in) : 0) * 1000;
   const expiresAt = Date.now() + expiresInMs;
-  const profile = decodeJwtPayload(json.access_token);
+  const profile = decodeJwtPayload(json.id_token);
 
   const tokens: AuthTokens = {
     accessToken: json.access_token,
