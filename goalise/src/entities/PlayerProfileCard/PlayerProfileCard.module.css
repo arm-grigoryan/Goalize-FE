@@ -7,7 +7,6 @@
   border-radius: 15px;
   border: 0.5px solid rgba(255, 255, 255, 0.10);
   height: auto;
-  width: fit-content;
   width: 100%;
   box-sizing: border-box;
   align-items: flex-start;
@@ -24,6 +23,7 @@
 .infoButtonPart{
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
 }
 .imageInfoContainer {
     display: flex;
@@ -92,10 +92,10 @@
 .infoButtons {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
 }
-.infoButtons > *:not(:last-child) { 
-    margin-right : 6px;
-}
+
 .playerInfoContainer::after {
   content: "";
   display: block;
@@ -107,8 +107,8 @@
 
 .buttonsContainer {
     display: flex;
-    flex-direction: row;
     margin-top: 32px;
+    flex-wrap: nowrap;
 }  
 .buttonsContainer> *:not(:last-child) { 
     margin-right : 13px;
@@ -158,19 +158,161 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-   flex: 0 0 300px;
-   min-width: 510px;
-   max-height: 470px;
+  flex: 1px;
+  max-height: 470px;
 }
 .leftContainer {
-    position: relative;
+  position: relative;
   display: flex;
   flex-direction: column;
-   flex: 1 1 0;
+  flex: 2;
   height: 100%;     
 }
 .unassignedContainer {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+/* --------------- mobile styles --------------------- */
+.mobile {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    width: 100%;
+}
+
+.mobile .leftContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+.mobile .rightContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.mobile .playerContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    width: 100%;
+}
+.mobile .wrapper {
+    display: flex;
+    flex-direction: row;
+}
+.mobile .nameWrapper {
+    display: flex;
+    flex-direction: column-reverse;
+}
+.mobile .imageWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 10px;
+    margin-bottom: 2px;
+    flex-direction: column;
+}
+.mobile .image {
+    margin: 0;
+    width: 334px;
+    height: 436px;
+}
+
+.mobile .teamContainer {
+    border-bottom:0.5px solid rgba(255, 255, 255, 0.10);
+}
+.mobile .teamContainer::before {
+    display: none;
+}
+
+.mobile .infoButtons {
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+    gap: 6px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.mobile .playerInfoContainer::after {
+    display: none;
+}
+.mobile .buttonsContainer {
+    position: absolute;
+    bottom: 0;
+    width: 334px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 16px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.50) 0%, rgba(138, 137, 137, 0) 100%);
+    backdrop-filter: blur(7.5px); 
+}
+.mobile .playerInfoContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 26px 17px 0 17px;
+     border-bottom: 0.5px solid rgba(255, 255, 255, 0.10);
+}
+.mobile .nameWrapper * button {
+    height: 28px;
+}
+
+.mobile .name {
+    font-size: 34px;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    bottom: 0;
+}
+.mobile .playerNumberContainer {
+    display: flex;
+    justify-content: flex-end;
+     align-items: flex-end;
+    width: 100%;
+}
+
+.mobile .playerNumber {
+    font-size: 132px;
+    height: 120px;
+}
+
+.mobile .numberNameWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    position: relative;
+    height: 66px;
+    margin-bottom: 20px;
+}
+
+.mobile .imageInfoContainer {
+    margin: 0;
+}
+
+.mobile .teamContainer {
+    margin: 0;
+    padding: 33px 17px;
+}
+
+.mobile .team {
+    margin: 0;
+}
+
+@media (max-width: 1330px) {
+    .playerNumber 
+    { 
+        font-size: 136px;
+    }
+}
+@media (max-width: 1230px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
 }

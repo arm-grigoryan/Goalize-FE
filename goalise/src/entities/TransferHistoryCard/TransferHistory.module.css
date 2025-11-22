@@ -6,6 +6,7 @@
     background: rgba(17, 19, 23, 0.70);
     padding: 30px 0 20px 30px;
     flex-direction: column;
+    width: 100%;
 }
 .titleWrapper {
     display: flex;
@@ -47,4 +48,21 @@
     color: #A5A5A5;
     font-size: 14px;
     font-weight: 400;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+}
+/* -----------mobile styles---------- */
+.mobile {
+    display: flex;
+    flex-direction: column;
+    padding: 20px  0 0 17px;
+    overflow: hidden;
+    height: 600px;
+}
+
+.mobile .content {
+    padding: 0;
 }

@@ -5,7 +5,10 @@ import calendarIcon from '../../assets/pngs/calendar.png';
 import ballIcon from '../../assets/pngs/ballIcon.png';
 import peopleIcon from '../../assets/pngs/peopleIcon.png';
 import card from '../../assets/pngs/cardIcon.png';
-const MatchCard: React.FC<IMatchCardProps> = ({
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+
+export const MatchCard: React.FC<IMatchCardProps> = ({
     fisrtTeamName,
     firstTeamNameValue,
     secondTeamName,
@@ -16,7 +19,17 @@ const MatchCard: React.FC<IMatchCardProps> = ({
     redCardsCount,
     yellowCardsCount,
 }) => {
-    return <div className={styles.container}> 
+      const { width } = useWindowSize();
+      const isMobile = width <= MEDIA_TABLET_SMALL;
+    return <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`}> 
+        {isMobile && 
+            <div className={styles.dateWrapper}> 
+                <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
+                    <Image src={calendarIcon}  alt="" className={styles.dateIcon}/>
+                </div>
+                <div className={styles.date}>{date}</div>
+            </div>
+        }
         <div className={styles.leftSideContainer}> 
             <div className={styles.firstTeam}>
                 <div className={styles.teamName}>{fisrtTeamName}</div>
@@ -28,12 +41,12 @@ const MatchCard: React.FC<IMatchCardProps> = ({
             </div>
         </div>
         <div className={styles.rightSideContainer}>
-            <div className={styles.dateWrapper}> 
+            {!isMobile && <div className={styles.dateWrapper}> 
                 <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
                     <Image src={calendarIcon}  alt="" className={styles.dateIcon}/>
                 </div>
                 <div className={styles.date}>{date}</div>
-            </div>
+            </div> }
             <div className={styles.cardsContainer}>
                 <div className={styles.cards}>
                     <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
@@ -63,6 +76,3 @@ const MatchCard: React.FC<IMatchCardProps> = ({
         </div>
     </div>
 };
-
-MatchCard.displayName = 'MatchCard';
-export default MatchCard;
