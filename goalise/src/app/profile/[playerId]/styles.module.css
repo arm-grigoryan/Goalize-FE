@@ -4,10 +4,30 @@
 }
 .grid {
     display: flex;
-    flex-direction: row;
-    width: 100%;
     gap: 24px;
+    width: 100%;
 }
+
+.grid > div {
+    min-width: 0;
+    display: flex;
+}
+
+.container {
+    min-width: 0;
+    box-sizing: border-box;
+}
+
 .matchCard {
-    flex: auto 1;
+    flex: 1;
+    min-width: 0;
+}
+
+.transferHistoryCard {
+    flex: 1.4;
+}
+@media (max-width: 900px) {
+    .grid {
+        flex-direction: column;
+    }
 }

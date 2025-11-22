@@ -4,23 +4,15 @@
     border: 0.5px solid rgba(255, 255, 255, 0.10);
     background: rgba(17, 19, 23, 0.70);
     padding: 30px 0 20px 30px;
-    max-width: 580px;
     overflow: hidden;
+    width: 100%;
 }
 
-.iconWrapper {
-    height: 47px;
-    width: 47px;
-    border: 0.5px solid rgba(245, 58, 83, 0.20);
-    border-radius: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 .icon {
     display: flex;
     width: 20px;
     height: 20px;
+    z-index: 1;
 }
 .titleWrapper {
     display: flex;
@@ -59,4 +51,30 @@
     color: #A5A5A5;
     font-size: 14px;
     margin-top: 10px;
+}
+.iconWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    margin-right: 10px;
+    height: 47px;
+    width: 47px;
+    border: 0.5px solid rgba(245, 58, 83, 0.20);
+    border-radius: 100px;
+}
+.redGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle,
+    #F53A53,
+    rgba(255, 0, 80, 0.1),
+    transparent 60%
+  );
+  filter: blur(6px);
+  z-index: 0;
 }

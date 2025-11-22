@@ -27,7 +27,12 @@
     cursor: pointer;
   }
 }
-
+.white_button_transparent {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 50px;
+  color: white;
+}
 .blue_button_transparant {
   display: flex;
   align-items: center;

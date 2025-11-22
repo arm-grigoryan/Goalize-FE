@@ -14,9 +14,9 @@ import cardIcon from '../../assets/pngs/cardIcon.png';
 import interceptionsIcon from '../../assets/pngs/interceptions.png';
 import tacklesIcon from '../../assets/pngs/tackles.png';
 import peopleIcon from '../../assets/pngs/peopleIcon.png';
-import en from '../../../messages/en.json';
+import { useTranslations } from "next-intl";
 
-const PlayerStatistics: React.FC<IPlayerStatisticsProps> = ({
+export const PlayerStatistics: React.FC<IPlayerStatisticsProps> = ({
   gamesPlayed,
   averageRate,
   goals,
@@ -34,21 +34,21 @@ const PlayerStatistics: React.FC<IPlayerStatisticsProps> = ({
   savedPenalties,
   saves,
 }) => {
-
+  const t = useTranslations("playerProfile.playerStatistics")
   const stats = [
-    { label: en.playerProfile.playerStatistics.avergaePlayerRate, value: averageRate, icon: startIcon },
-    { label: en.playerProfile.playerStatistics.goals, value: goals, icon: ballIcon },
-    { label: en.playerProfile.playerStatistics.assists, value: assists, icon: peopleIcon },
-    { label: en.playerProfile.playerStatistics.shotsCompleted, value: shotsCompleted, icon: shotsIcon, shotsAccuracy: shotAccuracyPercent },
-    { label: en.playerProfile.playerStatistics.passesCompleted, value: passesCompleted, icon: passesIcon, passesAccuracy: passAccuracyPercent },
-    { label: en.playerProfile.playerStatistics.tackles, value: tackles, icon: tacklesIcon },
-    { label: en.playerProfile.playerStatistics.interceptions, value: interceptions, icon: interceptionsIcon },
-    { label: en.playerProfile.playerStatistics.redCards, value: redCards, icon: cardIcon },
-    { label: en.playerProfile.playerStatistics.yellowCards, value: yellowCards, icon: cardIcon, isYellowCard: true },
-    { label: en.playerProfile.playerStatistics.averageGoalKeeperRate, value: averageGoalkeeperRate, icon: startIcon, isGoalKeeper: true },
-    { label: en.playerProfile.playerStatistics.goalsConceded, value: goalsConceded, icon: soccerIcon, isGoalKeeper: true },
-    { label: en.playerProfile.playerStatistics.savedPenalties, value: savedPenalties, icon: savedPenaltiesIcon, isGoalKeeper: true },
-    { label: en.playerProfile.playerStatistics.saves, value: saves, icon: savesIcon, isGoalKeeper: true },
+    { label:t("avergaePlayerRate"), value: averageRate, icon: startIcon },
+    { label:t("goals"), value: goals, icon: ballIcon },
+    { label:t("assists"), value: assists, icon: peopleIcon },
+    { label:t("shotsCompleted"), value: shotsCompleted, icon: shotsIcon, shotsAccuracy: shotAccuracyPercent },
+    { label:t("passesCompleted"), value: passesCompleted, icon: passesIcon, passesAccuracy: passAccuracyPercent },
+    { label:t("tackles"), value: tackles, icon: tacklesIcon },
+    { label:t("interceptions"), value: interceptions, icon: interceptionsIcon },
+    { label:t("redCards"), value: redCards, icon: cardIcon },
+    { label:t("yellowCards"), value: yellowCards, icon: cardIcon, isYellowCard: true },
+    { label:t("averageGoalKeeperRate"), value: averageGoalkeeperRate, icon: startIcon, isGoalKeeper: true },
+    { label:t("goalsConceded"), value: goalsConceded, icon: soccerIcon, isGoalKeeper: true },
+    { label:t("savedPenalties"), value: savedPenalties, icon: savedPenaltiesIcon, isGoalKeeper: true },
+    { label:t("saves"), value: saves, icon: savesIcon, isGoalKeeper: true },
   ];
 
 
@@ -56,11 +56,11 @@ const PlayerStatistics: React.FC<IPlayerStatisticsProps> = ({
     <div className={styles.container}>
       <div className={styles.titleContainer}>
         <div className={styles.title}>
-          {en.playerProfile.playerStatistics.title}
+          {t("title")}
         </div>
 
        <div className={styles.button}>
-          {en.playerProfile.playerStatistics.buttonText}: <span>{gamesPlayed}</span>
+          {t("buttonText")}: <span>{gamesPlayed}</span>
         </div>
       </div>
 
@@ -102,6 +102,3 @@ const PlayerStatistics: React.FC<IPlayerStatisticsProps> = ({
     </div>
   );
 };
-
-PlayerStatistics.displayName = "PlayerStatistics";
-export default PlayerStatistics;

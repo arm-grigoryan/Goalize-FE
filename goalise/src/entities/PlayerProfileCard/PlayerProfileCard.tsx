@@ -5,12 +5,14 @@ import Button from '@/shared/Button';
 import plusButtonImg from '../../assets/pngs/plusButton.png';
 import removeUserIng from '../../assets/pngs/removeUser.png';
 import Image  from 'next/image';
-import PlayerStatistics from '../PlayerStatistics/PlayerStatistics';
-import Scroll from '@/shared/Scroll/Scroll';
-import UnassignedPlayerCard from '../UnassignedPlayerCard/UnassignedPlayerCard';
-import en from '../../../messages/en.json';
+import PlayerStatistics from '../PlayerStatistics';
+import Scroll from '@/shared/Scroll';
+import UnassignedPlayerCard from '../UnassignedPlayerCard';
+import { MEDIA_TABLET_SMALL } from '@/constants/windowSizes';
+import { useWindowSize } from '@/hooks/useWindowSize';
+import { useTranslations } from 'next-intl';
 
- const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
+ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
   profilePic,
   phoneNumber,
   playerNumber,
@@ -28,32 +30,71 @@ import en from '../../../messages/en.json';
   quitTeamButtonText,
   onQuitTeamButtonClick,
 }) => {
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("playerProfile.buttons");
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`}>
     <div className={styles.leftContainer}>
       <div className={styles.playerContainer}>
         <div className={styles.imageWrapper}>
           {profilePic && <Image src={profilePic} className={styles.image} alt={''} />}
+          {isMobile && <div className={styles.buttonsContainer}>
+            { isCaptain && onMakeCaptainButtonClick && makeCaptainButtonText &&
+             <Button
+              className="white_button_transparent"
+              handleClick={onMakeCaptainButtonClick}
+              content={makeCaptainButtonText}
+            /> }
+           { teamName &&  onRemoveUserButtonClick && 
+            <Button
+              className="icon_button"
+              icon={removeUserIng}
+              iconHeight={12}
+              iconWidth={12}
+              handleClick={onRemoveUserButtonClick}
+            />
+             }
+          </div>}
         </div>
         <div className={styles.infoButtonPart}>
           <div className={styles.imageInfoContainer}>
             <div className={styles.playerInfoContainer}>
-              { isCaptain && onInviteButtonClick && inviteButtonText && 
+              {!isMobile &&  isCaptain && onInviteButtonClick && inviteButtonText && 
               <Button
                 className="blue_button_transparant"
                 content={inviteButtonText}
                 handleClick={onInviteButtonClick}
                 icon={plusButtonImg}
               />}
-              <div className={styles.name}>{fullName}</div>
-              <div className={styles.infoButtons}>
-                <div className={styles.button}>{en.playerProfile.buttons.age}: <span> {age} </span></div>
-                <div className={styles.button}>{en.playerProfile.buttons.foot}: <span> {foot} </span> </div>
-                <div className={styles.button}>{en.playerProfile.buttons.contact}: <span> {phoneNumber} </span></div>
-              </div>
+              <div className={isMobile ? styles.nameWrapper : ""}> 
+                <div className={isMobile ? styles.numberNameWrapper : ""}> <div className={styles.name}>{fullName}</div>
+                    {isMobile &&  teamName &&  
+                      <div className={styles.playerNumberContainer}> 
+                        {playerNumber && (
+                            <div className={styles.playerNumber}>{playerNumber}</div>
+                        )}
+                        </div>
+                    }</div>
+                <div className={isMobile ? styles.wrapper : ''}>
+                <div className={styles.infoButtons}>
+                  <div className={styles.button}>{t("age")}: <span> {age} </span></div>
+                  <div className={styles.button}>{t("foot")}: <span> {foot} </span> </div>
+                  <div className={styles.button}>{t("contact")}: <span> {phoneNumber} </span></div>
+                </div>
+                {isMobile && isCaptain && onInviteButtonClick && inviteButtonText && 
+                    <Button
+                      className="blue_button_transparant"
+                      content={inviteButtonText}
+                      handleClick={onInviteButtonClick}
+                      icon={plusButtonImg}
+                    />
+                }
+            </div>
+            </div>
             </div>
           </div>
-          <div className={styles.buttonsContainer}>
+          {!isMobile && <div className={styles.buttonsContainer}>
             { isCaptain && onMakeCaptainButtonClick && makeCaptainButtonText &&
              <Button
               className="red_button_transparant_white_text"
@@ -69,14 +110,14 @@ import en from '../../../messages/en.json';
               handleClick={onRemoveUserButtonClick}
             />
              }
-          </div>
+          </div> }
           {!teamName && 
                <div className={styles.unassignedContainer}> 
                   <UnassignedPlayerCard link='/'/>
                  </div>
            }
         </div>
-        { teamName &&  
+        {!isMobile &&  teamName &&  
         <div className={styles.playerNumberContainer}> 
           {playerNumber && (
               <div className={styles.playerNumber}>{playerNumber}</div>
@@ -116,5 +157,3 @@ import en from '../../../messages/en.json';
     </div>
   );
 };
-PlayerProfileCard.displayName = 'PlayerProfileCard';
-export default PlayerProfileCard;

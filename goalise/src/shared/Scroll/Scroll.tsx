@@ -1,9 +1,9 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import styles from "./Scroll.module.css";
-import { ScrollProps } from "./Scroll.tpes";    
+import { ScrollProps } from "./Scroll.types";    
 
-const Scroll: React.FC<ScrollProps> = ({ children, maxHeight }) => {
+export const Scroll: React.FC<ScrollProps> = ({ children, maxHeight }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [thumbHeight, setThumbHeight] = useState(0);
   const [thumbTop, setThumbTop] = useState(0);
@@ -42,5 +42,3 @@ const Scroll: React.FC<ScrollProps> = ({ children, maxHeight }) => {
     </div>
   );
 };
-
-export default Scroll;

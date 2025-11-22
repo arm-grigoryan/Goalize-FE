@@ -158,3 +158,48 @@
   filter: blur(6px);
   z-index: 0;
 }
+
+/* ----------mobile styles ---------------*/
+.mobile {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin-right: 18px;
+    padding: 19px 15px;
+}
+
+
+.mobile .dateWrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.mobile .leftSideContainer {
+    border-right: 0;
+}
+.mobile .rightSideContainer {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    margin-top: 8px;
+}
+.mobile .firstTeam {
+    padding: 8px 0;
+}
+.mobile .secondTeam {
+    padding: 8px 0;
+}
+.mobile .cardsContainer {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+.mobile .teamValue {
+    margin-left: 12px;
+}
