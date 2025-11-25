@@ -68,3 +68,9 @@
 .buttonsWrapper > * {
   flex: 1;
 }
+
+@media (max-width: 408px) {
+  .titleWrapper {
+    text-align: center;
+  }
+}

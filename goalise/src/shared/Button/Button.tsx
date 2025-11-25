@@ -34,7 +34,7 @@ export const Button: FC<ButtonProps> = ({
         [styles.active]: isActive,
       })}
     >
-      {icon &&<div className={styles.icon}> <Image width={iconWidth} height={iconHeight} src={icon} alt="" /></div> }
+      {icon && <div className={styles.icon}> <Image width={iconWidth} height={iconHeight} src={icon} alt=""  className={styles.icon}/></div> }
       {<div className={styles.content}> {content} </div>}
     </button>
   );

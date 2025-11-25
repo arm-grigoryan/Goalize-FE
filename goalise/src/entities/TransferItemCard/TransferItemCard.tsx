@@ -1,8 +1,8 @@
 import { ITransferItemCardProps } from "./TransferItemCard.types"
 import styles from './TransferItemCard.module.css';
 import Image from "next/image";
-import toArrowIcon from '../../assets/pngs/toarrowIcon.png';
-import calendarIcon from '../../assets/pngs/calendar.png';
+import toArrowIcon from '../../assets/pngs/arrow.svg';
+import dateIcon from '../../assets/pngs/dateIcon.svg';
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
 
@@ -19,7 +19,7 @@ export const TransferItemCard: React.FC<ITransferItemCardProps> = ({
         <div className={styles.wrapper}>
             <div className={styles.dateWrapper}>
                 <div className={`${styles.iconWrapper} ${styles.blueGlow}`}> 
-                    <Image className={styles.dateIcon} src={calendarIcon} alt=""/>
+                    <Image className={styles.dateIcon} src={dateIcon} alt=""/>
                 </div>
                 <div className={styles.date}> {date} </div>
             </div>

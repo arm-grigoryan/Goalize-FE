@@ -179,6 +179,7 @@
 .mobile .dateWrapper {
     padding: 0;
     margin-bottom: 17px;
+    border: none;
 }
 
 .mobile .teamLogoWrapper {

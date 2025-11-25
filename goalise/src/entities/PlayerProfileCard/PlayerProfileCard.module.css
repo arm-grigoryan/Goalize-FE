@@ -154,6 +154,23 @@
     font-size: 22px;
     color: #FFFFFF;
 }
+
+.teamLogoWrapper{
+    position: absolute;
+    display: flex;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.teamLogo {
+    width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .rightContainer {
   display: flex;
   flex-direction: column;
@@ -205,6 +222,7 @@
 .mobile .nameWrapper {
     display: flex;
     flex-direction: column-reverse;
+    width: 100%;
 }
 .mobile .imageWrapper {
     display: flex;
@@ -254,7 +272,8 @@
     display: flex;
     flex-direction: row-reverse;
     padding: 26px 17px 0 17px;
-     border-bottom: 0.5px solid rgba(255, 255, 255, 0.10);
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.10);
+    width: 100%;
 }
 .mobile .nameWrapper * button {
     height: 28px;
@@ -271,8 +290,9 @@
 .mobile .playerNumberContainer {
     display: flex;
     justify-content: flex-end;
-     align-items: flex-end;
+    align-items: flex-end;
     width: 100%;
+    pointer-events: none;
 }
 
 .mobile .playerNumber {
@@ -303,7 +323,17 @@
 .mobile .team {
     margin: 0;
 }
+.mobile .nameWrapper button,
+.mobile .wrapper button {
+  position: relative;
+  z-index: 5;
+}
 
+@media (max-width: 398px) {
+    .numberNameWrapper {
+        margin-top: 40px;
+    }
+}
 @media (max-width: 1330px) {
     .playerNumber 
     { 
@@ -314,5 +344,11 @@
     .container {
         display: flex;
         flex-direction: column;
+    }
+}
+
+@media (min-width: 595px) and (max-width: 765px) {
+    .numberNameWrapper {
+        margin-top: 32px;
     }
 }

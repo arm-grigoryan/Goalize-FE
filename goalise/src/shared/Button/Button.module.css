@@ -16,6 +16,9 @@
 }
 .icon {
   margin-right: 5px;
+  display: flex;
+  justify-content:center ;
+  align-items: center;
 }
 
 .white_button {
@@ -80,24 +83,57 @@
 
 .icon_button {
   background-color: transparent;
-  border: #15191e66 1px solid;
+  border: 1px solid rgba(255, 255, 255, 0.10);
   background-color: #15191e66;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 52px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  padding: 0; /* optional: remove extra padding */
+  padding: 0;
+  .icon {
+    margin: 0;
+    width: 26px;
+    height: 26px;
+  }
 }
-
+.white_icon_button {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  .icon {
+    margin: 0;
+    width: 26px;
+    height: 26px;
+  }
+}
 .icon_button_red {
   background-color: transparent;
   border: #f53a53 1px solid;
   border-radius: 50%;
 }
-
+.icon_button_with_text {
+    background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background-color: #15191e66;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
 .player_button {
   background-color: #15191e66;
   border: #15191e66 1px solid;
