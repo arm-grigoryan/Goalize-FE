@@ -203,3 +203,12 @@
 .mobile .teamValue {
     margin-left: 12px;
 }
+
+@media (max-width: 452px) {
+    .mobile .cardsContainer {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-template-rows: 1fr 1fr;
+        gap: 5px;
+    }
+}

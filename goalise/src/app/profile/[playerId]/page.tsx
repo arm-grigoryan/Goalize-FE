@@ -98,6 +98,7 @@ export default function PlayerProfilePage() {
               quitTeamButtonText="Quit Team"
               teamName="Team Name"
               isCaptain = {true}
+              teamLogo={toBeDeleted}
           />
       </div>
       <div className={styles.grid}> 

@@ -2,8 +2,8 @@
 import styles from './PlayerProfileCard.module.css';
 import { IPlayerProfileProps } from '@/entities/PlayerProfileCard/PlayerProfileCard.types';
 import Button from '@/shared/Button';
-import plusButtonImg from '../../assets/pngs/plusButton.png';
-import removeUserIng from '../../assets/pngs/removeUser.png';
+import plusButtonImg from '../../assets/pngs/plusButton.svg';
+import removeUserIng from '../../assets/pngs/removeUser.svg';
 import Image  from 'next/image';
 import PlayerStatistics from '../PlayerStatistics';
 import Scroll from '@/shared/Scroll';
@@ -48,7 +48,7 @@ import { useTranslations } from 'next-intl';
             /> }
            { teamName &&  onRemoveUserButtonClick && 
             <Button
-              className="icon_button"
+              className="white_icon_button"
               icon={removeUserIng}
               iconHeight={12}
               iconWidth={12}
@@ -117,8 +117,13 @@ import { useTranslations } from 'next-intl';
                  </div>
            }
         </div>
+          {!isMobile && teamLogo && (
+            <div className={styles.teamLogoWrapper}>
+              <Image src={teamLogo} alt=""  className={styles.teamLogo} />
+            </div>
+          )}
         {!isMobile &&  teamName &&  
-        <div className={styles.playerNumberContainer}> 
+        <div className={styles.playerNumberContainer}>
           {playerNumber && (
               <div className={styles.playerNumber}>{playerNumber}</div>
           )}

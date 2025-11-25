@@ -1,7 +1,7 @@
 "use client";
 import styles from "./Header.module.css";
 import Image from "next/image";
-import logo from "/public/pngs/logo/Logo.png";
+import logo from "/public/pngs/logo/Logo.svg";
 import profileImg from "/public/images/headerProfileImg.png";
 import Link from "next/link";
 import iconSearch from "../../../assets/pngs/icon-search.png";

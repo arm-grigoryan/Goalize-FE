@@ -3,7 +3,7 @@ import styles from './MatchList.module.css';
 import MatchCard from "../MatchCard";
 import Scroll from "@/shared/Scroll";
 import Image from "next/image";
-import matchesIcon from '../../assets/pngs/matches.png';
+import matchesIcon from '../../assets/pngs/calendar.svg';
 import matchEmptyState from '../../assets/pngs/matchEmptyState.png';
 import { useTranslations } from "next-intl";
 

@@ -3,7 +3,7 @@ import styles from './TransferHistory.module.css';
 import Image from "next/image";
 import TransferItemCard from "../TransferItemCard";
 import Scroll from "@/shared/Scroll";
-import transferHistoryIcon from '../../assets/pngs/transferHistoryIcon.png';
+import transferHistoryIcon from '../../assets/pngs/TransferIcon.svg';
 import transferEmptyState from '../../assets/pngs/transferEmptyState.png';
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";

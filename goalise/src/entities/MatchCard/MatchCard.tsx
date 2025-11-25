@@ -1,10 +1,10 @@
 import { IMatchCardProps } from "./MatchCard.types";
 import styles from './MatchCard.module.css';
 import Image from "next/image";
-import calendarIcon from '../../assets/pngs/calendar.png';
-import ballIcon from '../../assets/pngs/ballIcon.png';
-import peopleIcon from '../../assets/pngs/peopleIcon.png';
-import card from '../../assets/pngs/cardIcon.png';
+import dateIcon from '../../assets/pngs/dateIcon.svg';
+import ballIcon from '../../assets/pngs/shots.svg';
+import peopleIcon from '../../assets/pngs/assists.svg';
+import card from '../../assets/pngs/card.svg';
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 
@@ -25,7 +25,7 @@ export const MatchCard: React.FC<IMatchCardProps> = ({
         {isMobile && 
             <div className={styles.dateWrapper}> 
                 <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
-                    <Image src={calendarIcon}  alt="" className={styles.dateIcon}/>
+                    <Image src={dateIcon}  alt="" className={styles.dateIcon}/>
                 </div>
                 <div className={styles.date}>{date}</div>
             </div>
@@ -43,7 +43,7 @@ export const MatchCard: React.FC<IMatchCardProps> = ({
         <div className={styles.rightSideContainer}>
             {!isMobile && <div className={styles.dateWrapper}> 
                 <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
-                    <Image src={calendarIcon}  alt="" className={styles.dateIcon}/>
+                    <Image src={dateIcon}  alt="" className={styles.dateIcon}/>
                 </div>
                 <div className={styles.date}>{date}</div>
             </div> }
