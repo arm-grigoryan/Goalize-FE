@@ -4,6 +4,14 @@
       "title": "Please Complete your profile to enjoy all the features",
       "introduction": "Click on a steper to directly navigate to that step.",
       "buttonContent": "Manage Account"
+    },
+    "playerProfile": {
+      "playerBasicInfo": {
+        "age": "age",
+        "inviteButtonText": "Invite",
+        "makeCaptainButtonText": "Make Captain",
+        "quitTeamButtonText": "Quit Team"
+      }
     }
   },
   "header": {
@@ -43,52 +51,52 @@
     "rights": "© Copyright 2025.",
     "followUs": "Follow us"
   },
-    "playerProfile": {
-      "title": "PlayerProfile",
-      "buttons": {
-        "age": "age",
-        "foot": "Foot",
-        "contact": "Contact"
-      },
-      "playerStatistics": {
-        "title": "Player / Keeper Stats",
-        "buttonText": "Games Played",
-        "avergaePlayerRate": "Average Player Rate",
-        "goals": "Goals",
-        "assists": "Assists",
-        "shotsCompleted": "Shots Completed",
-        "passesCompleted": "Passes Completed",
-        "tackles": "Tackles",
-        "interceptions": "Interceptions",
-        "redCards": "RedCards",
-        "yellowCards": "YellowCards",
-        "averageGoalKeeperRate": "Average Keeper Rate",
-        "goalsConceded": "Goals Conceded",
-        "savedPenalties": "Saved Penalties",
-        "saves": "Saves"
-      },
-      "transferHistory" : {
-        "title": "Transfer History",
-        "label": "Transfers of the player during the career",
-        "from": "From",
-        "to": "To",
-        "emptyStateText": "No transfer news is scheduled at the moment"
-      },
-      "pastMatches": {
-        "title": "Past Matches",
-        "label": "Player's matches with highlights associated with him",
-        "emptyStateText": "No past match to show at the moment."
-      },
-      "unassigned": {
-        "title": "Free Agent",
-        "label": "Player is not assigned to any team at this moment.",
-        "linkText": "Send Invite"
-      },
-      "playerInvitationCard": {
-        "title": "Player Invitation",
-        "label": "Invite Vrur Saghatelyan to your team? Your phone number will be visible to the player for contact.",
-        "confirmButtonText": "Confirm",
-        "cancelButtonText": "Cancel"
-      }
+  "playerProfile": {
+    "title": "PlayerProfile",
+    "buttons": {
+      "age": "age",
+      "foot": "Foot",
+      "contact": "Contact"
+    },
+    "playerStatistics": {
+      "title": "Player / Keeper Stats",
+      "buttonText": "Games Played",
+      "avergaePlayerRate": "Average Player Rate",
+      "goals": "Goals",
+      "assists": "Assists",
+      "shotsCompleted": "Shots Completed",
+      "passesCompleted": "Passes Completed",
+      "tackles": "Tackles",
+      "interceptions": "Interceptions",
+      "redCards": "RedCards",
+      "yellowCards": "YellowCards",
+      "averageGoalKeeperRate": "Average Keeper Rate",
+      "goalsConceded": "Goals Conceded",
+      "savedPenalties": "Saved Penalties",
+      "saves": "Saves"
+    },
+    "transferHistory": {
+      "title": "Transfer History",
+      "label": "Transfers of the player during the career",
+      "from": "From",
+      "to": "To",
+      "emptyStateText": "No transfer news is scheduled at the moment"
+    },
+    "pastMatches": {
+      "title": "Past Matches",
+      "label": "Player's matches with highlights associated with him",
+      "emptyStateText": "No past match to show at the moment."
+    },
+    "unassigned": {
+      "title": "Free Agent",
+      "label": "Player is not assigned to any team at this moment.",
+      "linkText": "Send Invite"
+    },
+    "playerInvitationCard": {
+      "title": "Player Invitation",
+      "label": "Invite Vrur Saghatelyan to your team? Your phone number will be visible to the player for contact.",
+      "confirmButtonText": "Confirm",
+      "cancelButtonText": "Cancel"
     }
+  }
 }

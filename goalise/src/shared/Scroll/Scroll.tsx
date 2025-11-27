@@ -1,11 +1,11 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import styles from "./Scroll.module.css";
-import { ScrollProps } from "./Scroll.types";    
+import { ScrollProps } from "./Scroll.types";
 
 export const Scroll: React.FC<ScrollProps> = ({ children, maxHeight }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const [thumbHeight, setThumbHeight] = useState(0);
+  const thumbHeightRef = useRef(0);
   const [thumbTop, setThumbTop] = useState(0);
 
   useEffect(() => {
@@ -13,13 +13,18 @@ export const Scroll: React.FC<ScrollProps> = ({ children, maxHeight }) => {
     if (!wrapper) return;
 
     const handleScroll = () => {
-      const scrollRatio = wrapper.scrollTop / (wrapper.scrollHeight - wrapper.clientHeight);
-      setThumbTop(scrollRatio * (wrapper.clientHeight - thumbHeight));
+      const scrollableHeight = wrapper.scrollHeight - wrapper.clientHeight;
+      if (scrollableHeight <= 0) return;
+
+      const scrollRatio = wrapper.scrollTop / scrollableHeight;
+      const maxThumbTop = wrapper.clientHeight - thumbHeightRef.current;
+      setThumbTop(scrollRatio * maxThumbTop);
     };
 
     const handleResize = () => {
       const ratio = wrapper.clientHeight / wrapper.scrollHeight;
-      setThumbHeight(Math.max(ratio * wrapper.clientHeight, 68));
+      thumbHeightRef.current = Math.max(ratio * wrapper.clientHeight, 68);
+      handleScroll();
     };
 
     handleResize();
@@ -30,14 +35,18 @@ export const Scroll: React.FC<ScrollProps> = ({ children, maxHeight }) => {
       wrapper.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
-  }, [thumbHeight]);
+  }, []);
 
   return (
-    <div className={styles.scrollWrapper} style={{ maxHeight }} ref={wrapperRef}>
+    <div
+      className={styles.scrollWrapper}
+      style={{ maxHeight }}
+      ref={wrapperRef}
+    >
       {children}
       <div
         className={styles.scrollThumb}
-        style={{ height: thumbHeight, top: thumbTop }}
+        style={{ height: thumbHeightRef.current, top: thumbTop }}
       />
     </div>
   );
