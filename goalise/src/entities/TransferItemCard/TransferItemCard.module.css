@@ -1,144 +1,142 @@
-
 .container {
-    padding-right: 30px;
+  padding-right: 30px;
 }
 .wrapper {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    height: 69px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    border: 0.5px solid rgba(255, 255, 255, 0.10);
-    background: rgba(21, 25, 30, 0.40);
-    margin-bottom: 13px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 69px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  background: rgba(21, 25, 30, 0.4);
+  margin-bottom: 13px;
 }
 .dateWrapper {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        border-right: 1px solid rgba(255, 255, 255, 0.10);
-        margin-right: 8px;
-        padding: 24px 15px 24px 17px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  margin-right: 8px;
+  padding: 24px 15px 24px 17px;
 }
 .dateIcon {
-    width: 20px;
-    height: 20px;
-    margin-right: 8px;
-    z-index: 1;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  z-index: 1;
 }
 .date {
-    color: #E8E8E8;
-    font-size: 14px;
-    font-weight: 500;
-    text-transform: capitalize;
+  color: #e8e8e8;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: capitalize;
 }
 .teamLogoWrapper {
-    display: flex;
-    flex-direction: row;
-    padding: 15px 12px 15px 0;
+  display: flex;
+  flex-direction: row;
+  padding: 15px 12px 15px 0;
 }
 .fromTeamLogo {
-    width: 36px;
-    height: 36px;
-    margin-right: 10px;
+  width: 36px;
+  height: 36px;
+  margin-right: 10px;
 }
 .teamNameWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-    margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  margin-left: 10px;
 }
 .from {
-    color: #A5A5A5;
-    text-align: right;
-    font-size: 12px;
-    font-weight: 400;
-    text-transform: capitalize;
+  color: #a5a5a5;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: capitalize;
 }
 .teamName {
-    color: #FFF;
-    font-size: 14px;
-    font-weight: 400;
-    text-transform: capitalize;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: capitalize;
 }
 .toArrow {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 227px;
-    height: 100%;
-    border-radius: 10px;
-    background: linear-gradient(
-        90deg,
-        rgba(245, 179, 0, 0) 0%,
-        rgba(245, 179, 0, 0.12) 50%,
-        rgba(245, 179, 0, 0) 100%
-    );
-    z-index: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 227px;
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    rgba(245, 179, 0, 0) 0%,
+    rgba(245, 179, 0, 0.12) 50%,
+    rgba(245, 179, 0, 0) 100%
+  );
+  z-index: 1;
 }
 
-
 .toArrow::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(
-        circle,
-        rgba(255, 204, 0, 0.35) 0%,
-        rgba(255, 204, 0, 0.18) 40%,
-        rgba(255, 204, 0, 0) 70%
-    );
-    filter: blur(14px);
-    z-index: -2;
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle,
+    rgba(255, 204, 0, 0.35) 0%,
+    rgba(255, 204, 0, 0.18) 40%,
+    rgba(255, 204, 0, 0) 70%
+  );
+  filter: blur(14px);
+  z-index: -2;
 }
 
 .toArrow::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    background:
-        linear-gradient(
-            to right,
-            rgba(245, 179, 0, 0) 0%,
-            rgba(245, 179, 0, 0.7) 50%,
-            rgba(245, 179, 0, 0) 100%
-        ) top / 100% 1px no-repeat,
-
-        linear-gradient(
-            to right,
-            rgba(245, 179, 0, 0) 0%,
-            rgba(245, 179, 0, 0.7) 50%,
-            rgba(245, 179, 0, 0) 100%
-        ) bottom / 100% 1px no-repeat;
-    z-index: -1;
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+        to right,
+        rgba(245, 179, 0, 0) 0%,
+        rgba(245, 179, 0, 0.7) 50%,
+        rgba(245, 179, 0, 0) 100%
+      )
+      top / 100% 1px no-repeat,
+    linear-gradient(
+        to right,
+        rgba(245, 179, 0, 0) 0%,
+        rgba(245, 179, 0, 0.7) 50%,
+        rgba(245, 179, 0, 0) 100%
+      )
+      bottom / 100% 1px no-repeat;
+  z-index: -1;
 }
 
 .arrowIcon {
-    position: relative;
-    z-index: 10;
-    width: 60px;
-    height: auto;
+  position: relative;
+  z-index: 10;
+  width: 60px;
+  height: auto;
 }
 .iconWrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    z-index: 1;
-    margin-right: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  z-index: 1;
+  margin-right: 10px;
 }
 
 .blueGlow::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
@@ -152,52 +150,52 @@
   z-index: 0;
 }
 .teamContainer {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
 }
 
 /* ----------- mobile styles -------------*/
 .mobile .container {
-    padding: 0;
+  padding: 0;
 }
 .mobile .wrapper {
-    display: flex;
-    flex-direction: column;
-    height: fit-content;
-    padding: 17px 33px;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  padding: 17px 33px;
 }
 
 .mobile .teamContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .mobile .dateWrapper {
-    padding: 0;
-    margin-bottom: 17px;
-    border: none;
+  padding: 0;
+  margin-bottom: 17px;
+  border: none;
 }
 
 .mobile .teamLogoWrapper {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 10px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
 }
 .mobile .teamContainer {
-    height: 64px;
+  height: 64px;
 }
 
 .mobile .toArrow {
-    width: 108px;
-    height: 100%;
+  width: 108px;
+  height: 100%;
 }
 .mobile .teamLogo {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }

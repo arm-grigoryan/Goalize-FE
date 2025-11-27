@@ -21,6 +21,7 @@ export interface IUserInfo {
   email: string;
   emailConfirmed: boolean;
   phoneNumber: string;
+  age: number;
 }
 
 export interface ITeam {
