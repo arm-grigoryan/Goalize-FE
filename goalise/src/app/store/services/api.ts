@@ -11,24 +11,10 @@ import { IPlayerStats } from "@/types/api/playerStats";
 import { IPlayerTransferHistory } from "@/types/api/playerTransferHistory";
 import { IPlayerProfileMatches } from "@/types/api/PlayerProfilMatches";
 
-export const api = createApi({
-  reducerPath: "api",
+export const publicApi = createApi({
+  reducerPath: "publicApi",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
-    prepareHeaders: (headers) => {
-      if (typeof window !== "undefined") {
-        const token = JSON.parse(
-          localStorage.getItem("goalize_auth_tokens") || "null"
-        );
-        console.log(token.accessToken, "token from local storage");
-
-        if (token) {
-          headers.set("Authorization", `Bearer ${token.accessToken}`);
-        }
-      }
-
-      return headers;
-    },
   }),
   endpoints: (builder) => ({
     getUpComingMatches: builder.query<
@@ -88,17 +74,20 @@ export const api = createApi({
     getLeaguesJoinedTeams: builder.query<ITeam[], number>({
       query: (leagueId) => `/leagues/${leagueId}/joined-teams`,
     }),
-    getUserInfo: builder.query<IPlayerProfile, void>({
-      query: () => `/players/me`,
-    }),
     getPlayerBasicInfo: builder.query<IPlayerProfile, number>({
       query: (playerId) => `/players/${playerId}/info`,
     }),
     getPlayerStats: builder.query<IPlayerStats, number>({
       query: (playerId) => `/players/${playerId}/stats`,
     }),
-    getPlayerTransferHistory: builder.query<IPlayerTransferHistory[], number>({
-      query: (playerId) => `/players/${playerId}/transfers`,
+    getPlayerTransferHistory: builder.query<
+      IPlayerTransferHistory[],
+      { playerId: number; skip: number; take: number }
+    >({
+      query: ({ playerId, skip, take }) => ({
+        url: `/players/${playerId}/transfers`,
+        params: { skip, take },
+      }),
     }),
     getPlayerProfileMatches: builder.query<
       IPlayerProfileMatches[],
@@ -108,6 +97,32 @@ export const api = createApi({
         url: `/players/${playerId}/matches`,
         params: { skip, take },
       }),
+    }),
+  }),
+});
+
+export const api = createApi({
+  reducerPath: "api",
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.NEXT_PUBLIC_API_URL,
+    prepareHeaders: (headers) => {
+      if (typeof window !== "undefined") {
+        const token = JSON.parse(
+          localStorage.getItem("goalize_auth_tokens") || "null"
+        );
+        console.log(token.accessToken, "token from local storage");
+
+        if (token) {
+          headers.set("Authorization", `Bearer ${token.accessToken}`);
+        }
+      }
+
+      return headers;
+    },
+  }),
+  endpoints: (builder) => ({
+    getUserInfo: builder.query<IPlayerProfile, void>({
+      query: () => `/players/me`,
     }),
   }),
 });
@@ -122,9 +137,10 @@ export const {
   useGetLeaguesFixturesQuery,
   useGetLeaguesJoinedTeamsQuery,
   useGetLeaguesInfoQuery,
-  useGetUserInfoQuery,
   useGetPlayerBasicInfoQuery,
   useGetPlayerStatsQuery,
   useGetPlayerTransferHistoryQuery,
   useGetPlayerProfileMatchesQuery,
-} = api;
+} = publicApi;
+
+export const { useGetUserInfoQuery } = api;

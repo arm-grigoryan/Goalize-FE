@@ -1,4 +1,5 @@
 export interface IPlayerProfileMatches {
+  id: number;
   homeTeam: HomeTeam;
   awayTeam: AwayTeam;
   matchDate: string;
