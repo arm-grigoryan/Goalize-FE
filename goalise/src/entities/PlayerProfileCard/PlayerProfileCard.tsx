@@ -30,6 +30,7 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
   teamName,
   quitTeamButtonText,
   onQuitTeamButtonClick,
+  playerHasTeam,
 }) => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
@@ -72,6 +73,7 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
               <div className={styles.playerInfoContainer}>
                 {!isMobile &&
                   isCaptain &&
+                  !playerHasTeam &&
                   onInviteButtonClick &&
                   inviteButtonText && (
                     <Button

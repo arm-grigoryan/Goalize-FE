@@ -6,83 +6,30 @@ import styles from "./PlayerProfile.module.css";
 import MatchList from "@/entities/MatchList";
 import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 import { useState } from "react";
-import { useGetPlayerBasicInfoQuery } from "@/app/store/services/api";
+import {
+  useGetPlayerBasicInfoQuery,
+  useGetUserInfoQuery,
+} from "@/app/store/services/api";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 const hello = () => {
   console.log("hello");
 };
-// const TransferObj: ITransferItemCardProps[] = [
-//   {
-//     date: "25.06.25",
-//     fromTeamLogo: tranferHistoryIcon,
-//     fromTeamName: "Team Name",
-//     toTeamLogo: tranferHistoryIcon,
-//     toTeamName: "Team Name",
-//   },
-//   {
-//     date: "25.06.25",
-//     fromTeamLogo: tranferHistoryIcon,
-//     fromTeamName: "Team Name",
-//     toTeamLogo: tranferHistoryIcon,
-//     toTeamName: "Team Name",
-//   },
-//   {
-//     date: "25.06.25",
-//     fromTeamLogo: tranferHistoryIcon,
-//     fromTeamName: "Team Name",
-//     toTeamLogo: tranferHistoryIcon,
-//     toTeamName: "Team Name",
-//   },
-// ];
-
-// const MatchObject: IMatchCardProps[] = [
-//   {
-//     fisrtTeamName: "Team Name",
-//     firstTeamNameValue: 5,
-//     secondTeamName: "Team Name",
-//     secondTeamNameValue: 6,
-//     date: "25.06.25",
-//     goalsCount: 5,
-//     peopleCount: 2,
-//     redCardsCount: 2,
-//     yellowCardsCount: 2,
-//   },
-//   {
-//     fisrtTeamName: "Team Name",
-//     firstTeamNameValue: 5,
-//     secondTeamName: "Team Name",
-//     secondTeamNameValue: 6,
-//     date: "25.06.25",
-//     goalsCount: 5,
-//     peopleCount: 2,
-//     redCardsCount: 2,
-//     yellowCardsCount: 2,
-//   },
-//   {
-//     fisrtTeamName: "Team Name",
-//     firstTeamNameValue: 5,
-//     secondTeamName: "Team Name",
-//     secondTeamNameValue: 6,
-//     date: "25.06.25",
-//     goalsCount: 5,
-//     peopleCount: 2,
-//     redCardsCount: 2,
-//     yellowCardsCount: 2,
-//   },
-// ];
 export const PlayerProfile = () => {
   const [showInvitation, setShowInvitation] = useState(true);
   const { playerId } = useParams();
   const { data: playerBasicInfo } = useGetPlayerBasicInfoQuery(
     Number(playerId)
   );
+  const { data: userInfo } = useGetUserInfoQuery();
   const t = useTranslations("common.playerProfile.playerBasicInfo");
 
   const onButtonClick = () => {
     setShowInvitation(!showInvitation);
   };
+  const isCaptain =
+    userInfo?.playerInfo.id === userInfo?.playerInfo.team.captainId;
 
   return (
     <div className={styles.container}>
@@ -102,7 +49,7 @@ export const PlayerProfile = () => {
           onQuitTeamButtonClick={hello}
           quitTeamButtonText={t("quitTeamButtonText")}
           teamName={playerBasicInfo?.playerInfo.team.name || ""}
-          isCaptain={true}
+          isCaptain={isCaptain}
           teamLogo={toBeDeleted}
         />
       </div>
