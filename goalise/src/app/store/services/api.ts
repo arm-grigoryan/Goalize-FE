@@ -124,6 +124,34 @@ export const api = createApi({
     getUserInfo: builder.query<IPlayerProfile, void>({
       query: () => `/players/me`,
     }),
+    sendTeamInvitation: builder.mutation<
+      void,
+      { teamId: number; playerId: number }
+    >({
+      query: ({ teamId, playerId }) => ({
+        url: `/teams/${teamId}/invitations`,
+        method: "POST",
+        body: { playerId },
+      }),
+    }),
+    removeTeamMember: builder.mutation<
+      void,
+      { teamId: number; playerId: number }
+    >({
+      query: ({ teamId, playerId }) => ({
+        url: `/teams/${teamId}/members/${playerId}`,
+        method: "DELETE",
+      }),
+    }),
+    makeTeamCaptain: builder.mutation<
+      void,
+      { teamId: number; playerId: number }
+    >({
+      query: ({ teamId, playerId }) => ({
+        url: `/teams/${teamId}/captain/${playerId}`,
+        method: "PUT",
+      }),
+    }),
   }),
 });
 
@@ -143,4 +171,9 @@ export const {
   useGetPlayerProfileMatchesQuery,
 } = publicApi;
 
-export const { useGetUserInfoQuery } = api;
+export const {
+  useGetUserInfoQuery,
+  useSendTeamInvitationMutation,
+  useRemoveTeamMemberMutation,
+  useMakeTeamCaptainMutation,
+} = api;
