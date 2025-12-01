@@ -6,12 +6,11 @@ import styles from "./PlayerProfile.module.css";
 import MatchList from "@/entities/MatchList";
 import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 import { useState } from "react";
-import {
-  useGetPlayerBasicInfoQuery,
-  useGetUserInfoQuery,
-} from "@/app/store/services/api";
+
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { usePlayerProfile } from "./usePlayerProfile";
+import PopupModal from "@/entities/PopupModal";
 
 const hello = () => {
   console.log("hello");
@@ -19,13 +18,19 @@ const hello = () => {
 export const PlayerProfile = () => {
   const [showInvitation, setShowInvitation] = useState(true);
   const { playerId } = useParams();
-  const { data: playerBasicInfo } = useGetPlayerBasicInfoQuery(
-    Number(playerId)
-  );
-  const { data: userInfo } = useGetUserInfoQuery();
-  const t = useTranslations("common.playerProfile.playerBasicInfo");
 
-  const onButtonClick = () => {
+  const t = useTranslations("common.playerProfile.playerBasicInfo");
+  const {
+    userInfo,
+    playerBasicInfo,
+    sendTeamInvitation,
+    removeTeamMember,
+    makeTeamCaptain,
+    showInvitationErrorModal,
+    closeInvitationErrorModal,
+    invitationError,
+  } = usePlayerProfile(Number(playerId));
+  const onShowInvitationModal = () => {
     setShowInvitation(!showInvitation);
   };
   const isCaptain =
@@ -36,21 +41,22 @@ export const PlayerProfile = () => {
       <div className={styles.playerProfileCard}>
         <PlayerProfileCard
           phoneNumber={playerBasicInfo?.playerInfo.userInfo.phoneNumber || ""}
-          onInviteButtonClick={onButtonClick}
+          onInviteButtonClick={onShowInvitationModal}
           playerNumber={String(playerBasicInfo?.playerInfo.shirtNumber || "")}
           inviteButtonText={t("inviteButtonText")}
           makeCaptainButtonText={t("makeCaptainButtonText")}
-          onMakeCaptainButtonClick={hello}
-          onRemoveUserButtonClick={hello}
+          onMakeCaptainButtonClick={makeTeamCaptain}
+          onRemoveUserButtonClick={removeTeamMember}
           profilePic={toBeDeleted}
           fullName={`${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName}`}
           age={String(playerBasicInfo?.playerInfo.userInfo.age || "")}
           foot={playerBasicInfo?.playerInfo.userInfo.workingFoot || ""}
           onQuitTeamButtonClick={hello}
           quitTeamButtonText={t("quitTeamButtonText")}
-          teamName={playerBasicInfo?.playerInfo.team.name || ""}
+          teamName={playerBasicInfo?.playerInfo.team?.name || ""}
           isCaptain={isCaptain}
           teamLogo={toBeDeleted}
+          playerHasTeam={Boolean(playerBasicInfo?.playerInfo.team)}
         />
       </div>
       <div className={styles.grid}>
@@ -63,10 +69,20 @@ export const PlayerProfile = () => {
       </div>
       {!showInvitation && (
         <PlayerInvitationCard
-          onCancelButtonClick={onButtonClick}
-          onConfirmButtonClick={hello}
+          onCancelButtonClick={onShowInvitationModal}
+          onConfirmButtonClick={() => {
+            sendTeamInvitation();
+            onShowInvitationModal();
+          }}
         />
       )}
+      <PopupModal
+        open={showInvitationErrorModal}
+        onClose={() => closeInvitationErrorModal()}
+        title="Cannot Send Invitation"
+        description={invitationError || "An error occurred."}
+        buttonContent="OK"
+      />
     </div>
   );
 };

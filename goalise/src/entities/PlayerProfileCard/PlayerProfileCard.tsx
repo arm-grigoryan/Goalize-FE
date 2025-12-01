@@ -10,8 +10,9 @@ import UnassignedPlayerCard from "../UnassignedPlayerCard";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { useTranslations } from "next-intl";
-import { useGetPlayerStatsQuery } from "@/app/store/services/api";
+// import { useGetPlayerStatsQuery } from "@/app/store/services/api";
 import { useParams } from "next/navigation";
+import { usePlayerProfile } from "@/components/PlayerProfile/usePlayerProfile";
 
 export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
   profilePic,
@@ -36,7 +37,8 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
   const isMobile = width <= MEDIA_TABLET_SMALL;
   const t = useTranslations("playerProfile.buttons");
   const { playerId } = useParams();
-  const { data: playerStats } = useGetPlayerStatsQuery(Number(playerId));
+  const { playerStats } = usePlayerProfile(Number(playerId));
+  // const { data: playerStats } = useGetPlayerStatsQuery(Number(playerId));
   return (
     <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
       <div className={styles.leftContainer}>
@@ -73,7 +75,6 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
               <div className={styles.playerInfoContainer}>
                 {!isMobile &&
                   isCaptain &&
-                  !playerHasTeam &&
                   onInviteButtonClick &&
                   inviteButtonText && (
                     <Button
@@ -146,7 +147,7 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
                 )}
               </div>
             )}
-            {!teamName && (
+            {!playerHasTeam && (
               <div className={styles.unassignedContainer}>
                 <UnassignedPlayerCard link="/" />
               </div>
