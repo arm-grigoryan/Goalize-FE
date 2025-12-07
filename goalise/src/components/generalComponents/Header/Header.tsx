@@ -10,6 +10,8 @@ import { useTranslations } from "next-intl";
 import LanguageSelect from "@/shared/LanguageSelect";
 import { useGetLeaguesQuery } from "@/app/store/services/api";
 import { useEffect, useRef, useState, useMemo } from "react";
+import { useSearchAutoComplete } from "@/hooks/useSearchAutoComplete";
+import type { SearchItem } from "@/types/api/search";
 import PortalDropdown from "@/shared/PortalDropdown";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
@@ -25,10 +27,9 @@ export const Header = () => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
 
-  const { data: leaguesData, isLoading: leaguesLoading } = useGetLeaguesQuery();
+  const { data: leaguesData } = useGetLeaguesQuery();
 
   const [query, setQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [showSearchInput, setShowSearchInput] = useState(false);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
@@ -36,17 +37,40 @@ export const Header = () => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const { isAuthenticated, user, signIn, signOut, loading } = useAuth();
 
-  useEffect(() => {
-    const id = window.setTimeout(() => setDebouncedQuery(query.trim()), 300);
-    return () => window.clearTimeout(id);
-  }, [query]);
+  const {
+    results,
+    isLoading: searchLoading,
+    activeTab,
+    setActiveTab,
+  } = useSearchAutoComplete(query);
+  const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
+  const renderHighlighted = (text: string, q: string) => {
+    if (!q) return text;
+    try {
+      const parts = text.split(new RegExp(`(${escapeRegExp(q)})`, "gi"));
+      return parts.map((part, i) =>
+        part.toLowerCase() === q.toLowerCase() ? (
+          <span key={i} className={styles.search_highlight}>
+            {part}
+          </span>
+        ) : (
+          <span key={i} className={styles.search_dim}>
+            {part}
+          </span>
+        )
+      );
+    } catch {
+      return text;
+    }
+  };
   const filteredLeagues = useMemo(() => {
-    if (!debouncedQuery) return [];
+    // keep legacy behavior when the endpoint isn't available
+    if (!query) return [];
     if (!leaguesData) return [];
-    const q = debouncedQuery.toLowerCase();
+    const q = query.trim().toLowerCase();
     return leaguesData.filter((l) => l.name.toLowerCase().includes(q));
-  }, [debouncedQuery, leaguesData]);
+  }, [query, leaguesData]);
 
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
@@ -80,7 +104,9 @@ export const Header = () => {
   const closeMenu = () => setMobileMenuOpen(false);
 
   const onSearchFocus = () => {
-    if (filteredLeagues.length > 0) setSearchOpen(true);
+    // open if any results
+    if (filteredLeagues.length > 0 || (results && results.all.length > 0))
+      setSearchOpen(true);
   };
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,7 +117,6 @@ export const Header = () => {
 
   const onSelectLeague = () => {
     setQuery("");
-    setDebouncedQuery("");
     setSearchOpen(false);
     setShowSearchInput(false);
   };
@@ -114,7 +139,6 @@ export const Header = () => {
         setTimeout(() => searchInputRef.current?.focus(), 50);
       } else {
         setQuery("");
-        setDebouncedQuery("");
         setSearchOpen(false);
       }
       return next;
@@ -134,8 +158,7 @@ export const Header = () => {
     }
   };
 
-  const userLabel =
-    user?.name || user?.email || "Guest";
+  const userLabel = user?.name || user?.email || "Guest";
 
   return (
     <>
@@ -227,29 +250,63 @@ export const Header = () => {
                         ref={dropdownRef}
                         className={styles.search_dropdown_mobile}
                       >
-                        {leaguesLoading && (
+                        {searchLoading && (
                           <div className={styles.search_loading}>
                             Loading...
                           </div>
                         )}
 
-                        {!leaguesLoading && filteredLeagues.length === 0 && (
-                          <div className={styles.search_no_results}>
-                            No results
-                          </div>
-                        )}
+                        {!searchLoading &&
+                          results &&
+                          results.all.length === 0 && (
+                            <div className={styles.search_no_results}>
+                              No results
+                            </div>
+                          )}
 
-                        {!leaguesLoading &&
-                          filteredLeagues.map((l) => (
-                            <Link
-                              key={l.id}
-                              href={`/leagues/${l.id}`}
-                              className={styles.search_item}
-                              onClick={onSelectLeague}
-                            >
-                              {l.name}
-                            </Link>
-                          ))}
+                        {!searchLoading &&
+                          results &&
+                          results.all.map((it: SearchItem) => {
+                            const href =
+                              it.type === "league"
+                                ? `/leagues/${it.id}`
+                                : it.type === "team"
+                                ? `/teams/${it.id}`
+                                : `/profile/${it.id}`;
+                            return (
+                              <Link
+                                key={`${it.type}-${it.id}`}
+                                href={href}
+                                className={styles.search_item}
+                                onClick={() => {
+                                  setQuery("");
+                                  setSearchOpen(false);
+                                }}
+                              >
+                                {it.pictureUrl && (
+                                  <Image
+                                    src={it.pictureUrl}
+                                    alt={it.mainText}
+                                    width={32}
+                                    height={32}
+                                    className={styles.search_item_image}
+                                  />
+                                )}
+                                <div className={styles.search_item_content}>
+                                  <div className={styles.search_item_label}>
+                                    {renderHighlighted(it.mainText, query)}
+                                  </div>
+                                  {it.secondaryText && (
+                                    <div
+                                      className={styles.search_item_secondary}
+                                    >
+                                      {it.secondaryText}
+                                    </div>
+                                  )}
+                                </div>
+                              </Link>
+                            );
+                          })}
                       </div>
                     )}
                   </div>
@@ -266,8 +323,8 @@ export const Header = () => {
                       {loading
                         ? "Loading..."
                         : isAuthenticated
-                          ? "Sign out"
-                          : "Sign in"}
+                        ? "Sign out"
+                        : "Sign in"}
                     </button>
                   </div>
                 </div>
@@ -344,25 +401,91 @@ export const Header = () => {
 
               {searchOpen && (
                 <div ref={dropdownRef} className={styles.search_dropdown}>
-                  {leaguesLoading && (
+                  {searchLoading && (
                     <div className={styles.search_loading}>Loading...</div>
                   )}
 
-                  {!leaguesLoading && filteredLeagues.length === 0 && (
+                  {!searchLoading && results && results.all.length === 0 && (
                     <div className={styles.search_no_results}>No results</div>
                   )}
 
-                  {!leaguesLoading &&
-                    filteredLeagues.map((l) => (
-                      <Link
-                        key={l.id}
-                        href={`/leagues/${l.id}`}
-                        className={styles.search_item}
-                        onClick={onSelectLeague}
-                      >
-                        <div className={styles.search_item_label}>{l.name}</div>
-                      </Link>
-                    ))}
+                  {!searchLoading && results && (
+                    <div>
+                      <div className={styles.search_tabs}>
+                        <button
+                          className={`${styles.tab} ${
+                            activeTab === "all" ? styles.activeTab : ""
+                          }`}
+                          onClick={() => setActiveTab("all")}
+                        >
+                          All
+                        </button>
+                        <button
+                          className={`${styles.tab} ${
+                            activeTab === "leagues" ? styles.activeTab : ""
+                          }`}
+                          onClick={() => setActiveTab("leagues")}
+                        >
+                          Leagues
+                        </button>
+                        <button
+                          className={`${styles.tab} ${
+                            activeTab === "teams" ? styles.activeTab : ""
+                          }`}
+                          onClick={() => setActiveTab("teams")}
+                        >
+                          Teams
+                        </button>
+                        <button
+                          className={`${styles.tab} ${
+                            activeTab === "players" ? styles.activeTab : ""
+                          }`}
+                          onClick={() => setActiveTab("players")}
+                        >
+                          Players
+                        </button>
+                      </div>
+                      <div className={styles.search_list}>
+                        {(activeTab === "all"
+                          ? results.all
+                          : activeTab === "leagues"
+                          ? results.leagues
+                          : activeTab === "teams"
+                          ? results.teams
+                          : results.players
+                        ).map((it: SearchItem) => {
+                          const href =
+                            it.type === "league"
+                              ? `/leagues/${it.id}`
+                              : it.type === "team"
+                              ? `/teams/${it.id}`
+                              : `/profile/${it.id}`;
+                          return (
+                            <Link
+                              key={`${it.type}-${it.id}`}
+                              href={href}
+                              className={styles.search_item}
+                              onClick={() => {
+                                setQuery("");
+                                setSearchOpen(false);
+                              }}
+                            >
+                              <div className={styles.search_item_content}>
+                                <div className={styles.search_item_label}>
+                                  {renderHighlighted(it.mainText, query)}
+                                </div>
+                                {it.secondaryText && (
+                                  <div className={styles.search_item_secondary}>
+                                    {it.secondaryText}
+                                  </div>
+                                )}
+                              </div>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -388,8 +511,8 @@ export const Header = () => {
                   {loading
                     ? "Loading..."
                     : isAuthenticated
-                      ? "Sign out"
-                      : "Sign in"}
+                    ? "Sign out"
+                    : "Sign in"}
                 </button>
               </div>
               <div className={styles.profile_img_wrapper}>
