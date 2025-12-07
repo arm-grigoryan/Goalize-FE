@@ -11,6 +11,7 @@ import { useParams } from "next/navigation";
 import { useGetLeaguesInfoQuery } from "@/app/store/services/api";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { formatUTCDate } from "@/helper/formatDateAndTime";
 
 export const LeaguesHeader = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -18,7 +19,7 @@ export const LeaguesHeader = () => {
   const { data } = useGetLeaguesInfoQuery(Number(leagueId));
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
-  const date = new Date(data?.registrationDate ?? "").toLocaleDateString();
+  const date = formatUTCDate(data?.registrationDate ?? "");
   return (
     <div className={styles.leagues_header}>
       {isMobile ? (

@@ -12,6 +12,7 @@ import tranferHistoryIcon from "../../assets/pngs/transferHistoryIcon.png";
 import { handleLongStrings } from "@/helper/handleLongStrings";
 import { useEffect, useRef, useState } from "react";
 import { IPlayerTransferHistory } from "@/types/api/playerTransferHistory";
+import { formatUTCDate } from "@/helper/formatDateAndTime";
 
 export const TransferHistoryCard = () => {
   const { width } = useWindowSize();
@@ -85,7 +86,7 @@ export const TransferHistoryCard = () => {
           return (
             <TransferItemCard
               key={obj.id}
-              date={new Date(obj.transferDate).toLocaleDateString()}
+              date={formatUTCDate(obj.transferDate)}
               fromTeamLogo={tranferHistoryIcon}
               fromTeamName={handleLongStrings(obj.fromTeam.name, 7)}
               fromTeamNameToolTip={obj.fromTeam.name}

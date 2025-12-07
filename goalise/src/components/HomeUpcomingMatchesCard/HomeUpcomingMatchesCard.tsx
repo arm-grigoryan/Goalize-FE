@@ -11,6 +11,7 @@ import CustomDivider from "@/shared/Divider";
 import { useEffect, useRef, useState } from "react";
 import { UpcomingMatch } from "@/types/api/upComingMatches";
 import { useTranslations } from "next-intl";
+import { formatUTCDate } from "@/helper/formatDateAndTime";
 
 export const HomeUpcomingMatchesCard = () => {
   const t = useTranslations();
@@ -135,9 +136,9 @@ export const HomeUpcomingMatchesCard = () => {
               className={styles.next_matches_list_inner_wrapper}
             >
               {matches.map((match) => {
-                const { date } = match;
-                const d = new Date(date);
-                const tba = d.toLocaleDateString() === "1/1/1";
+                // const { date } = match;
+                // const d = new Date(date);
+                // const tba = d.toLocaleDateString() === "1/1/1";
 
                 return (
                   <MatchListInnerCard
@@ -146,16 +147,8 @@ export const HomeUpcomingMatchesCard = () => {
                     homeTeamPoints={match.homeTeamPoints}
                     teamNameAway={match.awayTeam.name}
                     awayTeamPoints={match.awayTeamPoints}
-                    matchDate={tba ? "TBA" : d.toLocaleDateString()}
-                    matchTime={
-                      tba
-                        ? "TBA"
-                        : d.toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            hour12: false,
-                          })
-                    }
+                    matchDate={formatUTCDate(match.date)}
+                    matchTime={formatUTCDate(match.date, "HH:MM")}
                   />
                 );
               })}
