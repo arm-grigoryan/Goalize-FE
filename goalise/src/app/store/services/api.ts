@@ -110,7 +110,6 @@ export const api = createApi({
         const token = JSON.parse(
           localStorage.getItem("goalize_auth_tokens") || "null"
         );
-        console.log(token.accessToken, "token from local storage");
 
         if (token) {
           headers.set("Authorization", `Bearer ${token.accessToken}`);
@@ -140,6 +139,12 @@ export const api = createApi({
     >({
       query: ({ teamId, playerId }) => ({
         url: `/teams/${teamId}/members/${playerId}`,
+        method: "DELETE",
+      }),
+    }),
+    quitTeam: builder.mutation<void, { teamId: number }>({
+      query: ({ teamId }) => ({
+        url: `/teams/${teamId}/members/me`,
         method: "DELETE",
       }),
     }),
@@ -175,5 +180,6 @@ export const {
   useGetUserInfoQuery,
   useSendTeamInvitationMutation,
   useRemoveTeamMemberMutation,
+  useQuitTeamMutation,
   useMakeTeamCaptainMutation,
 } = api;

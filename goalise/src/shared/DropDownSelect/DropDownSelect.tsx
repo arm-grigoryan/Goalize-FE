@@ -11,7 +11,7 @@ interface DropDownSelectProps {
 }
 
 export const DropDownSelect: React.FC<DropDownSelectProps> = ({ options }) => {
-  console.log(options, "options");
+  // debug: options
 
   return (
     <div className={styles.dropdown}>

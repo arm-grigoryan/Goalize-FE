@@ -60,7 +60,7 @@ export const HomePastMatchesCard = () => {
     };
   }, [isFetching]);
   const buttonClick = () => {
-    console.log("clicked");
+    // clicked
   };
   return (
     <div className={styles.past_matches}>
