@@ -7,6 +7,7 @@ import { ILeaguesGroup } from "@/types/api/leaguesGroup";
 import { ILeaguesResults } from "@/types/api/leaguesResults";
 import { ITeam } from "@/types/api/temas";
 import { IPlayerProfile } from "@/types/api/userInfo";
+import type { SearchResponse } from "@/types/api/search";
 import { IPlayerStats } from "@/types/api/playerStats";
 import { IPlayerTransferHistory } from "@/types/api/playerTransferHistory";
 import { IPlayerProfileMatches } from "@/types/api/PlayerProfilMatches";
@@ -98,6 +99,12 @@ export const publicApi = createApi({
         params: { skip, take },
       }),
     }),
+    getSearchAutoComplete: builder.query<SearchResponse, string>({
+      query: (text) => ({
+        url: `/search/auto-complete`,
+        params: { searchText: text },
+      }),
+    }),
   }),
 });
 
@@ -174,6 +181,8 @@ export const {
   useGetPlayerStatsQuery,
   useGetPlayerTransferHistoryQuery,
   useGetPlayerProfileMatchesQuery,
+  useGetSearchAutoCompleteQuery,
+  useLazyGetSearchAutoCompleteQuery,
 } = publicApi;
 
 export const {
