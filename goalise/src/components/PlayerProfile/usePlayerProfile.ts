@@ -5,6 +5,7 @@ import {
   useSendTeamInvitationMutation,
   useRemoveTeamMemberMutation,
   useMakeTeamCaptainMutation,
+  useQuitTeamMutation,
 } from "@/app/store/services/api";
 import { useCallback, useState } from "react";
 
@@ -19,13 +20,32 @@ export function usePlayerProfile(playerId: number) {
     useRemoveTeamMemberMutation();
   const [makeCaptain, { isLoading: isMakingCaptain }] =
     useMakeTeamCaptainMutation();
+  const [quitTeamMutation, { isLoading: isQuitting }] = useQuitTeamMutation();
 
   // State to track invitation error modal
   const [invitationError, setInvitationError] = useState<string | null>(null);
   const [showInvitationErrorModal, setShowInvitationErrorModal] =
     useState(false);
 
-  // Method to send team invitation
+  // State to track remove member error
+  const [removeMemberError, setRemoveMemberError] = useState<string | null>(
+    null
+  );
+  const [showRemoveMemberErrorModal, setShowRemoveMemberErrorModal] =
+    useState(false);
+
+  // State to track make captain error
+  const [makeCaptainError, setMakeCaptainError] = useState<string | null>(null);
+  const [showMakeCaptainErrorModal, setShowMakeCaptainErrorModal] =
+    useState(false);
+
+  // State to track quit team error
+  const [quitTeamError, setQuitTeamError] = useState<string | null>(null);
+  const [showQuitTeamErrorModal, setShowQuitTeamErrorModal] = useState(false);
+
+  // State to track non-captain invite attempt
+  const [showNotCaptainModal, setShowNotCaptainModal] = useState(false);
+
   const sendTeamInvitation = useCallback(async () => {
     const teamId = userInfo?.playerInfo?.team?.id;
     if (!teamId) {
@@ -39,7 +59,6 @@ export function usePlayerProfile(playerId: number) {
     } catch (error) {
       console.error("Failed to send invitation:", error);
 
-      // Check if the error is a 400 Bad Request
       if (
         error &&
         typeof error === "object" &&
@@ -58,12 +77,10 @@ export function usePlayerProfile(playerId: number) {
     }
   }, [userInfo?.playerInfo?.team?.id, playerId, sendInvitation]);
 
-  // Method to remove a member from the current user's team
   const removeTeamMember = useCallback(async () => {
     const teamId = userInfo?.playerInfo?.team?.id;
     const targetPlayerId = playerBasicInfo?.playerInfo?.id;
     if (!teamId || !targetPlayerId) {
-      console.error("Team ID or Player ID not available");
       return { success: false, error: "Team ID or Player ID not found" };
     }
 
@@ -72,7 +89,26 @@ export function usePlayerProfile(playerId: number) {
       return { success: true };
     } catch (error) {
       console.error("Failed to remove team member:", error);
-      return { success: false, error };
+
+      if (
+        error &&
+        typeof error === "object" &&
+        "status" in error &&
+        error.status === 400
+      ) {
+        const errorData = error as { data?: { errorMessage?: string } };
+        const errorMessage =
+          errorData?.data?.errorMessage || "Invalid request. Please try again.";
+        setRemoveMemberError(errorMessage);
+        setShowRemoveMemberErrorModal(true);
+        return { success: false, error: errorMessage, is400: true };
+      }
+
+      const unexpectedError =
+        "An unexpected error occurred. Please try again later.";
+      setRemoveMemberError(unexpectedError);
+      setShowRemoveMemberErrorModal(true);
+      return { success: false, error: unexpectedError };
     }
   }, [
     userInfo?.playerInfo?.team?.id,
@@ -80,7 +116,41 @@ export function usePlayerProfile(playerId: number) {
     removeMember,
   ]);
 
-  // Method to make a specific player the captain of the current user's team
+  const quitTeam = useCallback(async () => {
+    const teamId = userInfo?.playerInfo?.team?.id;
+    if (!teamId) {
+      console.error("Team ID not available");
+      return { success: false, error: "Team ID not found" };
+    }
+
+    try {
+      await quitTeamMutation({ teamId }).unwrap();
+      return { success: true };
+    } catch (error) {
+      console.error("Failed to quit team:", error);
+
+      if (
+        error &&
+        typeof error === "object" &&
+        "status" in error &&
+        error.status === 400
+      ) {
+        const errorData = error as { data?: { errorMessage?: string } };
+        const errorMessage =
+          errorData?.data?.errorMessage || "Invalid request. Please try again.";
+        setQuitTeamError(errorMessage);
+        setShowQuitTeamErrorModal(true);
+        return { success: false, error: errorMessage, is400: true };
+      }
+
+      const unexpectedError =
+        "An unexpected error occurred. Please try again later.";
+      setQuitTeamError(unexpectedError);
+      setShowQuitTeamErrorModal(true);
+      return { success: false, error: unexpectedError };
+    }
+  }, [userInfo?.playerInfo?.team?.id, quitTeamMutation]);
+
   const makeTeamCaptain = useCallback(async () => {
     const teamId = userInfo?.playerInfo?.team?.id;
     const targetPlayerId = playerBasicInfo?.playerInfo?.id;
@@ -94,7 +164,26 @@ export function usePlayerProfile(playerId: number) {
       return { success: true };
     } catch (error) {
       console.error("Failed to make team captain:", error);
-      return { success: false, error };
+
+      if (
+        error &&
+        typeof error === "object" &&
+        "status" in error &&
+        error.status === 400
+      ) {
+        const errorData = error as { data?: { errorMessage?: string } };
+        const errorMessage =
+          errorData?.data?.errorMessage || "Invalid request. Please try again.";
+        setMakeCaptainError(errorMessage);
+        setShowMakeCaptainErrorModal(true);
+        return { success: false, error: errorMessage, is400: true };
+      }
+
+      const unexpectedError =
+        "An unexpected error occurred. Please try again later.";
+      setMakeCaptainError(unexpectedError);
+      setShowMakeCaptainErrorModal(true);
+      return { success: false, error: unexpectedError };
     }
   }, [
     userInfo?.playerInfo?.team?.id,
@@ -115,8 +204,23 @@ export function usePlayerProfile(playerId: number) {
     // member removal
     removeTeamMember,
     isRemovingMember,
+    removeMemberError,
+    showRemoveMemberErrorModal,
+    closeRemoveMemberErrorModal: () => setShowRemoveMemberErrorModal(false),
     // make captain
     makeTeamCaptain,
     isMakingCaptain,
+    makeCaptainError,
+    showMakeCaptainErrorModal,
+    closeMakeCaptainErrorModal: () => setShowMakeCaptainErrorModal(false),
+    // quit team
+    quitTeam,
+    isQuitting,
+    quitTeamError,
+    showQuitTeamErrorModal,
+    closeQuitTeamErrorModal: () => setShowQuitTeamErrorModal(false),
+    // non-captain invite
+    showNotCaptainModal,
+    setShowNotCaptainModal,
   };
 }

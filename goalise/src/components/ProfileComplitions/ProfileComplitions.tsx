@@ -11,7 +11,7 @@ export const ProfileComplitions = () => {
 
   const t = useTranslations("common");
   const handleCLick = () => {
-    console.log("clickd");
+    // clicked
   };
   if ((userInfo?.profileCompletionInfo?.percentage ?? 0) >= 100) return null;
   return (

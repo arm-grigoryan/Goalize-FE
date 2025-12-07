@@ -30,8 +30,9 @@ export interface IUsersProps {
 }
 
 export interface IPlayerProfileProps {
+  isLoggedIn?: boolean;
   profilePic?: string | StaticImageData;
-  phoneNumber?: string;
+  phoneNumber: string | null;
   playerNumber?: string;
   inviteButtonText?: string;
   fullName?: string;
@@ -44,6 +45,8 @@ export interface IPlayerProfileProps {
   teamLogo?: string | StaticImageData;
   teamName?: string;
   isCaptain?: boolean;
+  isSameTeam?: boolean;
+  isViewingSelf?: boolean;
   quitTeamButtonText?: string;
   onQuitTeamButtonClick?: () => void;
   playerHasTeam?: boolean;

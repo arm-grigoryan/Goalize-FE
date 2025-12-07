@@ -24,6 +24,8 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
   foot,
   makeCaptainButtonText,
   isCaptain,
+  isSameTeam,
+  isViewingSelf,
   onInviteButtonClick,
   onMakeCaptainButtonClick,
   onRemoveUserButtonClick,
@@ -32,15 +34,15 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
   quitTeamButtonText,
   onQuitTeamButtonClick,
   playerHasTeam,
+  isLoggedIn,
 }) => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
   const t = useTranslations("playerProfile.buttons");
   const { playerId } = useParams();
   const { playerStats } = usePlayerProfile(Number(playerId));
-  // const { data: playerStats } = useGetPlayerStatsQuery(Number(playerId));
   return (
-    <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
+    <div className={styles.container}>
       <div className={styles.leftContainer}>
         <div className={styles.playerContainer}>
           <div className={styles.imageWrapper}>
@@ -49,24 +51,34 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
             )}
             {isMobile && (
               <div className={styles.buttonsContainer}>
-                {isCaptain &&
-                  onMakeCaptainButtonClick &&
-                  makeCaptainButtonText && (
-                    <Button
-                      className="white_button_transparent"
-                      handleClick={onMakeCaptainButtonClick}
-                      content={makeCaptainButtonText}
-                    />
-                  )}
-                {teamName && onRemoveUserButtonClick && (
-                  <Button
-                    className="white_icon_button"
-                    icon={removeUserIng}
-                    iconHeight={12}
-                    iconWidth={12}
-                    handleClick={onRemoveUserButtonClick}
-                  />
-                )}
+                {isLoggedIn ? (
+                  <>
+                    {isCaptain &&
+                      isSameTeam &&
+                      !isViewingSelf &&
+                      onMakeCaptainButtonClick &&
+                      makeCaptainButtonText && (
+                        <Button
+                          className="white_button_transparent"
+                          handleClick={onMakeCaptainButtonClick}
+                          content={makeCaptainButtonText}
+                        />
+                      )}
+                    {teamName &&
+                      onRemoveUserButtonClick &&
+                      isCaptain &&
+                      isSameTeam &&
+                      !isViewingSelf && (
+                        <Button
+                          className="white_icon_button"
+                          icon={removeUserIng}
+                          iconHeight={12}
+                          iconWidth={12}
+                          handleClick={onRemoveUserButtonClick}
+                        />
+                      )}
+                  </>
+                ) : null}
               </div>
             )}
           </div>
@@ -74,7 +86,8 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
             <div className={styles.imageInfoContainer}>
               <div className={styles.playerInfoContainer}>
                 {!isMobile &&
-                  isCaptain &&
+                  (!isSameTeam || !playerHasTeam) &&
+                  !isViewingSelf &&
                   onInviteButtonClick &&
                   inviteButtonText && (
                     <Button
@@ -88,6 +101,7 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
                   <div className={isMobile ? styles.numberNameWrapper : ""}>
                     {" "}
                     <div className={styles.name}>{fullName}</div>
+                    {/* Free Agent label removed per request */}
                     {isMobile && teamName && (
                       <div className={styles.playerNumberContainer}>
                         {playerNumber && (
@@ -106,12 +120,15 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
                       <div className={styles.button}>
                         {t("foot")}: <span> {foot} </span>{" "}
                       </div>
-                      <div className={styles.button}>
-                        {t("contact")}: <span> {phoneNumber} </span>
-                      </div>
+                      {phoneNumber && (
+                        <div className={styles.button}>
+                          {t("contact")}: <span> {phoneNumber} </span>
+                        </div>
+                      )}
                     </div>
                     {isMobile &&
-                      isCaptain &&
+                      (!isSameTeam || !playerHasTeam) &&
+                      !isViewingSelf &&
                       onInviteButtonClick &&
                       inviteButtonText && (
                         <Button
@@ -127,24 +144,34 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
             </div>
             {!isMobile && (
               <div className={styles.buttonsContainer}>
-                {isCaptain &&
-                  onMakeCaptainButtonClick &&
-                  makeCaptainButtonText && (
-                    <Button
-                      className="red_button_transparant_white_text"
-                      handleClick={onMakeCaptainButtonClick}
-                      content={makeCaptainButtonText}
-                    />
-                  )}
-                {teamName && onRemoveUserButtonClick && (
-                  <Button
-                    className="icon_button"
-                    icon={removeUserIng}
-                    iconHeight={12}
-                    iconWidth={12}
-                    handleClick={onRemoveUserButtonClick}
-                  />
-                )}
+                {isLoggedIn ? (
+                  <>
+                    {isCaptain &&
+                      isSameTeam &&
+                      !isViewingSelf &&
+                      onMakeCaptainButtonClick &&
+                      makeCaptainButtonText && (
+                        <Button
+                          className="red_button_transparant_white_text"
+                          handleClick={onMakeCaptainButtonClick}
+                          content={makeCaptainButtonText}
+                        />
+                      )}
+                    {teamName &&
+                      onRemoveUserButtonClick &&
+                      isCaptain &&
+                      isSameTeam &&
+                      !isViewingSelf && (
+                        <Button
+                          className="icon_button"
+                          icon={removeUserIng}
+                          iconHeight={12}
+                          iconWidth={12}
+                          handleClick={onRemoveUserButtonClick}
+                        />
+                      )}
+                  </>
+                ) : null}
               </div>
             )}
             {!playerHasTeam && (
@@ -175,13 +202,18 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
                 )}
                 <div className={styles.teamName}>{teamName}</div>
               </div>
-              {onQuitTeamButtonClick && quitTeamButtonText && (
-                <Button
-                  className="red_button_transparant_white_text"
-                  handleClick={onQuitTeamButtonClick}
-                  content={quitTeamButtonText}
-                />
-              )}
+              {isLoggedIn &&
+                onQuitTeamButtonClick &&
+                quitTeamButtonText &&
+                !isCaptain &&
+                playerHasTeam &&
+                isViewingSelf && (
+                  <Button
+                    className="red_button_transparant_white_text"
+                    handleClick={onQuitTeamButtonClick}
+                    content={quitTeamButtonText}
+                  />
+                )}
             </div>
           </div>
         )}

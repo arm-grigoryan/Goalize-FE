@@ -60,7 +60,7 @@ export const HomeTransferNewsCard = () => {
   }, [isFetching]);
 
   const buttonClick = () => {
-    console.log("clicked");
+    // clicked
   };
   return (
     <div

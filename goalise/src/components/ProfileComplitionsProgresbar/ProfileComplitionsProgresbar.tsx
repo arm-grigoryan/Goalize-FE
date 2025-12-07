@@ -27,7 +27,7 @@ export const ProfileComplitionsProgresbar = () => {
         <div className={styles.fill} style={{ width: `${safeValue}%` }} />
         {userInfo?.profileCompletionInfo?.steps.map((step, index) => {
           pointDistance += step.percentage;
-          console.log(pointDistance, "point distance");
+          // debug: pointDistance
 
           return (
             <div
