@@ -11,6 +11,7 @@ import { ILeaguesResultsItem } from "@/types/api/leaguesResults";
 import { handleLongStrings } from "@/helper/handleLongStrings";
 import { useEffect, useRef, useState } from "react";
 import { useParams, usePathname } from "next/navigation";
+import { formatUTCDate } from "@/helper/formatDateAndTime";
 
 const PAGE_SIZE = 5;
 
@@ -96,13 +97,10 @@ export const LeaguesFixtures = () => {
           <div key={stage} className={styles.fixtures_list}>
             <Title content={stage} />
             {matches.map((match: ILeaguesResultsItem) => {
-              const { date } = match;
-              const d = new Date(date);
-              const tba = d.toLocaleDateString() === "1/1/1";
               return (
                 <PastMatchesInnerCard
                   key={match.id}
-                  date={tba ? "TBA" : d.toLocaleDateString()}
+                  date={formatUTCDate(match.date)}
                   winnerIcon={winnerIcon}
                   teamLogo1={teamLogo}
                   teamLogo2={teamLogo}

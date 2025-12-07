@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { useGetPlayerProfileMatchesQuery } from "@/app/store/services/api";
 import { useEffect, useRef, useState } from "react";
 import { IPlayerProfileMatches } from "@/types/api/PlayerProfilMatches";
+import { formatUTCDate } from "@/helper/formatDateAndTime";
 
 export const MatchList = () => {
   const t = useTranslations("playerProfile.pastMatches");
@@ -88,7 +89,7 @@ export const MatchList = () => {
               homeTeamScore={match.homeTeamScore}
               awayTeamName={match.awayTeam.name}
               awayTeamScore={match.awayTeamScore}
-              date={new Date(match.matchDate).toLocaleDateString()}
+              date={formatUTCDate(match.matchDate)}
               goalsCount={match.playerGoalsCount}
               peopleCount={match.playerAssistsCount}
               redCardsCount={match.playerRedsCount}

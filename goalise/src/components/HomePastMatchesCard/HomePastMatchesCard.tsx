@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import { IMatchesPast } from "@/types/api/matchesPast";
 import { handleLongStrings } from "@/helper/handleLongStrings";
 import { useTranslations } from "next-intl";
+import { formatUTCDate } from "@/helper/formatDateAndTime";
 
 export const HomePastMatchesCard = () => {
   const t = useTranslations();
@@ -86,11 +87,10 @@ export const HomePastMatchesCard = () => {
       )}
       <div ref={scrollContainerRef} className={styles.match_wrapper}>
         {matches.map((match) => {
-          const date = new Date(match.date).toLocaleDateString();
           return (
             <PastMatchesInnerCard
               key={match.id}
-              date={date}
+              date={formatUTCDate(match.date)}
               winnerIcon={winnerIcon}
               drawIcon={drawIcon}
               teamLogo1={teamLogo}

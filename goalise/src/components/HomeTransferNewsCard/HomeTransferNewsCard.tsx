@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { ITransfers } from "@/types/api/transfers";
 import { handleLongStrings } from "@/helper/handleLongStrings";
 import { useTranslations } from "next-intl";
+import { formatUTCDate } from "@/helper/formatDateAndTime";
 
 export const HomeTransferNewsCard = () => {
   const t = useTranslations();
@@ -90,13 +91,12 @@ export const HomeTransferNewsCard = () => {
       )}
       <div ref={scrollContainerRef} className={styles.transfer_wrapper}>
         {transfers.map((transfer) => {
-          const date = new Date(transfer.transferDate).toLocaleDateString();
           return (
             <TransferInnerCard
               key={transfer.id}
               playerImage={playerImg}
               PlayerName={`${transfer.firstName} ${transfer.lastName}`}
-              transferDate={date}
+              transferDate={formatUTCDate(transfer.transferDate)}
               teamLogoFrom={playerImg}
               teamNameFrom={handleLongStrings(transfer.fromTeam.name, 8)}
               teamNameFromTooltip={transfer.fromTeam.name}
