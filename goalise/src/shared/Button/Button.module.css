@@ -26,6 +26,10 @@
   border-radius: 50px;
   border: none;
   outline: none;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 16px 24px; 
+  width: 100%;
   &&:hover {
     cursor: pointer;
   }

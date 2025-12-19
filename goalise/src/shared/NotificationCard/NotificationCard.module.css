@@ -1,0 +1,15 @@
+.container {
+    border: 1px solid transparent;
+    background-clip: padding-box, border-box;
+    background-origin: border-box;
+    background-image:
+        linear-gradient(#0F1011, #0F1011),
+        linear-gradient(to right, #54A2FE, #F6465D);
+        box-shadow:
+        0 0 10px rgba(84, 162, 254, 0.4),
+        0 0 15px rgba(246, 70, 93, 0.3);   
+        justify-self: center;
+    position: absolute;
+    padding: 25px 36px;
+    border-radius: 15px;
+}

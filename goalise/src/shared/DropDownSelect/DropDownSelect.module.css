@@ -1,27 +1,44 @@
 .dropdown {
-  background-color: #101010;
-  border-radius: 8px;
-  border: 1px solid gray;
-  padding: 4px 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    padding: 36px;
+    flex-direction: column;
+    align-items: flex-start;
+    max-height: 300px;
+    border-radius: 15px;
+    border: 1px solid transparent;
+    background-clip: padding-box, border-box;
+    background-origin: border-box;
+   background-image:  linear-gradient(
+    rgba(15, 16, 17, 0.97),
+    rgba(15, 16, 17, 0.87)
+  ), linear-gradient(to right, #54A2FE, #F6465D);
+  backdrop-filter: blur(70px);
+  -webkit-backdrop-filter: blur(70px);
+
+  /* depth */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+    justify-self: center;
+    margin-top: 40px;
+    width: 100%;
+    overflow: hidden;
+}
+.linksWrapper {
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  max-height: 250px;
-  overflow-y: auto;
+  width: 100%;
+}
+.links {
+  color: #E8E8E8;
+  font-size: 20px;
+  text-transform: capitalize;
+  text-decoration: none;
+  padding: 10px 20px;
 }
 
-.option {
-  padding: 8px 12px;
-  cursor: pointer;
-  color: gray;
-  user-select: none;
-}
-
-.option:hover {
-  background-color: #222;
-}
-
-.selectedOption {
-  background-color: #222;
-  color: #ccc;
+.links:hover {
+  border-radius: 10px;
+  border: 0.5px solid rgba(255, 255, 255, 0.10);
+  background: rgba(21, 25, 30, 0.40);
+  backdrop-filter: blur(10px);
 }

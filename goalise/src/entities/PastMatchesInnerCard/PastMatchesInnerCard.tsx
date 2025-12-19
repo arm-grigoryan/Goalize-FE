@@ -7,6 +7,8 @@ import emptyCalendar from "../../assets/pngs/calendarIconEmpty.png";
 import { CustomDivider } from "@/shared/Divider/Divider";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import winnerIconSwapped from '../../assets/pngs/winnerIconSwapped.svg';
+import drawSwappedIcon from '../../assets/pngs/drawIconSwapped.svg'
 interface PastMatchesInnerCardProps {
   date: string;
   winnerIcon: string | StaticImageData;
@@ -145,8 +147,8 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
               isBig ? styles.winner_wrapper_big2 : styles.winner_wrapper
             }
           >
-            {winner2 && <Image src={winnerIcon} alt="" />}
-            {draw && drawIcon && <Image src={drawIcon} alt="" />}
+            {winner2 && <Image src={winnerIconSwapped} alt="" />}
+            {draw  && <Image src={drawSwappedIcon} alt="" />}
           </div>
         </div>
       )}

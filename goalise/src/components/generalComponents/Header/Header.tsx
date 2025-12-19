@@ -4,141 +4,77 @@ import Image from "next/image";
 import logo from "/public/pngs/logo/Logo.svg";
 import profileImg from "/public/images/headerProfileImg.png";
 import Link from "next/link";
-import iconSearch from "../../../assets/pngs/icon-search.png";
+import searchIcon from '../../../assets/pngs/searchicon.svg';
 import { CustomDivider } from "@/shared/Divider/Divider";
 import { useTranslations } from "next-intl";
 import LanguageSelect from "@/shared/LanguageSelect";
 import { useGetLeaguesQuery } from "@/app/store/services/api";
-import { useEffect, useRef, useState, useMemo } from "react";
-import { useSearchAutoComplete } from "@/hooks/useSearchAutoComplete";
-import type { SearchItem } from "@/types/api/search";
-import PortalDropdown from "@/shared/PortalDropdown";
+import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import burgerIcon from "../../../assets/pngs/burgerMenu.png";
 import closeIcon from "../../../assets/pngs/arrowRightIcon.png";
 import { useAuth } from "@/shared/auth/AuthContext";
+import notificationIcon from '../../../assets/pngs/notificationIcon.svg';
+import SearchCard from "@/shared/SearchCard";
+import NotificationCard from "@/shared/NotificationCard";
+import PortalDropdown from "@/shared/PortalDropdown";
 
 export const Header = () => {
   const t = useTranslations();
   const [showDropdown, setShowDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const leaguesRef = useRef<HTMLSpanElement>(null);
+  const notificationRef = useRef<HTMLDivElement>(null);
+  const searchButtonRef = useRef<HTMLDivElement | null>(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
 
   const { data: leaguesData } = useGetLeaguesQuery();
-
-  const [query, setQuery] = useState("");
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [showSearchInput, setShowSearchInput] = useState(false);
-  const searchInputRef = useRef<HTMLInputElement | null>(null);
-  const searchButtonRef = useRef<HTMLDivElement | null>(null);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
   const { isAuthenticated, user, signIn, signOut, loading } = useAuth();
 
-  const {
-    results,
-    isLoading: searchLoading,
-    activeTab,
-    setActiveTab,
-  } = useSearchAutoComplete(query);
-  const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const [showSearchInput, setShowSearchInput] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
-  const renderHighlighted = (text: string, q: string) => {
-    if (!q) return text;
-    try {
-      const parts = text.split(new RegExp(`(${escapeRegExp(q)})`, "gi"));
-      return parts.map((part, i) =>
-        part.toLowerCase() === q.toLowerCase() ? (
-          <span key={i} className={styles.search_highlight}>
-            {part}
-          </span>
-        ) : (
-          <span key={i} className={styles.search_dim}>
-            {part}
-          </span>
-        )
-      );
-    } catch {
-      return text;
-    }
-  };
-  const filteredLeagues = useMemo(() => {
-    // keep legacy behavior when the endpoint isn't available
-    if (!query) return [];
-    if (!leaguesData) return [];
-    const q = query.trim().toLowerCase();
-    return leaguesData.filter((l) => l.name.toLowerCase().includes(q));
-  }, [query, leaguesData]);
+  const userLabel = user?.name || user?.email || "Guest";
 
+  // Close search and notifications on outside click
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
       if (
-        !dropdownRef.current ||
-        dropdownRef.current.contains(e.target as Node) ||
-        (searchInputRef.current &&
-          searchInputRef.current.contains(e.target as Node)) ||
-        (searchButtonRef.current &&
-          searchButtonRef.current.contains(e.target as Node))
-      )
-        return;
+        dropdownRef.current?.contains(e.target as Node) ||
+        searchButtonRef.current?.contains(e.target as Node) ||
+        searchInputRef.current?.contains(e.target as Node) ||
+        notificationRef.current?.contains(e.target as Node)
+      ) return;
+
       setSearchOpen(false);
+      setShowSearchInput(false);
+      setShowNotifications(false);
     }
     document.addEventListener("click", onDocClick);
     return () => document.removeEventListener("click", onDocClick);
   }, []);
 
+  // Lock scroll when mobile menu open
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
+    if (mobileMenuOpen) document.body.classList.add("no-scroll");
+    else document.body.classList.remove("no-scroll");
+
+    return () => document.body.classList.remove("no-scroll");
   }, [mobileMenuOpen]);
 
-  const openMenu = () => setMobileMenuOpen(true);
-  const closeMenu = () => setMobileMenuOpen(false);
-
-  const onSearchFocus = () => {
-    // open if any results
-    if (filteredLeagues.length > 0 || (results && results.all.length > 0))
-      setSearchOpen(true);
-  };
-
-  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-    if (e.target.value.trim()) setSearchOpen(true);
-    else setSearchOpen(false);
-  };
-
-  const onSelectLeague = () => {
-    setQuery("");
-    setSearchOpen(false);
-    setShowSearchInput(false);
-  };
-
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && filteredLeagues.length > 0) {
-      const first = filteredLeagues[0];
-      window.location.href = `/leagues/${first.id}`;
-      onSelectLeague();
-    } else if (e.key === "Escape") {
-      setSearchOpen(false);
-      setShowSearchInput(false);
-    }
-  };
-
   const toggleSearchInput = () => {
-    setShowSearchInput((prev) => {
+    setShowSearchInput(prev => {
       const next = !prev;
       if (next) {
+        setSearchOpen(true);
         setTimeout(() => searchInputRef.current?.focus(), 50);
       } else {
-        setQuery("");
         setSearchOpen(false);
       }
       return next;
@@ -151,30 +87,32 @@ export const Header = () => {
   };
 
   const onAuthClick = () => {
-    if (isAuthenticated) {
-      signOut("/");
-    } else {
-      signIn(getReturnPath());
-    }
+    if (isAuthenticated) signOut("/");
+    else signIn(getReturnPath());
   };
-
-  const userLabel = user?.name || user?.email || "Guest";
 
   return (
     <>
       {isMobile ? (
         <>
           {!mobileMenuOpen && (
-            <div className={styles.burger_menu_closed}>
-              <Image alt="" src={logo} className={styles.logo_wrapper} />
-              <Image
-                alt=""
-                src={burgerIcon}
-                className={styles.burger_menu_icon}
-                onClick={() => openMenu()}
-              />
-            </div>
+            <>
+              <div className={styles.burger_menu_closed}>
+                <Image alt="" src={logo} className={styles.logo_wrapper} />
+                <Image
+                  alt=""
+                  src={burgerIcon}
+                  className={styles.burger_menu_icon}
+                  onClick={() => setMobileMenuOpen(true)}
+                />
+              </div>
+
+              {searchOpen && (
+                <SearchCard open={true} inputRef={searchInputRef} />
+              )}
+            </>
           )}
+
           {mobileMenuOpen && (
             <div className={styles.mobile_menu_open}>
               <div className={styles.logo_and_close_icon_wrapper}>
@@ -183,9 +121,10 @@ export const Header = () => {
                   alt=""
                   src={closeIcon}
                   className={styles.menu_close_icon}
-                  onClick={() => closeMenu()}
+                  onClick={() => setMobileMenuOpen(false)}
                 />
               </div>
+
               <div className={styles.menu_wrapper}>
                 {showDropdown && leaguesRef.current && (
                   <PortalDropdown
@@ -206,15 +145,15 @@ export const Header = () => {
                   <Link
                     href="/"
                     className={styles.link}
-                    onClick={() => closeMenu()}
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {t("header.menu.home")}
                   </Link>
 
                   <span
-                    className={styles.link}
+                    className={`${styles.link} ${!!showDropdown ? styles.selected : ""}`}
                     ref={leaguesRef}
-                    onClick={() => setShowDropdown((prev) => !prev)}
+                    onClick={() => setShowDropdown(prev => !prev)}
                   >
                     {t("header.menu.leagues")}
                   </span>
@@ -222,100 +161,24 @@ export const Header = () => {
                   <Link
                     href="/teams"
                     className={styles.link}
-                    onClick={() => closeMenu()}
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {t("header.menu.teams")}
                   </Link>
+
                   <Link
                     href="/events"
                     className={styles.link}
-                    onClick={() => closeMenu()}
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {t("header.menu.events")}
                   </Link>
-
-                  <div className={styles.mobile_search_wrapper}>
-                    <input
-                      ref={searchInputRef}
-                      value={query}
-                      onChange={onSearchChange}
-                      onFocus={onSearchFocus}
-                      onKeyDown={onKeyDown}
-                      placeholder={"Search leagues..."}
-                      aria-label="Search leagues"
-                      className={styles.mobile_search_input}
-                    />
-                    {searchOpen && (
-                      <div
-                        ref={dropdownRef}
-                        className={styles.search_dropdown_mobile}
-                      >
-                        {searchLoading && (
-                          <div className={styles.search_loading}>
-                            Loading...
-                          </div>
-                        )}
-
-                        {!searchLoading &&
-                          results &&
-                          results.all.length === 0 && (
-                            <div className={styles.search_no_results}>
-                              No results
-                            </div>
-                          )}
-
-                        {!searchLoading &&
-                          results &&
-                          results.all.map((it: SearchItem) => {
-                            const href =
-                              it.type === "league"
-                                ? `/leagues/${it.id}`
-                                : it.type === "team"
-                                ? `/teams/${it.id}`
-                                : `/profile/${it.id}`;
-                            return (
-                              <Link
-                                key={`${it.type}-${it.id}`}
-                                href={href}
-                                className={styles.search_item}
-                                onClick={() => {
-                                  setQuery("");
-                                  setSearchOpen(false);
-                                }}
-                              >
-                                {it.pictureUrl && (
-                                  <Image
-                                    src={it.pictureUrl}
-                                    alt={it.mainText}
-                                    width={32}
-                                    height={32}
-                                    className={styles.search_item_image}
-                                  />
-                                )}
-                                <div className={styles.search_item_content}>
-                                  <div className={styles.search_item_label}>
-                                    {renderHighlighted(it.mainText, query)}
-                                  </div>
-                                  {it.secondaryText && (
-                                    <div
-                                      className={styles.search_item_secondary}
-                                    >
-                                      {it.secondaryText}
-                                    </div>
-                                  )}
-                                </div>
-                              </Link>
-                            );
-                          })}
-                      </div>
-                    )}
-                  </div>
 
                   <div className={styles.mobile_auth_actions}>
                     <button
                       className={styles.auth_button}
                       onClick={() => {
-                        closeMenu();
+                        setMobileMenuOpen(false);
                         onAuthClick();
                       }}
                       disabled={loading}
@@ -335,6 +198,7 @@ export const Header = () => {
       ) : (
         <div className={styles.header}>
           <Image alt="" src={logo} className={styles.logo_wrapper} />
+
           <div className={styles.hader_menu}>
             <div className={styles.link_wrapper}>
               <Link href="/" className={styles.link}>
@@ -344,7 +208,7 @@ export const Header = () => {
               <span
                 className={styles.link}
                 ref={leaguesRef}
-                onClick={() => setShowDropdown((prev) => !prev)}
+                    onClick={() => setShowDropdown((prev) => !prev)}
               >
                 {t("header.menu.leagues")}
               </span>
@@ -355,7 +219,6 @@ export const Header = () => {
               <Link href="/events" className={styles.link}>
                 {t("header.menu.events")}
               </Link>
-
               {showDropdown && leaguesRef.current && (
                 <PortalDropdown
                   options={
@@ -368,153 +231,67 @@ export const Header = () => {
                   }
                   targetRef={leaguesRef}
                   onClose={() => setShowDropdown(false)}
-                  width={200}
                 />
               )}
             </div>
 
-            <div className={styles.search_wrapper}>
-              <div
-                ref={searchButtonRef}
-                className={styles.search_icon_wrapper}
-                aria-hidden
-                onClick={toggleSearchInput}
-              >
-                <Image alt="" src={iconSearch} />
+            <div className={styles.searchContainer}>
+              <div className={styles.search_wrapper}>
+                <div
+                  ref={searchButtonRef}
+                  className={`${searchOpen ? styles.search_icon_wrapper_open : styles.search_icon_wrapper}`}
+                  aria-hidden
+                  onClick={toggleSearchInput}
+                >
+                  <Image alt="" src={searchIcon} />
+                </div>
               </div>
-
-              <input
-                ref={searchInputRef}
-                className={`${styles.search_input} ${
-                  showSearchInput
-                    ? styles.search_input_open
-                    : styles.search_input_closed
-                }`}
-                placeholder={"Search leagues..."}
-                aria-label="Search leagues"
-                value={query}
-                onChange={onSearchChange}
-                onFocus={onSearchFocus}
-                onKeyDown={onKeyDown}
-                onClick={(e) => e.stopPropagation()}
-              />
 
               {searchOpen && (
                 <div ref={dropdownRef} className={styles.search_dropdown}>
-                  {searchLoading && (
-                    <div className={styles.search_loading}>Loading...</div>
-                  )}
-
-                  {!searchLoading && results && results.all.length === 0 && (
-                    <div className={styles.search_no_results}>No results</div>
-                  )}
-
-                  {!searchLoading && results && (
-                    <div>
-                      <div className={styles.search_tabs}>
-                        <button
-                          className={`${styles.tab} ${
-                            activeTab === "all" ? styles.activeTab : ""
-                          }`}
-                          onClick={() => setActiveTab("all")}
-                        >
-                          All
-                        </button>
-                        <button
-                          className={`${styles.tab} ${
-                            activeTab === "leagues" ? styles.activeTab : ""
-                          }`}
-                          onClick={() => setActiveTab("leagues")}
-                        >
-                          Leagues
-                        </button>
-                        <button
-                          className={`${styles.tab} ${
-                            activeTab === "teams" ? styles.activeTab : ""
-                          }`}
-                          onClick={() => setActiveTab("teams")}
-                        >
-                          Teams
-                        </button>
-                        <button
-                          className={`${styles.tab} ${
-                            activeTab === "players" ? styles.activeTab : ""
-                          }`}
-                          onClick={() => setActiveTab("players")}
-                        >
-                          Players
-                        </button>
-                      </div>
-                      <div className={styles.search_list}>
-                        {(activeTab === "all"
-                          ? results.all
-                          : activeTab === "leagues"
-                          ? results.leagues
-                          : activeTab === "teams"
-                          ? results.teams
-                          : results.players
-                        ).map((it: SearchItem) => {
-                          const href =
-                            it.type === "league"
-                              ? `/leagues/${it.id}`
-                              : it.type === "team"
-                              ? `/teams/${it.id}`
-                              : `/profile/${it.id}`;
-                          return (
-                            <Link
-                              key={`${it.type}-${it.id}`}
-                              href={href}
-                              className={styles.search_item}
-                              onClick={() => {
-                                setQuery("");
-                                setSearchOpen(false);
-                              }}
-                            >
-                              <div className={styles.search_item_content}>
-                                <div className={styles.search_item_label}>
-                                  {renderHighlighted(it.mainText, query)}
-                                </div>
-                                {it.secondaryText && (
-                                  <div className={styles.search_item_secondary}>
-                                    {it.secondaryText}
-                                  </div>
-                                )}
-                              </div>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
+                  <SearchCard open={searchOpen} inputRef={searchInputRef} />
                 </div>
               )}
             </div>
           </div>
 
           <div className={styles.leng_and_profile_wrapper}>
-            <div className={styles.icon_and_leng_wrapper}>
+            <div className={styles.icon_and_leng_wrapper} style={{ position: 'relative' }}>
+              <div
+                className={`${styles.iconWrapper} ${styles.redGlow}`}
+                ref={notificationRef}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowNotifications(prev => !prev);
+                }}
+              >
+                <Image src={notificationIcon} alt="Notifications" />
+              </div>
+
+              {showNotifications && (
+                <div
+                  className={styles.notification_dropdown}
+                  style={{
+                    position: "absolute",
+                    top: "calc(100% + 8px)",
+                    right: 0,
+                    zIndex: 1000,
+                  }}
+                >
+                  <NotificationCard />
+                </div>
+              )}
+
               <LanguageSelect />
             </div>
-            <CustomDivider
-              variant="fullWidth"
-              orientation="vertical"
-              flexItem
-            />
+
+            <CustomDivider variant="fullWidth" orientation="vertical" flexItem />
+
             <div className={styles.name_and_img_wrapper}>
               <div className={styles.profile_details}>
                 <span className={styles.user_name}>{userLabel}</span>
-                <button
-                  className={styles.auth_button}
-                  onClick={onAuthClick}
-                  disabled={loading}
-                >
-                  {loading
-                    ? "Loading..."
-                    : isAuthenticated
-                    ? "Sign out"
-                    : "Sign in"}
-                </button>
               </div>
+
               <div className={styles.profile_img_wrapper}>
                 <Image src={profileImg} alt="" className={styles.profile_img} />
               </div>

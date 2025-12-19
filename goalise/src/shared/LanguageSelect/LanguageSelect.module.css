@@ -1,27 +1,76 @@
-.langBox {
+
+.select {
+  background: #101010;
+  border-radius: 10px;
+  min-width: 70px;
+  cursor: pointer;
   display: flex;
-  justify-content: center;
   align-items: center;
+  position: relative;
 }
 
-.langFormControl {
-  width: 100px;
-  background-color: #101010;
-  border-radius: 12px;
+.selectedText {
+  color: #ffffff;
+  font-size: 16px;
+
+  text-shadow:
+    0 0 4px rgba(245, 58, 83, 1),
+    0 0 6px rgba(245, 58, 83, 0.5);
+    margin-right: 4px;
+    text-transform: uppercase;
+}
+.arrow {
+  width: 8px;
+  height: 6px;
+  transition: transform 0.2s ease;
+  filter: drop-shadow(0 0 6px red);
 }
 
-.langLabel {
-  color: gray !important;
+.arrowOpen {
+  transform: rotate(180deg);
 }
 
-.langMenuTypography {
-  color: gray !important;
+.menu {
+  background: #101010;
+  border-radius: 15px;
+  margin-top: 5px;
+  position: absolute;
+  z-index: 50;
+  display: flex;
+  max-width: 170px;
+  min-width: 138px;
+  padding: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  border-radius: 15px;
+  background: #0F1011;
+  border: 1px solid transparent;
+  background-clip: padding-box, border-box;
+  background-origin: border-box;
+  background-image:
+      linear-gradient(
+      rgba(15, 16, 17, 0.97),
+      rgba(15, 16, 17, 0.87)
+    ),
+      linear-gradient(to right, #54A2FE, #F6465D);
+    box-shadow:
+    0 0 10px rgba(84, 162, 254, 0.4),
+    0 0 15px rgba(246, 70, 93, 0.3);   
+    justify-self: center;
 }
 
-.langSelectedValue {
-  color: gray !important;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.option {
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: #222;
+}
+
+.checkIcon {
+  margin-right: 8px;
 }

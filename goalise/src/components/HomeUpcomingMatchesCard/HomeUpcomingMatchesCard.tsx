@@ -80,9 +80,11 @@ export const HomeUpcomingMatchesCard = () => {
       {!data?.length ? (
         <div className={styles.Home_main_card_no_mutch}>
           <div className={styles.title_mobile_wrapper}>
-            <h3 className={styles.title_mobile}>
+            <div className={styles.title_mobile}>
+              <div className={styles.title_text}>
               {t("home.upcomingMatches.title")}
-            </h3>
+            </div> 
+            </div>
           </div>
           <div className={styles.no_upcoming_wrapper}>
             <span className={styles.no_upcoming_text}>
@@ -94,9 +96,11 @@ export const HomeUpcomingMatchesCard = () => {
         <div className={styles.Home_main_card}>
           <div className={styles.match_inner_wrapper}>
             <div>
-              <h3 className={styles.title}>
-                {t("home.upcomingMatches.title")}
-              </h3>
+              <div className={styles.title_mobile}>
+                <div className={styles.title_text}>
+                  {t("home.upcomingMatches.title")}
+                </div>
+              </div>
             </div>
             <div className={styles.match_left_block}>
               <div className={styles.match_left_block_inner_wrapper}>
@@ -126,7 +130,9 @@ export const HomeUpcomingMatchesCard = () => {
               </div>
             </div>
           </div>
-          <CustomDivider orientation="horizontal" variant="middle" />
+          <div className={styles.divider}> 
+            <CustomDivider orientation="vertical" />
+          </div>
           <div className={styles.next_match_list_wrapper}>
             <div className={styles.title_and_day_wrapper}>
               <Title content={t("home.upcomingMatches.matchList")} />
