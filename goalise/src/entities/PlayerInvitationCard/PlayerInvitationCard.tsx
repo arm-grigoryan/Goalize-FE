@@ -5,10 +5,12 @@ import { useTranslations } from 'next-intl';
 interface IPlayerInvitationCardProps {
   onConfirmButtonClick?: () => void;
   onCancelButtonClick?: () => void;
+  playerName: string;
 }
 export const PlayerInvitationCard: React.FC<IPlayerInvitationCardProps> = ({
   onConfirmButtonClick,
-  onCancelButtonClick
+  onCancelButtonClick,
+  playerName
 }) => {
   const t = useTranslations("playerProfile.playerInvitationCard");
 
@@ -20,7 +22,7 @@ export const PlayerInvitationCard: React.FC<IPlayerInvitationCardProps> = ({
             {t("title")}
           </div>
           <div className={styles.label}>
-            {t("label")}
+            {t('label', { playerName })}
           </div>
         </div>
 

@@ -24,8 +24,10 @@ export const PlayerStatistics: React.FC<IPlayerStatisticsProps> = ({
   averageRate,
   goals,
   assists,
+  shots,
   shotsCompleted,
   shotAccuracyPercent,
+  passes,
   passesCompleted,
   passAccuracyPercent,
   tackles,
@@ -37,24 +39,24 @@ export const PlayerStatistics: React.FC<IPlayerStatisticsProps> = ({
   savedPenalties,
   saves,
 }) => {
-    const { width } = useWindowSize();
-    const isMobile = width <= MEDIA_TABLET_SMALL;
-    const t = useTranslations("playerProfile.playerStatistics");
-    const stats = [
-      { label:t("avergaePlayerRate"), value: averageRate, icon: startIcon },
-      { label:t("goals"), value: goals, icon: ballIcon },
-      { label:t("assists"), value: assists, icon: assistsIcon },
-      { label:t("shotsCompleted"), value: shotsCompleted, icon: shotsIcon, shotsAccuracy: shotAccuracyPercent },
-      { label:t("passesCompleted"), value: passesCompleted, icon: passesIcon, passesAccuracy: passAccuracyPercent },
-      { label:t("tackles"), value: tackles, icon: tacklesIcon },
-      { label:t("interceptions"), value: interceptions, icon: interceptionsIcon },
-      { label:t("redCards"), value: redCards, icon: cardIcon },
-      { label:t("yellowCards"), value: yellowCards, icon: cardIcon, isYellowCard: true },
-      { label:t("averageGoalKeeperRate"), value: averageGoalkeeperRate, icon: startIcon, isGoalKeeper: true },
-      { label:t("goalsConceded"), value: goalsConceded, icon: goalsConcededIcon, isGoalKeeper: true },
-      { label:t("savedPenalties"), value: savedPenalties, icon: savedPenaltiesIcon, isGoalKeeper: true },
-      { label:t("saves"), value: saves, icon: savesIcon, isGoalKeeper: true },
-    ];
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("playerProfile.playerStatistics");
+  const stats = [
+    { label: t("avergaePlayerRate"), value: averageRate, icon: startIcon },
+    { label: t("goals"), value: goals, icon: ballIcon },
+    { label: t("assists"), value: assists, icon: assistsIcon },
+    { label: t("shotsCompleted"), value: shots && shotsCompleted ? `${shotsCompleted}/${shots}` : shotsCompleted, icon: shotsIcon, shotsAccuracy: shotAccuracyPercent },
+    { label: t("passesCompleted"), value: passes && passesCompleted ? `${passesCompleted}/${passes}` : passesCompleted, icon: passesIcon, passesAccuracy: passAccuracyPercent },
+    { label: t("tackles"), value: tackles, icon: tacklesIcon },
+    { label: t("interceptions"), value: interceptions, icon: interceptionsIcon },
+    { label: t("redCards"), value: redCards, icon: cardIcon },
+    { label: t("yellowCards"), value: yellowCards, icon: cardIcon, isYellowCard: true },
+    { label: t("averageGoalKeeperRate"), value: averageGoalkeeperRate, icon: startIcon, isGoalKeeper: true },
+    { label: t("goalsConceded"), value: goalsConceded, icon: goalsConcededIcon, isGoalKeeper: true },
+    { label: t("savedPenalties"), value: savedPenalties, icon: savedPenaltiesIcon, isGoalKeeper: true },
+    { label: t("saves"), value: saves, icon: savesIcon, isGoalKeeper: true },
+  ];
 
 
   return (
@@ -64,7 +66,7 @@ export const PlayerStatistics: React.FC<IPlayerStatisticsProps> = ({
           {t("title")}
         </div>
 
-       <div className={styles.button}>
+        <div className={styles.button}>
           {t("buttonText")}: <span>{gamesPlayed}</span>
         </div>
       </div>
@@ -75,10 +77,9 @@ export const PlayerStatistics: React.FC<IPlayerStatisticsProps> = ({
             <div className={styles.labelContainer}>
               <div
                 className={
-                  `${styles.iconWrapper} ${
-                    stat.isGoalKeeper
-                      ? styles.blueGlow
-                      : stat.isYellowCard
+                  `${styles.iconWrapper} ${stat.isGoalKeeper
+                    ? styles.blueGlow
+                    : stat.isYellowCard
                       ? styles.yellowGlow
                       : styles.redGlow
                   }`
@@ -92,18 +93,18 @@ export const PlayerStatistics: React.FC<IPlayerStatisticsProps> = ({
 
             <div className={styles.stroke}></div>
 
-           {!isMobile && <div className={styles.accuracy}>
+            {!isMobile && <div className={styles.accuracy}>
               {(stat.shotsAccuracy || stat.passesAccuracy) && (
                 <span className={styles.bluePercent}>
                   {(stat.shotsAccuracy || stat.passesAccuracy) + "%"}
                 </span>
               )}
             </div>}
-           {isMobile ?  <Tooltip title={(stat.shotsAccuracy || stat.passesAccuracy) && (shotAccuracyPercent || passAccuracyPercent)+ " %"} placement="top">
+            {isMobile ? <Tooltip title={(stat.shotsAccuracy || stat.passesAccuracy) && (shotAccuracyPercent || passAccuracyPercent) + " %"} placement="top">
               <div className={styles.value}>{stat.value}</div>
             </Tooltip>
-           : <div className={styles.value}>{stat.value}</div>}
-          </div>  
+              : <div className={styles.value}>{stat.value}</div>}
+          </div>
         ))}
       </div>
     </div>

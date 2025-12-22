@@ -8,28 +8,31 @@ import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 import { useState } from "react";
 
 import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { usePlayerProfile } from "./usePlayerProfile";
 import PopupModal from "@/entities/PopupModal";
+import { useAuth } from "@/shared/auth/AuthContext";
 
-// placeholder removed; real handlers supplied from hook
 export const PlayerProfile = () => {
   const [showInvitation, setShowInvitation] = useState(true);
   const { playerId } = useParams();
-  const router = useRouter();
+  const { signIn } = useAuth();
 
   const t = useTranslations("common.playerProfile.playerBasicInfo");
   const {
     userInfo,
     playerBasicInfo,
+    isLoadingPlayerInfo,
     sendTeamInvitation,
+    isSendingInvitation,
     removeTeamMember,
     makeTeamCaptain,
     quitTeam,
     showInvitationErrorModal,
     closeInvitationErrorModal,
     invitationError,
+    showInvitationSuccessModal,
+    closeInvitationSuccessModal,
     removeMemberError,
     showRemoveMemberErrorModal,
     closeRemoveMemberErrorModal,
@@ -47,7 +50,6 @@ export const PlayerProfile = () => {
     setShowInvitation(!showInvitation);
   };
 
-  // Compute role: Captain = true if user is captain, false if user exists but not captain, undefined if no user
   const isUserCaptain = userInfo
     ? userInfo?.playerInfo.id === userInfo?.playerInfo.team?.captainId
       ? true
@@ -64,21 +66,17 @@ export const PlayerProfile = () => {
   const isViewingSelf =
     userInfo?.playerInfo.id === playerBasicInfo?.playerInfo.id;
 
-  // Wrapped invite handler that checks role and handles guest redirect
   const handleInviteClick = () => {
-    // Guest: redirect to login
     if (!isLoggedIn) {
-      router.push("/signin-oidc");
+      const currentPath = `${window.location.pathname}${window.location.search}`;
+      signIn(currentPath);
       return;
     }
 
-    // Non-captain logged-in user: show "not allowed" modal
     if (isLoggedIn && !isUserCaptain) {
       setShowNotCaptainModal(true);
       return;
     }
-
-    // Captain or no role restriction: show invitation modal
     onShowInvitationModal();
   };
 
@@ -103,10 +101,15 @@ export const PlayerProfile = () => {
           isCaptain={isUserCaptain}
           isSameTeam={isSameTeam}
           isViewingSelf={isViewingSelf}
-          teamLogo={toBeDeleted}
+          teamLogo={playerBasicInfo?.playerInfo.team ? toBeDeleted : undefined}
           isLoggedIn={isLoggedIn}
           playerHasTeam={Boolean(playerBasicInfo?.playerInfo.team)}
         />
+        {isLoadingPlayerInfo && (
+          <div className={styles.section_loader_overlay}>
+            <div className={styles.loader}></div>
+          </div>
+        )}
       </div>
       <div className={styles.grid}>
         <div className={styles.transferHistoryCard}>
@@ -120,9 +123,10 @@ export const PlayerProfile = () => {
         <PlayerInvitationCard
           onCancelButtonClick={onShowInvitationModal}
           onConfirmButtonClick={() => {
-            sendTeamInvitation();
             onShowInvitationModal();
+            sendTeamInvitation();
           }}
+          playerName={`${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName}`}
         />
       )}
       <PopupModal
@@ -160,6 +164,18 @@ export const PlayerProfile = () => {
         description="You must be a captain to send invitations."
         buttonContent="OK"
       />
+      <PopupModal
+        open={showInvitationSuccessModal}
+        onClose={() => closeInvitationSuccessModal()}
+        title="Invitation Sent Successfully"
+        description="The player has been invited to your team."
+        buttonContent="OK"
+      />
+      {isSendingInvitation && (
+        <div className={styles.loader_container}>
+          <div className={styles.loader}></div>
+        </div>
+      )}
     </div>
   );
 };

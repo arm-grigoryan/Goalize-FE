@@ -176,7 +176,7 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
             )}
             {!playerHasTeam && (
               <div className={styles.unassignedContainer}>
-                <UnassignedPlayerCard link="/" />
+                <UnassignedPlayerCard onClick={onInviteButtonClick} />
               </div>
             )}
           </div>
@@ -224,8 +224,12 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
           goals={playerStats?.goals || 0}
           assists={playerStats?.assists || 0}
           averageRate={playerStats?.averageRate || 0}
+          shots={playerStats?.shots || 0}
           shotsCompleted={playerStats?.shotsCompleted || 0}
           shotAccuracyPercent={playerStats?.shotAccuracyPercent || 0}
+          passes={playerStats?.passes || 0}
+          passesCompleted={playerStats?.passesCompleted || 0}
+          passAccuracyPercent={playerStats?.passAccuracyPercent || 0}
           averageGoalkeeperRate={playerStats?.averageGoalkeeperRate || 0}
           goalsConceded={playerStats?.goalsConceded || 0}
           saves={playerStats?.saves || 0}
@@ -234,8 +238,6 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
           tackles={playerStats?.tackles || 0}
           redCards={playerStats?.redCards || 0}
           yellowCards={playerStats?.yellowCards || 0}
-          passesCompleted={playerStats?.passesCompleted || 0}
-          passAccuracyPercent={playerStats?.passAccuracyPercent || 0}
         />
       </div>
     </div>

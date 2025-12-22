@@ -1,3 +1,3 @@
 export interface IUnassignedPlayerCardProps {
-    link?: string;
+    onClick?: () => void;
 }
