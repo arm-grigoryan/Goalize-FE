@@ -8,7 +8,6 @@ import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 import { useState } from "react";
 
 import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { usePlayerProfile } from "./usePlayerProfile";
 import PopupModal from "@/entities/PopupModal";
