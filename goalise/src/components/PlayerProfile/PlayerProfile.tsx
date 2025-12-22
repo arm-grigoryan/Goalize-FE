@@ -17,7 +17,6 @@ import { useAuth } from "@/shared/auth/AuthContext";
 export const PlayerProfile = () => {
   const [showInvitation, setShowInvitation] = useState(true);
   const { playerId } = useParams();
-  const router = useRouter();
   const { signIn } = useAuth();
 
   const t = useTranslations("common.playerProfile.playerBasicInfo");
