@@ -10,8 +10,8 @@ import {
 import { useCallback, useState } from "react";
 
 export function usePlayerProfile(playerId: number) {
-  const { data: userInfo } = useGetUserInfoQuery();
-  const { data: playerBasicInfo } = useGetPlayerBasicInfoQuery(playerId);
+  const { data: userInfo, refetch: refetchUserInfo } = useGetUserInfoQuery();
+  const { data: playerBasicInfo, refetch: refetchPlayerBasicInfo, isLoading: isLoadingPlayerInfo } = useGetPlayerBasicInfoQuery(playerId);
   const { data: playerStats } = useGetPlayerStatsQuery(playerId);
 
   const [sendInvitation, { isLoading: isSendingInvitation }] =
@@ -22,29 +22,26 @@ export function usePlayerProfile(playerId: number) {
     useMakeTeamCaptainMutation();
   const [quitTeamMutation, { isLoading: isQuitting }] = useQuitTeamMutation();
 
-  // State to track invitation error modal
   const [invitationError, setInvitationError] = useState<string | null>(null);
   const [showInvitationErrorModal, setShowInvitationErrorModal] =
     useState(false);
 
-  // State to track remove member error
   const [removeMemberError, setRemoveMemberError] = useState<string | null>(
     null
   );
   const [showRemoveMemberErrorModal, setShowRemoveMemberErrorModal] =
     useState(false);
 
-  // State to track make captain error
   const [makeCaptainError, setMakeCaptainError] = useState<string | null>(null);
   const [showMakeCaptainErrorModal, setShowMakeCaptainErrorModal] =
     useState(false);
-
-  // State to track quit team error
   const [quitTeamError, setQuitTeamError] = useState<string | null>(null);
   const [showQuitTeamErrorModal, setShowQuitTeamErrorModal] = useState(false);
 
-  // State to track non-captain invite attempt
   const [showNotCaptainModal, setShowNotCaptainModal] = useState(false);
+
+  const [showInvitationSuccessModal, setShowInvitationSuccessModal] =
+    useState(false);
 
   const sendTeamInvitation = useCallback(async () => {
     const teamId = userInfo?.playerInfo?.team?.id;
@@ -55,6 +52,9 @@ export function usePlayerProfile(playerId: number) {
 
     try {
       await sendInvitation({ teamId, playerId }).unwrap();
+      setShowInvitationSuccessModal(true);
+      refetchUserInfo();
+      refetchPlayerBasicInfo();
       return { success: true };
     } catch (error) {
       console.error("Failed to send invitation:", error);
@@ -86,6 +86,8 @@ export function usePlayerProfile(playerId: number) {
 
     try {
       await removeMember({ teamId, playerId: targetPlayerId }).unwrap();
+      refetchUserInfo();
+      refetchPlayerBasicInfo();
       return { success: true };
     } catch (error) {
       console.error("Failed to remove team member:", error);
@@ -125,6 +127,8 @@ export function usePlayerProfile(playerId: number) {
 
     try {
       await quitTeamMutation({ teamId }).unwrap();
+      refetchUserInfo();
+      refetchPlayerBasicInfo();
       return { success: true };
     } catch (error) {
       console.error("Failed to quit team:", error);
@@ -161,6 +165,8 @@ export function usePlayerProfile(playerId: number) {
 
     try {
       await makeCaptain({ teamId, playerId: targetPlayerId }).unwrap();
+      refetchUserInfo();
+      refetchPlayerBasicInfo();
       return { success: true };
     } catch (error) {
       console.error("Failed to make team captain:", error);
@@ -195,31 +201,29 @@ export function usePlayerProfile(playerId: number) {
     userInfo,
     playerBasicInfo,
     playerStats,
-    // invitation
+    isLoadingPlayerInfo,
     sendTeamInvitation,
     isSendingInvitation,
     invitationError,
     showInvitationErrorModal,
     closeInvitationErrorModal: () => setShowInvitationErrorModal(false),
-    // member removal
+    showInvitationSuccessModal,
+    closeInvitationSuccessModal: () => setShowInvitationSuccessModal(false),
     removeTeamMember,
     isRemovingMember,
     removeMemberError,
     showRemoveMemberErrorModal,
     closeRemoveMemberErrorModal: () => setShowRemoveMemberErrorModal(false),
-    // make captain
     makeTeamCaptain,
     isMakingCaptain,
     makeCaptainError,
     showMakeCaptainErrorModal,
     closeMakeCaptainErrorModal: () => setShowMakeCaptainErrorModal(false),
-    // quit team
     quitTeam,
     isQuitting,
     quitTeamError,
     showQuitTeamErrorModal,
     closeQuitTeamErrorModal: () => setShowQuitTeamErrorModal(false),
-    // non-captain invite
     showNotCaptainModal,
     setShowNotCaptainModal,
   };

@@ -75,9 +75,6 @@ export const publicApi = createApi({
     getLeaguesJoinedTeams: builder.query<ITeam[], number>({
       query: (leagueId) => `/leagues/${leagueId}/joined-teams`,
     }),
-    getPlayerBasicInfo: builder.query<IPlayerProfile, number>({
-      query: (playerId) => `/players/${playerId}/info`,
-    }),
     getPlayerStats: builder.query<IPlayerStats, number>({
       query: (playerId) => `/players/${playerId}/stats`,
     }),
@@ -164,6 +161,9 @@ export const api = createApi({
         method: "PUT",
       }),
     }),
+    getPlayerBasicInfo: builder.query<IPlayerProfile, number>({
+      query: (playerId) => `/players/${playerId}/info`,
+    }),
   }),
 });
 
@@ -177,7 +177,6 @@ export const {
   useGetLeaguesFixturesQuery,
   useGetLeaguesJoinedTeamsQuery,
   useGetLeaguesInfoQuery,
-  useGetPlayerBasicInfoQuery,
   useGetPlayerStatsQuery,
   useGetPlayerTransferHistoryQuery,
   useGetPlayerProfileMatchesQuery,
@@ -187,6 +186,7 @@ export const {
 
 export const {
   useGetUserInfoQuery,
+  useGetPlayerBasicInfoQuery,
   useSendTeamInvitationMutation,
   useRemoveTeamMemberMutation,
   useQuitTeamMutation,

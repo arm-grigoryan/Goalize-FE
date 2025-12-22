@@ -22,55 +22,97 @@
   position: relative;
   flex-direction: column;
 }
+
 .cardContainer::before {
   content: "";
   position: absolute;
-   pointer-events: none;
+  pointer-events: none;
   inset: 0;
   padding: 1px;
   border-radius: 12px;
   background: linear-gradient(135deg, #54A2FE, #F6465D);
   -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
-          mask-composite: exclude;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
 }
+
 .titleWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 30px;
 }
+
 .title {
-    color: #E8E8E8;
-    font-size: 36px;
-    font-weight: 500;
-    text-transform: capitalize;
-    margin-bottom: 8px;
-    align-items: center;
+  color: #E8E8E8;
+  font-size: 36px;
+  font-weight: 500;
+  text-transform: capitalize;
+  margin-bottom: 8px;
+  align-items: center;
 }
+
 .label {
-    color: #A5A5A5;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 400;
-    margin-bottom: 36px;
-    max-width: 380px;
+  color: #A5A5A5;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 36px;
+  max-width: 380px;
 }
+
 .buttonsWrapper {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    gap: 10px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 10px;
 }
-.buttonsWrapper > * {
+
+.buttonsWrapper>* {
   flex: 1;
 }
 
 @media (max-width: 408px) {
   .titleWrapper {
     text-align: center;
+  }
+}
+
+.loader_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(15, 15, 15, 0.11);
+  z-index: 9999;
+  border-radius: 12px;
+}
+
+.loader {
+  border: 6px solid rgba(15, 15, 15, 0.11);
+  border-top: 6px solid #f53a53;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }

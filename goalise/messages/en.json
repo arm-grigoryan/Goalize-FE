@@ -94,9 +94,10 @@
     },
     "playerInvitationCard": {
       "title": "Player Invitation",
-      "label": "Invite Vrur Saghatelyan to your team? Your phone number will be visible to the player for contact.",
+      "label": "Invite {playerName} to your team? Your phone number will be visible to the player for contact.",
       "confirmButtonText": "Confirm",
-      "cancelButtonText": "Cancel"
+      "cancelButtonText": "Cancel",
+      "loadingText": "Sending..."
     }
   }
 }
