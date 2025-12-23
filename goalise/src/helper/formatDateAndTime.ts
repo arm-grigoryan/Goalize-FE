@@ -4,16 +4,16 @@ export function formatUTCDate(
   dateString: string | null,
   format: string = "dd-mm-yyyy"
 ): string {
-  if (!dateString) return "TBA";
+  if (!dateString) return "To-Be-Announced";
 
   const normalized = dateString.split(".")[0];
 
-  if (normalized.startsWith("0001-01-01")) return "TBA";
+  if (normalized.startsWith("0001-01-01")) return "To-Be-Announced";
 
-  if (normalized.startsWith("1970-01-01T00:00:00")) return "TBA";
+  if (normalized.startsWith("1970-01-01T00:00:00")) return "To-Be-Announced";
 
   const utcDate = new Date(dateString);
-  if (isNaN(utcDate.getTime())) return "TBA";
+  if (isNaN(utcDate.getTime())) return "To-Be-Announced";
 
   const local = new Date(
     utcDate.toLocaleString("en-US", { timeZone: ARMENIA_TIMEZONE })

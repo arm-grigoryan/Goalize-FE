@@ -1,8 +1,18 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
 .Home_flex_container {
   display: flex;
   gap: 10px;
   padding: 10px 0;
   flex: 3 2;
+}
+
+.profileComplitions {
+  display: flex;
+  width: 100%;
+  margin-bottom: 25px;
 }
 @media (max-width: 768px) {
   .Home_flex_container {

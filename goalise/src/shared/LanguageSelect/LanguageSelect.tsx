@@ -1,102 +1,73 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Typography,
-} from "@mui/material";
+import { useState, useRef, useEffect } from "react";
 import styles from "./LanguageSelect.module.css";
-
+import arrowDown from "../../assets/pngs/arrowDown.svg";
+import Image from "next/image";
+import selectedIcon from '../../assets/pngs/selected.svg';
 const languages = [
-  { code: "en", name: "English" },
-  { code: "hy", name: "Հայերեն" },
+  { code: "en", name: "ENG", fullName: "English" },
+  { code: "hy", name: "Հայ", fullName: "Հայերեն" },
 ];
 
 export const LanguageSelect = () => {
+  const [open, setOpen] = useState(false);
   const [lang, setLang] = useState("en");
+  const ref = useRef<HTMLDivElement>(null);
 
-  const handleChange = (event: SelectChangeEvent<string>) => {
-    setLang(event.target.value as string);
+  const toggle = () => setOpen(!open);
+
+  const selectLang = (code: string) => {
+    setLang(code);
+    setOpen(false);
   };
 
-  const renderValue = (selected: string) => {
-    const item = languages.find((l) => l.code === selected);
-    return (
-      <Typography className={styles.langSelectedValue} variant="body2" noWrap>
-        {item?.name ?? selected}
-      </Typography>
-    );
-  };
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
 
-  const menuProps = {
-    PaperProps: {
-      style: {
-        backgroundColor: "#101010",
-        borderRadius: 12,
-        marginTop: 0,
-        marginBottom: 0,
-      },
-    },
-    MenuListProps: {
-      style: {
-        paddingTop: 0,
-        paddingBottom: 0,
-      },
-    },
-  };
+  const selected = languages.find((l) => l.code === lang);
 
   return (
-    <Box className={styles.langBox}>
-      <FormControl size="small" className={styles.langFormControl}>
-        <InputLabel id="lang-select-label" className={styles.langLabel}>
-          Language
-        </InputLabel>
+    <div className={styles.wrapper} ref={ref}>
+      <div className={styles.select} onClick={toggle}>
+        <span className={styles.selectedText}>{selected?.name}</span>
 
-        <Select
-          labelId="lang-select-label"
-          value={lang}
-          label="Language"
-          onChange={handleChange}
-          renderValue={(v) => renderValue(v as string)}
-          MenuProps={menuProps}
-          sx={{
-            "& .MuiSelect-select": {
-              color: "gray",
-              padding: "6px 10px",
-              borderRadius: 12,
-            },
-            "& .MuiOutlinedInput-notchedOutline": {
-              borderColor: "gray",
-              borderRadius: 12,
-            },
-            "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#888" },
-            "& .MuiSvgIcon-root": { color: "gray" },
-          }}
-        >
+        <Image
+          src={arrowDown}
+          className={`${styles.arrow} ${open ? styles.arrowOpen : ""}`}
+          alt="arrow"
+        />
+      </div>
+
+      {open && (
+        <div className={styles.menu}>
           {languages.map((item) => (
-            <MenuItem
+            <div
               key={item.code}
-              value={item.code}
-              sx={{
-                color: "gray",
-                backgroundColor: "#101010",
-                "&.Mui-selected": { backgroundColor: "#222", color: "#ccc" },
-                "&:hover": { backgroundColor: "#222" },
-                borderRadius: 8,
-              }}
+              className={styles.option}
+              onClick={() => selectLang(item.code)}
             >
-              <Typography className={styles.langMenuTypography} variant="body2">
-                {item.name}
-              </Typography>
-            </MenuItem>
+              {lang === item.code && (
+              <Image
+                src={selectedIcon}
+                alt="selected"
+                className={styles.checkIcon}
+                width={16}
+                height={16}
+              />
+            )}
+            <span className={styles.optionText}>{item.fullName}</span>
+            </div>
           ))}
-        </Select>
-      </FormControl>
-    </Box>
+        </div>
+      )}
+    </div>
   );
 };

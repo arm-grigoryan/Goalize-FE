@@ -1,12 +1,14 @@
 import styles from "./Divider.module.css";
 import type { FC } from "react";
 import { Divider } from "@mui/material";
+import clsx from "clsx";
 
 interface CustomDividerProps {
   variant?: "middle" | "fullWidth" | "inset";
   orientation?: "horizontal" | "vertical";
   flexItem?: boolean;
 }
+
 export const CustomDivider: FC<CustomDividerProps> = ({
   variant,
   orientation,
@@ -14,7 +16,10 @@ export const CustomDivider: FC<CustomDividerProps> = ({
 }) => {
   return (
     <Divider
-      className={styles.divider}
+      className={clsx(
+        styles.divider,
+        orientation === "vertical" && styles["divider-vertical"]
+      )}
       variant={variant}
       orientation={orientation}
       flexItem={flexItem}
@@ -22,4 +27,3 @@ export const CustomDivider: FC<CustomDividerProps> = ({
   );
 };
 
-export default CustomDivider;

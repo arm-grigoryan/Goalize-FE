@@ -1,77 +1,81 @@
 .container {
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  /* allow container to grow with icons/labels */
+  padding: 24px 16px;
+  box-sizing: border-box;
 }
 
-.steps_name_wrapper {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-}
 .track {
   position: relative;
-  height: 16px;
   width: 100%;
-  min-width: 200px;
   max-width: 680px;
+  height: 16px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 999px;
-  overflow: visible;
   border: 1px solid rgba(255, 255, 255, 0.3);
   margin: 0 auto;
+  overflow: visible; /* allow circles/icons to overflow slightly */
 }
 
 .fill {
+  position: absolute;
+  top: 0;
+  left: 0;
   height: 100%;
   background: #ffffff;
   border-radius: 999px;
   transition: width 240ms ease;
-  position: absolute;
-  top: 0;
-  left: 0;
   z-index: 1;
 }
 
-.circle {
+.pointWrapper {
   position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3;
+}
+
+.iconWrapper {
+  margin-bottom: 6px; /* space between icon and circle */
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid white;
+  border-radius: 100px;
+  padding: 10px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.circle {
   width: 24px;
   height: 24px;
   border-radius: 50%;
   background: #ffffff;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-}
-
-.circle_0 {
-  left: 0;
-  transform: translate(-50%, -50%);
-}
-
-.circle_33 {
-  transform: translate(-50%, -50%);
-}
-
-.circle_66 {
-  transform: translate(-50%, -50%);
-}
-
-.circle_100 {
-  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .circle.active {
-  background: #ffffff;
-  border: none;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.25);
 }
 
-.percent {
-  min-width: 36px;
-  text-align: right;
-  color: #0b1020;
-  font-size: 14px;
-  font-weight: 600;
+.stepLabel {
+  margin-top: 6px; /* space between circle and label */
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  text-align: center;
 }

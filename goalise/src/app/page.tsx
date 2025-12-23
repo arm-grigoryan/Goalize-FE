@@ -7,7 +7,7 @@ import ProfileComplitions from "@/components/ProfileComplitions";
 export default function Home() {
   return (
     <div className={styles.page}>
-      <ProfileComplitions />
+      <div className={styles.profileComplitions}> <ProfileComplitions /></div>
       <HomeUpcomingMatchesCard />
       <div className={styles.Home_flex_container}>
         <HomePastMatchesCard />

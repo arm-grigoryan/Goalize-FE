@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import { UpcomingMatch } from "@/types/api/upComingMatches";
 import { useTranslations } from "next-intl";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
-
+import upcomingEmpty from '../../assets/pngs/upcomingEmpty.svg';
 export const HomeUpcomingMatchesCard = () => {
   const t = useTranslations();
   const [offset, setOffset] = useState<number>(0);
@@ -79,12 +79,8 @@ export const HomeUpcomingMatchesCard = () => {
     <>
       {!data?.length ? (
         <div className={styles.Home_main_card_no_mutch}>
-          <div className={styles.title_mobile_wrapper}>
-            <h3 className={styles.title_mobile}>
-              {t("home.upcomingMatches.title")}
-            </h3>
-          </div>
           <div className={styles.no_upcoming_wrapper}>
+            <Image src={upcomingEmpty} alt="" />
             <span className={styles.no_upcoming_text}>
               No upcoming matches scheduled at the moment
             </span>
@@ -94,9 +90,11 @@ export const HomeUpcomingMatchesCard = () => {
         <div className={styles.Home_main_card}>
           <div className={styles.match_inner_wrapper}>
             <div>
-              <h3 className={styles.title}>
-                {t("home.upcomingMatches.title")}
-              </h3>
+              <div className={styles.title_mobile}>
+                <div className={styles.title_text}>
+                  {t("home.upcomingMatches.title")}
+                </div>
+              </div>
             </div>
             <div className={styles.match_left_block}>
               <div className={styles.match_left_block_inner_wrapper}>
@@ -126,7 +124,9 @@ export const HomeUpcomingMatchesCard = () => {
               </div>
             </div>
           </div>
-          <CustomDivider orientation="horizontal" variant="middle" />
+          <div className={styles.divider}> 
+            <CustomDivider orientation="vertical" />
+          </div>
           <div className={styles.next_match_list_wrapper}>
             <div className={styles.title_and_day_wrapper}>
               <Title content={t("home.upcomingMatches.matchList")} />

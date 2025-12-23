@@ -9,14 +9,12 @@ interface PortalDropdownProps {
   options: DropdownOption[];
   targetRef: React.RefObject<HTMLSpanElement | null>;
   onClose?: () => void;
-  width?: number;
 }
 
 export const PortalDropdown: React.FC<PortalDropdownProps> = ({
   options,
   targetRef,
   onClose,
-  width = 200,
 }) => {
   const [coords, setCoords] = useState<{ top: number; left: number } | null>(
     null
@@ -48,7 +46,6 @@ export const PortalDropdown: React.FC<PortalDropdownProps> = ({
         top: coords.top,
         left: coords.left,
         zIndex: 1000,
-        width: width,
       }}
     >
       <DropDownSelect options={options} />

@@ -4,16 +4,17 @@ import Button from "@/shared/Button";
 import calendarIcon from "../../assets/pngs/calendarIcon.png";
 import Title from "@/shared/Title";
 import PastMatchesInnerCard from "../../entities/PastMatchesInnerCard";
-import winnerIcon from "../../assets/pngs/winnerIcon.png";
+import winnerIcon from "../../assets/pngs/winnerIcon.svg";
 import teamLogo from "../../assets/pngs/teamLogo.png";
-import drawIcon from "../../assets/pngs/drawIcon.png";
+import drawIcon from "../../assets/pngs/drawIcon.svg";
 import { useGetPastMatchesQuery } from "@/app/store/services/api";
 import { useEffect, useRef, useState } from "react";
 import { IMatchesPast } from "@/types/api/matchesPast";
 import { handleLongStrings } from "@/helper/handleLongStrings";
 import { useTranslations } from "next-intl";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
-
+import Image from "next/image";
+import pastMatchesEmpty from '../../assets/pngs/pastMatchesEmpty.svg';
 export const HomePastMatchesCard = () => {
   const t = useTranslations();
   const [offset, setOffset] = useState<number>(0);
@@ -64,6 +65,7 @@ export const HomePastMatchesCard = () => {
     // clicked
   };
   return (
+    <div className={styles.border}> 
     <div className={styles.past_matches}>
       <div className={styles.button_and_title_wrapper}>
         <div className={styles.button_wrapper}>
@@ -80,6 +82,7 @@ export const HomePastMatchesCard = () => {
 
       {!data?.length && (
         <div className={styles.no_match_wrapper}>
+          <Image src={pastMatchesEmpty} alt="" />
           <span className={styles.no_match_text}>
             No past match to show at the moment
           </span>
@@ -110,6 +113,7 @@ export const HomePastMatchesCard = () => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };

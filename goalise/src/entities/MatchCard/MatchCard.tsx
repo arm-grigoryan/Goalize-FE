@@ -2,7 +2,7 @@ import { IMatchCardProps } from "./MatchCard.types";
 import styles from "./MatchCard.module.css";
 import Image from "next/image";
 import dateIcon from "../../assets/pngs/dateIcon.svg";
-import ballIcon from "../../assets/pngs/shots.svg";
+import ballIcon from "../../assets/pngs/goals.svg";
 import peopleIcon from "../../assets/pngs/assists.svg";
 import card from "../../assets/pngs/card.svg";
 import { useWindowSize } from "@/hooks/useWindowSize";

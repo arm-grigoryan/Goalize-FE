@@ -1,12 +1,62 @@
 .profile_complitions {
-  background-color: #f53a53;
+  background: linear-gradient(272deg, #C50720 -121.3%, #F6465D 117.02%);
   color: white;
   border-radius: 10px;
-  padding: 30px;
+  padding: 37px 49px;
   display: flex;
+  width: 100%;
+  box-shadow: 0 0 35px rgba(245, 58, 83, 0.35);;
 }
-.info_wrapper {
+.info_wrapperS {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+.title {
+  text-transform: capitalize;
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.introduction {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.progressbar_wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+}
+.buttonWrapper {
+  width: 190px;
+}
+
+/* ------ mobile style ------- */
+
+.mobile {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 24px;
+}
+.mobile .title {
+  font-size: 22px;
+}
+.mobile .introduction {
+  font-size: 14px;
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+.mobile .buttonWrapper {
+  display: flex;
+  width: 100%;
+  margin-top: 26px;
+  justify-content: center;
+  align-items: center;
 }

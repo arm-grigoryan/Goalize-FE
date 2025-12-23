@@ -116,7 +116,7 @@ export const PlayerProfile = () => {
           <TransferHistoryCard />
         </div>
         <div className={styles.matchCard}>
-          <MatchList />
+          <MatchList  />
         </div>
       </div>
       {!showInvitation && (

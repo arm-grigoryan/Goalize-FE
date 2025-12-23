@@ -2,11 +2,10 @@
 import { FC } from "react";
 import styles from "./MatchListInnerCard.module.css";
 import Image from "next/image";
-import calendarEmpty from "../../assets/pngs/calendarIconEmpty.png";
-import clockIcon from "../../assets/pngs/clockIconRed.png";
 import CustomDivider from "@/shared/Divider";
-import vsIcon from "../../assets/pngs/vsIconRedSmall.png";
-
+import vsIcon from "../../assets/pngs/vsIcon.svg";
+import redCalendar from '../../assets/pngs/redCalendar.svg';
+import redClock from '../../assets/pngs/redClock.svg';
 interface MatchListInnerCardProps {
   teamNameHome: string;
   homeTeamPoints: number;
@@ -44,11 +43,13 @@ export const MatchListInnerCard: FC<MatchListInnerCardProps> = ({
           )}
         </div>
       </div>
-      <CustomDivider orientation="vertical" />
+      <div className={styles.divider}> 
+        <CustomDivider orientation="vertical" />
+      </div>
       <div className={styles.match_date_time}>
-        <Image src={calendarEmpty} alt="" />
+        <Image src={redCalendar} alt="" className={styles.icon}/>
         <div>{matchDate}</div>
-        <Image src={clockIcon} alt="" />
+        <Image src={redClock} alt=""  className={styles.icon} />
         <div>{matchTime}</div>
       </div>
     </div>

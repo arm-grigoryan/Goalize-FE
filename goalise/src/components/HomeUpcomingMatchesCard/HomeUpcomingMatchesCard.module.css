@@ -8,6 +8,7 @@
   position: relative;
   gap: 20px;
   padding: 15px;
+  padding-right: 0;
 }
 .Home_main_card_no_mutch {
   border: solid 1px #ffffff1a;
@@ -15,14 +16,14 @@
   display: flex;
   box-shadow: 0 4px 16px 0 #101010;
   background-color: #111317b2;
-  justify-content: space-between;
+  justify-content: center;
   position: relative;
   gap: 20px;
   padding: 15px;
   min-height: 40vh;
-  background-image: url("/pngs/nextMatchLeftInnerBackground.png");
   background-repeat: no-repeat;
   background-position: right;
+  align-items: center;
 }
 
 .match_wrapper {
@@ -76,11 +77,12 @@
   padding: 10px 15px;
   background: #f53a53;
   position: absolute;
-  top: -5%;
-  left: 5%;
-  clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  top: 0;
+  left: 100px;
+  clip-path: polygon(0 0, 100% 0, 85% 80%, 0 100%);
+     border-bottom-left-radius: 85px;
+    border-bottom-right-radius: 85px;
+    height: 31px;
 }
 .title_mobile {
   color: white;
@@ -89,12 +91,33 @@
   padding: 10px 15px;
   background: #f53a53;
   position: absolute;
-  top: -5%;
-  clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  top: 0;
+  left: 100px;
+    clip-path: polygon(
+    0 0,
+    100% 0,
+    88% 100%,
+    12% 100%
+  );
+  border-bottom-left-radius: 85px;
+  border-bottom-right-radius: 85px;
+  height: 20px;
+  position: absolute;
+  width: 170px;
 }
-
+.title_text {
+    display: flex;
+    position: relative;
+    font-size: 16px;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.divider {
+  display: flex;
+  height: inherit;
+}
 .title_mobile_wrapper {
   display: flex;
   width: 100%;
@@ -125,7 +148,7 @@
 
 .next_matches_list_inner_wrapper::-webkit-scrollbar-thumb {
   background-color: #54a2fe;
-  border-radius: 4px;
+  border-radius: 5px 0 0 5px;
 }
 
 .next_matches_list_inner_wrapper::-webkit-scrollbar-track {
@@ -214,14 +237,15 @@
 }
 
 .no_upcoming_wrapper {
-  position: absolute;
-  top: 80%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .no_upcoming_text {
   color: #a5a5a5;
   font-size: 14px;
+  margin-top: 10px;
 }
 
 @media (max-width: 768px) {

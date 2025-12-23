@@ -1,7 +1,7 @@
 .transfer_inner_card {
   display: flex;
   align-items: center;
-  border: solid 1px #15191e66;
+  border: solid 1px #4e586466;
   background-color: #15191e66;
   border-radius: 10px;
   padding: 12px 12px;
@@ -13,6 +13,7 @@
 .teams_info_inner_wrapper {
   display: flex;
   flex-direction: column;
+  gap: 7px;
 }
 .team_info {
   display: flex;
@@ -31,6 +32,10 @@
   min-width: 150px;
   display: flex;
   flex: 1;
+  align-items: center;
+}
+.first_info_name{
+  display: flex;
 }
 .transfer_wrapper {
   width: 100%;
@@ -38,7 +43,12 @@
   flex-direction: column;
   gap: 10px;
 }
-
+.transferLogo {
+  margin-right: 7px;
+}
+.teamLogo {
+  margin-right: 10px;
+}
 @media (max-width: 768px) {
   .transfer_inner_card {
     font-size: 20px;
