@@ -28,13 +28,14 @@ export const ProfileComplitions = () => {
           </div>
         </div>
         {!isMobile && 
+        <div className={styles.buttonWrapper}> 
         <Button
           content={t("ProfileComplition.buttonContent")}
           className="white_button"
           handleClick={handleCLick}
-        />}
+        /></div>}
       </div>
-      <div>
+      <div className={styles.progressbar_wrapper}>
         <ProfileComplitionsProgresbar />
       </div>
       {isMobile && 

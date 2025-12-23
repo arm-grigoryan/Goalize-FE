@@ -1,15 +1,50 @@
 .container {
-    border: 1px solid transparent;
-    background-clip: padding-box, border-box;
-    background-origin: border-box;
-    background-image:
-        linear-gradient(#0F1011, #0F1011),
-        linear-gradient(to right, #54A2FE, #F6465D);
-        box-shadow:
-        0 0 10px rgba(84, 162, 254, 0.4),
-        0 0 15px rgba(246, 70, 93, 0.3);   
-        justify-self: center;
-    position: absolute;
-    padding: 25px 36px;
-    border-radius: 15px;
+  width: 320px;
+  max-height: 380px;
+  padding: 25px 36px;
+  border-radius: 15px;
+  margin-top: 10px;
+  border: 1px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-image:
+    linear-gradient(rgba(15, 16, 17, 0.97), rgba(15, 16, 17, 0.87)),
+    linear-gradient(to right, #54A2FE, #F6465D);
+  box-shadow:
+    0 0 10px rgba(84, 162, 254, 0.4),
+    0 0 15px rgba(246, 70, 93, 0.3);
+  overflow: hidden;
+  justify-self: flex-start;
+}
+
+.title {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  font-size: 20px;
+  color: #E8E8E8;
+  text-transform: capitalize;
+  margin-bottom: 25px;
+
+  background:transparent;
+}
+
+.itemsContainer {
+  max-height: 230px;
+  overflow-y: auto;
+  padding-right: 6px; 
+}
+
+.itemsContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.itemsContainer::-webkit-scrollbar-thumb {
+  background-color: #54A2FE;
+  border-radius: 5px 0 0 5px;
+}
+
+.itemsContainer::-webkit-scrollbar-track {
+  background-color: transparent;
 }

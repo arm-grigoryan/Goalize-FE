@@ -8,6 +8,7 @@
   position: relative;
   gap: 20px;
   padding: 15px;
+  padding-right: 0;
 }
 .Home_main_card_no_mutch {
   border: solid 1px #ffffff1a;
@@ -15,14 +16,14 @@
   display: flex;
   box-shadow: 0 4px 16px 0 #101010;
   background-color: #111317b2;
-  justify-content: space-between;
+  justify-content: center;
   position: relative;
   gap: 20px;
   padding: 15px;
   min-height: 40vh;
-  background-image: url("/pngs/nextMatchLeftInnerBackground.png");
   background-repeat: no-repeat;
   background-position: right;
+  align-items: center;
 }
 
 .match_wrapper {
@@ -114,7 +115,8 @@
     text-transform: capitalize;
 }
 .divider {
-  height: 100%;
+  display: flex;
+  height: inherit;
 }
 .title_mobile_wrapper {
   display: flex;
@@ -146,7 +148,7 @@
 
 .next_matches_list_inner_wrapper::-webkit-scrollbar-thumb {
   background-color: #54a2fe;
-  border-radius: 4px;
+  border-radius: 5px 0 0 5px;
 }
 
 .next_matches_list_inner_wrapper::-webkit-scrollbar-track {
@@ -235,14 +237,15 @@
 }
 
 .no_upcoming_wrapper {
-  position: absolute;
-  top: 80%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .no_upcoming_text {
   color: #a5a5a5;
   font-size: 14px;
+  margin-top: 10px;
 }
 
 @media (max-width: 768px) {

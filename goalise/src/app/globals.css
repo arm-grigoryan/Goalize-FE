@@ -2,12 +2,17 @@
   font-family: var(--font-onest), sans-serif;
 }
 body {
-  background-color: #101010;
   margin: 0;
   box-sizing: border-box;
   padding: 15px 33px;
-  box-shadow: inset 40px 0 80px -40px rgba(255, 0, 0, 0.1),
-    inset -40px 0 80px -40px rgba(100, 180, 255, 0.2);
+  background-origin: border-box;
+  background-color: rgba(15, 16, 17, 0.97);
+  background-image:
+    linear-gradient(
+    rgba(15, 16, 17, 0.95),
+    rgba(15, 16, 17, 0.95)
+  ),
+  linear-gradient(to right, #F6465D, #54A2FE);
 }
 
 body::-webkit-scrollbar {
@@ -16,7 +21,7 @@ body::-webkit-scrollbar {
 
 body::-webkit-scrollbar-thumb {
   background-color: #54a2fe;
-  border-radius: 4px;
+  border-radius: 5px 0 0 5px;
 }
 
 body::-webkit-scrollbar-track {

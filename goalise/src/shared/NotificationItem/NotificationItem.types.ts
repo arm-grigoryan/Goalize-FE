@@ -1,8 +1,9 @@
 export interface INotificationItemProps {
-    type?: string;
-    status?: string;
-    detail?: string;
-    instance?: string;
+    icon?: string;
+    title?: string;
+    description?: string;
+    acceptButtonText?: string;
+    denyButtonText?: string;
     onAcceptButtonClick?: () => void;
-    onDenieButtonClick?: () => void;
+    onDenyButtonClick?: () => void;
 }

@@ -19,7 +19,9 @@ import notificationIcon from '../../../assets/pngs/notificationIcon.svg';
 import SearchCard from "@/shared/SearchCard";
 import NotificationCard from "@/shared/NotificationCard";
 import PortalDropdown from "@/shared/PortalDropdown";
-
+import { INotificationItemProps } from "@/shared/NotificationItem/NotificationItem.types";
+import teamLogo from '../../../assets/pngs/teamLogo.png';
+import ProfileCard from "@/shared/ProfileCard";
 export const Header = () => {
   const t = useTranslations();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -39,28 +41,50 @@ export const Header = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showProfileCard, setShowProfileCard] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
 
   const userLabel = user?.name || user?.email || "Guest";
+  
+  const obj =[
+    { 
+      icon: teamLogo,
+      title: "New comment on your post", 
+      description: "Someone has commented on your recent post."
+    },  
+    {
+      title: "New follower", 
+      description: "You have a new follower."
+    },
+    {
+      title: "Update available", 
+      description: "A new update is available for your app.",
+      acceptButtonText: "Accept",
+      denyButtonText: "Deny",
+      onAcceptButtonClick: () => {},
+      onDenyButtonClick: () => {}
+    },
+  ] as INotificationItemProps[];
 
-  // Close search and notifications on outside click
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
       if (
         dropdownRef.current?.contains(e.target as Node) ||
         searchButtonRef.current?.contains(e.target as Node) ||
         searchInputRef.current?.contains(e.target as Node) ||
-        notificationRef.current?.contains(e.target as Node)
+        notificationRef.current?.contains(e.target as Node)||
+        profileRef.current?.contains(e.target as Node)
       ) return;
 
       setSearchOpen(false);
       setShowSearchInput(false);
       setShowNotifications(false);
+      setShowProfileCard(false);
     }
     document.addEventListener("click", onDocClick);
     return () => document.removeEventListener("click", onDocClick);
   }, []);
 
-  // Lock scroll when mobile menu open
   useEffect(() => {
     if (mobileMenuOpen) document.body.classList.add("no-scroll");
     else document.body.classList.remove("no-scroll");
@@ -206,7 +230,7 @@ export const Header = () => {
               </Link>
 
               <span
-                className={styles.link}
+                className={styles.sele}
                 ref={leaguesRef}
                     onClick={() => setShowDropdown((prev) => !prev)}
               >
@@ -278,7 +302,7 @@ export const Header = () => {
                     zIndex: 1000,
                   }}
                 >
-                  <NotificationCard />
+                  <NotificationCard object={obj}/>
                 </div>
               )}
 
@@ -287,14 +311,25 @@ export const Header = () => {
 
             <CustomDivider variant="fullWidth" orientation="vertical" flexItem />
 
-            <div className={styles.name_and_img_wrapper}>
+            <div className={`${showProfileCard && styles.img_selected} ${ styles.name_and_img_wrapper}`}
+              ref={profileRef}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowProfileCard(prev => !prev);
+                }}>
               <div className={styles.profile_details}>
                 <span className={styles.user_name}>{userLabel}</span>
               </div>
 
-              <div className={styles.profile_img_wrapper}>
+              <div
+                className={styles.profile_img_wrapper }>
                 <Image src={profileImg} alt="" className={styles.profile_img} />
               </div>
+                {showProfileCard && (
+                    <div className={styles.profile_dropdown}>
+                      <ProfileCard  />
+                    </div>
+                )}
             </div>
           </div>
         </div>

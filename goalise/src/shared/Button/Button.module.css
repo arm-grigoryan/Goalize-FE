@@ -61,6 +61,7 @@
   border: #f53a53 1px solid;
   border-radius: 20px;
   color: #f53a53;
+  width: 100%;
   &&:hover {
     cursor: pointer;
   }

@@ -3,12 +3,12 @@ import type { FC } from "react";
 import type { StaticImageData } from "next/image";
 import styles from "./PastMatchesInnerCard.module.css";
 import Image from "next/image";
-import emptyCalendar from "../../assets/pngs/calendarIconEmpty.png";
 import { CustomDivider } from "@/shared/Divider/Divider";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import winnerIconSwapped from '../../assets/pngs/winnerIconSwapped.svg';
 import drawSwappedIcon from '../../assets/pngs/drawIconSwapped.svg'
+import calendarIcon from '../../assets/pngs/dateIcon.svg'
 interface PastMatchesInnerCardProps {
   date: string;
   winnerIcon: string | StaticImageData;
@@ -49,7 +49,7 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
         <div className={styles.past_matches_innerCard_mobile}>
           <div className={styles.date_wrapper}>
             <Image
-              src={emptyCalendar}
+              src={calendarIcon}
               alt=""
               className={styles.empty_calendar}
             />
@@ -107,48 +107,45 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
         </div>
       ) : (
         <div className={styles.past_matches_innerCard}>
-          <Image src={emptyCalendar} alt="" />
-          <div className={styles.date}>{date}</div>
-          <CustomDivider variant="middle" orientation="vertical" flexItem />
+          <div className={styles.date}>
+            <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
+              <Image src={calendarIcon} alt="" className={styles.icon} />
+            </div>
+            {date}
+          </div>
 
-          <div
-            className={
-              isBig ? styles.winner_wrapper_big1 : styles.winner_wrapper
-            }
-          >
-            {winner1 && <Image src={winnerIcon} alt="" />}
-            {draw && drawIcon && <Image src={drawIcon} alt="" />}
+          <div className={styles.side}>
+            <div className={styles.winner_slot}>
+              {winner1 && <Image src={winnerIcon} alt="" />}
+              {draw && drawIcon && <Image src={drawIcon} alt="" />}
+            </div>
+
+            <div className={styles.team}>
+              <Image src={teamLogo1} alt="" />
+              <span className={styles.team_name} title={teamName1Tooltip}>
+                {teamName1}
+              </span>
+            </div>
           </div>
-          <div className={styles.team_info}>
-            <div className={styles.team_logo}>
-              {<Image src={teamLogo1} alt="" />}
-            </div>
-            <div className={styles.team_name} title={teamName1Tooltip}>
-              {teamName1}
-            </div>
-            <div className={styles.score_wrapper}>
-              {teamScore1 !== null && teamScore2 !== null ? (
-                <>
-                  <div>{teamScore1}</div>
-                  <CustomDivider orientation="vertical" flexItem />
-                  <div>{teamScore2}</div>
-                </>
-              ) : (
-                <div>vs</div>
-              )}
-            </div>
-            <div className={styles.team_name} title={teamName2Tooltip}>
-              {teamName2}
-            </div>
-            <div>{<Image src={teamLogo2} alt="" />}</div>
+
+          <div className={styles.score_wrapper}>
+            <span>{teamScore1}</span>
+            <CustomDivider orientation="vertical" flexItem />
+            <span>{teamScore2}</span>
           </div>
-          <div
-            className={
-              isBig ? styles.winner_wrapper_big2 : styles.winner_wrapper
-            }
-          >
-            {winner2 && <Image src={winnerIconSwapped} alt="" />}
-            {draw  && <Image src={drawSwappedIcon} alt="" />}
+
+          <div className={styles.side}>
+            <div className={styles.team}>
+              <span className={styles.team_name} title={teamName2Tooltip}>
+                {teamName2}
+              </span>
+              <Image src={teamLogo2} alt="" />
+            </div>
+
+            <div className={styles.winner_slot2}>
+              {winner2 && <Image src={winnerIconSwapped} alt="" />}
+              {draw && <Image src={drawSwappedIcon} alt="" />}
+            </div>
           </div>
         </div>
       )}

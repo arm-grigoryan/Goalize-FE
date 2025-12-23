@@ -4,10 +4,10 @@
   border-radius: 10px;
   padding: 37px 49px;
   display: flex;
-  width:100% ;
-  box-shadow: 0 0 35px rgba(245, 58, 83, 0.35);
+  width: 100%;
+  box-shadow: 0 0 35px rgba(245, 58, 83, 0.35);;
 }
-.info_wrapper {
+.info_wrapperS {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -24,10 +24,18 @@
   font-size: 16px;
 }
 
-.textWrapper{
-   max-width: 510px;
+.progressbar_wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.textWrapper {
   display: flex;
   flex-direction: column;
+}
+.buttonWrapper {
+  width: 190px;
 }
 
 /* ------ mobile style ------- */
@@ -45,7 +53,7 @@
   margin-top: 12px;
   margin-bottom: 16px;
 }
-.buttonWrapper {
+.mobile .buttonWrapper {
   display: flex;
   width: 100%;
   margin-top: 26px;

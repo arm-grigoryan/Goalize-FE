@@ -25,13 +25,24 @@
   "home": {
     "upcomingMatches": {
       "title": "Upcoming Matches",
-      "matchList": "Match List"
+      "matchList": "Upcoming Matches"
     },
     "pastMatches": {
       "title": "Past Matches"
     },
     "transferNews": {
       "title": "Transfer News"
+    },
+    "notifications": {
+      "title": "Notification"
+    },
+    "profileCard": {
+      "profile": "Profile",
+      "createTeam": "Create Team",
+      "myTeam": "My Team",
+      "accoynt": "Account",
+      "logIn" : "Log In",
+      "logout": "Logout"
     }
   },
   "footer": {

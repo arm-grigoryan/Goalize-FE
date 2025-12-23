@@ -11,7 +11,8 @@ import { ITransfers } from "@/types/api/transfers";
 import { handleLongStrings } from "@/helper/handleLongStrings";
 import { useTranslations } from "next-intl";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
-
+import transferEmpty from '../../assets/pngs/transferEmpty.svg';
+import Image from "next/image";
 export const HomeTransferNewsCard = () => {
   const t = useTranslations();
 
@@ -64,6 +65,7 @@ export const HomeTransferNewsCard = () => {
     // clicked
   };
   return (
+    <div className={styles.border}> 
     <div
       className={
         transfers?.length ? styles.transfer_news : styles.transfer_news_empty
@@ -84,6 +86,7 @@ export const HomeTransferNewsCard = () => {
 
       {!transfers?.length && (
         <div className={styles.no_transfer_wrapper}>
+          <Image src={transferEmpty} alt="" />
           <span className={styles.no_transfer_text}>
             No transfer news is scheduled at the moment
           </span>
@@ -112,6 +115,7 @@ export const HomeTransferNewsCard = () => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };

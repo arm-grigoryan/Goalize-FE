@@ -1,4 +1,5 @@
+import { INotificationItemProps } from "../NotificationItem/NotificationItem.types";
+
 export interface INotificationCardProps {
-    title?: string;
-  
+    object?: INotificationItemProps[];
 }
