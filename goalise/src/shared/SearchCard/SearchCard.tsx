@@ -4,7 +4,7 @@ import { useSearchAutoComplete } from "@/hooks/useSearchAutoComplete";
 import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useGetLeaguesQuery } from "@/app/store/services/api";
+// import { useGetLeaguesQuery } from "@/app/store/services/api";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import redSearchIcon from '../../assets/pngs/redSearchIcon.svg';
@@ -14,7 +14,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
   // const [searchOpen, setSearchOpen] = useState(false)
   // const { data: leaguesData } = useGetLeaguesQuery();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  // const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   //  const renderHighlighted = (text: string, q: string) => {
   //   if (!q) return text;
   //   try {
