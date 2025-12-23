@@ -1,41 +1,39 @@
 import { ISearchCardProps } from "./SearchCard.types";
 import styles from './SearchCard.module.css';
 import { useSearchAutoComplete } from "@/hooks/useSearchAutoComplete";
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { SearchItem } from "@/types/api/search";
 import Image from "next/image";
 import { useGetLeaguesQuery } from "@/app/store/services/api";
-import teamLogo from '../../assets/pngs/teamLogo.png';
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import redSearchIcon from '../../assets/pngs/redSearchIcon.svg';
 
 export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
   const [query, setQuery] = useState("");
-  const [searchOpen, setSearchOpen] = useState(false)
-  const { data: leaguesData } = useGetLeaguesQuery();
+  // const [searchOpen, setSearchOpen] = useState(false)
+  // const { data: leaguesData } = useGetLeaguesQuery();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-   const renderHighlighted = (text: string, q: string) => {
-    if (!q) return text;
-    try {
-      const parts = text.split(new RegExp(`(${escapeRegExp(q)})`, "gi"));
-      return parts.map((part, i) =>
-        part.toLowerCase() === q.toLowerCase() ? (
-          <span key={i} className={styles.search_highlight}>
-            {part}
-          </span>
-        ) : (
-          <span key={i} className={styles.search_dim}>
-            {part}
-          </span>
-        )
-      );
-    } catch {
-      return text;
-    }
-  };
+  //  const renderHighlighted = (text: string, q: string) => {
+  //   if (!q) return text;
+  //   try {
+  //     const parts = text.split(new RegExp(`(${escapeRegExp(q)})`, "gi"));
+  //     return parts.map((part, i) =>
+  //       part.toLowerCase() === q.toLowerCase() ? (
+  //         <span key={i} className={styles.search_highlight}>
+  //           {part}
+  //         </span>
+  //       ) : (
+  //         <span key={i} className={styles.search_dim}>
+  //           {part}
+  //         </span>
+  //       )
+  //     );
+  //   } catch {
+  //     return text;
+  //   }
+  // };
   const {
     results,
     isLoading: searchLoading,
