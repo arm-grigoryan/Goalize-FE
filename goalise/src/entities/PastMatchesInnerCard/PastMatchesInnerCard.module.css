@@ -81,7 +81,7 @@
   justify-content: center;
   gap: 10px;
 
-  min-width: 70px;
+  max-width: 70px;
   font-size: 22px;
   font-weight: 700;
 
@@ -90,12 +90,12 @@
 
 /* ---------- WINNERS (BORDER PINNED) ---------- */
 .winner_slot {
-  min-width: 80px;
+  width: 80px;
   display: flex;
   align-items: center;
   position: relative;
 }
-.winner_slot2{
+.winner_slot2 {
   position: relative;
 }
 /* LEFT */
@@ -104,7 +104,7 @@
   justify-self: start;
   display: flex;
   align-items: center;
-  min-width: 80px;
+  max-width: 80px;
 }
 
 /* RIGHT */
@@ -113,7 +113,7 @@
   justify-self: end;
   display: flex;
   align-items: center;
-  min-width: 80px;
+  max-width: 80px;
 }
 
 /* ---------- DIVIDER ---------- */
@@ -140,23 +140,21 @@
 .team_info_mobile {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .past_matches_innerCard_mobile {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  width: 90%;
-  margin: 0 auto;
-  padding: 12px;
+  flex-direction: column;
+  padding: 17px 33px;
 
   border: 1px solid #ffffff1a;
   background-color: #15191e66;
   border-radius: 10px;
   color: #e8e8e8;
-  font-size: 30px;
+  font-size: 14px;
 }
 
 .away_team_info_mobile,
@@ -166,10 +164,11 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
+  min-width: 100px;
 }
 
 .team_logo_mobile {
-  width: 60px;
+  max-width: 60px;
   height: fit-content;
 }
 
@@ -182,9 +181,26 @@
   display: flex;
   gap: 8px;
   font-weight: 700;
+  align-self: center;
+  position: relative;
+  top: 16px;
+  margin: 0 10px;
+  font-weight: 700;
 }
 
+.mobile {
+  display: flex;
+}
+.mobile .date {
+  border: none;
+}
+.mobile .empty_calendar {
+  width: 18px;
+  margin-right: 8px;
+} 
 .winner_wrapper_mobile {
-  min-width: 100px;
-  min-height: 50px;
+      position: relative;
+    max-width: 100px;
+    min-height: 50px;
+    top: 34px;
 }

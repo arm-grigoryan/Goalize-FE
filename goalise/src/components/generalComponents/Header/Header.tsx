@@ -38,7 +38,7 @@ export const Header = () => {
   const { data: leaguesData } = useGetLeaguesQuery();
   const { isAuthenticated, user, signIn, signOut, loading } = useAuth();
 
-  const [showSearchInput, setShowSearchInput] = useState(false);
+  const [, setShowSearchInput] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileCard, setShowProfileCard] = useState(false);

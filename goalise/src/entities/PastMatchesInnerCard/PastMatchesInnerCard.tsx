@@ -46,13 +46,15 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
   return (
     <>
       {isMobile ? (
-        <div className={styles.past_matches_innerCard_mobile}>
+        <div className={`${isMobile ? styles.mobile : ""} ${styles.past_matches_innerCard_mobile}`}>
           <div className={styles.date_wrapper}>
+            <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
             <Image
               src={calendarIcon}
               alt=""
               className={styles.empty_calendar}
             />
+            </div>
             <div className={styles.date}>{date}</div>
           </div>
           <div className={styles.team_info_mobile}>
@@ -106,7 +108,7 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
           </div>
         </div>
       ) : (
-        <div className={styles.past_matches_innerCard}>
+        <div className={`${styles.past_matches_innerCard} ${isMobile ? styles.mobile : ""}`}>
           <div className={styles.date}>
             <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
               <Image src={calendarIcon} alt="" className={styles.icon} />

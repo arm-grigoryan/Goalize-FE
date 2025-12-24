@@ -6,6 +6,8 @@ import CustomDivider from "@/shared/Divider";
 import vsIcon from "../../assets/pngs/vsIcon.svg";
 import redCalendar from '../../assets/pngs/redCalendar.svg';
 import redClock from '../../assets/pngs/redClock.svg';
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 interface MatchListInnerCardProps {
   teamNameHome: string;
   homeTeamPoints: number;
@@ -23,8 +25,10 @@ export const MatchListInnerCard: FC<MatchListInnerCardProps> = ({
   matchDate,
   matchTime,
 }) => {
+   const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
   return (
-    <div className={styles.match_list_innerCard}>
+    <div className={` ${styles.match_list_innerCard} ${isMobile ? styles.mobile : ""} `}>
       <div className={styles.teams_info}>
         <div className={styles.team_inner_info}>
           <div className={styles.team_name}>{teamNameHome}</div>
@@ -48,9 +52,9 @@ export const MatchListInnerCard: FC<MatchListInnerCardProps> = ({
       </div>
       <div className={styles.match_date_time}>
         <Image src={redCalendar} alt="" className={styles.icon}/>
-        <div>{matchDate}</div>
+        <div className={styles.date}>{matchDate}</div>
         <Image src={redClock} alt=""  className={styles.icon} />
-        <div>{matchTime}</div>
+        <div className={styles.time}>{matchTime}</div>
       </div>
     </div>
   );

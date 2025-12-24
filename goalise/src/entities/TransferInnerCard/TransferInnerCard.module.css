@@ -7,8 +7,8 @@
   padding: 12px 12px;
   color: #e8e8e8;
   gap: 10px;
-  width: 90%;
   margin: 0 auto;
+  width: 90%;
 }
 .teams_info_inner_wrapper {
   display: flex;
@@ -24,12 +24,12 @@
   flex: 2;
 }
 .player_info_and_date {
-  min-width: 200px;
+  max-width: 200px;
   display: flex;
   flex-direction: column;
 }
 .transfer_info_wrapper {
-  min-width: 150px;
+  max-width: 200px;
   display: flex;
   flex: 1;
   align-items: center;
@@ -51,7 +51,6 @@
 }
 @media (max-width: 768px) {
   .transfer_inner_card {
-    font-size: 20px;
     width: 90%;
   }
   .player_info_wrapper {
@@ -62,4 +61,10 @@
     display: flex;
     min-width: 50px;
   }
+}
+.mobile .transfer_inner_card {
+  font-size: 14px;
+}
+.mobile .teams_info_inner_wrapper {
+  text-overflow: ellipsis;
 }

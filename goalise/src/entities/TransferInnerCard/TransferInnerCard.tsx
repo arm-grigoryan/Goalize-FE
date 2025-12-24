@@ -4,6 +4,8 @@ import type { FC } from "react";
 import Image, { StaticImageData } from "next/image";
 import transferIcon from "../../assets/pngs/transferIcon.png";
 import { CustomDivider } from "@/shared/Divider/Divider";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 interface TransferInnerCardProps {
   playerImage: string | StaticImageData;
@@ -28,8 +30,10 @@ export const TransferInnerCard: FC<TransferInnerCardProps> = ({
   teamNameTo,
   teamNameToTooltip,
 }) => {
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
   return (
-    <div className={styles.transfer_inner_card}>
+    <div className={` ${styles.transfer_inner_card} ${isMobile ? styles.mobile : ""} `}>
       <div className={styles.player_info_wrapper}>
         <Image src={playerImage} alt="" />
         <div className={styles.player_info_and_date}>

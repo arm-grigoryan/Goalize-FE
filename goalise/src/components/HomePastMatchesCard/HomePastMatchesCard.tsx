@@ -15,7 +15,11 @@ import { useTranslations } from "next-intl";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
 import Image from "next/image";
 import pastMatchesEmpty from '../../assets/pngs/pastMatchesEmpty.svg';
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 export const HomePastMatchesCard = () => {
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
   const t = useTranslations();
   const [offset, setOffset] = useState<number>(0);
   const [matches, setMatches] = useState<IMatchesPast[]>([]);
@@ -65,7 +69,7 @@ export const HomePastMatchesCard = () => {
     // clicked
   };
   return (
-    <div className={styles.border}> 
+    <div className={`${styles.border} ${isMobile ? styles.mobile : ""}`}> 
     <div className={styles.past_matches}>
       <div className={styles.button_and_title_wrapper}>
         <div className={styles.button_wrapper}>

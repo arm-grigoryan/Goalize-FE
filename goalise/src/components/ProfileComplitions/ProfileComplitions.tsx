@@ -10,14 +10,14 @@ import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 
 export const ProfileComplitions = () => {
   const { data: userInfo } = useGetUserInfoQuery();
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
 
   const t = useTranslations("common");
   const handleCLick = () => {
     // clicked
   };
   if ((userInfo?.profileCompletionInfo?.percentage ?? 0) >= 100) return null;
-    const { width } = useWindowSize();
-    const isMobile = width <= MEDIA_TABLET_SMALL;
   return (
     <div className={`${styles.profile_complitions} ${isMobile ? styles.mobile : ""}`}>
       <div className={styles.info_wrapperS}>
