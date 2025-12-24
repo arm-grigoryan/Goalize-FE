@@ -8,6 +8,8 @@ import basicInfoIcon from "../../assets/pngs/basicInfoIcon.svg";
 import profilePictureIcon from "../../assets/pngs/profilePictureIcon.svg";
 import footIcon from "../../assets/pngs/footIcon.svg";
 import emailIcon from "../../assets/pngs/emailIcon.svg";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 
 const STEP_ICONS = [
   basicInfoIcon,
@@ -20,9 +22,11 @@ export const ProfileComplitionsProgresbar = () => {
   const { data: userInfo } = useGetUserInfoQuery();
   const safeValue = userInfo?.profileCompletionInfo?.percentage || 0;
   let pointDistance = 0;
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
       <div
         className={styles.track}
         role="progressbar"
@@ -50,7 +54,7 @@ export const ProfileComplitionsProgresbar = () => {
                   className={styles.icon}
                 />
               </div>
-
+            <div> % </div>
               <div
                 className={`${styles.circle} ${
                   safeValue >= pointDistance ? styles.active : ""

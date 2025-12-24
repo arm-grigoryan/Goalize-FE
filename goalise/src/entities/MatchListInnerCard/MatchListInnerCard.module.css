@@ -54,6 +54,9 @@
   height: 100%;
   margin-top: 14px;
 }
+.date {
+  text-overflow: ellipsis;
+}
 @media (max-width: 768px) {
   .match_list_innerCard {
     font-size: 14px;
@@ -70,4 +73,7 @@
   .vs_icon {
     margin: 0 10px -10px 140px;
   }
+}
+.mobile .teams_info {
+  min-width: 121px;
 }
