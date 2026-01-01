@@ -38,8 +38,14 @@
 
 .icon {
   display: flex;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
+  margin-bottom: 3px;
+}
+.iconTime {
+  display: flex;
+  width: 13px;
+  height: 13px;
   margin-bottom: 3px;
 }
 .vs_icon {
@@ -49,6 +55,7 @@
 
 .team_points {
   color: #a5a5a5;
+  height: 18px;
 }
 .divider {
   height: 100%;
@@ -69,11 +76,13 @@
   }
   .match_date_time {
     gap: 4px;
+    margin: 0;
   }
   .vs_icon {
-    margin: 0 10px -10px 140px;
+    margin: 0 10px -14px 140px;
   }
 }
 .mobile .teams_info {
-  min-width: 121px;
+  min-width: 12px;
+  border-right: 1px solid #ffffff1a;
 }

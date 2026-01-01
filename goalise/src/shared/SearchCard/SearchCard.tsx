@@ -49,23 +49,22 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
   return (
     <>
       {isMobile && 
-     <div className={styles.search_mobile_container}>
-          <div className={styles.input_image_wrapper}> 
-                <Image src={redSearchIcon} alt=""/>
-                <input 
-                  ref={inputRef}
-                  placeholder="Search leagues..." 
-                  className={`${styles.search_input_mobile} ${
-                        open ? styles.search_input_open : styles.search_input_closed
-                }`}
-                value={query}
-                onChange={onSearchChange}
-                onClick={(e) => e.stopPropagation()}
-                />
-          </div>
-      </div> 
-      } 
-      
+        <div className={styles.search_mobile_container}>
+              <div className={styles.input_image_wrapper}> 
+                    <Image src={redSearchIcon} alt=""/>
+                    <input 
+                      ref={inputRef}
+                      placeholder="Search leagues..." 
+                      className={`${styles.search_input_mobile} ${
+                            open ? styles.search_input_open : styles.search_input_closed
+                    }`}
+                    value={query}
+                    onChange={onSearchChange}
+                    onClick={(e) => e.stopPropagation()}
+                    />
+              </div>
+          </div> 
+      }
     <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
         <div className={styles.searchInputWrapper}>
           <Image
@@ -85,8 +84,12 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
             onClick={(e) => e.stopPropagation()}
           />
         </div>
-      {open && (
-        <div ref={dropdownRef} className={styles.search_dropdown}>
+        <div
+              ref={dropdownRef}
+              className={`${styles.search_dropdown} ${
+                open ? styles.open : styles.closed
+              }`}
+            >
              {!searchLoading && results && (
                     <div className={styles.search}>
                       <div className={styles.search_tabs}>
@@ -208,7 +211,6 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
             <div className={styles.search_no_results}>No results</div>
           )}
         </div>
-      )}
     </div>
     </>
   );

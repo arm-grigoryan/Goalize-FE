@@ -22,6 +22,7 @@ import PortalDropdown from "@/shared/PortalDropdown";
 import { INotificationItemProps } from "@/shared/NotificationItem/NotificationItem.types";
 import teamLogo from '../../../assets/pngs/teamLogo.png';
 import ProfileCard from "@/shared/ProfileCard";
+import mobileLogo from '/public/pngs/logo/mobileLogo.svg';
 export const Header = () => {
   const t = useTranslations();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -65,6 +66,7 @@ export const Header = () => {
       onDenyButtonClick: () => {}
     },
   ] as INotificationItemProps[];
+   const notificationsCount = obj.length;
 
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
@@ -122,7 +124,7 @@ export const Header = () => {
           {!mobileMenuOpen && (
             <>
               <div className={styles.burger_menu_closed}>
-                <Image alt="" src={logo} className={styles.logo_wrapper} />
+                <Image alt="" src={mobileLogo} className={styles.logo_wrapper} />
                 <Image
                   alt=""
                   src={burgerIcon}
@@ -131,9 +133,7 @@ export const Header = () => {
                 />
               </div>
 
-              {searchOpen && (
-                <SearchCard open={true} inputRef={searchInputRef} />
-              )}
+              <SearchCard open={true} inputRef={searchInputRef} />
             </>
           )}
 
@@ -290,6 +290,11 @@ export const Header = () => {
                 }}
               >
                 <Image src={notificationIcon} alt="Notifications" />
+                {notificationsCount > 0 && (
+                  <span className={styles.notificationBadge}>
+                    {notificationsCount > 99 ? "99+" : notificationsCount}
+                  </span>
+                )}
               </div>
 
               {showNotifications && (

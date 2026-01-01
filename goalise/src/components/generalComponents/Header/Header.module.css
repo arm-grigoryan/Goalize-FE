@@ -42,6 +42,7 @@
     rgba(15, 16, 17, 0.87)
   ),
     linear-gradient(to right, #54A2FE, #F6465D);
+    cursor: pointer;
 }
 .link {
   text-decoration: none;
@@ -51,6 +52,7 @@
  .selected {
   color: #ffffff;
   font-weight: bold;
+  cursor: pointer;
 }
 .logo_wrapper {
   max-width: 15vw;
@@ -88,6 +90,7 @@
   display: flex;
   align-items: center;
   height: 40px;
+  cursor: pointer;
 }
 .icon_and_leng_wrapper {
   display: flex;
@@ -246,4 +249,24 @@
   top: calc(70% + 8px);
   right: 0;
   z-index: 1000;
+}
+
+.notificationBadge {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  min-width: 18px;
+  height: 18px;
+  background-color: #F6465D;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+  border-radius: 100px;
+  border: 2px solid #0F1011;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
 }

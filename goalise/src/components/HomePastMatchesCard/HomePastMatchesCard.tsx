@@ -1,7 +1,6 @@
 "use client";
 import styles from "./HomePastMatchesCard.module.css";
-import Button from "@/shared/Button";
-import calendarIcon from "../../assets/pngs/calendarIcon.png";
+import calendarIcon from "../../assets/pngs/calendar.svg";
 import Title from "@/shared/Title";
 import PastMatchesInnerCard from "../../entities/PastMatchesInnerCard";
 import winnerIcon from "../../assets/pngs/winnerIcon.svg";
@@ -17,6 +16,7 @@ import Image from "next/image";
 import pastMatchesEmpty from '../../assets/pngs/pastMatchesEmpty.svg';
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+
 export const HomePastMatchesCard = () => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
@@ -65,19 +65,17 @@ export const HomePastMatchesCard = () => {
       container?.removeEventListener("scroll", handleScroll);
     };
   }, [isFetching]);
-  const buttonClick = () => {
-    // clicked
-  };
+
   return (
     <div className={`${styles.border} ${isMobile ? styles.mobile : ""}`}> 
     <div className={styles.past_matches}>
       <div className={styles.button_and_title_wrapper}>
-        <div className={styles.button_wrapper}>
-          <Button
-            className="icon_button"
-            handleClick={buttonClick}
-            icon={calendarIcon}
-          />
+        <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
+         <Image
+              src={calendarIcon}
+              alt=""
+              className={styles.empty_calendar}
+            />
         </div>
         <div className={styles.title_wrapper}>
           <Title content={t("home.pastMatches.title")} />
@@ -86,7 +84,7 @@ export const HomePastMatchesCard = () => {
 
       {!data?.length && (
         <div className={styles.no_match_wrapper}>
-          <Image src={pastMatchesEmpty} alt="" />
+          <Image src={pastMatchesEmpty} alt="" className={styles.no_match_image} />
           <span className={styles.no_match_text}>
             No past match to show at the moment
           </span>

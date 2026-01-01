@@ -79,10 +79,16 @@
   position: absolute;
   top: 0;
   left: 100px;
-  clip-path: polygon(0 0, 100% 0, 85% 80%, 0 100%);
-     border-bottom-left-radius: 85px;
-    border-bottom-right-radius: 85px;
-    height: 31px;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    88% 100%,
+    12% 100%
+  );
+  border-bottom-left-radius: 85px;
+  border-bottom-right-radius: 85px;
+  height: 20px;
+  width: 170px;
 }
 .title_mobile {
   color: white;
@@ -92,8 +98,8 @@
   background: #f53a53;
   position: absolute;
   top: 0;
-  left: 100px;
-    clip-path: polygon(
+  left: 0;
+  clip-path: polygon(
     0 0,
     100% 0,
     88% 100%,
@@ -102,8 +108,11 @@
   border-bottom-left-radius: 85px;
   border-bottom-right-radius: 85px;
   height: 20px;
-  position: absolute;
   width: 170px;
+  justify-content: center;
+  display: flex;
+  align-self: center;
+  justify-self: center;
 }
 .title_text {
     display: flex;
@@ -122,6 +131,7 @@
   display: flex;
   width: 100%;
   justify-content: center;
+  align-items: center;
 }
 .next_match_list_wrapper {
   flex: 1;
@@ -242,6 +252,11 @@
   justify-content: center;
   align-items: center;
 }
+
+.no_upcoming_image {
+  width: 100%;
+}
+
 .no_upcoming_text {
   color: #a5a5a5;
   font-size: 14px;
@@ -269,17 +284,9 @@
     justify-content: center;
   }
   .title {
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    padding: 10px 15px;
-    background: #f53a53;
-    position: absolute;
-    top: -1.5%;
-    left: 25%;
-    clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
   }
   .match_left_block {
     background-image: url("../../assets/pngs/upComingMatchBorderRed.png");

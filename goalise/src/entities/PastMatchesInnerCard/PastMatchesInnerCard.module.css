@@ -1,9 +1,9 @@
+/* ================= DESKTOP CARD ================= */
+
 .past_matches_innerCard {
   display: grid;
-  grid-template-columns: 180px auto 1fr 1fr 1fr auto;
-
+  grid-template-columns: 180px 1px 1fr 100px 1fr;
   align-items: center;
-
   width: 90%;
   margin: 0 auto;
   padding: 14px 20px;
@@ -18,12 +18,8 @@
 .date {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 10px;
-
-  height: 100%;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  justify-content: flex-start;
+  font-size: 14px;
 }
 
 /* ---------- ICON ---------- */
@@ -53,14 +49,22 @@
   z-index: 0;
 }
 
-/* ---------- TEAM SIDES ---------- */
-.side {
-  display: flex;
+/* ---------- SIDES ---------- */
+.side_left {
+  display: grid;
+  grid-template-columns: 80px auto;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
 }
 
+.side_right {
+  display: grid;
+  grid-template-columns: auto 80px;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ---------- TEAM ---------- */
 .team {
   display: flex;
   align-items: center;
@@ -74,18 +78,37 @@
   text-overflow: ellipsis;
 }
 
-/* ---------- SCORE ---------- */
-.score_wrapper {
+/* ---------- WINNER SLOT ---------- */
+.winner_slot,
+.winner_slot2 {
+  width: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.winner_slot {
+  position: relative;
+  right: 4px
+}
+.winner_slot2 {
+  position: relative;
+  left: -14px;
+}
+/* ---------- SCORE ---------- */
+.score_wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
-
-  max-width: 70px;
   font-size: 22px;
   font-weight: 700;
+}
 
-  justify-self: center;
+.score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* ---------- WINNERS (BORDER PINNED) ---------- */
@@ -129,25 +152,12 @@
   align-items: center;
 }
 
-/* ================= MOBILE VIEW ================= */
-
-.date_wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.team_info_mobile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/* ================= MOBILE ================= */
 
 .past_matches_innerCard_mobile {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   flex-direction: column;
+  gap: 16px;
   padding: 17px 33px;
 
   border: 1px solid #ffffff1a;
@@ -157,50 +167,42 @@
   font-size: 14px;
 }
 
-.away_team_info_mobile,
-.home_team_info_mobile {
+.date_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.team_info_mobile {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.home_team_info_mobile,
+.away_team_info_mobile {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: 8px;
-  min-width: 100px;
 }
 
 .team_logo_mobile {
   max-width: 60px;
-  height: fit-content;
-}
-
-.empty_calendar {
-  width: 50px;
-  height: fit-content;
 }
 
 .score_wrapper_mobile {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  align-items: center;
   gap: 8px;
-  font-weight: 700;
-  align-self: center;
-  position: relative;
-  top: 16px;
-  margin: 0 10px;
   font-weight: 700;
 }
 
-.mobile {
-  display: flex;
-}
-.mobile .date {
-  border: none;
-}
-.mobile .empty_calendar {
-  width: 18px;
-  margin-right: 8px;
-} 
 .winner_wrapper_mobile {
-      position: relative;
-    max-width: 100px;
-    min-height: 50px;
-    top: 34px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

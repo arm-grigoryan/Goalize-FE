@@ -4,6 +4,7 @@
   background: rgba(17, 19, 23, 0.70);
   backdrop-filter: blur(55px);
   width: 100%;
+  padding: 10px 0 10px 10px;
 }
 .transfer_news {
   min-height: 50vh;
@@ -62,7 +63,9 @@
   align-items: center;
   justify-content: center;
 }
-
+.transfer_empty_image{
+  width: 100%;
+}
 .no_transfer_text {
   color: #a5a5a5;
   font-size: 14px;
