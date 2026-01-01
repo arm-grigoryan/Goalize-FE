@@ -13,6 +13,10 @@ import { UpcomingMatch } from "@/types/api/upComingMatches";
 import { useTranslations } from "next-intl";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
 import upcomingEmpty from '../../assets/pngs/upcomingEmpty.svg';
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import matchMobileEmpty from '../../assets/pngs/matchMobileEmpty.svg';
+
 export const HomeUpcomingMatchesCard = () => {
   const t = useTranslations();
   const [offset, setOffset] = useState<number>(0);
@@ -20,6 +24,8 @@ export const HomeUpcomingMatchesCard = () => {
   const [firstMatch, setFirstMatch] = useState<UpcomingMatch | null>(null);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
 
   const { data, isFetching } = useGetUpComingMatchesQuery(
     { take: 10, skip: offset },
@@ -80,7 +86,7 @@ export const HomeUpcomingMatchesCard = () => {
       {!data?.length ? (
         <div className={styles.Home_main_card_no_mutch}>
           <div className={styles.no_upcoming_wrapper}>
-            <Image src={upcomingEmpty} alt="" />
+            <Image src={isMobile ? matchMobileEmpty : upcomingEmpty} alt="" className={styles.no_upcoming_image}/>
             <span className={styles.no_upcoming_text}>
               No upcoming matches scheduled at the moment
             </span>
@@ -90,7 +96,7 @@ export const HomeUpcomingMatchesCard = () => {
         <div className={styles.Home_main_card}>
           <div className={styles.match_inner_wrapper}>
             <div>
-              <div className={styles.title_mobile}>
+              <div className={`${styles.title} ${isMobile && styles.title_mobile}`}>
                 <div className={styles.title_text}>
                   {t("home.upcomingMatches.title")}
                 </div>

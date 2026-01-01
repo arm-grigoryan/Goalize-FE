@@ -33,6 +33,18 @@
   flex-direction: column;
   width: 100%;
 }
+
+.search_dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+
+  transition-delay: 0s;
+}
+
+.search_dropdown.closed {
+  pointer-events: none;
+}
 .search_wrapper { 
   position: relative; 
   display: flex; 
@@ -290,4 +302,5 @@
 
 .mobile  {
   margin: 0;
+  max-width: 300px;
 }

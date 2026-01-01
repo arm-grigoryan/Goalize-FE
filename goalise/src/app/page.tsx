@@ -10,8 +10,12 @@ export default function Home() {
       <div className={styles.profileComplitions}> <ProfileComplitions /></div>
       <HomeUpcomingMatchesCard />
       <div className={styles.Home_flex_container}>
-        <HomePastMatchesCard />
-        <HomeTransferNewsCard />
+        <div className={styles.past}>
+          <HomePastMatchesCard />
+        </div>
+        <div className={styles.transfer}>
+          <HomeTransferNewsCard />
+        </div>
       </div>
     </div>
   );

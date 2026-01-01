@@ -32,9 +32,10 @@ export const MatchListInnerCard: FC<MatchListInnerCardProps> = ({
       <div className={styles.teams_info}>
         <div className={styles.team_inner_info}>
           <div className={styles.team_name}>{teamNameHome}</div>
-          {homeTeamPoints !== null && (
-            <div className={styles.team_points}>{`${homeTeamPoints} pts`}</div>
-          )}
+          <div className={styles.team_points}> 
+            {homeTeamPoints !== null && 
+           `${homeTeamPoints} pts`}
+          </div>
         </div>
         <div className={styles.vs_icon}>
           <Image src={vsIcon} alt="" />
@@ -42,9 +43,10 @@ export const MatchListInnerCard: FC<MatchListInnerCardProps> = ({
         <CustomDivider orientation="horizontal" />
         <div className={styles.team_inner_info}>
           <div className={styles.team_name}>{teamNameAway}</div>
-          {awayTeamPoints !== null && (
-            <div className={styles.team_points}>{`${awayTeamPoints} pts`}</div>
-          )}
+          <div className={styles.team_points}>
+            {awayTeamPoints !== null && 
+            `${awayTeamPoints} pts`
+          }</div>
         </div>
       </div>
       <div className={styles.divider}> 
@@ -53,7 +55,7 @@ export const MatchListInnerCard: FC<MatchListInnerCardProps> = ({
       <div className={styles.match_date_time}>
         <Image src={redCalendar} alt="" className={styles.icon}/>
         <div className={styles.date}>{matchDate}</div>
-        <Image src={redClock} alt=""  className={styles.icon} />
+        <Image src={redClock} alt=""  className={styles.iconTime} />
         <div className={styles.time}>{matchTime}</div>
       </div>
     </div>

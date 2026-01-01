@@ -1,7 +1,6 @@
 "use client";
 import styles from "./HomeTransferNewsCard.module.css";
-import Button from "@/shared/Button";
-import transferIcon from "../../assets/pngs/homeTransferIcon.png";
+import transferHistoryIcon from "../../assets/pngs/TransferIcon.svg";
 import Title from "@/shared/Title";
 import TransferInnerCard from "../../entities/TransferInnerCard";
 import playerImg from "../../assets/pngs/teamLogo.png";
@@ -61,9 +60,6 @@ export const HomeTransferNewsCard = () => {
     };
   }, [isFetching]);
 
-  const buttonClick = () => {
-    // clicked
-  };
   return (
     <div className={styles.border}> 
     <div
@@ -73,11 +69,7 @@ export const HomeTransferNewsCard = () => {
     >
       <div className={styles.button_and_title_wrapper}>
         <div className={styles.button_wrapper}>
-          <Button
-            className="icon_button"
-            handleClick={buttonClick}
-            icon={transferIcon}
-          />
+           <Image src={transferHistoryIcon} className={styles.icon} alt="" />
         </div>
         <div className={styles.title_wrapper}>
           <Title content={t("home.transferNews.title")} />
@@ -86,7 +78,7 @@ export const HomeTransferNewsCard = () => {
 
       {!transfers?.length && (
         <div className={styles.no_transfer_wrapper}>
-          <Image src={transferEmpty} alt="" />
+          <Image src={transferEmpty} alt="" className={styles.transfer_empty_image} />
           <span className={styles.no_transfer_text}>
             No transfer news is scheduled at the moment
           </span>
