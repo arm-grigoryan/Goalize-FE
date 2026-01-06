@@ -8,8 +8,15 @@ import {
   useQuitTeamMutation,
 } from "@/app/store/services/api";
 import { useCallback, useState } from "react";
+import { AuthTokens } from "@/shared/auth/oidcService";
 
-export function usePlayerProfile(playerId: number) {
+interface UsePlayerProfileProps {
+  playerId: number;
+  refreshTokens?: (refreshToken: string) => Promise<AuthTokens>;
+  tokens?: AuthTokens | null;
+}
+
+export function usePlayerProfile({ playerId, refreshTokens, tokens }: UsePlayerProfileProps) {
   const { data: userInfo, refetch: refetchUserInfo } = useGetUserInfoQuery();
   const { data: playerBasicInfo, refetch: refetchPlayerBasicInfo, isLoading: isLoadingPlayerInfo } = useGetPlayerBasicInfoQuery(playerId);
   const { data: playerStats } = useGetPlayerStatsQuery(playerId);
@@ -40,6 +47,22 @@ export function usePlayerProfile(playerId: number) {
 
   const [showNotCaptainModal, setShowNotCaptainModal] = useState(false);
 
+  // Confirmation modals
+  const [showMakeCaptainConfirmModal, setShowMakeCaptainConfirmModal] =
+    useState(false);
+  const [showRemoveMemberConfirmModal, setShowRemoveMemberConfirmModal] =
+    useState(false);
+  const [showQuitTeamConfirmModal, setShowQuitTeamConfirmModal] =
+    useState(false);
+
+  // Success modals
+  const [showMakeCaptainSuccessModal, setShowMakeCaptainSuccessModal] =
+    useState(false);
+  const [showRemoveMemberSuccessModal, setShowRemoveMemberSuccessModal] =
+    useState(false);
+  const [showQuitTeamSuccessModal, setShowQuitTeamSuccessModal] =
+    useState(false);
+
   const [showInvitationSuccessModal, setShowInvitationSuccessModal] =
     useState(false);
 
@@ -63,14 +86,14 @@ export function usePlayerProfile(playerId: number) {
         error &&
         typeof error === "object" &&
         "status" in error &&
-        error.status === 400
+        (error.status === 400 || error.status === 409)
       ) {
         const errorData = error as { data?: { errorMessage?: string } };
         const errorMessage =
           errorData?.data?.errorMessage || "Invalid request. Please try again.";
         setInvitationError(errorMessage);
         setShowInvitationErrorModal(true);
-        return { success: false, error: errorMessage, is400: true };
+        return { success: false, error: errorMessage, is400: error.status === 400, is409: error.status === 409 };
       }
 
       return { success: false, error };
@@ -86,6 +109,7 @@ export function usePlayerProfile(playerId: number) {
 
     try {
       await removeMember({ teamId, playerId: targetPlayerId }).unwrap();
+      setShowRemoveMemberSuccessModal(true);
       refetchUserInfo();
       refetchPlayerBasicInfo();
       return { success: true };
@@ -120,6 +144,8 @@ export function usePlayerProfile(playerId: number) {
 
   const quitTeam = useCallback(async () => {
     const teamId = userInfo?.playerInfo?.team?.id;
+    const isUserCaptain = userInfo?.playerInfo?.id === userInfo?.playerInfo?.team?.captainId;
+
     if (!teamId) {
       console.error("Team ID not available");
       return { success: false, error: "Team ID not found" };
@@ -127,6 +153,17 @@ export function usePlayerProfile(playerId: number) {
 
     try {
       await quitTeamMutation({ teamId }).unwrap();
+
+      // Refresh access token if user was captain (captain role will be gone)
+      if (isUserCaptain && refreshTokens && tokens?.refreshToken) {
+        try {
+          await refreshTokens(tokens.refreshToken);
+        } catch (refreshError) {
+          console.error("Failed to refresh tokens after quitting team:", refreshError);
+        }
+      }
+
+      setShowQuitTeamSuccessModal(true);
       refetchUserInfo();
       refetchPlayerBasicInfo();
       return { success: true };
@@ -137,14 +174,14 @@ export function usePlayerProfile(playerId: number) {
         error &&
         typeof error === "object" &&
         "status" in error &&
-        error.status === 400
+        (error.status === 400 || error.status === 409)
       ) {
         const errorData = error as { data?: { errorMessage?: string } };
         const errorMessage =
           errorData?.data?.errorMessage || "Invalid request. Please try again.";
         setQuitTeamError(errorMessage);
         setShowQuitTeamErrorModal(true);
-        return { success: false, error: errorMessage, is400: true };
+        return { success: false, error: errorMessage, is400: error.status === 400, is409: error.status === 409 };
       }
 
       const unexpectedError =
@@ -153,7 +190,14 @@ export function usePlayerProfile(playerId: number) {
       setShowQuitTeamErrorModal(true);
       return { success: false, error: unexpectedError };
     }
-  }, [userInfo?.playerInfo?.team?.id, quitTeamMutation]);
+  }, [
+    userInfo?.playerInfo?.team?.id,
+    userInfo?.playerInfo?.id,
+    userInfo?.playerInfo?.team?.captainId,
+    quitTeamMutation,
+    refreshTokens,
+    tokens?.refreshToken,
+  ]);
 
   const makeTeamCaptain = useCallback(async () => {
     const teamId = userInfo?.playerInfo?.team?.id;
@@ -165,6 +209,17 @@ export function usePlayerProfile(playerId: number) {
 
     try {
       await makeCaptain({ teamId, playerId: targetPlayerId }).unwrap();
+
+      // Refresh access token since current user's captain role is now gone
+      if (refreshTokens && tokens?.refreshToken) {
+        try {
+          await refreshTokens(tokens.refreshToken);
+        } catch (refreshError) {
+          console.error("Failed to refresh tokens after making captain:", refreshError);
+        }
+      }
+
+      setShowMakeCaptainSuccessModal(true);
       refetchUserInfo();
       refetchPlayerBasicInfo();
       return { success: true };
@@ -195,6 +250,8 @@ export function usePlayerProfile(playerId: number) {
     userInfo?.playerInfo?.team?.id,
     playerBasicInfo?.playerInfo?.id,
     makeCaptain,
+    refreshTokens,
+    tokens?.refreshToken,
   ]);
 
   return {
@@ -226,5 +283,17 @@ export function usePlayerProfile(playerId: number) {
     closeQuitTeamErrorModal: () => setShowQuitTeamErrorModal(false),
     showNotCaptainModal,
     setShowNotCaptainModal,
+    showMakeCaptainConfirmModal,
+    setShowMakeCaptainConfirmModal,
+    showRemoveMemberConfirmModal,
+    setShowRemoveMemberConfirmModal,
+    showQuitTeamConfirmModal,
+    setShowQuitTeamConfirmModal,
+    showMakeCaptainSuccessModal,
+    closeMakeCaptainSuccessModal: () => setShowMakeCaptainSuccessModal(false),
+    showRemoveMemberSuccessModal,
+    closeRemoveMemberSuccessModal: () => setShowRemoveMemberSuccessModal(false),
+    showQuitTeamSuccessModal,
+    closeQuitTeamSuccessModal: () => setShowQuitTeamSuccessModal(false),
   };
 }

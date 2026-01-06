@@ -21,8 +21,14 @@ export const UnassignedPlayerCard: React.FC<IUnassignedPlayerCardProps> = ({
             </div>
             <div className={styles.titleConatiner}>
                 <div className={styles.title}>{t("title")}</div>
-                <div className={styles.context}>{t("label")}
-                    <a href="#" onClick={handleClick} className={styles.linkText}>{t("linkText")}</a>
+                <div className={styles.context}>
+                    {t("label")}
+                    {onClick && (
+                        <>
+                            {" "}
+                            <a href="#" onClick={handleClick} className={styles.linkText}>{t("linkText")}</a>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

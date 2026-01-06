@@ -11,33 +11,40 @@
   box-sizing: border-box;
   align-items: flex-start;
 }
+
 .quitTeamButtonText {
   display: flex;
   flex-direction: column;
 }
+
 .playerContainer {
   display: flex;
   flex-direction: row;
   padding: 19px 0 26px 32px;
 }
+
 .infoButtonPart {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
 }
+
 .imageInfoContainer {
   display: flex;
   flex-direction: row;
   margin-bottom: 22px;
 }
+
 .plusIcon {
   width: 12px;
   height: 12px;
 }
+
 .imageWrapper {
   position: relative;
   display: inline-block;
 }
+
 .image {
   width: 260px;
   height: 100%;
@@ -46,10 +53,12 @@
   border-radius: 10px;
   background: linear-gradient(272deg, #c50720 -121%, #f6465d 117%);
 }
+
 .playerInfoContainer {
   display: flex;
   flex-direction: column;
 }
+
 .name {
   font-size: 36px;
   color: #e8e8e8;
@@ -57,10 +66,12 @@
   padding-bottom: 10px;
   margin-top: 15px;
 }
+
 .teamContainer {
   display: flex;
   flex-direction: column;
 }
+
 .teamContainer::before {
   content: "";
   display: flex;
@@ -68,23 +79,24 @@
   height: 1px;
   width: 100%;
   margin-top: 32px;
-  background: linear-gradient(
-    to right,
-    #a5a5a5 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(to right,
+      #a5a5a5 0%,
+      rgba(255, 255, 255, 0) 100%);
 }
+
 .team {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 17px;
 }
+
 .teamInfo {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
+
 .teamImg {
   width: 42px;
   height: 42px;
@@ -106,11 +118,9 @@
   height: 1px;
   width: 100%;
   margin-top: 32px;
-  background: linear-gradient(
-    to right,
-    #a5a5a5 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(to right,
+      #a5a5a5 0%,
+      rgba(255, 255, 255, 0) 100%);
 }
 
 .buttonsContainer {
@@ -118,9 +128,11 @@
   margin-top: 32px;
   flex-wrap: nowrap;
 }
-.buttonsContainer > *:not(:last-child) {
+
+.buttonsContainer>*:not(:last-child) {
   margin-right: 13px;
 }
+
 .button {
   display: flex;
   padding: 10px 15px;
@@ -135,7 +147,8 @@
   text-transform: capitalize;
   font-size: 14px;
 }
-.button > span {
+
+.button>span {
   color: #ffffff;
 }
 
@@ -150,17 +163,16 @@
   line-height: 1;
   position: relative;
   color: transparent;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.1) 0%,
-    transparent 100%
-  );
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 100%);
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 2px transparent;
   -webkit-background-clip: text;
   background-clip: text;
   filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0.1));
 }
+
 .teamName {
   font-size: 22px;
   color: #ffffff;
@@ -177,11 +189,13 @@
   border-radius: 50%;
   overflow: hidden;
 }
+
 .teamLogo {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .rightContainer {
   display: flex;
   flex-direction: column;
@@ -190,6 +204,7 @@
   max-height: 470px;
   overflow-y: auto;
 }
+
 .rightContainer::-webkit-scrollbar {
   width: 6px;
 }
@@ -202,6 +217,7 @@
 .rightContainer::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
 .leftContainer {
   position: relative;
   display: flex;
@@ -209,11 +225,13 @@
   flex: 2;
   height: 100%;
 }
+
 .unassignedContainer {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 /* --------------- mobile styles --------------------- */
 .mobile {
   display: flex;
@@ -228,26 +246,31 @@
   width: 100%;
   position: relative;
 }
+
 .mobile .rightContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
+
 .mobile .playerContainer {
   display: flex;
   flex-direction: column;
   padding: 0;
   width: 100%;
 }
+
 .mobile .wrapper {
   display: flex;
   flex-direction: row;
 }
+
 .mobile .nameWrapper {
   display: flex;
   flex-direction: column-reverse;
   width: 100%;
 }
+
 .mobile .imageWrapper {
   display: flex;
   justify-content: center;
@@ -256,6 +279,7 @@
   margin-bottom: 2px;
   flex-direction: column;
 }
+
 .mobile .image {
   margin: 0;
   width: 334px;
@@ -265,6 +289,7 @@
 .mobile .teamContainer {
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
 }
+
 .mobile .teamContainer::before {
   display: none;
 }
@@ -277,9 +302,11 @@
   width: 100%;
   flex-wrap: wrap;
 }
+
 .mobile .playerInfoContainer::after {
   display: none;
 }
+
 .mobile .buttonsContainer {
   position: absolute;
   bottom: 0;
@@ -289,13 +316,12 @@
   padding: 20px 16px;
   box-sizing: border-box;
   margin-bottom: 20px;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.5) 0%,
-    rgba(138, 137, 137, 0) 100%
-  );
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(138, 137, 137, 0) 100%);
   backdrop-filter: blur(7.5px);
 }
+
 .mobile .playerInfoContainer {
   display: flex;
   flex-direction: row-reverse;
@@ -303,6 +329,7 @@
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
   width: 100%;
 }
+
 .mobile .nameWrapper * button {
   height: 28px;
 }
@@ -315,6 +342,7 @@
   position: absolute;
   bottom: 0;
 }
+
 .mobile .playerNumberContainer {
   display: flex;
   justify-content: flex-end;
@@ -351,6 +379,7 @@
 .mobile .team {
   margin: 0;
 }
+
 .mobile .nameWrapper button,
 .mobile .wrapper button {
   position: relative;
@@ -362,15 +391,24 @@
     margin-top: 40px;
   }
 }
+
 @media (max-width: 1330px) {
   .playerNumber {
     font-size: 136px;
   }
 }
+
 @media (max-width: 1230px) {
   .container {
     display: flex;
     flex-direction: column;
+  }
+
+  .leftContainer,
+  .rightContainer {
+    width: 100%;
+    flex: none;
+    height: auto;
   }
 }
 
