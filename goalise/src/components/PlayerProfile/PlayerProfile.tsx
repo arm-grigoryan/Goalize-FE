@@ -12,12 +12,13 @@ import { useTranslations } from "next-intl";
 import { usePlayerProfile } from "./usePlayerProfile";
 import PopupModal from "@/entities/PopupModal";
 import { useAuth } from "@/shared/auth/AuthContext";
+import {refreshTokens} from "@/shared/auth/oidcService"
 
 export const PlayerProfile = () => {
   const [showInvitation, setShowInvitation] = useState(true);
   const { playerId } = useParams();
   const { signIn, tokens } = useAuth();
-  const { refreshTokens } = require("@/shared/auth/oidcService");
+  
 
   const t = useTranslations("common.playerProfile.playerBasicInfo");
   const {
