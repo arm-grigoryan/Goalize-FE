@@ -40,9 +40,11 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
   const isMobile = width <= MEDIA_TABLET_SMALL;
   const t = useTranslations("playerProfile.buttons");
   const { playerId } = useParams();
-  const { playerStats } = usePlayerProfile(Number(playerId));
+  const { playerStats } = usePlayerProfile({ playerId: Number(playerId) });
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${isMobile ? styles.mobile : ""}`}
+    >
       <div className={styles.leftContainer}>
         <div className={styles.playerContainer}>
           <div className={styles.imageWrapper}>
@@ -176,7 +178,7 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
             )}
             {!playerHasTeam && (
               <div className={styles.unassignedContainer}>
-                <UnassignedPlayerCard onClick={onInviteButtonClick} />
+                <UnassignedPlayerCard onClick={isViewingSelf ? undefined : onInviteButtonClick} />
               </div>
             )}
           </div>
@@ -205,7 +207,6 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
               {isLoggedIn &&
                 onQuitTeamButtonClick &&
                 quitTeamButtonText &&
-                !isCaptain &&
                 playerHasTeam &&
                 isViewingSelf && (
                   <Button

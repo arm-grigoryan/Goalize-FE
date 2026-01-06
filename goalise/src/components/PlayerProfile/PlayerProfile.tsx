@@ -16,7 +16,8 @@ import { useAuth } from "@/shared/auth/AuthContext";
 export const PlayerProfile = () => {
   const [showInvitation, setShowInvitation] = useState(true);
   const { playerId } = useParams();
-  const { signIn } = useAuth();
+  const { signIn, tokens } = useAuth();
+  const { refreshTokens } = require("@/shared/auth/oidcService");
 
   const t = useTranslations("common.playerProfile.playerBasicInfo");
   const {
@@ -44,7 +45,26 @@ export const PlayerProfile = () => {
     closeQuitTeamErrorModal,
     showNotCaptainModal,
     setShowNotCaptainModal,
-  } = usePlayerProfile(Number(playerId));
+    showMakeCaptainConfirmModal,
+    setShowMakeCaptainConfirmModal,
+    showRemoveMemberConfirmModal,
+    setShowRemoveMemberConfirmModal,
+    showQuitTeamConfirmModal,
+    setShowQuitTeamConfirmModal,
+    showMakeCaptainSuccessModal,
+    closeMakeCaptainSuccessModal,
+    showRemoveMemberSuccessModal,
+    closeRemoveMemberSuccessModal,
+    showQuitTeamSuccessModal,
+    closeQuitTeamSuccessModal,
+    isRemovingMember,
+    isMakingCaptain,
+    isQuitting,
+  } = usePlayerProfile({
+    playerId: Number(playerId),
+    refreshTokens,
+    tokens,
+  });
 
   const onShowInvitationModal = () => {
     setShowInvitation(!showInvitation);
@@ -80,31 +100,62 @@ export const PlayerProfile = () => {
     onShowInvitationModal();
   };
 
+  const handleMakeCaptainClick = () => {
+    setShowMakeCaptainConfirmModal(true);
+  };
+
+  const handleRemoveMemberClick = () => {
+    setShowRemoveMemberConfirmModal(true);
+  };
+
+  const handleQuitTeamClick = () => {
+    setShowQuitTeamConfirmModal(true);
+  };
+
+  const handleConfirmMakeCaptain = () => {
+    setShowMakeCaptainConfirmModal(false);
+    makeTeamCaptain();
+  };
+
+  const handleConfirmRemoveMember = () => {
+    setShowRemoveMemberConfirmModal(false);
+    removeTeamMember();
+  };
+
+  const handleConfirmQuitTeam = () => {
+    setShowQuitTeamConfirmModal(false);
+    quitTeam();
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.playerProfileCard}>
-        <PlayerProfileCard
-          phoneNumber={playerBasicInfo?.playerInfo.userInfo.phoneNumber || ""}
-          onInviteButtonClick={handleInviteClick}
-          playerNumber={String(playerBasicInfo?.playerInfo.shirtNumber || "")}
-          inviteButtonText={t("inviteButtonText")}
-          makeCaptainButtonText={t("makeCaptainButtonText")}
-          onMakeCaptainButtonClick={makeTeamCaptain}
-          onRemoveUserButtonClick={removeTeamMember}
-          profilePic={toBeDeleted}
-          fullName={`${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName}`}
-          age={String(playerBasicInfo?.playerInfo.userInfo.age || "")}
-          foot={playerBasicInfo?.playerInfo.userInfo.workingFoot || ""}
-          onQuitTeamButtonClick={quitTeam}
-          quitTeamButtonText={t("quitTeamButtonText")}
-          teamName={playerBasicInfo?.playerInfo.team?.name || ""}
-          isCaptain={isUserCaptain}
-          isSameTeam={isSameTeam}
-          isViewingSelf={isViewingSelf}
-          teamLogo={playerBasicInfo?.playerInfo.team ? toBeDeleted : undefined}
-          isLoggedIn={isLoggedIn}
-          playerHasTeam={Boolean(playerBasicInfo?.playerInfo.team)}
-        />
+        <div style={isLoadingPlayerInfo ? { visibility: "hidden" } : {}}>
+          <PlayerProfileCard
+            phoneNumber={playerBasicInfo?.playerInfo.userInfo.phoneNumber || ""}
+            onInviteButtonClick={handleInviteClick}
+            playerNumber={String(playerBasicInfo?.playerInfo.shirtNumber || "")}
+            inviteButtonText={t("inviteButtonText")}
+            makeCaptainButtonText={t("makeCaptainButtonText")}
+            onMakeCaptainButtonClick={handleMakeCaptainClick}
+            onRemoveUserButtonClick={handleRemoveMemberClick}
+            profilePic={toBeDeleted}
+            fullName={`${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName}`}
+            age={String(playerBasicInfo?.playerInfo.userInfo.age || "")}
+            foot={playerBasicInfo?.playerInfo.userInfo.workingFoot || ""}
+            onQuitTeamButtonClick={handleQuitTeamClick}
+            quitTeamButtonText={t("quitTeamButtonText")}
+            teamName={playerBasicInfo?.playerInfo.team?.name || ""}
+            isCaptain={isUserCaptain}
+            isSameTeam={isSameTeam}
+            isViewingSelf={isViewingSelf}
+            teamLogo={
+              playerBasicInfo?.playerInfo.team ? toBeDeleted : undefined
+            }
+            isLoggedIn={isLoggedIn}
+            playerHasTeam={Boolean(playerBasicInfo?.playerInfo.team)}
+          />
+        </div>
         {isLoadingPlayerInfo && (
           <div className={styles.section_loader_overlay}>
             <div className={styles.loader}></div>
@@ -116,7 +167,7 @@ export const PlayerProfile = () => {
           <TransferHistoryCard />
         </div>
         <div className={styles.matchCard}>
-          <MatchList  />
+          <MatchList />
         </div>
       </div>
       {!showInvitation && (
@@ -171,7 +222,73 @@ export const PlayerProfile = () => {
         description="The player has been invited to your team."
         buttonContent="OK"
       />
+      <PopupModal
+        open={showMakeCaptainConfirmModal}
+        onClose={() => setShowMakeCaptainConfirmModal(false)}
+        title="Make Team Captain"
+        description={`Are you sure you want to make ${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName} the team captain? You will lose your captain privileges.`}
+        buttonContent="Confirm"
+        onButtonClick={handleConfirmMakeCaptain}
+        showCancelButton
+        cancelButtonContent="Cancel"
+      />
+      <PopupModal
+        open={showMakeCaptainSuccessModal}
+        onClose={() => closeMakeCaptainSuccessModal()}
+        title="Captain Changed Successfully"
+        description="The team captain has been updated."
+        buttonContent="OK"
+      />
+      <PopupModal
+        open={showRemoveMemberConfirmModal}
+        onClose={() => setShowRemoveMemberConfirmModal(false)}
+        title="Remove Team Member"
+        description={`Are you sure you want to remove ${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName} from the team?`}
+        buttonContent="Confirm"
+        onButtonClick={handleConfirmRemoveMember}
+        showCancelButton
+        cancelButtonContent="Cancel"
+      />
+      <PopupModal
+        open={showRemoveMemberSuccessModal}
+        onClose={() => closeRemoveMemberSuccessModal()}
+        title="Member Removed Successfully"
+        description="The team member has been removed."
+        buttonContent="OK"
+      />
+      <PopupModal
+        open={showQuitTeamConfirmModal}
+        onClose={() => setShowQuitTeamConfirmModal(false)}
+        title="Quit Team"
+        description="Are you sure you want to quit the team?"
+        buttonContent="Confirm"
+        onButtonClick={handleConfirmQuitTeam}
+        showCancelButton
+        cancelButtonContent="Cancel"
+      />
+      <PopupModal
+        open={showQuitTeamSuccessModal}
+        onClose={() => closeQuitTeamSuccessModal()}
+        title="Successfully Quit Team"
+        description="You have left the team."
+        buttonContent="OK"
+      />
       {isSendingInvitation && (
+        <div className={styles.loader_container}>
+          <div className={styles.loader}></div>
+        </div>
+      )}
+      {isRemovingMember && (
+        <div className={styles.loader_container}>
+          <div className={styles.loader}></div>
+        </div>
+      )}
+      {isMakingCaptain && (
+        <div className={styles.loader_container}>
+          <div className={styles.loader}></div>
+        </div>
+      )}
+      {isQuitting && (
         <div className={styles.loader_container}>
           <div className={styles.loader}></div>
         </div>

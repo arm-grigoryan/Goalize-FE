@@ -13,6 +13,9 @@ interface PopupModalProps {
   description: string;
   buttonContent: string;
   hasCloseButton?: boolean;
+  onButtonClick?: () => void;
+  showCancelButton?: boolean;
+  cancelButtonContent?: string;
 }
 
 export const PopupModal: FC<PopupModalProps> = ({
@@ -22,7 +25,18 @@ export const PopupModal: FC<PopupModalProps> = ({
   description,
   buttonContent,
   hasCloseButton = false,
+  onButtonClick,
+  showCancelButton = false,
+  cancelButtonContent = "Cancel",
 }) => {
+  const handleButtonClick = () => {
+    if (onButtonClick) {
+      onButtonClick();
+    } else {
+      onClose();
+    }
+  };
+
   return (
     <Dialog open={open} onClose={onClose} className={styles.popup_modal}>
       <Title content={title} className="title_40" />
@@ -33,12 +47,12 @@ export const PopupModal: FC<PopupModalProps> = ({
         <Button
           className="red_button"
           content={buttonContent}
-          handleClick={() => onClose()}
+          handleClick={handleButtonClick}
         />
-        {hasCloseButton && (
+        {(hasCloseButton || showCancelButton) && (
           <Button
             className="red_button_transparant_white_text"
-            content="Cancel"
+            content={cancelButtonContent}
             handleClick={() => onClose()}
           />
         )}
