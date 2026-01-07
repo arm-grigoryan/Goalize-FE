@@ -22,7 +22,6 @@
   z-index: 99;
   margin-top: 24px;
   justify-self: center;
-  /* overflow: auto; */
   overflow: hidden;
 } 
 
@@ -302,5 +301,48 @@
 
 .mobile  {
   margin: 0;
-  max-width: 300px;
+  min-width: 120px;
+  padding: 20px;
+  top: 168px;
+  align-self: center;
+  justify-self: center;
+
 }
+
+@media (max-width: 520px) { 
+  .container {
+    position: absolute;
+    top: 168px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100vw - 88px);
+    z-index: 9999;
+    padding: 10px;
+  }
+  .search_tabs { 
+    display: flex; 
+    gap: 6px; 
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 6px 10px;
+    background: transparent;
+  } 
+  .tab {
+    padding: 3px 6px; 
+    background: transparent; 
+    color: #54A2FE;
+    border-radius: 100px;
+    cursor: pointer; 
+    font-size: 12px; 
+  }
+  .tab:hover { 
+    background: rgba(255, 255, 255, 0.05); 
+  } 
+
+  .activeTab { 
+    background: #54A2FE; 
+    color: white; 
+  } 
+}
+

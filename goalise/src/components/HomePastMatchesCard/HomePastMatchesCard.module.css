@@ -26,6 +26,7 @@
     rgba(15, 16, 17, 0.95)
   ),
   linear-gradient(to right, #F6465D, #54A2FE);
+   padding: 10px 0 10px 10px;
 }
 
 .button_and_title_wrapper {

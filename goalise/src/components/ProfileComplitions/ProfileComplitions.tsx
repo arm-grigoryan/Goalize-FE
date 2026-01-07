@@ -23,9 +23,6 @@ export const ProfileComplitions = () => {
       <div className={styles.info_wrapperS}>
         <div className={styles.textWrapper}> 
           <div className={styles.title}>{t("ProfileComplition.title")}</div>
-          <div className={styles.introduction}>
-            <span>{t("ProfileComplition.introduction")}</span>
-          </div>
         </div>
         {!isMobile && 
         <div className={styles.buttonWrapper}> 
