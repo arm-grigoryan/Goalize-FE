@@ -4,7 +4,6 @@
   background: rgba(17, 19, 23, 0.70);
   backdrop-filter: blur(55px);
   width: 100%;
-  padding: 10px 0 10px 10px;
 }
 .transfer_news {
   min-height: 50vh;
@@ -27,6 +26,7 @@
   ),
   linear-gradient(to right, #F6465D, #54A2FE);
   max-height: 35vh;
+   padding: 10px 0 10px 10px;
 }
 .transfer_news_empty {
   min-height: 50vh;

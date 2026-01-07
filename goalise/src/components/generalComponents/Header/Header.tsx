@@ -122,9 +122,38 @@ export const Header = () => {
       {isMobile ? (
         <>
           {!mobileMenuOpen && (
-            <>
+            <div className={styles.header_mobile}>
               <div className={styles.burger_menu_closed}>
                 <Image alt="" src={mobileLogo} className={styles.logo_wrapper} />
+               <div className={styles.leng_and_profile_wrapper_mobile}>
+                <div
+                className={`${styles.iconWrapper} ${styles.redGlow}`}
+                ref={notificationRef}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowNotifications(prev => !prev);
+                }}
+              >
+                <Image src={notificationIcon} alt="Notifications" />
+                {notificationsCount > 0 && (
+                  <span className={styles.notificationBadge}>
+                    {notificationsCount > 99 ? "99+" : notificationsCount}
+                  </span>
+                )}</div>
+                {showNotifications && (
+                <div
+                  className={styles.notification_dropdown}
+                  style={{
+                    position: "absolute",
+                    top: "80px",
+                    right: 0,
+                    zIndex: 1000,
+                  }}
+                >
+                  <NotificationCard object={obj}/>
+                </div>
+              )}
+                <LanguageSelect />
                 <Image
                   alt=""
                   src={burgerIcon}
@@ -132,11 +161,10 @@ export const Header = () => {
                   onClick={() => setMobileMenuOpen(true)}
                 />
               </div>
-
+              </div>
               <SearchCard open={true} inputRef={searchInputRef} />
-            </>
+            </div>
           )}
-
           {mobileMenuOpen && (
             <div className={styles.mobile_menu_open}>
               <div className={styles.logo_and_close_icon_wrapper}>
@@ -260,23 +288,28 @@ export const Header = () => {
             </div>
 
             <div className={styles.searchContainer}>
-              <div className={styles.search_wrapper}>
-                <div
-                  ref={searchButtonRef}
-                  className={`${searchOpen ? styles.search_icon_wrapper_open : styles.search_icon_wrapper}`}
-                  aria-hidden
-                  onClick={toggleSearchInput}
-                >
-                  <Image alt="" src={searchIcon} />
+                <div className={styles.iconWrapper} ref={searchButtonRef}>
+                  <div
+                    className={
+                      searchOpen
+                        ? styles.search_icon_wrapper_open
+                        : styles.search_icon_wrapper
+                    }
+                    onClick={toggleSearchInput}
+                  >
+                    <Image alt="" src={searchIcon} />
+                  </div>
+                  <div
+                    ref={dropdownRef}
+                    className={`${styles.search_dropdown} ${
+                      searchOpen ? styles.open : styles.closed
+                    }`}
+                  >
+                    <SearchCard open={searchOpen} inputRef={searchInputRef} />
+                  </div>
                 </div>
               </div>
 
-              {searchOpen && (
-                <div ref={dropdownRef} className={styles.search_dropdown}>
-                  <SearchCard open={searchOpen} inputRef={searchInputRef} />
-                </div>
-              )}
-            </div>
           </div>
 
           <div className={styles.leng_and_profile_wrapper}>
