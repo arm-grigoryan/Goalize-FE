@@ -13,7 +13,7 @@ import { handleLongStrings } from "@/helper/handleLongStrings";
 import { useTranslations } from "next-intl";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
 import Image from "next/image";
-import pastMatchesEmpty from '../../assets/pngs/pastMatchesEmpty.svg';
+import pastMatchesEmpty from "../../assets/pngs/pastMatchesEmpty.svg";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 
@@ -67,55 +67,59 @@ export const HomePastMatchesCard = () => {
   }, [isFetching]);
 
   return (
-    <div className={`${styles.border} ${isMobile ? styles.mobile : ""}`}> 
-    <div className={styles.past_matches}>
-      <div className={styles.button_and_title_wrapper}>
-        <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
-         <Image
+    <div className={`${styles.border} ${isMobile ? styles.mobile : ""}`}>
+      <div className={styles.past_matches}>
+        <div className={styles.button_and_title_wrapper}>
+          <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
+            <Image
               src={calendarIcon}
               alt=""
               className={styles.empty_calendar}
             />
+          </div>
+          <div className={styles.title_wrapper}>
+            <Title content={t("home.pastMatches.title")} />
+          </div>
         </div>
-        <div className={styles.title_wrapper}>
-          <Title content={t("home.pastMatches.title")} />
-        </div>
-      </div>
 
-      {!data?.length && (
-        <div className={styles.no_match_wrapper}>
-          <Image src={pastMatchesEmpty} alt="" className={styles.no_match_image} />
-          <span className={styles.no_match_text}>
-            No past match to show at the moment
-          </span>
-        </div>
-      )}
-      <div ref={scrollContainerRef} className={styles.match_wrapper}>
-        {matches.map((match) => {
-          return (
-            <PastMatchesInnerCard
-              key={match.id}
-              date={formatUTCDate(match.date)}
-              winnerIcon={winnerIcon}
-              drawIcon={drawIcon}
-              teamLogo1={teamLogo}
-              teamName1={handleLongStrings(match.homeTeam.name, 9)}
-              teamName1Tooltip={match.homeTeam.name}
-              teamScore1={match.homeTeamScore}
-              teamLogo2={teamLogo}
-              teamName2={handleLongStrings(match.awayTeam.name, 9)}
-              teamName2Tooltip={match.awayTeam.name}
-              teamScore2={match.awayTeamScore}
+        {!matches?.length && (
+          <div className={styles.no_match_wrapper}>
+            <Image
+              src={pastMatchesEmpty}
+              alt=""
+              className={styles.no_match_image}
             />
-          );
-        })}
-        {isFetching && (
-          <div className={styles.loader_container}>
-            <div className={styles.loader}></div>
+            <span className={styles.no_match_text}>
+              No past match to show at the moment
+            </span>
           </div>
         )}
+        <div ref={scrollContainerRef} className={styles.match_wrapper}>
+          {matches.map((match) => {
+            return (
+              <PastMatchesInnerCard
+                key={match.id}
+                date={formatUTCDate(match.date)}
+                winnerIcon={winnerIcon}
+                drawIcon={drawIcon}
+                teamLogo1={teamLogo}
+                teamName1={handleLongStrings(match.homeTeam.name, 9)}
+                teamName1Tooltip={match.homeTeam.name}
+                teamScore1={match.homeTeamScore}
+                teamLogo2={teamLogo}
+                teamName2={handleLongStrings(match.awayTeam.name, 9)}
+                teamName2Tooltip={match.awayTeam.name}
+                teamScore2={match.awayTeamScore}
+              />
+            );
+          })}
+          {isFetching && (
+            <div className={styles.loader_container}>
+              <div className={styles.loader}></div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </div>
   );
 };

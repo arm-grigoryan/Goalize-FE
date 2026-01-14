@@ -4,19 +4,8 @@ import { useGetUserInfoQuery } from "@/app/store/services/api";
 import styles from "./ProfileComplitionsProgresbar.module.css";
 import Image from "next/image";
 
-import basicInfoIcon from "../../assets/pngs/basicInfoIcon.svg";
-import profilePictureIcon from "../../assets/pngs/profilePictureIcon.svg";
-import footIcon from "../../assets/pngs/footIcon.svg";
-import emailIcon from "../../assets/pngs/emailIcon.svg";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
-
-const STEP_ICONS = [
-  basicInfoIcon,
-  profilePictureIcon,
-  footIcon,
-  emailIcon,
-];
 
 export const ProfileComplitionsProgresbar = () => {
   const { data: userInfo } = useGetUserInfoQuery();
@@ -47,14 +36,14 @@ export const ProfileComplitionsProgresbar = () => {
             >
               <div className={styles.iconWrapper}>
                 <Image
-                  src={STEP_ICONS[index]}
+                  src={step.iconUrl}
                   alt={step.name}
                   width={24}
                   height={24}
                   className={styles.icon}
                 />
               </div>
-            <div> % </div>
+              <div> % </div>
               <div
                 className={`${styles.circle} ${
                   safeValue >= pointDistance ? styles.active : ""
@@ -65,7 +54,6 @@ export const ProfileComplitionsProgresbar = () => {
           );
         })}
       </div>
-</div>
-
+    </div>
   );
 };
