@@ -15,35 +15,44 @@ export const ProfileComplitions = () => {
 
   const t = useTranslations("common");
   const handleCLick = () => {
-    // clicked
+    if (process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY) {
+      window.location.href = process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY;
+    }
   };
-  if ((userInfo?.profileCompletionInfo?.percentage ?? 0) >= 100) return null;
+  if (!userInfo || (userInfo?.profileCompletionInfo?.percentage ?? 0) >= 100)
+    return null;
   return (
-    <div className={`${styles.profile_complitions} ${isMobile ? styles.mobile : ""}`}>
+    <div
+      className={`${styles.profile_complitions} ${
+        isMobile ? styles.mobile : ""
+      }`}
+    >
       <div className={styles.info_wrapperS}>
-        <div className={styles.textWrapper}> 
+        <div className={styles.textWrapper}>
           <div className={styles.title}>{t("ProfileComplition.title")}</div>
         </div>
-        {!isMobile && 
-        <div className={styles.buttonWrapper}> 
-        <Button
-          content={t("ProfileComplition.buttonContent")}
-          className="white_button"
-          handleClick={handleCLick}
-        /></div>}
+        {!isMobile && (
+          <div className={styles.buttonWrapper}>
+            <Button
+              content={t("ProfileComplition.buttonContent")}
+              className="white_button"
+              handleClick={handleCLick}
+            />
+          </div>
+        )}
       </div>
       <div className={styles.progressbar_wrapper}>
         <ProfileComplitionsProgresbar />
       </div>
-      {isMobile && 
-      <div className={styles.buttonWrapper}> 
-        <Button
-          content={t("ProfileComplition.buttonContent")}
-          className="white_button"
-          handleClick={handleCLick}
-        />
+      {isMobile && (
+        <div className={styles.buttonWrapper}>
+          <Button
+            content={t("ProfileComplition.buttonContent")}
+            className="white_button"
+            handleClick={handleCLick}
+          />
         </div>
-        }
+      )}
     </div>
   );
 };

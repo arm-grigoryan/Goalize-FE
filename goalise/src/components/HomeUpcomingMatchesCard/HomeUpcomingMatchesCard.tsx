@@ -12,10 +12,10 @@ import { useEffect, useRef, useState } from "react";
 import { UpcomingMatch } from "@/types/api/upComingMatches";
 import { useTranslations } from "next-intl";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
-import upcomingEmpty from '../../assets/pngs/upcomingEmpty.svg';
+import upcomingEmpty from "../../assets/pngs/upcomingEmpty.svg";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
-import matchMobileEmpty from '../../assets/pngs/matchMobileEmpty.svg';
+import matchMobileEmpty from "../../assets/pngs/matchMobileEmpty.svg";
 
 export const HomeUpcomingMatchesCard = () => {
   const t = useTranslations();
@@ -83,10 +83,14 @@ export const HomeUpcomingMatchesCard = () => {
 
   return (
     <>
-      {!data?.length ? (
+      {!matches?.length ? (
         <div className={styles.Home_main_card_no_mutch}>
           <div className={styles.no_upcoming_wrapper}>
-            <Image src={isMobile ? matchMobileEmpty : upcomingEmpty} alt="" className={styles.no_upcoming_image}/>
+            <Image
+              src={isMobile ? matchMobileEmpty : upcomingEmpty}
+              alt=""
+              className={styles.no_upcoming_image}
+            />
             <span className={styles.no_upcoming_text}>
               No upcoming matches scheduled at the moment
             </span>
@@ -96,7 +100,9 @@ export const HomeUpcomingMatchesCard = () => {
         <div className={styles.Home_main_card}>
           <div className={styles.match_inner_wrapper}>
             <div>
-              <div className={`${styles.title} ${isMobile && styles.title_mobile}`}>
+              <div
+                className={`${styles.title} ${isMobile && styles.title_mobile}`}
+              >
                 <div className={styles.title_text}>
                   {t("home.upcomingMatches.title")}
                 </div>
@@ -130,7 +136,7 @@ export const HomeUpcomingMatchesCard = () => {
               </div>
             </div>
           </div>
-          <div className={styles.divider}> 
+          <div className={styles.divider}>
             <CustomDivider orientation="vertical" />
           </div>
           <div className={styles.next_match_list_wrapper}>
@@ -142,10 +148,6 @@ export const HomeUpcomingMatchesCard = () => {
               className={styles.next_matches_list_inner_wrapper}
             >
               {matches.map((match) => {
-                // const { date } = match;
-                // const d = new Date(date);
-                // const tba = d.toLocaleDateString() === "1/1/1";
-
                 return (
                   <MatchListInnerCard
                     key={match.id}
@@ -158,13 +160,13 @@ export const HomeUpcomingMatchesCard = () => {
                   />
                 );
               })}
-              {isFetching && (
-                <div className={styles.loader_container}>
-                  <div className={styles.loader}></div>
-                </div>
-              )}
             </div>
           </div>
+        </div>
+      )}
+      {isFetching && (
+        <div className={styles.loader_container}>
+          <div className={styles.loader}></div>
         </div>
       )}
     </>

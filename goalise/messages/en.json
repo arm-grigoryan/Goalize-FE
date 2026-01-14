@@ -40,9 +40,9 @@
       "profile": "Profile",
       "createTeam": "Create Team",
       "myTeam": "My Team",
-      "accoynt": "Account",
-      "logIn" : "Log In",
-      "logout": "Logout"
+      "account": "Account",
+      "logIn": "Log In",
+      "logOut": "Logout"
     }
   },
   "footer": {

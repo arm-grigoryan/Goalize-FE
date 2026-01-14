@@ -4,7 +4,7 @@ import Image from "next/image";
 import logo from "/public/pngs/logo/Logo.svg";
 import profileImg from "/public/images/headerProfileImg.png";
 import Link from "next/link";
-import searchIcon from '../../../assets/pngs/searchicon.svg';
+import searchIcon from "../../../assets/pngs/searchicon.svg";
 import { CustomDivider } from "@/shared/Divider/Divider";
 import { useTranslations } from "next-intl";
 import LanguageSelect from "@/shared/LanguageSelect";
@@ -15,14 +15,14 @@ import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import burgerIcon from "../../../assets/pngs/burgerMenu.png";
 import closeIcon from "../../../assets/pngs/arrowRightIcon.png";
 import { useAuth } from "@/shared/auth/AuthContext";
-import notificationIcon from '../../../assets/pngs/notificationIcon.svg';
+import notificationIcon from "../../../assets/pngs/notificationIcon.svg";
 import SearchCard from "@/shared/SearchCard";
 import NotificationCard from "@/shared/NotificationCard";
 import PortalDropdown from "@/shared/PortalDropdown";
 import { INotificationItemProps } from "@/shared/NotificationItem/NotificationItem.types";
-import teamLogo from '../../../assets/pngs/teamLogo.png';
+import teamLogo from "../../../assets/pngs/teamLogo.png";
 import ProfileCard from "@/shared/ProfileCard";
-import mobileLogo from '/public/pngs/logo/mobileLogo.svg';
+import mobileLogo from "/public/pngs/logo/mobileLogo.svg";
 export const Header = () => {
   const t = useTranslations();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -30,6 +30,7 @@ export const Header = () => {
   const leaguesRef = useRef<HTMLSpanElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
   const searchButtonRef = useRef<HTMLDivElement | null>(null);
+  const mobileSearchRef = useRef<HTMLDivElement | null>(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -46,37 +47,39 @@ export const Header = () => {
   const profileRef = useRef<HTMLDivElement>(null);
 
   const userLabel = user?.name || user?.email || "Guest";
-  
-  const obj =[
-    { 
-      icon: teamLogo,
-      title: "New comment on your post", 
-      description: "Someone has commented on your recent post."
-    },  
+
+  const obj = [
     {
-      title: "New follower", 
-      description: "You have a new follower."
+      icon: teamLogo,
+      title: "New comment on your post",
+      description: "Someone has commented on your recent post.",
     },
     {
-      title: "Update available", 
+      title: "New follower",
+      description: "You have a new follower.",
+    },
+    {
+      title: "Update available",
       description: "A new update is available for your app.",
       acceptButtonText: "Accept",
       denyButtonText: "Deny",
       onAcceptButtonClick: () => {},
-      onDenyButtonClick: () => {}
+      onDenyButtonClick: () => {},
     },
   ] as INotificationItemProps[];
-   const notificationsCount = obj.length;
+  const notificationsCount = obj.length;
 
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
       if (
         dropdownRef.current?.contains(e.target as Node) ||
         searchButtonRef.current?.contains(e.target as Node) ||
+        mobileSearchRef.current?.contains(e.target as Node) ||
         searchInputRef.current?.contains(e.target as Node) ||
-        notificationRef.current?.contains(e.target as Node)||
+        notificationRef.current?.contains(e.target as Node) ||
         profileRef.current?.contains(e.target as Node)
-      ) return;
+      )
+        return;
 
       setSearchOpen(false);
       setShowSearchInput(false);
@@ -95,7 +98,7 @@ export const Header = () => {
   }, [mobileMenuOpen]);
 
   const toggleSearchInput = () => {
-    setShowSearchInput(prev => {
+    setShowSearchInput((prev) => {
       const next = !prev;
       if (next) {
         setSearchOpen(true);
@@ -124,45 +127,65 @@ export const Header = () => {
           {!mobileMenuOpen && (
             <div className={styles.header_mobile}>
               <div className={styles.burger_menu_closed}>
-                <Image alt="" src={mobileLogo} className={styles.logo_wrapper} />
-               <div className={styles.leng_and_profile_wrapper_mobile}>
-                <div
-                className={`${styles.iconWrapper} ${styles.redGlow}`}
-                ref={notificationRef}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowNotifications(prev => !prev);
-                }}
-              >
-                <Image src={notificationIcon} alt="Notifications" />
-                {notificationsCount > 0 && (
-                  <span className={styles.notificationBadge}>
-                    {notificationsCount > 99 ? "99+" : notificationsCount}
-                  </span>
-                )}</div>
-                {showNotifications && (
-                <div
-                  className={styles.notification_dropdown}
-                  style={{
-                    position: "absolute",
-                    top: "80px",
-                    right: 0,
-                    zIndex: 1000,
-                  }}
-                >
-                  <NotificationCard object={obj}/>
-                </div>
-              )}
-                <LanguageSelect />
                 <Image
                   alt=""
-                  src={burgerIcon}
-                  className={styles.burger_menu_icon}
-                  onClick={() => setMobileMenuOpen(true)}
+                  src={mobileLogo}
+                  className={styles.logo_wrapper}
                 />
+                <div className={styles.leng_and_profile_wrapper_mobile}>
+                  {isAuthenticated && (
+                    <>
+                      <div
+                        className={`${styles.iconWrapper} ${styles.redGlow}`}
+                        ref={notificationRef}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowNotifications((prev) => !prev);
+                        }}
+                      >
+                        <Image src={notificationIcon} alt="Notifications" />
+                        {notificationsCount > 0 && (
+                          <span className={styles.notificationBadge}>
+                            {notificationsCount > 99
+                              ? "99+"
+                              : notificationsCount}
+                          </span>
+                        )}
+                      </div>
+                      {showNotifications && (
+                        <div
+                          className={styles.notification_dropdown}
+                          style={{
+                            position: "absolute",
+                            top: "80px",
+                            right: 0,
+                            zIndex: 1000,
+                          }}
+                        >
+                          <NotificationCard object={obj} />
+                        </div>
+                      )}
+                    </>
+                  )}
+                  <LanguageSelect />
+                  <div
+                    className={styles.iconWrapper}
+                    ref={mobileSearchRef}
+                    onClick={toggleSearchInput}
+                  >
+                    <Image alt="" src={searchIcon} />
+                  </div>
+                  <Image
+                    alt=""
+                    src={burgerIcon}
+                    className={styles.burger_menu_icon}
+                    onClick={() => setMobileMenuOpen(true)}
+                  />
+                </div>
               </div>
-              </div>
-              <SearchCard open={true} inputRef={searchInputRef} />
+              {searchOpen && (
+                <SearchCard open={searchOpen} inputRef={searchInputRef} />
+              )}
             </div>
           )}
           {mobileMenuOpen && (
@@ -203,9 +226,11 @@ export const Header = () => {
                   </Link>
 
                   <span
-                    className={`${styles.link} ${!!showDropdown ? styles.selected : ""}`}
+                    className={`${styles.link} ${
+                      !!showDropdown ? styles.selected : ""
+                    }`}
                     ref={leaguesRef}
-                    onClick={() => setShowDropdown(prev => !prev)}
+                    onClick={() => setShowDropdown((prev) => !prev)}
                   >
                     {t("header.menu.leagues")}
                   </span>
@@ -260,7 +285,7 @@ export const Header = () => {
               <span
                 className={styles.sele}
                 ref={leaguesRef}
-                    onClick={() => setShowDropdown((prev) => !prev)}
+                onClick={() => setShowDropdown((prev) => !prev)}
               >
                 {t("header.menu.leagues")}
               </span>
@@ -288,87 +313,117 @@ export const Header = () => {
             </div>
 
             <div className={styles.searchContainer}>
-                <div className={styles.iconWrapper} ref={searchButtonRef}>
-                  <div
-                    className={
-                      searchOpen
-                        ? styles.search_icon_wrapper_open
-                        : styles.search_icon_wrapper
-                    }
-                    onClick={toggleSearchInput}
-                  >
-                    <Image alt="" src={searchIcon} />
-                  </div>
-                  <div
-                    ref={dropdownRef}
-                    className={`${styles.search_dropdown} ${
-                      searchOpen ? styles.open : styles.closed
-                    }`}
-                  >
-                    <SearchCard open={searchOpen} inputRef={searchInputRef} />
-                  </div>
+              <div className={styles.iconWrapper} ref={searchButtonRef}>
+                <div
+                  className={
+                    searchOpen
+                      ? styles.search_icon_wrapper_open
+                      : styles.search_icon_wrapper
+                  }
+                  onClick={toggleSearchInput}
+                >
+                  <Image alt="" src={searchIcon} />
+                </div>
+                <div
+                  ref={dropdownRef}
+                  className={`${styles.search_dropdown} ${
+                    searchOpen ? styles.open : styles.closed
+                  }`}
+                >
+                  <SearchCard open={searchOpen} inputRef={searchInputRef} />
                 </div>
               </div>
-
+            </div>
           </div>
 
           <div className={styles.leng_and_profile_wrapper}>
-            <div className={styles.icon_and_leng_wrapper} style={{ position: 'relative' }}>
-              <div
-                className={`${styles.iconWrapper} ${styles.redGlow}`}
-                ref={notificationRef}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowNotifications(prev => !prev);
-                }}
-              >
-                <Image src={notificationIcon} alt="Notifications" />
-                {notificationsCount > 0 && (
-                  <span className={styles.notificationBadge}>
-                    {notificationsCount > 99 ? "99+" : notificationsCount}
-                  </span>
-                )}
-              </div>
+            <div
+              className={styles.icon_and_leng_wrapper}
+              style={{ position: "relative" }}
+            >
+              {isAuthenticated && (
+                <>
+                  <div
+                    className={`${styles.iconWrapper} ${styles.redGlow}`}
+                    ref={notificationRef}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowNotifications((prev) => !prev);
+                    }}
+                  >
+                    <Image src={notificationIcon} alt="Notifications" />
+                    {notificationsCount > 0 && (
+                      <span className={styles.notificationBadge}>
+                        {notificationsCount > 99 ? "99+" : notificationsCount}
+                      </span>
+                    )}
+                  </div>
 
-              {showNotifications && (
-                <div
-                  className={styles.notification_dropdown}
-                  style={{
-                    position: "absolute",
-                    top: "calc(100% + 8px)",
-                    right: 0,
-                    zIndex: 1000,
-                  }}
-                >
-                  <NotificationCard object={obj}/>
-                </div>
+                  {showNotifications && (
+                    <div
+                      className={styles.notification_dropdown}
+                      style={{
+                        position: "absolute",
+                        top: "calc(100% + 8px)",
+                        right: 0,
+                        zIndex: 1000,
+                      }}
+                    >
+                      <NotificationCard object={obj} />
+                    </div>
+                  )}
+                </>
               )}
 
               <LanguageSelect />
             </div>
 
-            <CustomDivider variant="fullWidth" orientation="vertical" flexItem />
+            <CustomDivider
+              variant="fullWidth"
+              orientation="vertical"
+              flexItem
+            />
 
-            <div className={`${showProfileCard && styles.img_selected} ${ styles.name_and_img_wrapper}`}
-              ref={profileRef}
+            {isAuthenticated ? (
+              <div
+                className={`${showProfileCard && styles.img_selected} ${
+                  styles.name_and_img_wrapper
+                }`}
+                ref={profileRef}
                 onClick={(e) => {
                   e.stopPropagation();
-                  setShowProfileCard(prev => !prev);
-                }}>
-              <div className={styles.profile_details}>
-                <span className={styles.user_name}>{userLabel}</span>
-              </div>
+                  setShowProfileCard((prev) => !prev);
+                }}
+              >
+                <div className={styles.profile_details}>
+                  <span className={styles.user_name}>{userLabel}</span>
+                </div>
 
-              <div
-                className={styles.profile_img_wrapper }>
-                <Image src={profileImg} alt="" className={styles.profile_img} />
-              </div>
+                <div className={styles.profile_img_wrapper}>
+                  <Image
+                    src={profileImg}
+                    alt=""
+                    className={styles.profile_img}
+                  />
+                </div>
                 {showProfileCard && (
-                    <div className={styles.profile_dropdown}>
-                      <ProfileCard  />
-                    </div>
+                  <div className={styles.profile_dropdown}>
+                    <ProfileCard
+                      logIn={isAuthenticated}
+                      onAuthClick={onAuthClick}
+                    />
+                  </div>
                 )}
-            </div>
+              </div>
+            ) : (
+              <button
+                className={styles.auth_button}
+                onClick={onAuthClick}
+                disabled={loading}
+              >
+                {loading ? "Loading..." : t("home.profileCard.logIn")}
+              </button>
+            )}
           </div>
         </div>
       )}
