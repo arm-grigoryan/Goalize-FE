@@ -5,8 +5,6 @@ import PastMatchesInnerCard from "@/entities/PastMatchesInnerCard";
 import winnerIcon from "../../assets/pngs/winnerIcon.png";
 import teamLogo from "../../assets/pngs/teamLogo.png";
 import drawIcon from "../../assets/pngs/drawIcon.png";
-import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
-import { useWindowSize } from "@/hooks/useWindowSize";
 import { useGetLeaguesResultsQuery } from "@/app/store/services/api";
 import { ILeaguesResultsItem } from "@/types/api/leaguesResults";
 import { handleLongStrings } from "@/helper/handleLongStrings";
@@ -25,8 +23,6 @@ export const LeaguesResults = () => {
   );
   const [hasMore, setHasMore] = useState<boolean>(true);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const { width } = useWindowSize();
-  const isMobile = width <= MEDIA_TABLET_SMALL;
 
   const { data: resultsData, isFetching } = useGetLeaguesResultsQuery(
     { leagueId: leagueIdNum, skip: offset, take: PAGE_SIZE },
@@ -108,7 +104,7 @@ export const LeaguesResults = () => {
                   teamName2={handleLongStrings(match.awayTeam.name, 8)}
                   teamScore1={match.homeTeamScore}
                   teamScore2={match.awayTeamScore}
-                  isBig={!isMobile}
+                  variant={"results"}
                 />
               );
             })}

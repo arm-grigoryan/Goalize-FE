@@ -22,17 +22,21 @@ export const GroupCard = ({ groupCardContent, groupName }: GroupCardProps) => {
       <div className={styles.group_card}>
         <table className={styles.group_card_table}>
           <thead className={styles.group_card_header}>
-            <tr>
-              <th>#</th>
-              <th className={styles.team}>Team</th>
-              <th>MP</th>
-              <th>GD</th>
-              <th className={styles.pts}>PTS</th>
+            <tr className={styles.header_content}>
+              <div className={styles.titleWrapper}> 
+                <th>#</th>
+                <th className={styles.team}>Team</th>
+              </div>
+              <div className={styles.names_wrapper}> 
+                <th>MP</th>
+                <th>GD</th>
+                <th className={styles.pts}>PTS</th>
+              </div>
             </tr>
           </thead>
         </table>
 
-        <div className={rows > minRows ? styles.scrollable : ""}>
+        <div className={`${rows > minRows ? styles.scrollable : ""} ${styles.table_wrapper}`}>
           <table className={styles.group_card_table}>
             <tbody>
               {filledRows.map((card, index) => (
@@ -42,11 +46,15 @@ export const GroupCard = ({ groupCardContent, groupName }: GroupCardProps) => {
                 >
                   {card ? (
                     <>
-                      <td>{index + 1}</td>
-                      <td className={styles.team}>{card.team.name}</td>
-                      <td>{card.matchesPlayed}</td>
-                      <td>{card.goalsDifference}</td>
-                      <td className={styles.pts}>{card.points}</td>
+                      <div className={styles.position_container}> 
+                        <td className={styles.index}>{index + 1}</td>
+                        <td className={styles.team}>{card.team.name}</td>
+                      </div>
+                      <div className={styles.scores_container}> 
+                        <td className={styles.scores}>{card.matchesPlayed}</td>
+                        <td className={styles.scores}>{card.goalsDifference}</td>
+                        <td className={styles.pts}>{card.points}</td>
+                      </div>
                     </>
                   ) : (
                     <td colSpan={5}>&nbsp;</td>

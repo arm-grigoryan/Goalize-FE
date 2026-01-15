@@ -1,6 +1,6 @@
 .group_card {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto auto;
   gap: 25px;
 }
 
@@ -32,5 +32,12 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 870px) {
+  .group_card {
+    grid-template-columns: 1fr;
+    width: 100%;
   }
 }

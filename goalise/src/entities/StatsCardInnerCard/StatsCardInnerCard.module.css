@@ -1,0 +1,96 @@
+.container {
+    display: flex;
+    justify-content: center;
+    color: white;
+    margin-top: 12px;
+    border-bottom: 1px solid  #a5a5a544;
+}
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    margin-bottom: 12px;
+}
+.imageNameWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.playerImage {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+}
+.nameContainer {
+    display: flex;
+    flex-direction: column;
+}
+.playerName {
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    margin-bottom: 4px;
+    white-space: nowrap;
+}
+.teamName {
+    color: #A5A5A5;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.shirtNumber {
+    margin-left: 40px;
+}
+.value {
+    margin-right: 14px;
+    margin-left: 40px;
+}
+
+.topValue {
+    display: flex;
+    width: 40px;
+    height: 20px;
+    padding: 4px 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    background: #F53A53;
+    margin-left: 40px;
+}
+
+
+
+.mobileWrapper {
+    display: flex;
+    justify-content: center;
+    color: white;
+    margin-top: 12px;
+    border-bottom: 1px solid  #a5a5a544;
+}
+.mobileWrapper .wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+}
+.mobileWrapper .shirtNumber {
+    margin-left: 14px;
+}
+
+.mobileWrapper .playerName {
+    white-space: wrap;
+}
+.mobileWrapper .teamName {
+    white-space: wrap;
+}
+
+.mobileWrapper .value {
+    margin-left: 20px;
+}
+
+.mobileWrapper .topValue {
+    margin-left: 20px;
+}

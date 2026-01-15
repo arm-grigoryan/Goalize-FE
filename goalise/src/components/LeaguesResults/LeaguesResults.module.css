@@ -1,5 +1,5 @@
 .leagues_results {
-  padding: 20px;
+  padding: 20px 0 20px 20px;
   margin-top: 30px;
   border: solid 1px #a5a5a544;
   border-radius: 12px;
@@ -32,8 +32,9 @@
 
 .fixtures_list {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
   gap: 10px;
+  padding-right: 20px;
 }
 .loader_container {
   display: flex;

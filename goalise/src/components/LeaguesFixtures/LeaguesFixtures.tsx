@@ -4,8 +4,6 @@ import styles from "./LeaguesFixtures.module.css";
 import PastMatchesInnerCard from "@/entities/PastMatchesInnerCard";
 import winnerIcon from "../../assets/pngs/winnerIcon.png";
 import teamLogo from "../../assets/pngs/teamLogo.png";
-import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
-import { useWindowSize } from "@/hooks/useWindowSize";
 import { useGetLeaguesFixturesQuery } from "@/app/store/services/api";
 import { ILeaguesResultsItem } from "@/types/api/leaguesResults";
 import { handleLongStrings } from "@/helper/handleLongStrings";
@@ -25,8 +23,6 @@ export const LeaguesFixtures = () => {
   );
   const [hasMore, setHasMore] = useState<boolean>(true);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const { width } = useWindowSize();
-  const isMobile = width <= MEDIA_TABLET_SMALL;
 
   const { data: resultsData, isFetching } = useGetLeaguesFixturesQuery(
     { leagueId: leagueIdNum, skip: offset, take: PAGE_SIZE },
@@ -108,7 +104,7 @@ export const LeaguesFixtures = () => {
                   teamName2={handleLongStrings(match.awayTeam.name, 8)}
                   teamScore1={match.homeTeamScore}
                   teamScore2={match.awayTeamScore}
-                  isBig={!isMobile}
+                  variant={"fixtures"}
                 />
               );
             })}
