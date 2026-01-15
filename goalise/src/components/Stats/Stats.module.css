@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    margin-top: 24px;
+    overflow: hidden;
+    overflow-x: scroll;
+    padding-bottom: 14px;
+}
+
+.container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background-color: #54a2fe;
+    border-radius: 5px;
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.mobileWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 28px;
+    width: 100%;
+}

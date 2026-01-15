@@ -1,0 +1,28 @@
+import React from "react";
+import { IStatsCardInnerCardProps } from "./StatsCardInnerCard.types";
+import styles from './StatsCardInnerCard.module.css';
+import Image from "next/image";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+
+export const StatsCardInnerCard: React.FC<IStatsCardInnerCardProps> = ({
+ teamPlayer,
+ team,
+ value
+}) => {
+    const { width } = useWindowSize();
+    const isMobile = width <= MEDIA_TABLET_SMALL;
+    return <div className={`${isMobile ? styles.mobileWrapper : styles.container}`}> 
+            <div className={styles.wrapper}> 
+                <div className={styles.imageNameWrapper}>
+                    <Image src={''}  alt="" className={styles.playerImage}/>
+                    <div className={styles.nameContainer}>
+                        <div className={styles.playerName}>{teamPlayer.firstName} {teamPlayer.lastName} </div>
+                        <div className={styles.teamName}> {team?.name}</div>
+                    </div>
+                </div>
+                    <div className={styles.shirtNumber}> #{teamPlayer.shirtNumber} </div>
+                    <div className={`${styles.value} ${styles.topValue}`}> {value} </div>
+          </div>
+     </div>
+};

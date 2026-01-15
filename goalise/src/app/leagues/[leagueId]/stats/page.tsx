@@ -1,3 +1,8 @@
+import Stats from "@/components/Stats";
+
 export default function LeaguesStatsPage() {
-  return <div>this is stats page</div>;
+
+  return <div>
+    <Stats />
+  </div>;
 }

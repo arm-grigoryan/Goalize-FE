@@ -7,12 +7,14 @@ import Image from "next/image";
 import { CustomDivider } from "@/shared/Divider/Divider";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
-
+import vsIcon from "../../assets/pngs/vsIcon.png";
 import winnerIconSwapped from "../../assets/pngs/winnerIconSwapped.svg";
 import drawSwappedIcon from "../../assets/pngs/drawIconSwapped.svg";
 import calendarIcon from "../../assets/pngs/dateIcon.svg";
 
+type PatchMatchesInnerCardVariant = "default" | "results" | "fixtures";
 interface PastMatchesInnerCardProps {
+  variant?: PatchMatchesInnerCardVariant;
   date: string;
   winnerIcon: string | StaticImageData;
   drawIcon?: string | StaticImageData;
@@ -24,10 +26,10 @@ interface PastMatchesInnerCardProps {
   teamName2: string;
   teamName2Tooltip?: string;
   teamScore2: number;
-  isBig?: boolean;
 }
 
 export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
+  variant = "default",
   date,
   winnerIcon,
   drawIcon,
@@ -39,7 +41,6 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
   teamName2,
   teamName2Tooltip,
   teamScore2,
-  isBig = false,
 }) => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
@@ -50,22 +51,21 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
 
   if (isMobile) {
     return (
-      <div className={styles.past_matches_innerCard_mobile}>
-        <div className={styles.date_wrapper}>
-          <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
-            <Image src={calendarIcon} alt="" />
-          </div>
-          <span>{date}</span>
+      <div className={`${variant == "results" ? 
+                          styles.past_matches_innerCard_results_mobile
+                          : variant == 'fixtures' ?
+                          styles.past_matches_innerCard_fixtures_mobile
+                          : styles.past_matches_innerCard_mobile}`}
+        >
+          <div className={styles.date_wrapper}>
+            <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
+              <Image src={calendarIcon} alt="" />
+            </div>
+            <span>{date}</span>
         </div>
         <div className={styles.team_info_mobile}>
           <div className={styles.home_team_info_mobile}>
-              <div
-                className={
-                  isBig
-                    ? styles.winner_wrapper_big1
-                    : styles.winner_wrapper_mobile
-                }
-              >
+              <div className={styles.winner_wrapper_mobile}>
               {winner1 && <Image src={winnerIcon} alt="" />}
               {draw && drawIcon && <Image src={drawIcon} alt="" />}
             </div>
@@ -73,20 +73,26 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
             <div>{teamName1}</div>
           </div>
 
-          <div className={styles.score_wrapper_mobile}>
-            <span className={styles.score}>{teamScore1}</span>
-            <CustomDivider orientation="vertical" flexItem />
-            <span className={styles.score}>{teamScore2}</span>
+         <div className={styles.score_wrapper}>
+            {!(variant === "fixtures" ) &&
+              <span className={`${variant == "results" &&
+                                  winner1 && styles.score1} 
+                                ${styles.score}`}>
+                  {teamScore1}
+              </span>} 
+            {variant === "fixtures" 
+                  ? <Image src={vsIcon} alt="" className={styles.vsIcon} /> 
+                  : <CustomDivider orientation="vertical" flexItem />}
+            {!(variant === "fixtures" ) && 
+                <span className={`${variant == "results" &&
+                                    winner2 && styles.score2} 
+                                    ${styles.score}`}>
+                      {teamScore2}
+                  </span>}
           </div>
 
           <div className={styles.away_team_info_mobile}>
-              <div
-                className={
-                  isBig
-                    ? styles.winner_wrapper_big2
-                    : styles.winner_wrapper_mobile
-                }
-              >
+              <div className={styles.winner_wrapper_mobile}>
               {winner2 && <Image src={winnerIcon} alt="" />}
               {draw && drawIcon && <Image src={drawIcon} alt="" />}
             </div>
@@ -99,7 +105,11 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
   }
 
   return (
-    <div className={styles.past_matches_innerCard}>
+    <div className={`${variant == "results" ? 
+                          styles.past_matches_innerCard_results
+                          : variant === "fixtures" ? 
+                          styles.past_matches_innerCard_fixtures 
+                          :styles.past_matches_innerCard}`}>
       <div className={styles.date}>
         <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
           <Image src={calendarIcon} alt="" className={styles.icon} />
@@ -107,10 +117,11 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
         {date}
       </div>
       <CustomDivider orientation="vertical" flexItem />
+      <div className={styles.wrapper}> 
       <div className={styles.side_left}>
         <div className={styles.winner_slot}>
-          {winner1 && <Image src={winnerIcon} alt="" />}
-          {draw && drawIcon && <Image src={drawIcon} alt="" />}
+          {winner1 && <Image src={variant == "default" ? winnerIcon : winnerIconSwapped} alt="" />}
+          {draw && drawIcon && <Image src={variant == "default" ? drawIcon : drawSwappedIcon} alt="" />}
         </div>
 
         <div className={styles.team}>
@@ -122,9 +133,21 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
       </div>
 
       <div className={styles.score_wrapper}>
-        <span className={styles.score}>{teamScore1}</span>
-        <CustomDivider orientation="vertical" flexItem />
-        <span className={styles.score}>{teamScore2}</span>
+       {!(variant === "fixtures" ) &&
+        <span className={`${variant == "results" &&
+                            winner1 && styles.score1} 
+                          ${styles.score}`}>
+            {teamScore1}
+        </span>} 
+      {variant === "fixtures" 
+            ? <Image src={vsIcon} alt="" className={styles.vsIcon} /> 
+            : <CustomDivider orientation="vertical" flexItem />}
+       {!(variant === "fixtures" ) && 
+          <span className={`${variant == "results" &&
+                              winner2 && styles.score2} 
+                              ${styles.score}`}>
+                {teamScore2}
+            </span>}
       </div>
 
       <div className={styles.side_right}>
@@ -136,9 +159,10 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
         </div>
 
         <div className={styles.winner_slot2}>
-          {winner2 && <Image src={winnerIconSwapped} alt="" />}
-          {draw && <Image src={drawSwappedIcon} alt="" />}
+          {winner2 && <Image src={variant == "default" ? winnerIconSwapped : winnerIcon} alt="" />}
+          {draw && <Image src={variant == "default" ? drawSwappedIcon : drawIcon} alt="" />}
         </div>
+      </div>
       </div>
     </div>
   );
