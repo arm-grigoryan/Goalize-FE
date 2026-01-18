@@ -57,23 +57,6 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
   const isMobile = width <= MEDIA_TABLET_SMALL;
   return (
     <>
-      {isMobile && (
-        <div className={styles.search_mobile_container}>
-          <div className={styles.input_image_wrapper}>
-            <Image src={redSearchIcon} alt="" />
-            <input
-              ref={inputRef}
-              placeholder="Search leagues, teams, players..."
-              className={`${styles.search_input_mobile} ${
-                open ? styles.search_input_open : styles.search_input_closed
-              }`}
-              value={query}
-              onChange={onSearchChange}
-              onClick={(e) => e.stopPropagation()}
-            />
-          </div>
-        </div>
-      )}
       <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
         <div className={styles.searchInputWrapper}>
           <Image

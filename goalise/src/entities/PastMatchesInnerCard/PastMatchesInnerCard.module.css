@@ -209,15 +209,36 @@
 }
 
 .winner_wrapper_mobile {
+  position: relative;
+  left: 11px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-
-
-
+.winnerIcon{
+  position: relative;
+  width: 74px;
+  bottom: -26px;
+  right: 20px;
+}
+.drawIcon{
+  position: relative;
+  width: 74px;
+  bottom: -26px;
+  right: 20px;
+}
+.winnerIconSwapped {
+  position: relative;
+  width: 68px;
+  bottom: -22px;
+}
+.drawIconSwapped {
+  position: relative;
+  width: 72px;
+  bottom: -26px;
+  left: 10px;
+}
 /* ------------ results page ----------- */
 .past_matches_innerCard_results {
   display: grid;

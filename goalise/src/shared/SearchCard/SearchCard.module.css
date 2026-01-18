@@ -303,7 +303,7 @@
   margin: 0;
   min-width: 120px;
   padding: 20px;
-  top: 168px;
+  top: 68px;
   align-self: center;
   justify-self: center;
 
@@ -312,7 +312,7 @@
 @media (max-width: 520px) { 
   .container {
     position: absolute;
-    top: 168px;
+    top: 68px;
     left: 50%;
     transform: translateX(-50%);
     width: calc(100vw - 88px);

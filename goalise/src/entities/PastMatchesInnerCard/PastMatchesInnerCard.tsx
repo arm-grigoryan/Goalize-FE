@@ -66,8 +66,8 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
         <div className={styles.team_info_mobile}>
           <div className={styles.home_team_info_mobile}>
               <div className={styles.winner_wrapper_mobile}>
-              {winner1 && <Image src={winnerIcon} alt="" />}
-              {draw && drawIcon && <Image src={drawIcon} alt="" />}
+              {winner1 && <Image src={winnerIcon} alt="" className={styles.winnerIcon} />}
+              {draw && drawIcon && <Image src={drawIcon} alt="" className={styles.drawIcon}/>}
             </div>
             <Image src={teamLogo1} alt="" className={styles.team_logo_mobile} />
             <div>{teamName1}</div>
@@ -93,8 +93,8 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
 
           <div className={styles.away_team_info_mobile}>
               <div className={styles.winner_wrapper_mobile}>
-              {winner2 && <Image src={winnerIcon} alt="" />}
-              {draw && drawIcon && <Image src={drawIcon} alt="" />}
+              {winner2 && <Image src={winnerIconSwapped} alt="" className={styles.winnerIconSwapped} />}
+              {draw && drawIcon && <Image src={drawSwappedIcon} alt="" className={styles.drawIconSwapped} />}
             </div>
             <Image src={teamLogo2} alt="" className={styles.team_logo_mobile} />
             <div>{teamName2}</div>

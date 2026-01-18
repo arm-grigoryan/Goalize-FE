@@ -16,7 +16,7 @@
     0 0 4px rgba(245, 58, 83, 1),
     0 0 6px rgba(245, 58, 83, 0.5);
     margin-right: 4px;
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 .arrow {
   width: 8px;
@@ -72,4 +72,39 @@
 
 .checkIcon {
   margin-right: 8px;
+}
+
+.mobileWrapper {
+  display: flex;
+  color: #ffffff;
+}
+.mobileSelect {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex-direction: column;
+}
+.mobileSelectedText{
+  color: #a5a5a5;
+  text-transform: capitalize;
+}
+.mobileArrow {
+  color: #a5a5a5;
+  width: 10px;
+  height: 10px;
+  margin-left: 10px;
+}
+.mobileArrowOpen {
+  transform: rotate(180deg);
+}
+.mobileMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+.mobileOption{
+  font-size: 18px;
+  color: #a5a5a5;
 }

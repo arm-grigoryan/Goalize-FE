@@ -4,15 +4,18 @@ import styles from "./ProfileCard.module.css";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useGetUserInfoQuery } from "@/app/store/services/api";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 
 export const ProfileCard: React.FC<IProfileCardProps> = ({
   logIn,
   onAuthClick,
 }) => {
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
   const t = useTranslations();
   const router = useRouter();
   const { data: userInfo } = useGetUserInfoQuery();
-
   // Determine whether to show "Create Team" or "My Team"
   const hasTeam =
     userInfo?.playerInfo?.team !== null &&
@@ -52,7 +55,7 @@ export const ProfileCard: React.FC<IProfileCardProps> = ({
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`${isMobile ? styles.mobile :styles.container}`}>
       <div className={styles.item} onClick={handleProfileClick}>
         {t("home.profileCard.profile")}
       </div>
