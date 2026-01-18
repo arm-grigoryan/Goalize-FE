@@ -126,13 +126,28 @@ export const Header = () => {
         <>
           {!mobileMenuOpen && (
             <div className={styles.header_mobile}>
+              <div className={styles.imagesWrapper}> 
+                  <Image
+                    alt=""
+                    src={burgerIcon}
+                    className={styles.burger_menu_icon}
+                    onClick={() => setMobileMenuOpen(true)}
+                  />
+                   <Image
+                      alt=""
+                      src={mobileLogo}
+                      className={styles.mobile_logo_wrapper}
+                  />
+              </div>
               <div className={styles.burger_menu_closed}>
-                <Image
-                  alt=""
-                  src={mobileLogo}
-                  className={styles.logo_wrapper}
-                />
                 <div className={styles.leng_and_profile_wrapper_mobile}>
+                   <div
+                    className={`${styles.iconWrapper} ${styles.redGlow}`}
+                    ref={mobileSearchRef}
+                    onClick={toggleSearchInput}
+                  >
+                    <Image alt="" src={searchIcon} className={styles.searchIcon} />
+                  </div>
                   {isAuthenticated && (
                     <>
                       <div
@@ -140,7 +155,10 @@ export const Header = () => {
                         ref={notificationRef}
                         onClick={(e) => {
                           e.stopPropagation();
-                          setShowNotifications((prev) => !prev);
+                          setShowNotifications((prev) => {
+                            if (!prev) setShowProfileCard(false);
+                            return !prev;
+                          });
                         }}
                       >
                         <Image src={notificationIcon} alt="Notifications" />
@@ -152,36 +170,54 @@ export const Header = () => {
                           </span>
                         )}
                       </div>
+                     
                       {showNotifications && (
-                        <div
-                          className={styles.notification_dropdown}
-                          style={{
-                            position: "absolute",
-                            top: "80px",
-                            right: 0,
-                            zIndex: 1000,
-                          }}
-                        >
+                        <div className={styles.notification_dropdown_mobile}>
                           <NotificationCard object={obj} />
                         </div>
                       )}
                     </>
                   )}
-                  <LanguageSelect />
-                  <div
-                    className={styles.iconWrapper}
-                    ref={mobileSearchRef}
-                    onClick={toggleSearchInput}
-                  >
-                    <Image alt="" src={searchIcon} />
-                  </div>
+                </div>
+                {isAuthenticated ? (
+              <div
+                className={`${
+                  styles.name_and_img_wrapper
+                }`}
+                ref={profileRef}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowProfileCard((prev) => {
+                    if (!prev) setShowNotifications(false);
+                    return !prev;
+                  });
+                }}
+              >
+                <div>
                   <Image
+                    src={profileImg}
                     alt=""
-                    src={burgerIcon}
-                    className={styles.burger_menu_icon}
-                    onClick={() => setMobileMenuOpen(true)}
+                    className={styles.profile_img}
                   />
                 </div>
+                {showProfileCard && (
+                  <div className={styles.profile_dropdown_mobile}>
+                    <ProfileCard
+                      logIn={isAuthenticated}
+                      onAuthClick={onAuthClick}
+                    />
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                className={styles.auth_button}
+                onClick={onAuthClick}
+                disabled={loading}
+              >
+                {loading ? "Loading..." : t("home.profileCard.logIn")}
+              </button>
+            )}
               </div>
               {searchOpen && (
                 <SearchCard open={searchOpen} inputRef={searchInputRef} />
@@ -191,7 +227,7 @@ export const Header = () => {
           {mobileMenuOpen && (
             <div className={styles.mobile_menu_open}>
               <div className={styles.logo_and_close_icon_wrapper}>
-                <Image alt="" src={logo} className={styles.logo_wrapper} />
+                <Image alt="" src={mobileLogo} className={styles.logo_wrapper} />
                 <Image
                   alt=""
                   src={closeIcon}
@@ -250,7 +286,7 @@ export const Header = () => {
                   >
                     {t("header.menu.events")}
                   </Link>
-
+                  <LanguageSelect variant="headerMobile"/>
                   <div className={styles.mobile_auth_actions}>
                     <button
                       className={styles.auth_button}
@@ -348,7 +384,10 @@ export const Header = () => {
                     ref={notificationRef}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setShowNotifications((prev) => !prev);
+                      setShowNotifications((prev) => {
+                        if (!prev) setShowProfileCard(false);
+                        return !prev;
+                      });
                     }}
                   >
                     <Image src={notificationIcon} alt="Notifications" />
@@ -360,15 +399,7 @@ export const Header = () => {
                   </div>
 
                   {showNotifications && (
-                    <div
-                      className={styles.notification_dropdown}
-                      style={{
-                        position: "absolute",
-                        top: "calc(100% + 8px)",
-                        right: 0,
-                        zIndex: 1000,
-                      }}
-                    >
+                    <div className={styles.notification_dropdown}>
                       <NotificationCard object={obj} />
                     </div>
                   )}
@@ -392,7 +423,10 @@ export const Header = () => {
                 ref={profileRef}
                 onClick={(e) => {
                   e.stopPropagation();
-                  setShowProfileCard((prev) => !prev);
+                  setShowProfileCard((prev) => {
+                    if (!prev) setShowNotifications(false);
+                    return !prev;
+                  });
                 }}
               >
                 <div className={styles.profile_details}>

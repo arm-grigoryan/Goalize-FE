@@ -2,7 +2,7 @@
 import Title from "@/shared/Title";
 import styles from "./LeaguesResults.module.css";
 import PastMatchesInnerCard from "@/entities/PastMatchesInnerCard";
-import winnerIcon from "../../assets/pngs/winnerIcon.png";
+import winnerIcon from "../../assets/pngs/winnerIcon.svg";
 import teamLogo from "../../assets/pngs/teamLogo.png";
 import drawIcon from "../../assets/pngs/drawIcon.png";
 import { useGetLeaguesResultsQuery } from "@/app/store/services/api";
