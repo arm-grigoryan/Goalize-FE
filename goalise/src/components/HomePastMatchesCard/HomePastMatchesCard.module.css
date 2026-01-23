@@ -82,6 +82,8 @@
   flex-direction: column;
   gap: 10px;
   overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 30px;
 }
 
 .match_wrapper::-webkit-scrollbar {

@@ -21,9 +21,10 @@ export const LeaguesJoinedTeamsProgressBar = ({
       <div
         className={styles.progressFill}
         style={{ width: `${progress}%` }}
-      ></div>
-      <div className={styles.progressText}>
-        {registeredTeamsCount} / {maxTeamsCount}
+      >
+        <span className={styles.progressText}>
+          {registeredTeamsCount} / {maxTeamsCount}
+        </span>
       </div>
     </div>
   );

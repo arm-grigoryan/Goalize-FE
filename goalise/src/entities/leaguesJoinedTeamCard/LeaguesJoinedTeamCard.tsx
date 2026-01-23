@@ -22,8 +22,8 @@ export const LeaguesJoinedTeamCard = ({
         <div className={styles.captain_info}>
           <Image src={captainImage} alt="Captain" className={styles.captain} />
           <div>
-            <div>{captainName}</div>
-            <div>captain</div>
+            <div className={styles.captain_name}>{captainName}</div>
+            <div className={styles.captain_role}>captain</div>
           </div>
         </div>
       </div>

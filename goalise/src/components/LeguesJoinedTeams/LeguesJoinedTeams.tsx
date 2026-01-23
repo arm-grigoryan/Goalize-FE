@@ -18,11 +18,17 @@ export const LeguesJoinedTeams = () => {
 
   return (
     <div className={styles.leagues_joined_teams}>
-      <h2>Joined Teams</h2>
+      <div className={styles.titleWrapper}>
+        Teams
+        <div className={styles.titleCount}>{'(' + data?.length  + '/' + leagueInfo?.maxTeamsCount + ')'}</div>
+      </div>
       <LeaguesJoinedTeamsProgressBar
         maxTeamsCount={leagueInfo?.maxTeamsCount || 0}
         registeredTeamsCount={data?.length || 0}
       />
+      <div className={styles.joinedTeamsTitle}> 
+        Joined Teams
+      </div>
       <div className={styles.teams_container}>
         {data?.map((team) => (
           <LeaguesJoinedTeamCard

@@ -50,6 +50,7 @@
 .position_container {
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 20px;
     width: 100%;
 }
@@ -59,6 +60,7 @@
   justify-content: space-between;
   padding: 10px 8px;
   border-bottom: 1px solid #ffffff1a;
+  align-items: center;
 }
 .group_card_content td {
   font-size: 14px;
@@ -76,6 +78,15 @@
 }
 .group_card_content .index{
   color: #A5A5A5;
+}
+.imageWrapper{
+  display: flex;
+  align-items: center;
+}
+.image {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 .pts {
   color: #f5b03a !important;

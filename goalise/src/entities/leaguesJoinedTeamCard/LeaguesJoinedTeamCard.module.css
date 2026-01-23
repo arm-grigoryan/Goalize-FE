@@ -1,11 +1,12 @@
 .leagues_joined_team_card {
   display: flex;
-  width: 20vw;
+  max-width: 320px;
   flex-direction: column;
   gap: 10px;
-  padding: 12px;
+  padding: 12px 34px;
   color: #e0e0e0;
   border-radius: 15px;
+  border: 1px solid #ffffff1a;
   background: linear-gradient(
         to right,
         rgba(255, 0, 0, 0.01),
@@ -22,8 +23,21 @@
   display: flex;
   gap: 8px;
 }
-
+.captain_name {
+  color: #FFF;
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+.captain_role {
+  color: #A5A5A5;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: capitalize;
+}
 .team_name {
+  color: #E8E8E8;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 700;
+  text-transform: capitalize;
 }
