@@ -23,6 +23,7 @@ import { INotificationItemProps } from "@/shared/NotificationItem/NotificationIt
 import teamLogo from "../../../assets/pngs/teamLogo.png";
 import ProfileCard from "@/shared/ProfileCard";
 import mobileLogo from "/public/pngs/logo/mobileLogo.svg";
+import { ErrorBanner } from "@/components/ErrorBanner/ErrorBanner";
 export const Header = () => {
   const t = useTranslations();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -133,11 +134,13 @@ export const Header = () => {
                     className={styles.burger_menu_icon}
                     onClick={() => setMobileMenuOpen(true)}
                   />
-                   <Image
-                      alt=""
+                   <Link href="/">
+                    <Image
+                      alt="Logo"
                       src={mobileLogo}
                       className={styles.mobile_logo_wrapper}
-                  />
+                    />
+                  </Link>
               </div>
               <div className={styles.burger_menu_closed}>
                 <div className={styles.leng_and_profile_wrapper_mobile}>
@@ -179,35 +182,36 @@ export const Header = () => {
                     </>
                   )}
                 </div>
-                {isAuthenticated ? (
-              <div
-                className={`${
-                  styles.name_and_img_wrapper
-                }`}
-                ref={profileRef}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowProfileCard((prev) => {
-                    if (!prev) setShowNotifications(false);
-                    return !prev;
-                  });
-                }}
-              >
-                <div>
-                  <Image
-                    src={profileImg}
-                    alt=""
-                    className={styles.profile_img}
-                  />
-                </div>
-                {showProfileCard && (
-                  <div className={styles.profile_dropdown_mobile}>
-                    <ProfileCard
-                      logIn={isAuthenticated}
-                      onAuthClick={onAuthClick}
+                <ErrorBanner visible={true} onClose={() => {}} />
+              {isAuthenticated ? (
+                <div
+                  className={`${
+                    styles.name_and_img_wrapper
+                  }`}
+                  ref={profileRef}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowProfileCard((prev) => {
+                      if (!prev) setShowNotifications(false);
+                      return !prev;
+                    });
+                  }}
+                >
+                  <div>
+                    <Image
+                      src={profileImg}
+                      alt=""
+                      className={styles.profile_img}
                     />
                   </div>
-                )}
+                  {showProfileCard && (
+                    <div className={styles.profile_dropdown_mobile}>
+                      <ProfileCard
+                        logIn={isAuthenticated}
+                        onAuthClick={onAuthClick}
+                      />
+                    </div>
+                  )}
               </div>
             ) : (
               <button
@@ -227,7 +231,13 @@ export const Header = () => {
           {mobileMenuOpen && (
             <div className={styles.mobile_menu_open}>
               <div className={styles.logo_and_close_icon_wrapper}>
-                <Image alt="" src={mobileLogo} className={styles.logo_wrapper} />
+                <Link href="/">
+                  <Image
+                    alt="Logo"
+                    src={mobileLogo}
+                    className={styles.mobile_logo_wrapper}
+                  />
+                </Link>
                 <Image
                   alt=""
                   src={closeIcon}
@@ -287,22 +297,6 @@ export const Header = () => {
                     {t("header.menu.events")}
                   </Link>
                   <LanguageSelect variant="headerMobile"/>
-                  <div className={styles.mobile_auth_actions}>
-                    <button
-                      className={styles.auth_button}
-                      onClick={() => {
-                        setMobileMenuOpen(false);
-                        onAuthClick();
-                      }}
-                      disabled={loading}
-                    >
-                      {loading
-                        ? "Loading..."
-                        : isAuthenticated
-                        ? "Sign out"
-                        : "Sign in"}
-                    </button>
-                  </div>
                 </div>
               </div>
             </div>
@@ -310,7 +304,9 @@ export const Header = () => {
         </>
       ) : (
         <div className={styles.header}>
-          <Image alt="" src={logo} className={styles.logo_wrapper} />
+          <Link href="/">
+            <Image alt="Logo" src={logo} className={styles.logo_wrapper} />
+          </Link>
 
           <div className={styles.hader_menu}>
             <div className={styles.link_wrapper}>
@@ -414,7 +410,7 @@ export const Header = () => {
               orientation="vertical"
               flexItem
             />
-
+            <ErrorBanner visible={true} onClose={() => {}} />
             {isAuthenticated ? (
               <div
                 className={`${showProfileCard && styles.img_selected} ${

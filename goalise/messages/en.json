@@ -110,5 +110,10 @@
       "cancelButtonText": "Cancel",
       "loadingText": "Sending..."
     }
-  }
+  },
+  "errors": {
+    "networkError": "Something went wrong. Please try again later.",
+    "backButtonText": "Back to home",
+    "notFound": "Oops! This page went out of bounds! ⚽"
+}
 }
