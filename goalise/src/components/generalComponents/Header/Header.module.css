@@ -176,13 +176,16 @@
   align-items: center;
 }
 .menu {
-  width: 100%;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 2vh;
-  align-items: center;
+      width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    height: 100vh;
+    justify-content: center;
+    justify-self: center;
+    align-self: center;
+    align-items: center;
 }
 .no-scroll {
   overflow: hidden !important;
@@ -286,10 +289,13 @@
     linear-gradient(to right, #54A2FE, #F6465D);
 }
 .profile_dropdown {
-  position: absolute;
-  top: calc(70% + 8px);
-  right: 0;
-  z-index: 1000;
+    position: absolute;
+    top: calc(70% + 8px);
+    display: flex;
+    justify-content: flex-end;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
 }
 
 .notificationBadge {
