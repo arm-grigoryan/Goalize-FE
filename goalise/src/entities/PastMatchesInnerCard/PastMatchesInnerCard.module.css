@@ -7,7 +7,7 @@
     1px
     auto; 
   align-items: center;
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   padding: 14px 0 14px 20px;
 
@@ -244,10 +244,9 @@
   display: grid;
   grid-template-columns: 180px 1px 1fr;
   align-items: center;
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   padding: 7px 10px;
-
   border: 1px solid rgba(255, 255, 255, 0.1);
   background-color: #15191e66;
   border-radius: 10px;
@@ -257,15 +256,16 @@
 .past_matches_innerCard_results .date {
   display: flex;
   align-items: center;
-  justify-content: flex;
-  padding-right: 20px;
 }
-
+.past_matches_innerCard_results .team {
+ gap: 40px;
+}
 .past_matches_innerCard_results .wrapper {
   display: flex;
-  width: 100%;
   align-items: center;
-  justify-content: center;
+  justify-self: center;
+  width: 100%;
+  max-width: 600px;
 }
 .past_matches_innerCard_results .score2 {
   position: relative;
@@ -282,25 +282,37 @@
   );
   z-index: 1;
 }
+.past_matches_innerCard_results .side_left{
+    display: grid;
+    grid-template-columns: 80px 140px;
+}
+.past_matches_innerCard_results .side_right{
+    display: grid;
+    grid-template-columns: 140px 80px;  
+}
+.past_matches_innerCard_results .side_right .team {
+    justify-content: flex-end;
+}
 .score2::before {
   content: "";
   position: absolute;
   left: 0;
   width: 100%;
   height: 100%;
+  padding: 1px 0;
   border-radius: inherit;
   background: linear-gradient(
         to right,
         rgba(245, 179, 0, 0) 0%,
         rgba(245, 179, 0, 0.7) 0%,
-        rgba(245, 179, 0, 0) 100%
+        rgba(245, 179, 0, 0) 90%
       )
       top / 100% 1px no-repeat,
     linear-gradient(
         to right,
         rgba(245, 179, 0, 0) 0%,
         rgba(245, 179, 0, 0.7) 0%,
-        rgba(245, 179, 0, 0) 100%
+        rgba(245, 179, 0, 0) 90%
       )
       bottom / 100% 1px no-repeat;
   z-index: -1;
@@ -325,6 +337,7 @@
   content: "";
   position: absolute;
   left: 0;
+  padding: 1px 0;
   width: 100%;
   height: 100%;
   border-radius: inherit;
@@ -332,14 +345,14 @@
         to left,
         rgba(245, 179, 0, 0) 0%,
         rgba(245, 179, 0, 0.7) 0%,
-        rgba(245, 179, 0, 0) 100%
+        rgba(245, 179, 0, 0) 90%
       )
       top / 100% 1px no-repeat,
     linear-gradient(
         to left,
         rgba(245, 179, 0, 0) 0%,
         rgba(245, 179, 0, 0.7) 0%,
-        rgba(245, 179, 0, 0) 100%
+        rgba(245, 179, 0, 0) 90%
       )
       bottom / 100% 1px no-repeat;
   z-index: -1;
@@ -378,7 +391,7 @@
     1px
     auto; 
   align-items: center;
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   padding: 14px 0 14px 20px;
 
@@ -407,7 +420,7 @@
 }
 
 .past_matches_innerCard_fixtures_mobile {
-    display: flex;
+  display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 17px 33px;

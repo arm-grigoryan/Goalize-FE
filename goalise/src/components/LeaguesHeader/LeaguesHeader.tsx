@@ -11,9 +11,9 @@ import { useParams, usePathname } from "next/navigation";
 import { useGetLeaguesInfoQuery } from "@/app/store/services/api";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
-import { formatUTCDate } from "@/helper/formatDateAndTime";
 import ChampionCard from "../ChampionCard";
 import joinedIcon from '../../assets/pngs/joinedIcon.svg';
+
 export const LeaguesHeader = () => {
   const [openModal, setOpenModal] = useState(false);
 
@@ -24,11 +24,9 @@ export const LeaguesHeader = () => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
   console.log("league data:", data);
-  const date = formatUTCDate(data?.registrationDate ?? "");
   const base = `/leagues/${leagueId}`;
 
   const isActive = (href: string) => {
-    // Groups (index route)
     if (href === base) {
       return pathname === base || pathname === `${base}/groups`;
     }
@@ -43,6 +41,23 @@ export const LeaguesHeader = () => {
 
   const formatPrize = (value?: number) =>
   value ? value.toLocaleString("de-DE") : "";
+
+
+const formatDate = (isoDate: string) => {
+  const date = new Date(isoDate);
+
+  const pad = (num: number) => num.toString().padStart(2, "0");
+
+  const day = pad(date.getDate());
+  const month = pad(date.getMonth() + 1);
+  const year = date.getFullYear();
+
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+
+  return `${day}/${month}/${year} ${hours}:${minutes}`;
+};
+
 
 
   return (
@@ -60,24 +75,29 @@ export const LeaguesHeader = () => {
           <div className={styles.registration_closed_container_mobile}>
             {!(data?.state === "Finished") &&  
             <div className={styles.fee_container}>
-              <div className={styles.total_value}>
-                <div className={styles.placePrize_container}>
+              <div className={styles.fee_Title}> Prize Pool</div>
+              <div className={styles.total_value_mobile}>
+               {data?.firstPlacePrize && 
+               <div className={styles.placePrize_container}>
                   <div className={styles.placePrize_text}>1st place prize</div>
                   <div className={styles.placePrize}> ֏ {formatPrize(data?.firstPlacePrize)}</div>
-                </div>
-                <div className={styles.placePrize_container}>
+                </div>}
+                 {data?.secondPlacePrize && 
+                 <div className={styles.placePrize_container}>
                   <div className={styles.placePrize_text}>2nd place prize</div>
                   <div className={styles.placePrize}>֏ {formatPrize(data?.secondPlacePrize)} </div>
-                </div>
-                <div className={styles.placePrize_container}>
+                </div>}
+                 {data?.semiFinalistPrize && 
+                 <div className={styles.placePrize_container}>
                   <div className={styles.placePrize_text}>3rd place prize</div>
                   <div className={styles.placePrize}>֏ {formatPrize(data?.semiFinalistPrize)} </div>
-                </div>
+                </div>}
               </div>
-              <div className={styles.per_value_container}>
+               {data?.paymentPerGame && 
+               <div className={styles.per_value_container_mobile}>
                 <div className={styles.per_value}>֏ {formatPrize(data?.paymentPerGame)}</div>
-                <div className={styles.valu_text}>/per game</div>
-              </div>
+                <div className={styles.valu_text}>/per game /per team </div>
+              </div>}
             </div>}
             <div className={styles.buttonTextWrapper}> 
               {data?.state === "Registration" && (
@@ -88,7 +108,7 @@ export const LeaguesHeader = () => {
               />
             )}
             <p className={styles.registration_closed_text_mobile}>
-              Registrations will be closed on <span>{date}</span>
+              Registrations will be closed on {" "}{ data && <span>{formatDate(data?.registrationDate)}</span>}
             </p>
             </div>
           </div>
@@ -114,6 +134,12 @@ export const LeaguesHeader = () => {
                 </div>
               </div>
               )}
+              <div className={styles.stageButton}>
+                <div className={styles.stageButtonWrapper}>
+                  <div className={styles.stageButtonName}> State: </div>
+                  <div className={styles.stage}>{data?.state}</div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -122,28 +148,33 @@ export const LeaguesHeader = () => {
             {!(data?.state === "Finished") &&  
             <div className={styles.fee_container}>
               <div className={styles.total_value}>
-                <div className={styles.placePrize_container}>
-                  <div className={styles.placePrize_text}>1st place prize</div>
-                  <div className={styles.placePrize}> ֏ {formatPrize(data?.firstPlacePrize)} </div>
-                </div>
-                <div className={styles.placePrize_container}>
-                  <div className={styles.placePrize_text}>2nd place prize</div>
-                  <div className={styles.placePrize}>֏ {formatPrize(data?.secondPlacePrize)} </div>
-                </div>
-                <div className={styles.placePrize_container}>
-                  <div className={styles.placePrize_text}>3rd place prize</div>
-                  <div className={styles.placePrize}>֏ {formatPrize(data?.semiFinalistPrize)}</div>
-                </div>
+                <div className={styles.fee_Title}> Prize Pool</div>
+                {data?.firstPlacePrize &&  
+                  <div className={styles.placePrize_container}>
+                        <div className={styles.placePrize_text}>1st place prize</div>
+                        <div className={styles.placePrize}> ֏ {formatPrize(data?.firstPlacePrize)} </div>
+                    </div>}
+                 {data?.secondPlacePrize && 
+                    <div className={styles.placePrize_container}>
+                      <div className={styles.placePrize_text}>2nd place prize</div>
+                      <div className={styles.placePrize}>֏ {formatPrize(data?.secondPlacePrize)} </div>
+                    </div>}
+                 {data?.semiFinalistPrize && 
+                  <div className={styles.placePrize_container}>
+                    <div className={styles.placePrize_text}>3rd place prize</div>
+                    <div className={styles.placePrize}>֏ {formatPrize(data?.semiFinalistPrize)}</div>
+                  </div>}
               </div>
+              {data?.paymentPerGame && 
               <div className={styles.per_value_container}>
                 <div className={styles.per_value}>֏ {formatPrize(data?.paymentPerGame)}</div>
-                <div className={styles.valu_text}>/per game</div>
-              </div>
+                <div className={styles.valu_text}>/per game /per team </div>
+              </div>}
             </div>}
 
             <p className={styles.registration_closed_text}>
               Registrations will be closed on{" "}
-              <span>{data?.registrationDate}</span>
+             {data && <span>{formatDate(data?.registrationDate)}</span>}
             </p>
           </div>
         </div>
@@ -152,9 +183,9 @@ export const LeaguesHeader = () => {
       {data?.state === "Registration" ? (
         <div className={styles.links}>
           <Link
-            href={`${base}/teams`}
+            href={`${base}`}
             className={`${styles.link} ${
-              isActive(`${base}/teams`) ? styles.selected : ""
+              isActive(`${base}`) ? styles.selected : ""
             }`}
           >
             Teams

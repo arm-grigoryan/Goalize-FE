@@ -11,6 +11,8 @@ import { handleLongStrings } from "@/helper/handleLongStrings";
 import { useEffect, useRef, useState } from "react";
 import { useParams, usePathname } from "next/navigation";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 
 const PAGE_SIZE = 5;
 
@@ -78,9 +80,10 @@ export const LeaguesResults = () => {
       container?.removeEventListener("scroll", handleScroll);
     };
   }, [isFetching, hasMore]);
-
+ const { width } = useWindowSize();
+   const isMobile = width <= MEDIA_TABLET_SMALL;
   return (
-    <div className={styles.leagues_results}>
+    <div className={`${isMobile ? styles.mobile : styles.leagues_results}`}>
       <div className={styles.title_wrapper}>
         <Title content="Results" />
       </div>
