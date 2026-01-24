@@ -84,7 +84,26 @@
 .text {
   color: #a5a5a5;
 }
-
+.leagues {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  color: #a5a5a5;
+}
+.leagues_label {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+}
+.arrow {
+  width: 8px;
+  height: 8px;
+}
+.arrowOpen {
+  transform: rotate(180deg);
+}
 /* ---------- mobile ---------- */
 .mobile .logo {
   margin: 0;
@@ -112,4 +131,7 @@
 .mobile .rights_language {
   justify-content: center;
   margin-top: 34px;
+}
+.mobile .leagues_label {
+  gap: 6px;
 }

@@ -24,6 +24,8 @@ import teamLogo from "../../../assets/pngs/teamLogo.png";
 import ProfileCard from "@/shared/ProfileCard";
 import mobileLogo from "/public/pngs/logo/mobileLogo.svg";
 import { ErrorBanner } from "@/components/ErrorBanner/ErrorBanner";
+import arrowDown from "../../../assets/pngs/arrowDown.svg";
+
 export const Header = () => {
   const t = useTranslations();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -34,6 +36,10 @@ export const Header = () => {
   const mobileSearchRef = useRef<HTMLDivElement | null>(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  const leaguesButtonRef = useRef<HTMLSpanElement>(null);
+  const leaguesDropdownRef = useRef<HTMLDivElement>(null);
+
 
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
@@ -78,7 +84,8 @@ export const Header = () => {
         mobileSearchRef.current?.contains(e.target as Node) ||
         searchInputRef.current?.contains(e.target as Node) ||
         notificationRef.current?.contains(e.target as Node) ||
-        profileRef.current?.contains(e.target as Node)
+        profileRef.current?.contains(e.target as Node) ||
+        leaguesRef.current?.contains(e.target as Node)
       )
         return;
 
@@ -120,7 +127,6 @@ export const Header = () => {
     if (isAuthenticated) signOut("/");
     else signIn(getReturnPath());
   };
-
   return (
     <>
       {isMobile ? (
@@ -272,14 +278,46 @@ export const Header = () => {
                   </Link>
 
                   <span
-                    className={`${styles.link} ${
-                      !!showDropdown ? styles.selected : ""
-                    }`}
-                    ref={leaguesRef}
-                    onClick={() => setShowDropdown((prev) => !prev)}
-                  >
-                    {t("header.menu.leagues")}
-                  </span>
+                      className={`${styles.leagues_mobile} ${
+                        showDropdown ? styles.active : ""
+                      }`}
+                      ref={leaguesButtonRef}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowDropdown((prev) => !prev);
+                      }}
+                    >
+                      <span className={styles.leagues_label}>
+                        {t("header.menu.leagues")}
+                      </span>
+
+                      <Image
+                        alt=""
+                        src={arrowDown}
+                        className={`${styles.arrow} ${
+                          showDropdown ? styles.arrowOpen : ""
+                        }`}
+                        aria-hidden
+                      />
+
+                      {showDropdown && (
+                        <div
+                          ref={leaguesDropdownRef}
+                          className={styles.leagues_dropdown_mobile}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {leaguesData?.map((league) => (
+                            <div
+                              key={league.id}
+                              className={styles.dropdown_item}
+                              onClick={() => setShowDropdown(false)}
+                            >
+                              {league.name}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </span>
 
                   <Link
                     href="/teams"

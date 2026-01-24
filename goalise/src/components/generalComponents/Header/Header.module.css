@@ -21,7 +21,28 @@
   min-width: 200px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
-
+.leagues_mobile {
+  color: #a5a5a5;
+  cursor: pointer;
+}
+.arrow {
+  width: 10px;
+  height: 10px;
+  margin-left: 10px;
+}
+.arrowOpen {
+  transform: rotate(180deg);
+}
+.leagues_dropdown_mobile {
+  color: #a5a5a5;
+  margin-top: 10px;
+  font-size: 18px;
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .hader_menu {
   display: flex;
   gap: 2vw;
@@ -171,18 +192,17 @@
   padding: 5px 10px;
 }
 .menu_wrapper {
-  height: 100%;
+  height: 100svh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .menu {
-      width: 100%;
+    width: 100%;
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 2vh;
-    height: 100vh;
     justify-content: center;
     justify-self: center;
     align-self: center;
