@@ -24,7 +24,7 @@ export const LeaguesHeader = () => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
 
-  const date = formatUTCDate(data?.registrationDate ?? "");
+  //const date = formatUTCDate(data?.registrationDate ?? "");
 
   const base = `/leagues/${leagueId}`;
 
