@@ -4,7 +4,6 @@
 body {
   margin: 0;
   box-sizing: border-box;
-  padding: 15px 33px;
   background-origin: border-box;
   background-color: rgba(15, 16, 17, 0.97);
   background-image:
@@ -14,7 +13,10 @@ body {
   ),
   linear-gradient(to right, #F6465D, #54A2FE);
 }
-
+.container {
+  padding: 15px 33px;
+  min-height: 100svh;
+}
 body::-webkit-scrollbar {
   width: 6px;
 }

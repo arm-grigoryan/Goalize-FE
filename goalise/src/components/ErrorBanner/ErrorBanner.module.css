@@ -1,0 +1,42 @@
+.container {
+      position: fixed;
+      top: 0;
+      right: 0;
+      background-color: #101010;
+      border: 1px solid #F6465D;
+      color: white;
+      width: 240px;
+      height: 80px;
+      border-radius: 15px;
+      padding: 12px 20px;
+      z-index: 9999;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 33px 0 0;
+}
+.closeButton {
+    margin-left: 20px;
+    background: transparent;
+    color: #a5a5a5;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px 10px 0 0;
+}
+.icon {
+    width: 26px;
+    height: 26px;
+    margin-bottom: 8px;
+}
+.contentWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}

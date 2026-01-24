@@ -78,9 +78,9 @@
     gap: 4px;
     margin: 0;
   }
-  .vs_icon {
+  /* .vs_icon {
     margin: 0 10px -14px 140px;
-  }
+  } */
 }
 .mobile .teams_info {
   min-width: 12px;

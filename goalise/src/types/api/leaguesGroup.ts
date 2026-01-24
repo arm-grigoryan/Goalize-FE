@@ -1,5 +1,8 @@
+import { StaticImageData } from "next/image";
+
 export interface ILeaguesGroupItem {
   id: number;
+  image?: StaticImageData;
   matchesPlayed: number;
   goalsScored: number;
   goalsAgainst: number;

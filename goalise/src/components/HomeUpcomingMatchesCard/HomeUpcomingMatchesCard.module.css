@@ -186,6 +186,7 @@
   flex-direction: column;
   padding-top: 30px;
   align-items: center;
+  justify-content: center;
   flex-direction: column-reverse;
 }
 .team_logo {
@@ -289,6 +290,9 @@
     margin: 0 auto;
   }
   .match_left_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-image: url("../../assets/pngs/upComingMatchBorderRed.png");
     background-repeat: no-repeat;
     background-position: right;
@@ -299,10 +303,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    height: 100%;
     margin-top: 30px;
     transform: rotate(-90deg);
   }
   .match_right_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-image: url("../../assets/pngs/upComingMatchBorderBlue.png");
     background-repeat: no-repeat;
     background-position: left;
@@ -312,14 +321,17 @@
   .match_right_block_inner_wrapper {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
     padding-top: 30px;
     align-items: center;
     flex-direction: column-reverse;
     transform: rotate(-90deg);
   }
   .team_logo {
-    max-width: 300px;
-  }
+      width: 100%;  
+      height: 100%;
+}
   .match_inner_wrapper {
     margin-top: 20px;
   }

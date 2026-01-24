@@ -1,12 +1,31 @@
 .teams_container {
   max-height: 500px;
-  overflow-y: auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  overflow: hidden;
+  overflow-y: scroll;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
-
+.titleWrapper {
+  display: flex;
+  flex-direction: row;
+  color: #FFF;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: capitalize;
+  margin: 20px 0;
+}
+.titleCount {
+  color: #a5a5a5;
+  margin-left: 8px;
+}
+.joinedTeamsTitle {
+  color: #FFF;
+  font-size: 22px;
+  font-weight: 500;
+  text-transform: capitalize;
+  margin: 24px 0 20px 0;
+}
 .teams_container::-webkit-scrollbar {
   width: 6px;
 }
@@ -18,4 +37,22 @@
 
 .teams_container::-webkit-scrollbar-track {
   background-color: transparent;
+}
+
+@media (max-width: 1200px) {
+  .teams_container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .teams_container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .teams_container {
+    grid-template-columns: 1fr;
+  }
 }

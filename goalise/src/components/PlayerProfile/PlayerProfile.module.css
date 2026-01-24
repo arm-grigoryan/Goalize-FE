@@ -12,10 +12,11 @@
 .grid>div {
   min-width: 0;
   display: flex;
+  overflow: hidden;
 }
 
 .container {
-  min-width: 0;
+  width: 100%;
   box-sizing: border-box;
 }
 

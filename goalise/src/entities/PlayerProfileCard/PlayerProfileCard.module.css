@@ -230,6 +230,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 20px;
 }
 
 /* --------------- mobile styles --------------------- */
@@ -275,15 +276,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px 10px;
+  padding: 24px 20px;
   margin-bottom: 2px;
   flex-direction: column;
 }
 
 .mobile .image {
   margin: 0;
-  width: 334px;
-  height: 436px;
+  width: 100%;
 }
 
 .mobile .teamContainer {
@@ -310,7 +310,7 @@
 .mobile .buttonsContainer {
   position: absolute;
   bottom: 0;
-  width: 334px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 20px 16px;

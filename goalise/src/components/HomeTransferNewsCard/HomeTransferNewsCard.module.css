@@ -42,6 +42,7 @@
   linear-gradient(to right, #F6465D, #54A2FE);
   background-color: #111317b2;
   flex-direction: column;
+  padding: 10px 0 10px 10px;
 }
 
 .button_and_title_wrapper {

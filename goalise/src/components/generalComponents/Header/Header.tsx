@@ -23,6 +23,9 @@ import { INotificationItemProps } from "@/shared/NotificationItem/NotificationIt
 import teamLogo from "../../../assets/pngs/teamLogo.png";
 import ProfileCard from "@/shared/ProfileCard";
 import mobileLogo from "/public/pngs/logo/mobileLogo.svg";
+import { ErrorBanner } from "@/components/ErrorBanner/ErrorBanner";
+import arrowDown from "../../../assets/pngs/arrowDown.svg";
+
 export const Header = () => {
   const t = useTranslations();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -33,6 +36,10 @@ export const Header = () => {
   const mobileSearchRef = useRef<HTMLDivElement | null>(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  const leaguesButtonRef = useRef<HTMLSpanElement>(null);
+  const leaguesDropdownRef = useRef<HTMLDivElement>(null);
+
 
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
@@ -77,7 +84,8 @@ export const Header = () => {
         mobileSearchRef.current?.contains(e.target as Node) ||
         searchInputRef.current?.contains(e.target as Node) ||
         notificationRef.current?.contains(e.target as Node) ||
-        profileRef.current?.contains(e.target as Node)
+        profileRef.current?.contains(e.target as Node) ||
+        leaguesRef.current?.contains(e.target as Node)
       )
         return;
 
@@ -119,20 +127,36 @@ export const Header = () => {
     if (isAuthenticated) signOut("/");
     else signIn(getReturnPath());
   };
-
   return (
     <>
       {isMobile ? (
         <>
           {!mobileMenuOpen && (
             <div className={styles.header_mobile}>
+              <div className={styles.imagesWrapper}> 
+                  <Image
+                    alt=""
+                    src={burgerIcon}
+                    className={styles.burger_menu_icon}
+                    onClick={() => setMobileMenuOpen(true)}
+                  />
+                   <Link href="/">
+                    <Image
+                      alt="Logo"
+                      src={mobileLogo}
+                      className={styles.mobile_logo_wrapper}
+                    />
+                  </Link>
+              </div>
               <div className={styles.burger_menu_closed}>
-                <Image
-                  alt=""
-                  src={mobileLogo}
-                  className={styles.logo_wrapper}
-                />
                 <div className={styles.leng_and_profile_wrapper_mobile}>
+                   <div
+                    className={`${styles.iconWrapper} ${styles.redGlow}`}
+                    ref={mobileSearchRef}
+                    onClick={toggleSearchInput}
+                  >
+                    <Image alt="" src={searchIcon} className={styles.searchIcon} />
+                  </div>
                   {isAuthenticated && (
                     <>
                       <div
@@ -140,7 +164,10 @@ export const Header = () => {
                         ref={notificationRef}
                         onClick={(e) => {
                           e.stopPropagation();
-                          setShowNotifications((prev) => !prev);
+                          setShowNotifications((prev) => {
+                            if (!prev) setShowProfileCard(false);
+                            return !prev;
+                          });
                         }}
                       >
                         <Image src={notificationIcon} alt="Notifications" />
@@ -152,36 +179,55 @@ export const Header = () => {
                           </span>
                         )}
                       </div>
+                     
                       {showNotifications && (
-                        <div
-                          className={styles.notification_dropdown}
-                          style={{
-                            position: "absolute",
-                            top: "80px",
-                            right: 0,
-                            zIndex: 1000,
-                          }}
-                        >
+                        <div className={styles.notification_dropdown_mobile}>
                           <NotificationCard object={obj} />
                         </div>
                       )}
                     </>
                   )}
-                  <LanguageSelect />
-                  <div
-                    className={styles.iconWrapper}
-                    ref={mobileSearchRef}
-                    onClick={toggleSearchInput}
-                  >
-                    <Image alt="" src={searchIcon} />
-                  </div>
-                  <Image
-                    alt=""
-                    src={burgerIcon}
-                    className={styles.burger_menu_icon}
-                    onClick={() => setMobileMenuOpen(true)}
-                  />
                 </div>
+                <ErrorBanner visible={false} onClose={() => {}} />
+              {isAuthenticated ? (
+                <div
+                  className={`${
+                    styles.name_and_img_wrapper
+                  }`}
+                  ref={profileRef}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowProfileCard((prev) => {
+                      if (!prev) setShowNotifications(false);
+                      return !prev;
+                    });
+                  }}
+                >
+                  <div>
+                    <Image
+                      src={profileImg}
+                      alt=""
+                      className={styles.profile_img}
+                    />
+                  </div>
+                  {showProfileCard && (
+                    <div className={styles.profile_dropdown_mobile}>
+                      <ProfileCard
+                        logIn={isAuthenticated}
+                        onAuthClick={onAuthClick}
+                      />
+                    </div>
+                  )}
+              </div>
+            ) : (
+              <button
+                className={styles.auth_button}
+                onClick={onAuthClick}
+                disabled={loading}
+              >
+                {loading ? "Loading..." : t("home.profileCard.logIn")}
+              </button>
+            )}
               </div>
               {searchOpen && (
                 <SearchCard open={searchOpen} inputRef={searchInputRef} />
@@ -191,7 +237,13 @@ export const Header = () => {
           {mobileMenuOpen && (
             <div className={styles.mobile_menu_open}>
               <div className={styles.logo_and_close_icon_wrapper}>
-                <Image alt="" src={logo} className={styles.logo_wrapper} />
+                <Link href="/">
+                  <Image
+                    alt="Logo"
+                    src={mobileLogo}
+                    className={styles.mobile_logo_wrapper}
+                  />
+                </Link>
                 <Image
                   alt=""
                   src={closeIcon}
@@ -226,14 +278,46 @@ export const Header = () => {
                   </Link>
 
                   <span
-                    className={`${styles.link} ${
-                      !!showDropdown ? styles.selected : ""
-                    }`}
-                    ref={leaguesRef}
-                    onClick={() => setShowDropdown((prev) => !prev)}
-                  >
-                    {t("header.menu.leagues")}
-                  </span>
+                      className={`${styles.leagues_mobile} ${
+                        showDropdown ? styles.active : ""
+                      }`}
+                      ref={leaguesButtonRef}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowDropdown((prev) => !prev);
+                      }}
+                    >
+                      <span className={styles.leagues_label}>
+                        {t("header.menu.leagues")}
+                      </span>
+
+                      <Image
+                        alt=""
+                        src={arrowDown}
+                        className={`${styles.arrow} ${
+                          showDropdown ? styles.arrowOpen : ""
+                        }`}
+                        aria-hidden
+                      />
+
+                      {showDropdown && (
+                        <div
+                          ref={leaguesDropdownRef}
+                          className={styles.leagues_dropdown_mobile}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {leaguesData?.map((league) => (
+                            <div
+                              key={league.id}
+                              className={styles.dropdown_item}
+                              onClick={() => setShowDropdown(false)}
+                            >
+                              {league.name}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </span>
 
                   <Link
                     href="/teams"
@@ -250,23 +334,7 @@ export const Header = () => {
                   >
                     {t("header.menu.events")}
                   </Link>
-
-                  <div className={styles.mobile_auth_actions}>
-                    <button
-                      className={styles.auth_button}
-                      onClick={() => {
-                        setMobileMenuOpen(false);
-                        onAuthClick();
-                      }}
-                      disabled={loading}
-                    >
-                      {loading
-                        ? "Loading..."
-                        : isAuthenticated
-                        ? "Sign out"
-                        : "Sign in"}
-                    </button>
-                  </div>
+                  <LanguageSelect variant="headerMobile"/>
                 </div>
               </div>
             </div>
@@ -274,7 +342,9 @@ export const Header = () => {
         </>
       ) : (
         <div className={styles.header}>
-          <Image alt="" src={logo} className={styles.logo_wrapper} />
+          <Link href="/">
+            <Image alt="Logo" src={logo} className={styles.logo_wrapper} />
+          </Link>
 
           <div className={styles.hader_menu}>
             <div className={styles.link_wrapper}>
@@ -348,7 +418,10 @@ export const Header = () => {
                     ref={notificationRef}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setShowNotifications((prev) => !prev);
+                      setShowNotifications((prev) => {
+                        if (!prev) setShowProfileCard(false);
+                        return !prev;
+                      });
                     }}
                   >
                     <Image src={notificationIcon} alt="Notifications" />
@@ -360,15 +433,7 @@ export const Header = () => {
                   </div>
 
                   {showNotifications && (
-                    <div
-                      className={styles.notification_dropdown}
-                      style={{
-                        position: "absolute",
-                        top: "calc(100% + 8px)",
-                        right: 0,
-                        zIndex: 1000,
-                      }}
-                    >
+                    <div className={styles.notification_dropdown}>
                       <NotificationCard object={obj} />
                     </div>
                   )}
@@ -383,7 +448,7 @@ export const Header = () => {
               orientation="vertical"
               flexItem
             />
-
+            <ErrorBanner visible={false} onClose={() => {}} />
             {isAuthenticated ? (
               <div
                 className={`${showProfileCard && styles.img_selected} ${
@@ -392,7 +457,10 @@ export const Header = () => {
                 ref={profileRef}
                 onClick={(e) => {
                   e.stopPropagation();
-                  setShowProfileCard((prev) => !prev);
+                  setShowProfileCard((prev) => {
+                    if (!prev) setShowNotifications(false);
+                    return !prev;
+                  });
                 }}
               >
                 <div className={styles.profile_details}>

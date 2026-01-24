@@ -1,7 +1,8 @@
 "use client";
 import { ILeaguesGroupItem } from "@/types/api/leaguesGroup";
 import styles from "./GroupCard.module.css";
-
+import Image from "next/image";
+import teamLogo from '../../assets/pngs/teamLogo.png'
 interface GroupCardProps {
   groupCardContent: ILeaguesGroupItem[];
   groupName: string;
@@ -48,6 +49,7 @@ export const GroupCard = ({ groupCardContent, groupName }: GroupCardProps) => {
                     <>
                       <div className={styles.position_container}> 
                         <td className={styles.index}>{index + 1}</td>
+                        <td className={styles.imageWrapper}><Image src={teamLogo} alt=""  className={styles.image}/></td>
                         <td className={styles.team}>{card.team.name}</td>
                       </div>
                       <div className={styles.scores_container}> 

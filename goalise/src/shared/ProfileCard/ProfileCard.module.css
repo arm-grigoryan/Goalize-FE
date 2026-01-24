@@ -1,5 +1,6 @@
 .container {
     display: flex;
+    width: 100%;
     max-width: 234px;
     padding: 25px 36px;
     flex-direction: column;
@@ -34,4 +35,25 @@
 }
 .login {
   color: #F53A53;
+}
+.mobile {
+  display: flex;
+  margin: 0 34px;
+  padding: 25px 36px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+    border: 1px solid transparent;
+    background-clip: padding-box, border-box;
+    background-origin: border-box;
+    background-image:
+      linear-gradient(
+      rgba(15, 16, 17, 0.92),
+      rgba(15, 16, 17, 0.93)
+    ),
+    linear-gradient(to right, #F6465D, #54A2FE);
+    border-radius: 15px;
+    box-shadow:
+      0 0 10px rgba(84, 162, 254, 0.4),
+      0 0 15px rgba(246, 70, 93, 0.3);
 }
