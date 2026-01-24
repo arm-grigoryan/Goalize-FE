@@ -1,18 +1,54 @@
 .footer {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 34px;
   color: white;
-  padding: 15px;
+  background-color: #15191e;
+  padding: 48px 34px;
+  z-index: 10;
 }
 
 .logo_wrapper {
-  width: 15vw;
-  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.logo {
+  width: 150px;
+  height: auto;
+  margin-bottom: 8px;
+}
+.socials {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.socials_icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+.instaIcon {
+  width: 34px;
+  height: 34px;
+}
+.icon {
+  width: 40px;
+  height: 40px;
 }
 .top_footer {
   display: flex;
+  padding-bottom: 34px;
   justify-content: space-between;
+  border-bottom: 1px solid #a5a5a5;
+}
+.info_sections {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-left: 100px;
 }
 .links {
   display: flex;
@@ -26,25 +62,54 @@
 }
 .bottom_footer {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .privacy_terms {
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  gap: 8px;
 }
 .link {
   text-decoration: none;
   color: #a5a5a5;
 }
-@media (max-width: 768px) {
-  .top_footer {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-  }
-  .bottom_footer {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-  }
+.rights_language {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin-top: 20px;
+}
+.text {
+  color: #a5a5a5;
+}
+
+/* ---------- mobile ---------- */
+.mobile .logo {
+  margin: 0;
+  height: 34px;
+}
+.mobile .top_footer {
+  flex-direction: column;
+  gap: 24px;
+  border: none;
+}
+.mobile .logo_wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobile .info_sections {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin: 0;
+}
+
+.mobile .rights_language {
+  justify-content: center;
+  margin-top: 34px;
 }
