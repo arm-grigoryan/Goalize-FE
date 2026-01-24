@@ -182,7 +182,7 @@ export const Header = () => {
                     </>
                   )}
                 </div>
-                <ErrorBanner visible={true} onClose={() => {}} />
+                <ErrorBanner visible={false} onClose={() => {}} />
               {isAuthenticated ? (
                 <div
                   className={`${
@@ -410,7 +410,7 @@ export const Header = () => {
               orientation="vertical"
               flexItem
             />
-            <ErrorBanner visible={true} onClose={() => {}} />
+            <ErrorBanner visible={false} onClose={() => {}} />
             {isAuthenticated ? (
               <div
                 className={`${showProfileCard && styles.img_selected} ${

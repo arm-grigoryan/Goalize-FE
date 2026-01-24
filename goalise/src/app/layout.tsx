@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import Header from "@/components/generalComponents/Header";
 import { Providers } from "./provider";
 import { NextIntlClientProvider } from "next-intl";
 import Footer from "@/components/generalComponents/Footer";
 import localFont from "next/font/local";
-
+import './globals.css';
 const onest = localFont({
    src: [
     {
@@ -44,7 +43,11 @@ export default async function RootLayout({
         <NextIntlClientProvider>
           <Providers>
             <Header />
-            {children}
+
+            <main className="container">
+              {children}
+            </main>
+
             <Footer />
           </Providers>
         </NextIntlClientProvider>
