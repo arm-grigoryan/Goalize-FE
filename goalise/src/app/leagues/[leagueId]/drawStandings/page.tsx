@@ -1,3 +1,9 @@
+import DrowStandings from "@/components/DrowStandings";
+
 export default function LeaguesDrawStandingsPage() {
-  return <div>this is draw standings page</div>;
+  return (
+    <div>
+      <DrowStandings />
+    </div>
+  );
 }
