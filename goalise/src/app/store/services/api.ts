@@ -11,6 +11,7 @@ import type { SearchResponse } from "@/types/api/search";
 import { IPlayerStats } from "@/types/api/playerStats";
 import { IPlayerTransferHistory } from "@/types/api/playerTransferHistory";
 import { IPlayerProfileMatches } from "@/types/api/PlayerProfilMatches";
+import { IDrowStandings } from "@/types/api/drowStandings";
 
 export const publicApi = createApi({
   reducerPath: "publicApi",
@@ -74,6 +75,9 @@ export const publicApi = createApi({
     }),
     getLeaguesJoinedTeams: builder.query<ITeam[], number>({
       query: (leagueId) => `/leagues/${leagueId}/joined-teams`,
+    }),
+    getLeaguesDraw: builder.query<IDrowStandings, number>({
+      query: (leagueId) => `/leagues/${leagueId}/draw`,
     }),
     getPlayerStats: builder.query<IPlayerStats, number>({
       query: (playerId) => `/players/${playerId}/stats`,
@@ -177,6 +181,7 @@ export const {
   useGetLeaguesFixturesQuery,
   useGetLeaguesJoinedTeamsQuery,
   useGetLeaguesInfoQuery,
+  useGetLeaguesDrawQuery,
   useGetPlayerStatsQuery,
   useGetPlayerTransferHistoryQuery,
   useGetPlayerProfileMatchesQuery,

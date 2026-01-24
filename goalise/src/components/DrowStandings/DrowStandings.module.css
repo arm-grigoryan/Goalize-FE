@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 350px;
+}
+.match {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+.final {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}

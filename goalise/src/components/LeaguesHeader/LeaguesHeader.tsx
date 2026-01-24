@@ -23,7 +23,9 @@ export const LeaguesHeader = () => {
   const { data } = useGetLeaguesInfoQuery(Number(leagueId));
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
-  console.log("league data:", data);
+
+  //const date = formatUTCDate(data?.registrationDate ?? "");
+
   const base = `/leagues/${leagueId}`;
 
   const isActive = (href: string) => {
@@ -32,15 +34,15 @@ export const LeaguesHeader = () => {
     }
     return pathname.startsWith(href);
   };
- const winnerLogo =
-  data?.winner?.logoUrl &&
-  typeof data.winner.logoUrl === "string" &&
-  data.winner.logoUrl.startsWith("http")
-    ? data.winner.logoUrl
-    : undefined;
+  const winnerLogo =
+    data?.winner?.logoUrl &&
+      typeof data.winner.logoUrl === "string" &&
+      data.winner.logoUrl.startsWith("http")
+      ? data.winner.logoUrl
+      : undefined;
 
   const formatPrize = (value?: number) =>
-  value ? value.toLocaleString("de-DE") : "";
+    value ? value.toLocaleString("de-DE") : "";
 
 
 const formatDate = (isoDate: string) => {
@@ -126,13 +128,13 @@ const formatDate = (isoDate: string) => {
                   handleClick={() => setOpenModal(true)}
                 />
               )}
-              {data?.state === "Registration" && ( 
+              {data?.state === "Registration" && (
                 <div className={styles.joinedButton}>
-                <div className={styles.joinedButtonWrapper}> 
-                  <Image className={styles.joinedButtonIcon}  src={joinedIcon} alt=""/>
-                  <div className={styles.stageButtonName}>Joined</div>
+                  <div className={styles.joinedButtonWrapper}>
+                    <Image className={styles.joinedButtonIcon} src={joinedIcon} alt="" />
+                    <div className={styles.stageButtonName}>Joined</div>
+                  </div>
                 </div>
-              </div>
               )}
               <div className={styles.stageButton}>
                 <div className={styles.stageButtonWrapper}>
@@ -195,45 +197,40 @@ const formatDate = (isoDate: string) => {
         <div className={styles.links}>
           <Link
             href={base}
-            className={`${styles.link} ${
-              isActive(base) ? styles.selected : ""
-            }`}
+            className={`${styles.link} ${isActive(base) ? styles.selected : ""
+              }`}
           >
             Groups
           </Link>
 
           <Link
             href={`${base}/drawStandings`}
-            className={`${styles.link} ${
-              isActive(`${base}/drawStandings`) ? styles.selected : ""
-            }`}
+            className={`${styles.link} ${isActive(`${base}/drawStandings`) ? styles.selected : ""
+              }`}
           >
             Draw Standings
           </Link>
 
           <Link
             href={`${base}/results`}
-            className={`${styles.link} ${
-              isActive(`${base}/results`) ? styles.selected : ""
-            }`}
+            className={`${styles.link} ${isActive(`${base}/results`) ? styles.selected : ""
+              }`}
           >
             Results
           </Link>
 
           <Link
             href={`${base}/fixtures`}
-            className={`${styles.link} ${
-              isActive(`${base}/fixtures`) ? styles.selected : ""
-            }`}
+            className={`${styles.link} ${isActive(`${base}/fixtures`) ? styles.selected : ""
+              }`}
           >
             Fixtures
           </Link>
 
           <Link
             href={`${base}/stats`}
-            className={`${styles.link} ${
-              isActive(`${base}/stats`) ? styles.selected : ""
-            }`}
+            className={`${styles.link} ${isActive(`${base}/stats`) ? styles.selected : ""
+              }`}
           >
             Stats
           </Link>
