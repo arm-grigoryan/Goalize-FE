@@ -242,7 +242,7 @@
 /* ------------ results page ----------- */
 .past_matches_innerCard_results {
   display: grid;
-  grid-template-columns: 180px 1px 1fr;
+  grid-template-columns: 180px 1px auto;
   align-items: center;
   width: 100%;
   margin: 0 auto;
@@ -262,10 +262,9 @@
 }
 .past_matches_innerCard_results .wrapper {
   display: flex;
-  align-items: center;
-  justify-self: center;
+  align-self: center;
+  justify-content: center;
   width: 100%;
-  max-width: 600px;
 }
 .past_matches_innerCard_results .score2 {
   position: relative;
@@ -282,13 +281,13 @@
   );
   z-index: 1;
 }
-.past_matches_innerCard_results .side_left{
+.past_matches_innerCard_results .side_left {
     display: grid;
-    grid-template-columns: 80px 140px;
+    grid-template-columns: 80px 160px;
 }
-.past_matches_innerCard_results .side_right{
+.past_matches_innerCard_results .side_right {
     display: grid;
-    grid-template-columns: 140px 80px;  
+    grid-template-columns: 160px 80px;  
 }
 .past_matches_innerCard_results .side_right .team {
     justify-content: flex-end;
@@ -359,10 +358,10 @@
 }
 
 .past_matches_innerCard_results .score_wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1px 1fr;
-    align-items: center;
-    justify-content: center;
+    justify-self: center;
+    align-self: center;
+    width: 100%;
+    max-width: 260px;
     gap: 0;
     font-size: 22px;
     font-weight: 700;
