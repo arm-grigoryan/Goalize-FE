@@ -15,7 +15,7 @@ body {
 }
 .container {
   padding: 15px 33px;
-  min-height: calc(100vh - var(--header-height)); /* optional */
+  min-height: 100svh;
 }
 body::-webkit-scrollbar {
   width: 6px;
