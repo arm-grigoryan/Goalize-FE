@@ -1,4 +1,4 @@
-interface ITopPlayer {
+export interface ITopPlayer {
   teamPlayer: {
     id: number;
     playerId: number;

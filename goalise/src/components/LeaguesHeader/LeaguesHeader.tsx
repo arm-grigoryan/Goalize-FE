@@ -8,7 +8,7 @@ import Link from "next/link";
 import PopupModal from "@/entities/PopupModal";
 import { usePathname } from "next/navigation";
 import ChampionCard from "../ChampionCard";
-import joinedIcon from '../../assets/pngs/joinedIcon.svg';
+import joinedIcon from "../../assets/pngs/joinedIcon.svg";
 import { useLeagueHeader } from "./useLeagueHeader";
 
 export const LeaguesHeader = () => {
@@ -33,7 +33,6 @@ export const LeaguesHeader = () => {
   const base = `/leagues/${leagueId}`;
   console.log(isRegistrationClosed, "isRegistrationClosed");
 
-
   const isActive = (href: string) => {
     if (href === base) {
       return pathname === base || pathname === `${base}/groups`;
@@ -43,40 +42,56 @@ export const LeaguesHeader = () => {
 
   const winnerLogo =
     leagueData?.winner?.logoUrl &&
-      typeof leagueData.winner.logoUrl === "string" &&
-      leagueData.winner.logoUrl.startsWith("http")
+    typeof leagueData.winner.logoUrl === "string" &&
+    leagueData.winner.logoUrl.startsWith("http")
       ? leagueData.winner.logoUrl
       : undefined;
 
   const renderPrizePool = () => (
     <div className={isMobile ? styles.fee_container : styles.fee_container}>
-      <div className={isMobile ? styles.total_value_mobile : styles.total_value}>
+      <div
+        className={isMobile ? styles.total_value_mobile : styles.total_value}
+      >
         {!isMobile && <div className={styles.fee_Title}>Prize Pool</div>}
         {isMobile && <div className={styles.fee_Title}>Prize Pool</div>}
 
         {leagueData?.firstPlacePrize && (
           <div className={styles.placePrize_container}>
             <div className={styles.placePrize_text}>1st place prize</div>
-            <div className={styles.placePrize}>֏ {formatPrize(leagueData.firstPlacePrize)}</div>
+            <div className={styles.placePrize}>
+              ֏ {formatPrize(leagueData.firstPlacePrize)}
+            </div>
           </div>
         )}
         {leagueData?.secondPlacePrize && (
           <div className={styles.placePrize_container}>
             <div className={styles.placePrize_text}>2nd place prize</div>
-            <div className={styles.placePrize}>֏ {formatPrize(leagueData.secondPlacePrize)}</div>
+            <div className={styles.placePrize}>
+              ֏ {formatPrize(leagueData.secondPlacePrize)}
+            </div>
           </div>
         )}
         {leagueData?.semiFinalistPrize && (
           <div className={styles.placePrize_container}>
             <div className={styles.placePrize_text}>3rd place prize</div>
-            <div className={styles.placePrize}>֏ {formatPrize(leagueData.semiFinalistPrize)}</div>
+            <div className={styles.placePrize}>
+              ֏ {formatPrize(leagueData.semiFinalistPrize)}
+            </div>
           </div>
         )}
       </div>
 
       {leagueData?.paymentPerGame && (
-        <div className={isMobile ? styles.per_value_container_mobile : styles.per_value_container}>
-          <div className={styles.per_value}>֏ {formatPrize(leagueData.paymentPerGame)}</div>
+        <div
+          className={
+            isMobile
+              ? styles.per_value_container_mobile
+              : styles.per_value_container
+          }
+        >
+          <div className={styles.per_value}>
+            ֏ {formatPrize(leagueData.paymentPerGame)}
+          </div>
           <div className={styles.valu_text}>/per game /per team</div>
           {isRegistrationClosed && (
             <div className={styles.registration_closed_reason}>
@@ -90,18 +105,33 @@ export const LeaguesHeader = () => {
   );
 
   const renderJoinButton = () => {
-    if (leagueData?.state === "Registration" && isRegistrationClosed) return null;
+    if (leagueData?.state === "Registration" && isRegistrationClosed)
+      return null;
 
     if (isTeamJoined) {
       return (
         <div
-          className={leagueData?.state === "Playing" || leagueData?.state === "Finished" ? styles.disabled_button : ""}
-          onClick={leagueData?.state === "Registration" ? handleOpenUnjoinModal : undefined}
+          className={
+            leagueData?.state === "Playing" || leagueData?.state === "Finished"
+              ? styles.disabled_button
+              : ""
+          }
+          onClick={
+            leagueData?.state === "Registration"
+              ? handleOpenUnjoinModal
+              : undefined
+          }
         >
           <div className={styles.joinedButton}>
             <div className={styles.joinedButtonWrapper}>
-              <Image className={styles.joinedButtonIcon} src={joinedIcon} alt="" />
-              <div className={styles.stageButtonName}>{leagueData?.state === "Playing" ? "Joined" : "Joined"}</div>
+              <Image
+                className={styles.joinedButtonIcon}
+                src={joinedIcon}
+                alt=""
+              />
+              <div className={styles.stageButtonName}>
+                {leagueData?.state === "Playing" ? "Joined" : "Joined"}
+              </div>
             </div>
           </div>
         </div>
@@ -128,7 +158,9 @@ export const LeaguesHeader = () => {
         <div className={styles.badge}>Join League</div>
       )}
       {isRegistrationClosed && (
-        <div className={styles.registration_closed_badge}>Registration Closed</div>
+        <div className={styles.registration_closed_badge}>
+          Registration Closed
+        </div>
       )}
 
       {/* Main Content */}
@@ -157,17 +189,25 @@ export const LeaguesHeader = () => {
                   {renderPrizePool()}
                   <div className={styles.buttonTextWrapper}>
                     {renderJoinButton()}
-                    {!isRegistrationClosed && leagueData?.state === "Registration" && (
-                      <p className={styles.registration_closed_text_mobile}>
-                        Registrations will be closed on{" "}
-                        {leagueData && <span>{formatDate(leagueData.registrationDate)}</span>}
-                      </p>
-                    )}
+                    {!isRegistrationClosed &&
+                      leagueData?.state === "Registration" && (
+                        <p className={styles.registration_closed_text_mobile}>
+                          Registrations will be closed on{" "}
+                          {leagueData && (
+                            <span>
+                              {formatDate(leagueData.registrationDate)}
+                            </span>
+                          )}
+                        </p>
+                      )}
                   </div>
                 </>
               ) : (
                 <div className={styles.winner_prize_container}>
-                  <ChampionCard teamName={leagueData?.winner?.name} logoSrc={winnerLogo} />
+                  <ChampionCard
+                    teamName={leagueData?.winner?.name}
+                    logoSrc={winnerLogo}
+                  />
                   {renderPrizePool()}
                 </div>
               )}
@@ -192,18 +232,24 @@ export const LeaguesHeader = () => {
             <div className={styles.registration_closed_container}>
               {leagueData?.state === "Finished" ? (
                 <div className={styles.winner_prize_container}>
-                  <ChampionCard teamName={leagueData?.winner?.name} logoSrc={winnerLogo} />
+                  <ChampionCard
+                    teamName={leagueData?.winner?.name}
+                    logoSrc={winnerLogo}
+                  />
                   {renderPrizePool()}
                 </div>
               ) : (
                 <>
                   {renderPrizePool()}
-                  {!isRegistrationClosed && leagueData?.state === "Registration" && (
-                    <p className={styles.registration_closed_text}>
-                      Registrations will be closed on{" "}
-                      {leagueData && <span>{formatDate(leagueData.registrationDate)}</span>}
-                    </p>
-                  )}
+                  {!isRegistrationClosed &&
+                    leagueData?.state === "Registration" && (
+                      <p className={styles.registration_closed_text}>
+                        Registrations will be closed on{" "}
+                        {leagueData && (
+                          <span>{formatDate(leagueData.registrationDate)}</span>
+                        )}
+                      </p>
+                    )}
                 </>
               )}
             </div>
@@ -216,7 +262,9 @@ export const LeaguesHeader = () => {
         <div className={styles.links}>
           <Link
             href={`${base}`}
-            className={`${styles.link} ${isActive(`${base}`) ? styles.selected : ""}`}
+            className={`${styles.link} ${
+              isActive(`${base}`) ? styles.selected : ""
+            }`}
           >
             Teams
           </Link>
@@ -225,31 +273,41 @@ export const LeaguesHeader = () => {
         <div className={styles.links}>
           <Link
             href={base}
-            className={`${styles.link} ${isActive(base) ? styles.selected : ""}`}
+            className={`${styles.link} ${
+              isActive(base) ? styles.selected : ""
+            }`}
           >
             Groups
           </Link>
           <Link
             href={`${base}/drawStandings`}
-            className={`${styles.link} ${isActive(`${base}/drawStandings`) ? styles.selected : ""}`}
+            className={`${styles.link} ${
+              isActive(`${base}/drawStandings`) ? styles.selected : ""
+            }`}
           >
             Draw Standings
           </Link>
           <Link
             href={`${base}/results`}
-            className={`${styles.link} ${isActive(`${base}/results`) ? styles.selected : ""}`}
+            className={`${styles.link} ${
+              isActive(`${base}/results`) ? styles.selected : ""
+            }`}
           >
             Results
           </Link>
           <Link
             href={`${base}/fixtures`}
-            className={`${styles.link} ${isActive(`${base}/fixtures`) ? styles.selected : ""}`}
+            className={`${styles.link} ${
+              isActive(`${base}/fixtures`) ? styles.selected : ""
+            }`}
           >
             Fixtures
           </Link>
           <Link
             href={`${base}/stats`}
-            className={`${styles.link} ${isActive(`${base}/stats`) ? styles.selected : ""}`}
+            className={`${styles.link} ${
+              isActive(`${base}/stats`) ? styles.selected : ""
+            }`}
           >
             Stats
           </Link>
@@ -260,11 +318,13 @@ export const LeaguesHeader = () => {
       {isLoading && (
         <div className={styles.loading_overlay}>
           {/* Using a simple spinner or loading text, assuming no global loader component available immediately */}
-          <div style={{ color: 'white' }}>Loading...</div>
+          <div style={{ color: "white" }}>Loading...</div>
         </div>
       )}
 
-      {modalState.open && modalState.type !== "error" && modalState.type !== "success" ? (
+      {modalState.open &&
+      modalState.type !== "error" &&
+      modalState.type !== "success" ? (
         <PopupModal
           open={modalState.open}
           onClose={handleCloseModal}
@@ -276,7 +336,8 @@ export const LeaguesHeader = () => {
         />
       ) : null}
 
-      {modalState.open && (modalState.type === "error" || modalState.type === "success") ? (
+      {modalState.open &&
+      (modalState.type === "error" || modalState.type === "success") ? (
         <PopupModal
           open={modalState.open}
           onClose={handleCloseModal}
@@ -286,7 +347,6 @@ export const LeaguesHeader = () => {
           onButtonClick={handleCloseModal}
         />
       ) : null}
-
     </div>
   );
 };

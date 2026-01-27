@@ -7,6 +7,7 @@ import React from "react";
 import styles from "./Stats.module.css";
 import { useParams } from "next/navigation";
 import { useGetLeaguesTopPlayersQuery } from "@/app/store/services/api";
+import { ITopPlayer } from "@/types/api/topPlayers";
 
 export const Stats: React.FC = () => {
   const { width } = useWindowSize();
@@ -38,7 +39,7 @@ export const Stats: React.FC = () => {
   }
 
   const mapToStatsCardProps = (
-    players: any[] = []
+    players: ITopPlayer[] = []
   ): IStatsCardInnerCardProps[] =>
     players.map((player) => ({
       teamPlayer: {
