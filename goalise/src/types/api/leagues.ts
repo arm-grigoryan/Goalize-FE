@@ -16,7 +16,7 @@ export interface ILeague {
   };
   state: "Registration" | "Playing" | "Finished";
   maxTeamsCount: number;
-  registrationDate: "2025-09-19T17:11:07.233Z";
+  registrationDate: string;
   paymentPerGame: number;
   firstPlacePrize?: number;
   secondPlacePrize?: number;

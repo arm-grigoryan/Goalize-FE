@@ -12,6 +12,7 @@ import { IPlayerStats } from "@/types/api/playerStats";
 import { IPlayerTransferHistory } from "@/types/api/playerTransferHistory";
 import { IPlayerProfileMatches } from "@/types/api/PlayerProfilMatches";
 import { IDrowStandings } from "@/types/api/drowStandings";
+import { ITopPlayers } from "@/types/api/topPlayers";
 
 export const publicApi = createApi({
   reducerPath: "publicApi",
@@ -106,6 +107,9 @@ export const publicApi = createApi({
         params: { searchText: text },
       }),
     }),
+    getLeaguesTopPlayers: builder.query<ITopPlayers[], number>({
+      query: (leagueId) => `/leagues/${leagueId}/top-players`,
+    }),
   }),
 });
 
@@ -168,6 +172,18 @@ export const api = createApi({
     getPlayerBasicInfo: builder.query<IPlayerProfile, number>({
       query: (playerId) => `/players/${playerId}/info`,
     }),
+    joinLeague: builder.mutation<void, { leagueId: number; teamId: number }>({
+      query: ({ leagueId, teamId }) => ({
+        url: `/Leagues/${leagueId}/teams/${teamId}`,
+        method: "PUT",
+      }),
+    }),
+    unjoinLeague: builder.mutation<void, { leagueId: number; teamId: number }>({
+      query: ({ leagueId, teamId }) => ({
+        url: `/Leagues/${leagueId}/teams/${teamId}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -187,6 +203,7 @@ export const {
   useGetPlayerProfileMatchesQuery,
   useGetSearchAutoCompleteQuery,
   useLazyGetSearchAutoCompleteQuery,
+  useGetLeaguesTopPlayersQuery,
 } = publicApi;
 
 export const {
@@ -196,4 +213,6 @@ export const {
   useRemoveTeamMemberMutation,
   useQuitTeamMutation,
   useMakeTeamCaptainMutation,
+  useJoinLeagueMutation,
+  useUnjoinLeagueMutation,
 } = api;

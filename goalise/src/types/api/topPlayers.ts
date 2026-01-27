@@ -5,7 +5,7 @@ interface ITopPlayer {
     userId: string;
     firstName: string;
     lastName: string;
-    picture: string;
+    picture: string | null;
     shirtNumber: number;
   };
   value: number;
