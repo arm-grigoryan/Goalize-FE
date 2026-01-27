@@ -48,8 +48,6 @@ export const LeaguesHeader = () => {
       ? leagueData.winner.logoUrl
       : undefined;
 
-  const showTitleSection = leagueData && (leagueData.state !== "Registration" || leagueData.firstPlacePrize || leagueData.secondPlacePrize || leagueData.semiFinalistPrize || leagueData.paymentPerGame);
-
   const renderPrizePool = () => (
     <div className={isMobile ? styles.fee_container : styles.fee_container}>
       <div className={isMobile ? styles.total_value_mobile : styles.total_value}>
