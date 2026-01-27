@@ -2,7 +2,7 @@ export interface IStatsCardInnerCardProps {
     teamPlayer: {
         firstName: string;
         lastName: string;
-        picture: string;
+        picture: string | null;
         shirtNumber: number;
     };
     team?: {

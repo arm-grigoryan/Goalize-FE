@@ -1,11 +1,11 @@
 .container {
-    display: flex;
-    flex-direction: row;
-    gap: 40px;
-    margin-top: 24px;
-    overflow: hidden;
-    overflow-x: scroll;
-    padding-bottom: 14px;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  margin-top: 24px;
+  overflow: hidden;
+  overflow-x: scroll;
+  padding-bottom: 14px;
 }
 
 .container::-webkit-scrollbar {
@@ -13,8 +13,8 @@
 }
 
 .container::-webkit-scrollbar-thumb {
-    background-color: #54a2fe;
-    border-radius: 5px;
+  background-color: #54a2fe;
+  border-radius: 5px;
 }
 
 .container::-webkit-scrollbar-track {
@@ -22,10 +22,47 @@
 }
 
 .mobileWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 28px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 28px;
+  width: 100%;
+}
+
+.loader_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 100%;
+}
+
+.loader {
+  border: 6px solid rgba(15, 15, 15, 0.11);
+  border-top: 6px solid #f53a53;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 1.2rem;
+  color: #ff4d4d;
+  width: 100%;
 }
