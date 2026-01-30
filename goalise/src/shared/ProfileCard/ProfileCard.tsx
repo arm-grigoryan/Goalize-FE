@@ -1,4 +1,5 @@
 import React from "react";
+import { useCallback } from "react";
 import { IProfileCardProps } from "./ProfileCard.types";
 import styles from "./ProfileCard.module.css";
 import { useTranslations } from "next-intl";
@@ -16,33 +17,40 @@ export const ProfileCard: React.FC<IProfileCardProps> = ({
   const t = useTranslations();
   const router = useRouter();
   const { data: userInfo } = useGetUserInfoQuery();
-  // Determine whether to show "Create Team" or "My Team"
-  const hasTeam =
-    userInfo?.playerInfo?.team !== null &&
-    userInfo?.playerInfo?.team !== undefined;
+  const draftTeamId = userInfo?.playerInfo?.draftTeamId;
+  const team = userInfo?.playerInfo?.team;
+
+  const hasTeam = !!team || !!draftTeamId;
+
   const shouldShowCreateTeam = !hasTeam;
   const teamMenuLabel = shouldShowCreateTeam
     ? t("home.profileCard.createTeam")
     : t("home.profileCard.myTeam");
-  const teamMenuRoute = shouldShowCreateTeam ? "/teams/create" : "/teams";
+
+  let teamMenuRoute = "/teams";
+  if (shouldShowCreateTeam) {
+    teamMenuRoute = "/teams/create";
+  } else if (draftTeamId) {
+    teamMenuRoute = `/teams/draft/${draftTeamId}`;
+  }
 
   const playerId = userInfo?.playerInfo?.id;
 
-  const handleProfileClick = () => {
+  const handleProfileClick = useCallback(() => {
     if (playerId) {
       router.push(`/profile/${playerId}`);
     }
-  };
+  }, [playerId, router]);
 
-  const handleTeamClick = () => {
+  const handleTeamClick = useCallback(() => {
     router.push(teamMenuRoute);
-  };
+  }, [router, teamMenuRoute]);
 
-  const handleAccountClick = () => {
+  const handleAccountClick = useCallback(() => {
     if (process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY) {
       window.location.href = process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY;
     }
-  };
+  }, []);
 
   if (!logIn) {
     return (
@@ -55,7 +63,7 @@ export const ProfileCard: React.FC<IProfileCardProps> = ({
   }
 
   return (
-    <div className={`${isMobile ? styles.mobile :styles.container}`}>
+    <div className={`${isMobile ? styles.mobile : styles.container}`}>
       <div className={styles.item} onClick={handleProfileClick}>
         {t("home.profileCard.profile")}
       </div>
