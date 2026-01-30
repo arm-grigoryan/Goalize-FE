@@ -8,6 +8,7 @@ export interface IPlayerInfo {
   userInfo: IUserInfo;
   shirtNumber: number;
   team: ITeam;
+  draftTeamId?: number | null;
 }
 
 export interface IUserInfo {
