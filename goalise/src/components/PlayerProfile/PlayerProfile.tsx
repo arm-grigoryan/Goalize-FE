@@ -89,8 +89,7 @@ export const PlayerProfile = () => {
 
   const handleInviteClick = () => {
     if (!isLoggedIn) {
-      const currentPath = `${window.location.pathname}${window.location.search}`;
-      signIn(currentPath);
+      signIn();
       return;
     }
 
