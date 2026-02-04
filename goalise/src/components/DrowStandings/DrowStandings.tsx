@@ -5,13 +5,12 @@ import bigVsIcon from "../../assets/pngs/bigVsIcon.svg";
 import separator from "../../assets/pngs/separator.svg";
 import separatorBig from "../../assets/pngs/separatorBig.svg";
 import separator16 from '../../assets/pngs/separator16.svg'
-import { useDrowStandings } from "./useDrowStandings";
+import { MatchWithCount, useDrowStandings } from "./useDrowStandings";
 import ChampionCard from "../ChampionCard";
 import { useEffect, useState } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import tbdIcon from '../../assets/pngs/tbdIcon.svg';
-import teamLogo from '../../assets/pngs/teamLogo.png';
 
 export const DrowStandings = () => {
   const { width } = useWindowSize();
@@ -21,13 +20,13 @@ export const DrowStandings = () => {
   const finalMatchData =
     finalMatch?.[0] && typeof finalMatch[0] === "object"
       ? Object.values(finalMatch[0]).find(
-          (value: any) => value?.homeTeam && value?.awayTeam
+          (value: MatchWithCount) => value?.homeTeam && value?.awayTeam
         )
       : null;
 
   const maxMatchCount =
     leftBlock.length > 0
-      ? Math.max(...leftBlock.map((m: any) => m.matchCount))
+      ? Math.max(...leftBlock.map((m) => m.matchCount))
       : 0;
     const useResponsiveSpacing = () => {
   const [spacing, setSpacing] = useState(80);
@@ -65,7 +64,7 @@ const spacing = useResponsiveSpacing();
     return roundIndex * spacing;
   };
 
-  const splitBlock = (block: any[]) => {
+  const splitBlock = (block: MatchWithCount[]) => {
     const centerIndex = block.findIndex((m) => m.matchCount === 2);
     return {
       top: block.slice(0, centerIndex),
@@ -74,12 +73,12 @@ const spacing = useResponsiveSpacing();
     };
   };
 
-  const groupByCount = (arr: any[], count: number) =>
+  const groupByCount = (arr: MatchWithCount[], count: number) =>
     arr.filter((m) => m.matchCount === count);
 
-  const renderMatch = (match: any, side: "left" | "right") => {
+  const renderMatch = (match: MatchWithCount, side: "left" | "right") => {
     const matchData = Object.values(match).find(
-      (v: any) => v?.homeTeam && v?.awayTeam
+      (v: MatchWithCount) => v?.homeTeam && v?.awayTeam
     );
   const displayData = matchData || match;
   console.log(displayData)
@@ -196,7 +195,7 @@ const spacing = useResponsiveSpacing();
       </div>
     );
   };
-    const renderMobileTop = (block: any[]) => {
+    const renderMobileTop = (block: MatchWithCount[]) => {
       const top16 = block.filter(m => m.matchCount === 16)
       const top8 = block.filter(m => m.matchCount === 8);
       const top4 = block.filter(m => m.matchCount === 4);
@@ -267,7 +266,7 @@ const spacing = useResponsiveSpacing();
         ) : null 
       );
     }
-    const renderMobileBottom = (block: any[]) => {
+    const renderMobileBottom = (block: MatchWithCount[]) => {
       const bottom2 = block.filter(m => m.matchCount === 2);
       const bottom4 = block.filter(m => m.matchCount === 4);
       const bottom8 = block.filter(m => m.matchCount === 8);
@@ -292,7 +291,7 @@ const spacing = useResponsiveSpacing();
       );
     };
 
-  const renderSide = (block: any[], side: "left" | "right") => {
+  const renderSide = (block: MatchWithCount[], side: "left" | "right") => {
     const { top, middle, bottom } = splitBlock(block);
 
     const top16 = groupByCount(top, 16);

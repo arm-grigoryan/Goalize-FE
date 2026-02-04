@@ -3,7 +3,7 @@ import { Match, root } from "@/types/api/drowStandings";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
-type MatchWithCount = Match & { matchCount: number };
+export type MatchWithCount = Match & { matchCount: number };
 
 const createEmptyMatch = (id: number): Match => ({
   id,
