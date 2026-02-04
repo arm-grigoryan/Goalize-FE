@@ -120,7 +120,7 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
       <div className={styles.wrapper}> 
       <div className={styles.side_left}>
         <div className={styles.winner_slot}>
-          {winner1 && <Image src={variant == "default" ? winnerIcon : winnerIconSwapped} alt="" />}
+          {winner1 && <Image src={variant == "default" ? winnerIcon : winnerIconSwapped} alt=""  className={styles.winner1}/>}
           {draw && drawIcon && <Image src={variant == "default" ? drawIcon : drawSwappedIcon} alt="" />}
         </div>
 

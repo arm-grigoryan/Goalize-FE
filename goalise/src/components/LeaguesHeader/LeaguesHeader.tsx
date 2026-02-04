@@ -49,39 +49,44 @@ export const LeaguesHeader = () => {
 
   const renderPrizePool = () => (
     <div className={isMobile ? styles.fee_container : styles.fee_container}>
+      {(leagueData?.firstPlacePrize || leagueData?.secondPlacePrize || leagueData?.semiFinalistPrize )&& 
       <div
         className={isMobile ? styles.total_value_mobile : styles.total_value}
       >
         {!isMobile && <div className={styles.fee_Title}>Prize Pool</div>}
         {isMobile && <div className={styles.fee_Title}>Prize Pool</div>}
 
+        <div className={styles.placePrize_container}>
         {leagueData?.firstPlacePrize && (
-          <div className={styles.placePrize_container}>
+            <div>
             <div className={styles.placePrize_text}>1st place prize</div>
             <div className={styles.placePrize}>
               ֏ {formatPrize(leagueData.firstPlacePrize)}
             </div>
-          </div>
+            </div>
         )}
         {leagueData?.secondPlacePrize && (
-          <div className={styles.placePrize_container}>
-            <div className={styles.placePrize_text}>2nd place prize</div>
-            <div className={styles.placePrize}>
+         <div>  
+          <div className={styles.placePrize_text}>2nd place prize</div>
+          <div className={styles.placePrize}>
               ֏ {formatPrize(leagueData.secondPlacePrize)}
             </div>
           </div>
         )}
+       
         {leagueData?.semiFinalistPrize && (
-          <div className={styles.placePrize_container}>
+          <div>
             <div className={styles.placePrize_text}>3rd place prize</div>
             <div className={styles.placePrize}>
               ֏ {formatPrize(leagueData.semiFinalistPrize)}
             </div>
           </div>
-        )}
+        )} 
+        </div>
       </div>
-
-      {leagueData?.paymentPerGame && (
+      }
+      {!(leagueData?.winner?.name )&&
+      leagueData?.paymentPerGame && (
         <div
           className={
             isMobile
@@ -266,7 +271,7 @@ export const LeaguesHeader = () => {
               isActive(`${base}`) ? styles.selected : ""
             }`}
           >
-            Teams
+            Joined Teams
           </Link>
         </div>
       ) : (
