@@ -47,9 +47,19 @@ export const ProfileCard: React.FC<IProfileCardProps> = ({
   }, [router, teamMenuRoute]);
 
   const handleAccountClick = useCallback(() => {
-    if (process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY) {
-      window.location.href = process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY;
-    }
+    const authority = process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY;
+    const clientId = process.env.NEXT_PUBLIC_IDENTITY_CLIENT_ID;
+
+    if (!authority || !clientId) return;
+
+    const returnTo = `${window.location.pathname}${window.location.search}`;
+
+    const url = new URL(authority);
+
+    url.searchParams.set("client_id", clientId);
+    url.searchParams.set("returnTo", returnTo);
+
+    window.location.href = url.toString();
   }, []);
 
   if (!logIn) {
