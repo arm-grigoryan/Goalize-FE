@@ -47,7 +47,7 @@ export const ProfileComplitions = () => {
             <Button
               content={t("ProfileComplition.buttonContent")}
               className="white_button"
-              handleClick={handleCLick}
+              handleClick={handleClick}
             />
           </div>
         )}
