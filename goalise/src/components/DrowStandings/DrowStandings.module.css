@@ -1,16 +1,510 @@
 .container {
   display: flex;
   justify-content: center;
+  align-self: center;
   align-items: center;
-  gap: 350px;
+  width: 100%;
+  margin: 20px 0;
 }
 .match {
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 12px;
+  border-radius: 8px;
+  background-color: transparent;
+  margin: 8px 0;
+  overflow: hidden;
 }
+.finalTeam {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+  text-transform: uppercase;
+  color: #ffff;
+}
+.winner {
+  background-color: #2e2e2e3d;
+}
+.winner2 {
+  background-color: #2e2e2e3d;
+}
+.noOne {
+  background-color: #2e2e2e3d;
+}
+.winner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1px;
+  border-radius: 8px;
+  background: linear-gradient(to right, #54A2FE 10%, transparent 60%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.winner2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1px;
+  border-radius: 8px;
+  background: linear-gradient(to left, #f53a53 10%, transparent 60%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.team.loserText {
+  color:#bfbdbd7c;
+}
+.team {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #ffff;
+}
+.score {
+  margin-left: 20px;
+}
+.score2 {
+  margin-right: 20px;
+}
+.line {
+  color: #ffff;
+  margin: 0 12px;
+}
+.liveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: red;
+  display: inline-block;
+  animation: liveBlink 1s infinite ease-in-out;
+  margin: 0 10px;
+}
+
+@keyframes liveBlink {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.4); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
 .final {
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
+  width: clamp(240px, 30vw, 360px);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 20px;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  box-shadow:
+    rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px,
+    rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px,
+    rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.circle {
+  width: clamp(140px, 20vw, 260px);
+  aspect-ratio: 1 / 1;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 20px;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  box-shadow:
+    rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px,
+    rgba(0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0.17) 0px 12px 13px,
+    rgba(0, 0, 0.09) 0px -3px 5px;
+}
+.leftBlock {
+  position: relative;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.rightBlock {
+  position: relative;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.tbdIcon {
+  display: flex;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+.tbdIconSwapped {
+  display: flex;
+  width: 24px;
+  height: 24px;
+  margin-left: 10px;
+}
+.tbdIconMobile {
+  display: flex;
+  width: 24px;
+  height: 24px;
+  margin-bottom: 10px;
+}
+.tbdIconMobileSwapped {
+  display: flex;
+  width: 24px;
+  height: 24px;
+  margin-top: 10px;
+}
+.tbdVS {
+  width: 16px;
+  height: 40px;
+}
+.tbdVSDesktop {
+  width: 24px;
+  height: 20px;
+}
+.tbdVSMobile {
+  width: 24px;
+  height: 24px;
+  margin: 10px 0;
+}
+.teamLogo {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.teamLogoSwapped {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+.teamLogoMobile {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+.teamLogoSwappedMobile {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-top: 10px;
+}
+.circleBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ flex-direction: column;
+}
+.matchWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.matchWrapperLeft {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.separatorRight {
+  position: relative;
+  transform: rotateY(180deg);
+  top: 20px;
+  height: 50px;
+}
+.separatorLeft {
+  position: relative;
+  top: 20px;
+  height: 50px;
+}
+.separatorSmallWrapper {
+  display: flex;
+  flex-direction: row;
+}
+.separatorBigWrapper{
+  display: flex;
+  flex-direction: row;
+}
+.separatorBiggestWrapper {
+  display: flex;
+  flex-direction: column;
+}
+.separator {
+  position: relative;
+  right: 40px;
+  top: 86px;
+}
+.separatorSmall {
+  position: relative;
+}
+.separatorBig {
+  position: relative;
+}
+.separatorBiggest {
+  height: 100%;
+  width: 40px;
+}
+.middle .separatorLeft {
+  display: none;
+}
+.middle .separatorRight {
+  display: none;
+}
+.leftBlock .middle ~ .matchWrapperLeft .separatorLeft {
+  transform: rotateX(180deg) rotate(0deg);
+  top: unset;
+  bottom: 20px;
+}
+.rightBlock .middle ~ .matchWrapper .separatorRight {
+  top: unset;
+  transform: rotateY(0deg) rotate(180deg);
+  bottom: 20px;
+}
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+.wrapperSwapped {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+.wrapperRight {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.wrapperRightSwapped {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.wrapperRight .separatorBigWrapper {
+  transform: rotateY(180deg);
+}
+.wrapperRight .separatorBigWrapperSwapped {
+  transform: rotateY(0deg) rotate(180deg);
+}
+.wrapperRight .separatorBiggestWrapper {
+  transform: rotateY(180deg) rotate(0deg);
+}
+.wrapperSwapped .separatorBiggestWrapper {
+  transform: rotateY(180deg) rotate(180deg);
+}
+
+.wrapperRightSwapped .separatorBiggestWrapper {
+  transform: rotateY(0deg) rotate(180deg);
+}
+.wrapperRightSwapped .separatorBigWrapperSwapped {
+  transform: rotateY(0deg) rotate(180deg);
+} 
+.wrapperSwapped .group8 { 
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.wrapperRight .separatorSmallWrapper {
+  transform: rotateY(180deg);
+}
+.wrapperSwapped .separatorSmallWrapper {
+  transform: rotateY(180deg) rotate(180deg);
+}
+.wrapperRightSwapped .separatorSmallWrapper {
+   transform: rotateY(0deg) rotate(180deg);
+}
+.group8 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.group16 {
+  display: flex;
+  flex-direction: column;
+}
+.separatorBigWrapperSwapped {
+  transform: rotateY(180deg) rotate(180deg);
+}
+.separatorBigWrapperSwapped .separator {
+  top: unset;
+}
+.imgWrapper {
+    position: relative;
+    height: 60px;
+    bottom: 40px;
+}
+.imgWrapper .separator {
+  position: relative;
+  right: 0;
+  top: 0;
+}
+.separatorWrapper {
+  width: 40px;
+  height: 200px;
+}
+.separatorWrapper img {
+  width: 40px !important;
+  height: 200px !important;
+  transform: scaleY(2);
+  transform-origin: top;
+}
+
+@media (max-width: 840px) {
+  .matchWrapper {
+    width: 120px;
+  }
+  .team {
+    font-size: 12px;
+  }
+  .score {
+    margin-left: 8px;
+  }
+  .score2 {
+    margin-right: 8px;
+  }
+  .line {
+    margin: 0 6px;
+  }
+  .finalTeam {
+    font-size: 12px;
+  }
+  .vsWrapper {
+    width: 40px;
+    height: 40px;
+  }
+  .vs {
+    width: 40px;
+    height: 40px;
+  }
+  .separator {
+    width: 42px;
+    height: 42px;
+    right: 36px;
+   
+  }
+  .separatorSmall {
+    width: 42px;
+    height: 42px;
+  }
+  .separatorBig {
+    height: 160px;
+  }
+  .wrapper, .wrapperSwapped {
+    gap: 4px;
+  }
+  .wrapper .separator {
+    top: 108px
+  }
+  .wrapperSwapped .separator {
+    bottom: 10px;
+    right: 37px;
+  }
+  .wrapperRightSwapped  .separator {
+    bottom: 10px;
+    left: unset;
+  }
+  .wrapper .separatorBiggestWrapper .separator{
+    left: 3px;
+    top: unset;
+  }
+  .wrapperSwapped .separatorBiggestWrapper .separator {
+    left: 3px;
+  }
+}
+
+@media (max-width: 758px) {
+  .container {
+    flex-direction: column;
+  }
+  .leftBlock {
+    flex-direction: column;
+   transform: rotateX(0deg) rotate(90deg);
+  }
+}
+.mobileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobileRow {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.mobileColumn {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+}
+
+.mobileFinal {
+  margin: 24px 0;
+}
+
+.matchMobile {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 4px;
+  border-radius: 8px;
+  background-color: transparent;
+  margin: 4px 0;
+  overflow: hidden;
+  background-color: #2e2e2e3d;
+  font-size: 12px;
+}
+.teamMobile {
+  display: flex;
+  flex-direction: column;
+  color: #ffff;
+  align-items: center;
+
+}
+.team2Mobile {
+  display: flex;
+  flex-direction: column;
+  color: #ffff;
+  align-items: center;
+}
+
+.teamMobile.loserText {
+  color:#bfbdbd7c;
+}
+.team2Mobile.loserText {
+  color:#bfbdbd7c;
 }
