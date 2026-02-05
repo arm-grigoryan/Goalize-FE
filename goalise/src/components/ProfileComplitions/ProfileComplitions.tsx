@@ -14,11 +14,22 @@ export const ProfileComplitions = () => {
   const isMobile = width <= MEDIA_TABLET_SMALL;
 
   const t = useTranslations("common");
-  const handleCLick = () => {
-    if (process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY) {
-      window.location.href = process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY;
-    }
-  };
+  const handleClick = () => {
+  const authority = process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY;
+  const clientId = process.env.NEXT_PUBLIC_IDENTITY_CLIENT_ID;
+
+  if (!authority || !clientId) return;
+
+  const returnTo = `${window.location.pathname}${window.location.search}`;
+
+  const url = new URL(authority);
+
+  url.searchParams.set("client_id", clientId);
+  url.searchParams.set("returnTo", returnTo);
+
+  window.location.href = url.toString();
+};
+
   if (!userInfo || (userInfo?.profileCompletionInfo?.percentage ?? 0) >= 100)
     return null;
   return (
@@ -36,7 +47,7 @@ export const ProfileComplitions = () => {
             <Button
               content={t("ProfileComplition.buttonContent")}
               className="white_button"
-              handleClick={handleCLick}
+              handleClick={handleClick}
             />
           </div>
         )}
@@ -49,7 +60,7 @@ export const ProfileComplitions = () => {
           <Button
             content={t("ProfileComplition.buttonContent")}
             className="white_button"
-            handleClick={handleCLick}
+            handleClick={handleClick}
           />
         </div>
       )}
