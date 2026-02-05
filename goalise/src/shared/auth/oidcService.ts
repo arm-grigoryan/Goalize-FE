@@ -172,8 +172,28 @@ const buildAuthorizeUrl = async (returnPath?: string) => {
 
 export const startLoginRedirect = async (returnPath?: string) => {
   if (typeof window === "undefined") return;
-  const target = await buildAuthorizeUrl(returnPath);
+
+  const captured =
+    returnPath ??
+    (window.location.pathname +
+      window.location.search +
+      window.location.hash);
+
+  const target = await buildAuthorizeUrl(sanitizeReturnPath(captured));
   window.location.href = target;
+};
+
+const sanitizeReturnPath = (path?: string) => {
+  if (!path) return "/";
+
+  if (!path.startsWith("/")) return "/";
+
+  if (path.startsWith("//")) return "/";
+
+  if (path.startsWith("/signin-oidc") || path.startsWith("/signout-callback-oidc"))
+    return "/";
+
+  return path;
 };
 
 const requestTokens = async (code: string, codeVerifier: string) => {
@@ -237,7 +257,7 @@ export const handleSignInCallback = async (url: string) => {
   }
 
   const tokens = await requestTokens(code, pending.codeVerifier);
-  return { tokens, returnPath: pending.returnPath || "/" };
+  return { tokens, returnPath: sanitizeReturnPath(pending.returnPath) };
 };
 
 export const refreshTokens = async (refreshToken: string): Promise<AuthTokens> => {
