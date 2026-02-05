@@ -7,6 +7,7 @@
   z-index: 1000;
   position: relative;
 }
+
 .leagues_container {
   display: flex;
   flex-direction: column;
@@ -21,18 +22,22 @@
   min-width: 200px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
+
 .leagues_mobile {
   color: #a5a5a5;
   cursor: pointer;
 }
+
 .arrow {
   width: 10px;
   height: 10px;
   margin-left: 10px;
 }
+
 .arrowOpen {
   transform: rotate(180deg);
 }
+
 .leagues_dropdown_mobile {
   color: #a5a5a5;
   margin-top: 10px;
@@ -43,10 +48,18 @@
   align-items: center;
   justify-content: center;
 }
+
+.dropdown_item {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .hader_menu {
   display: flex;
   gap: 2vw;
 }
+
 .link_wrapper {
   display: flex;
   padding: 16px 50px;
@@ -58,28 +71,30 @@
   background-clip: padding-box, border-box;
   background-origin: border-box;
   background-image:
-    linear-gradient(
-    rgba(15, 16, 17, 0.97),
-    rgba(15, 16, 17, 0.87)
-  ),
+    linear-gradient(rgba(15, 16, 17, 0.97),
+      rgba(15, 16, 17, 0.87)),
     linear-gradient(to right, #54A2FE, #F6465D);
-    cursor: pointer;
+  cursor: pointer;
 }
+
 .link {
   text-decoration: none;
   color: #a5a5a5;
   cursor: pointer;
 }
- .selected {
+
+.selected {
   color: #ffffff;
   font-weight: bold;
   cursor: pointer;
 }
+
 .logo_wrapper {
   max-width: 15vw;
   height: fit-content;
 }
-.divider{
+
+.divider {
   display: flex;
   height: 100%;
 }
@@ -92,32 +107,34 @@
   align-items: center;
   justify-content: center;
 }
+
 .img_selected {
   border: 1px solid transparent;
   background-clip: padding-box, border-box;
   background-origin: border-box;
   background-image:
-    linear-gradient(
-    rgba(15, 16, 17, 0.95),
-    rgba(15, 16, 17, 0.95)
-  ),
-  linear-gradient(to right, #F6465D, #54A2FE);
+    linear-gradient(rgba(15, 16, 17, 0.95),
+      rgba(15, 16, 17, 0.95)),
+    linear-gradient(to right, #F6465D, #54A2FE);
   display: flex;
   flex-direction: row;
   border-radius: 10px;
   padding: 10px;
 }
+
 .leng_and_profile_wrapper {
   display: flex;
   align-items: center;
   height: 40px;
   cursor: pointer;
 }
+
 .icon_and_leng_wrapper {
   display: flex;
   gap: 1vw;
   align-items: center;
 }
+
 .name_and_img_wrapper {
   display: flex;
   gap: 1vw;
@@ -161,22 +178,25 @@
   background-color: #a5a5a5;
   color: #101010;
 }
+
 .searchContainer {
   display: flex;
   flex-direction: column;
 }
+
 .burger_menu_closed {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 5px 10px;
 }
+
 .mobile_menu_open {
   position: fixed;
   top: 0;
   left: 0;
   z-index: 9999;
-  
+
   background-color: #0F1011;
   width: 100%;
   height: 100svh;
@@ -185,29 +205,33 @@
   padding: 0;
   font-size: 24px;
 }
+
 .logo_and_close_icon_wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 5px 10px;
 }
+
 .menu_wrapper {
   height: 100svh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .menu {
-    width: 100%;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 2vh;
-    justify-content: center;
-    justify-self: center;
-    align-self: center;
-    align-items: center;
+  width: 100%;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  justify-content: center;
+  justify-self: center;
+  align-self: center;
+  align-items: center;
 }
+
 .no-scroll {
   overflow: hidden !important;
   height: 100vh;
@@ -230,10 +254,12 @@
 
   z-index: 100;
 }
+
 .searchIcon {
   width: 20px;
   height: 20px;
 }
+
 .notification_dropdown_mobile {
   display: flex;
   justify-content: center;
@@ -243,12 +269,14 @@
   right: 0;
   z-index: 1000;
 }
+
 .notification_dropdown {
-   position: absolute;
-   top: calc(100% + 8px);
-   right: 0;
-   z-index: 1000;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 1000;
 }
+
 .search_dropdown.open {
   opacity: 1;
   visibility: visible;
@@ -260,26 +288,27 @@
 .search_dropdown.closed {
   pointer-events: none;
 }
+
 .iconWrapper {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .redGlow::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(
-    circle,
-    rgba(245, 58, 83, 1),
-    rgba(255, 0, 80, 0.1),
-    transparent 90%
-  );
+  background: radial-gradient(circle,
+      rgba(245, 58, 83, 1),
+      rgba(255, 0, 80, 0.1),
+      transparent 90%);
   filter: blur(6px);
   z-index: 0;
 }
+
 .search_icon_wrapper {
   display: flex;
   align-items: center;
@@ -289,10 +318,10 @@
   width: 52px;
   height: 52px;
   justify-content: center;
- background-color: #232323d7;
+  background-color: #232323d7;
 }
 
-.search_icon_wrapper_open  {
+.search_icon_wrapper_open {
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -309,14 +338,15 @@
     linear-gradient(#0F1011, #0F1011),
     linear-gradient(to right, #54A2FE, #F6465D);
 }
+
 .profile_dropdown {
-    position: absolute;
-    top: calc(70% + 8px);
-    display: flex;
-    justify-content: flex-end;
-    left: 0;
-    z-index: 1000;
-    width: 100%;
+  position: absolute;
+  top: calc(70% + 8px);
+  display: flex;
+  justify-content: flex-end;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
 }
 
 .notificationBadge {
@@ -338,15 +368,16 @@
   justify-content: center;
   z-index: 2;
 }
+
 .leng_and_profile_wrapper_mobile {
-    display: flex;
-    flex-direction: row;
-    gap: 18px;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  justify-content: center;
+  align-items: center;
 }
 
-.header_mobile{
+.header_mobile {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -354,6 +385,7 @@
   margin-bottom: 10px;
   padding: 15px 33px 0;
 }
+
 .imagesWrapper {
   display: flex;
   flex-direction: row;
@@ -361,10 +393,12 @@
   align-items: center;
   gap: 10px;
 }
-.mobile_logo_wrapper{
+
+.mobile_logo_wrapper {
   width: 40px;
   height: 50px;
 }
+
 .profile_dropdown_mobile {
   position: absolute;
   right: 0;
@@ -377,10 +411,12 @@
   .hader_menu {
     gap: 10px;
   }
+
   .link_wrapper {
     padding: 8px 25px;
     gap: 10px;
   }
+
   .auth_button {
     margin-left: 10px;
   }

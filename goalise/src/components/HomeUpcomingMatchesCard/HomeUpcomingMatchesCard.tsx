@@ -19,71 +19,71 @@ import matchMobileEmpty from "../../assets/pngs/matchMobileEmpty.svg";
 
 export const HomeUpcomingMatchesCard = () => {
   const t = useTranslations();
+  const BATCH_SIZE = 10;
   const [offset, setOffset] = useState<number>(0);
-  const [matches, setMatches] = useState<UpcomingMatch[]>([]);
-  const [firstMatch, setFirstMatch] = useState<UpcomingMatch | null>(null);
+  const [allMatches, setAllMatches] = useState<UpcomingMatch[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
 
   const { data, isFetching } = useGetUpComingMatchesQuery(
-    { take: 10, skip: offset },
+    { take: BATCH_SIZE, skip: offset },
     { skip: !hasMore }
   );
 
+  // Data processing effect: Append unique items and update hasMore
   useEffect(() => {
     if (!data) return;
 
-    const firstFromBatch = data[0] ?? null;
-
-    if (!firstMatch && firstFromBatch) {
-      setFirstMatch(firstFromBatch);
-    }
-
-    const idToExclude = firstMatch?.id ?? firstFromBatch?.id ?? null;
-
-    const filteredIncoming = idToExclude
-      ? data.filter((m) => m.id !== idToExclude)
-      : data;
-
-    setMatches((prev) => {
-      const merged = [...prev, ...filteredIncoming];
-
-      const unique = merged.filter(
-        (item, index, self) => index === self.findIndex((m) => m.id === item.id)
-      );
-      return unique;
+    setAllMatches((prev) => {
+      const existingIds = new Set(prev.map((m) => m.id));
+      const newUnique = data.filter((m) => !existingIds.has(m.id));
+      return [...prev, ...newUnique];
     });
 
-    if (data.length < 5) {
+    if (data.length < BATCH_SIZE) {
       setHasMore(false);
     }
-  }, [data, firstMatch]);
+  }, [data]);
 
+  // Infinite Scroll Handler
   useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
     const handleScroll = () => {
-      const container = scrollContainerRef.current;
-      if (!container || isFetching) return;
+      // Prevent multiple triggers or fetching when done
+      if (isFetching || !hasMore) return;
 
       const { scrollTop, scrollHeight, clientHeight } = container;
-
-      if (scrollTop + clientHeight >= scrollHeight) {
-        setOffset((prev) => prev + 5);
+      // Trigger update when close to bottom
+      if (scrollTop + clientHeight >= scrollHeight - 50) {
+        setOffset((prev) => prev + BATCH_SIZE);
       }
     };
 
-    const container = scrollContainerRef.current;
-    container?.addEventListener("scroll", handleScroll);
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, [isFetching, hasMore, allMatches]);
 
-    return () => {
-      container?.removeEventListener("scroll", handleScroll);
-    };
-  }, [isFetching]);
+  // Initial fill effect: If content doesn't overflow, fetch more until it does
+  useEffect(() => {
+    if (!hasMore || isFetching || allMatches.length === 0) return;
+
+    const container = scrollContainerRef.current;
+    if (container && container.scrollHeight <= container.clientHeight) {
+      setOffset((prev) => prev + BATCH_SIZE);
+    }
+  }, [allMatches, hasMore, isFetching]);
+
+  // Derived state for UI
+  const firstMatch = allMatches[0]; // Featured item
+  const matches = allMatches.slice(1); // Scrollable list
 
   return (
     <>
-      {!matches?.length ? (
+      {!allMatches?.length ? (
         <div className={styles.Home_main_card_no_mutch}>
           <div className={styles.no_upcoming_wrapper}>
             <Image

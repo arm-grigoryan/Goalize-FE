@@ -70,8 +70,8 @@ export const Header = () => {
       description: "A new update is available for your app.",
       acceptButtonText: "Accept",
       denyButtonText: "Deny",
-      onAcceptButtonClick: () => {},
-      onDenyButtonClick: () => {},
+      onAcceptButtonClick: () => { },
+      onDenyButtonClick: () => { },
     },
   ] as INotificationItemProps[];
   const notificationsCount = obj.length;
@@ -109,6 +109,8 @@ export const Header = () => {
     setShowSearchInput((prev) => {
       const next = !prev;
       if (next) {
+        setShowNotifications(false);
+        setShowProfileCard(false);
         setSearchOpen(true);
         setTimeout(() => searchInputRef.current?.focus(), 50);
       } else {
@@ -128,24 +130,24 @@ export const Header = () => {
         <>
           {!mobileMenuOpen && (
             <div className={styles.header_mobile}>
-              <div className={styles.imagesWrapper}> 
+              <div className={styles.imagesWrapper}>
+                <Image
+                  alt=""
+                  src={burgerIcon}
+                  className={styles.burger_menu_icon}
+                  onClick={() => setMobileMenuOpen(true)}
+                />
+                <Link href="/">
                   <Image
-                    alt=""
-                    src={burgerIcon}
-                    className={styles.burger_menu_icon}
-                    onClick={() => setMobileMenuOpen(true)}
+                    alt="Logo"
+                    src={mobileLogo}
+                    className={styles.mobile_logo_wrapper}
                   />
-                   <Link href="/">
-                    <Image
-                      alt="Logo"
-                      src={mobileLogo}
-                      className={styles.mobile_logo_wrapper}
-                    />
-                  </Link>
+                </Link>
               </div>
               <div className={styles.burger_menu_closed}>
                 <div className={styles.leng_and_profile_wrapper_mobile}>
-                   <div
+                  <div
                     className={`${styles.iconWrapper} ${styles.redGlow}`}
                     ref={mobileSearchRef}
                     onClick={toggleSearchInput}
@@ -160,7 +162,10 @@ export const Header = () => {
                         onClick={(e) => {
                           e.stopPropagation();
                           setShowNotifications((prev) => {
-                            if (!prev) setShowProfileCard(false);
+                            if (!prev) {
+                              setShowProfileCard(false);
+                              setSearchOpen(false);
+                            }
                             return !prev;
                           });
                         }}
@@ -174,7 +179,7 @@ export const Header = () => {
                           </span>
                         )}
                       </div>
-                     
+
                       {showNotifications && (
                         <div className={styles.notification_dropdown_mobile}>
                           <NotificationCard object={obj} />
@@ -183,46 +188,48 @@ export const Header = () => {
                     </>
                   )}
                 </div>
-                <ErrorBanner visible={false} onClose={() => {}} />
-              {isAuthenticated ? (
-                <div
-                  className={`${
-                    styles.name_and_img_wrapper
-                  }`}
-                  ref={profileRef}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowProfileCard((prev) => {
-                      if (!prev) setShowNotifications(false);
-                      return !prev;
-                    });
-                  }}
-                >
-                  <div>
-                    <Image
-                      src={profileImg}
-                      alt=""
-                      className={styles.profile_img}
-                    />
-                  </div>
-                  {showProfileCard && (
-                    <div className={styles.profile_dropdown_mobile}>
-                      <ProfileCard
-                        logIn={isAuthenticated}
-                        onAuthClick={onAuthClick}
+                <ErrorBanner visible={false} onClose={() => { }} />
+                {isAuthenticated ? (
+                  <div
+                    className={`${styles.name_and_img_wrapper
+                      }`}
+                    ref={profileRef}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowProfileCard((prev) => {
+                        if (!prev) {
+                          setShowNotifications(false);
+                          setSearchOpen(false);
+                        }
+                        return !prev;
+                      });
+                    }}
+                  >
+                    <div>
+                      <Image
+                        src={profileImg}
+                        alt=""
+                        className={styles.profile_img}
                       />
                     </div>
-                  )}
-              </div>
-            ) : (
-              <button
-                className={styles.auth_button}
-                onClick={onAuthClick}
-                disabled={loading}
-              >
-                {loading ? "Loading..." : t("home.profileCard.logIn")}
-              </button>
-            )}
+                    {showProfileCard && (
+                      <div className={styles.profile_dropdown_mobile}>
+                        <ProfileCard
+                          logIn={isAuthenticated}
+                          onAuthClick={onAuthClick}
+                        />
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <button
+                    className={styles.auth_button}
+                    onClick={onAuthClick}
+                    disabled={loading}
+                  >
+                    {loading ? "Loading..." : t("home.profileCard.logIn")}
+                  </button>
+                )}
               </div>
               {searchOpen && (
                 <SearchCard open={searchOpen} inputRef={searchInputRef} />
@@ -253,9 +260,9 @@ export const Header = () => {
                     options={
                       leaguesData
                         ? leaguesData.map((league) => ({
-                            value: league.id,
-                            label: league.name,
-                          }))
+                          value: league.id,
+                          label: league.name,
+                        }))
                         : []
                     }
                     targetRef={leaguesRef}
@@ -273,46 +280,48 @@ export const Header = () => {
                   </Link>
 
                   <span
-                      className={`${styles.leagues_mobile} ${
-                        showDropdown ? styles.active : ""
+                    className={`${styles.leagues_mobile} ${showDropdown ? styles.active : ""
                       }`}
-                      ref={leaguesButtonRef}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setShowDropdown((prev) => !prev);
-                      }}
-                    >
-                      <span className={styles.leagues_label}>
-                        {t("header.menu.leagues")}
-                      </span>
-
-                      <Image
-                        alt=""
-                        src={arrowDown}
-                        className={`${styles.arrow} ${
-                          showDropdown ? styles.arrowOpen : ""
-                        }`}
-                        aria-hidden
-                      />
-
-                      {showDropdown && (
-                        <div
-                          ref={leaguesDropdownRef}
-                          className={styles.leagues_dropdown_mobile}
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {leaguesData?.map((league) => (
-                            <div
-                              key={league.id}
-                              className={styles.dropdown_item}
-                              onClick={() => setShowDropdown(false)}
-                            >
-                              {league.name}
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                    ref={leaguesButtonRef}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowDropdown((prev) => !prev);
+                    }}
+                  >
+                    <span className={styles.leagues_label}>
+                      {t("header.menu.leagues")}
                     </span>
+
+                    <Image
+                      alt=""
+                      src={arrowDown}
+                      className={`${styles.arrow} ${showDropdown ? styles.arrowOpen : ""
+                        }`}
+                      aria-hidden
+                    />
+
+                    {showDropdown && (
+                      <div
+                        ref={leaguesDropdownRef}
+                        className={styles.leagues_dropdown_mobile}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {leaguesData?.map((league) => (
+                          <Link
+                            key={league.id}
+                            href={`/leagues/${league.id}`}
+                            className={styles.dropdown_item}
+                            onClick={() => {
+                              setShowDropdown(false);
+                              setMobileMenuOpen(false);
+                            }}
+                          >
+                            {league.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </span>
 
                   <Link
                     href="/teams"
@@ -329,7 +338,7 @@ export const Header = () => {
                   >
                     {t("header.menu.events")}
                   </Link>
-                  <LanguageSelect variant="headerMobile"/>
+                  <LanguageSelect variant="headerMobile" />
                 </div>
               </div>
             </div>
@@ -366,9 +375,9 @@ export const Header = () => {
                   options={
                     leaguesData
                       ? leaguesData.map((league) => ({
-                          value: league.id,
-                          label: league.name,
-                        }))
+                        value: league.id,
+                        label: league.name,
+                      }))
                       : []
                   }
                   targetRef={leaguesRef}
@@ -391,9 +400,8 @@ export const Header = () => {
                 </div>
                 <div
                   ref={dropdownRef}
-                  className={`${styles.search_dropdown} ${
-                    searchOpen ? styles.open : styles.closed
-                  }`}
+                  className={`${styles.search_dropdown} ${searchOpen ? styles.open : styles.closed
+                    }`}
                 >
                   <SearchCard open={searchOpen} inputRef={searchInputRef} />
                 </div>
@@ -443,12 +451,11 @@ export const Header = () => {
               orientation="vertical"
               flexItem
             />
-            <ErrorBanner visible={false} onClose={() => {}} />
+            <ErrorBanner visible={false} onClose={() => { }} />
             {isAuthenticated ? (
               <div
-                className={`${showProfileCard && styles.img_selected} ${
-                  styles.name_and_img_wrapper
-                }`}
+                className={`${showProfileCard && styles.img_selected} ${styles.name_and_img_wrapper
+                  }`}
                 ref={profileRef}
                 onClick={(e) => {
                   e.stopPropagation();

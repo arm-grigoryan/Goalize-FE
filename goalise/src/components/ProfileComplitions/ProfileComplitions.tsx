@@ -34,13 +34,17 @@ export const ProfileComplitions = () => {
     return null;
   return (
     <div
-      className={`${styles.profile_complitions} ${
-        isMobile ? styles.mobile : ""
-      }`}
+      className={`${styles.profile_complitions} ${isMobile ? styles.mobile : ""
+        }`}
     >
       <div className={styles.info_wrapperS}>
         <div className={styles.textWrapper}>
-          <div className={styles.title}>{t("ProfileComplition.title")}</div>
+          <div className={styles.title}>
+            {t("ProfileComplition.title")}
+            <span className={styles.percentageMain}>
+              {userInfo?.profileCompletionInfo?.percentage ?? 0}%
+            </span>
+          </div>
         </div>
         {!isMobile && (
           <div className={styles.buttonWrapper}>

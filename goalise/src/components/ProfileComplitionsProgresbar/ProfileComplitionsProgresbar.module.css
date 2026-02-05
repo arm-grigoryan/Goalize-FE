@@ -59,6 +59,14 @@
   height: 24px;
 }
 
+.percentageText {
+  color: white;
+  font-size: 12px;
+  line-height: 1;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
 .circle {
   width: 24px;
   height: 24px;
@@ -80,15 +88,18 @@
   color: white;
   text-align: center;
 }
-.mobile .iconWrapper{
+
+.mobile .iconWrapper {
   margin: 0;
   width: 16px;
   height: 16px;
 }
+
 .mobile .icon {
   width: 13px;
   height: 13px;
 }
+
 .mobile .stepLabel {
   font-size: 12px;
   margin-top: 8px;
@@ -96,6 +107,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .mobile .pointWrapper {
   transform: translate(-55%, -59%);
 }
