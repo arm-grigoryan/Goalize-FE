@@ -52,6 +52,7 @@
 @media (max-width: 768px) {
   .transfer_inner_card {
     width: 90%;
+    font-size: 12px;
   }
   .player_info_wrapper {
     flex-direction: column;

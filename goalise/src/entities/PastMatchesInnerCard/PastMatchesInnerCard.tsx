@@ -73,7 +73,7 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
             <div>{teamName1}</div>
           </div>
 
-         <div className={styles.score_wrapper}>
+         <div className={styles.score_wrapper_mobile}>
             {!(variant === "fixtures" ) &&
               <span className={`${variant == "results" &&
                                   winner1 && styles.score1} 

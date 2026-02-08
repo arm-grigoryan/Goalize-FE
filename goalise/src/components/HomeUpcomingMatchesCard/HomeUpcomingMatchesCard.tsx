@@ -16,6 +16,7 @@ import upcomingEmpty from "../../assets/pngs/upcomingEmpty.svg";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import matchMobileEmpty from "../../assets/pngs/matchMobileEmpty.svg";
+import { LiveDateLabel } from "@/entities/LiveDateLabel/LiveDateLabel";
 
 export const HomeUpcomingMatchesCard = () => {
   const t = useTranslations();
@@ -80,7 +81,8 @@ export const HomeUpcomingMatchesCard = () => {
       container?.removeEventListener("scroll", handleScroll);
     };
   }, [isFetching]);
-
+console.log(data)
+console.log(matches, '----------)')
   return (
     <>
       {!matches?.length ? (
@@ -100,15 +102,18 @@ export const HomeUpcomingMatchesCard = () => {
         <div className={styles.Home_main_card}>
           <div className={styles.match_inner_wrapper}>
             <div>
+              {/* <LiveDateLabel isLive/>
               <div
                 className={`${styles.title} ${isMobile && styles.title_mobile}`}
               >
                 <div className={styles.title_text}>
                   {t("home.upcomingMatches.title")}
                 </div>
-              </div>
+              </div> */}
+              <LiveDateLabel date="25-06-25" time="10:25" />
             </div>
-            <div className={styles.match_left_block}>
+            <div className={styles.leftRightWrapper}> 
+              <div className={styles.match_left_block}>
               <div className={styles.match_left_block_inner_wrapper}>
                 <div>
                   <span className={styles.team_name}>
@@ -135,7 +140,9 @@ export const HomeUpcomingMatchesCard = () => {
                 />
               </div>
             </div>
+            </div>
           </div>
+          
           <div className={styles.divider}>
             <CustomDivider orientation="vertical" />
           </div>

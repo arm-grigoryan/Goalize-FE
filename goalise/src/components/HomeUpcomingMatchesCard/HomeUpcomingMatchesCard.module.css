@@ -1,7 +1,8 @@
 .Home_main_card {
   border: solid 1px #ffffff1a;
   border-radius: 10px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
   box-shadow: 0 4px 16px 0 #101010;
   background-color: #111317b2;
   justify-content: space-between;
@@ -68,6 +69,14 @@
 .match_inner_wrapper {
   flex: 1;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.leftRightWrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
   align-items: center;
 }
 .title {
@@ -123,9 +132,18 @@
     font-weight: 600;
     text-transform: capitalize;
 }
+.liveWrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 0 28px;
+    justify-content: center;
+    align-items: center;
+}
 .divider {
   display: flex;
   height: inherit;
+  margin-top: 4px;
+  flex: 1;
 }
 .title_mobile_wrapper {
   display: flex;
@@ -184,7 +202,7 @@
 .match_right_block_inner_wrapper {
   display: flex;
   flex-direction: column;
-  padding-top: 30px;
+  margin-bottom: 30px;
   align-items: center;
   justify-content: center;
   flex-direction: column-reverse;
@@ -279,6 +297,9 @@
   }
   .match_inner_wrapper {
     flex: 1;
+
+  }
+  .leftRightWrapper {
     display: flex;
     flex-direction: column;
     align-items: center;

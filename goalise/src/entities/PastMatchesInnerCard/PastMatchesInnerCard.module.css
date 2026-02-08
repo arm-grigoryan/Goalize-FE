@@ -172,7 +172,7 @@
   background-color: #15191e66;
   border-radius: 10px;
   color: #e8e8e8;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .date_wrapper {
@@ -205,6 +205,7 @@
   grid-template-columns: 1fr 1px 1fr;
   align-items: center;
   gap: 8px;
+  font-size: 18px;
   font-weight: 700;
 }
 
@@ -388,7 +389,7 @@
   background-color: #15191e66;
   border-radius: 10px;
   color: #e8e8e8;
-  font-size: 14px;
+  font-size: 12px;
 }
 /* ------------ fixtures page ----------- */
 .past_matches_innerCard_fixtures {
