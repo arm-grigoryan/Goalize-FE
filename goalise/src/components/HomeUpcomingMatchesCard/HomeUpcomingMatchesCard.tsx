@@ -78,10 +78,10 @@ export const HomeUpcomingMatchesCard = () => {
     }
   }, [allMatches, hasMore, isFetching]);
 
-    return () => {
-      container?.removeEventListener("scroll", handleScroll);
-    };
-  }, [isFetching]);
+  // Derived state for UI
+  const firstMatch = allMatches[0]; // Featured item
+  const matches = allMatches.slice(1); // Scrollable list
+
   return (
     <>
       {!allMatches?.length ? (
@@ -112,7 +112,7 @@ export const HomeUpcomingMatchesCard = () => {
               <LiveDateLabel date="25-06-25" time="10:25" />
             </div>
             <div className={styles.leftRightWrapper}> 
-              <div className={styles.match_left_block}>
+            <div className={styles.match_left_block}>
               <div className={styles.match_left_block_inner_wrapper}>
                 <div>
                   <span className={styles.team_name}>
@@ -139,7 +139,7 @@ export const HomeUpcomingMatchesCard = () => {
                 />
               </div>
             </div>
-            </div>
+          </div>
           </div>
           
           <div className={styles.divider}>
