@@ -33,9 +33,18 @@ export function useSearchAutoComplete(query: string) {
   }, [query, trigger]);
 
   const results = useMemo(() => {
-    const leagues: SearchItem[] = data?.leagues || [];
-    const teams: SearchItem[] = data?.teams || [];
-    const players: SearchItem[] = data?.players || [];
+    const leagues: SearchItem[] = (data?.leagues || []).map((item) => ({
+      ...item,
+      type: "league",
+    }));
+    const teams: SearchItem[] = (data?.teams || []).map((item) => ({
+      ...item,
+      type: "team",
+    }));
+    const players: SearchItem[] = (data?.players || []).map((item) => ({
+      ...item,
+      type: "profile",
+    }));
     const all: SearchItem[] = [...leagues, ...teams, ...players].sort(
       (a, b) => (b.matchScore || 0) - (a.matchScore || 0)
     );

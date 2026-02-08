@@ -41,6 +41,25 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
   const t = useTranslations("playerProfile.buttons");
   const { playerId } = useParams();
   const { playerStats } = usePlayerProfile({ playerId: Number(playerId) });
+
+  const showMakeCaptain =
+    isLoggedIn &&
+    isCaptain &&
+    isSameTeam &&
+    !isViewingSelf &&
+    !!onMakeCaptainButtonClick &&
+    !!makeCaptainButtonText;
+
+  const showRemoveUser =
+    isLoggedIn &&
+    !!teamName &&
+    !!onRemoveUserButtonClick &&
+    isCaptain &&
+    isSameTeam &&
+    !isViewingSelf;
+
+  const showActionButtons = showMakeCaptain || showRemoveUser;
+
   return (
     <div
       className={`${styles.container} ${isMobile ? styles.mobile : ""}`}
@@ -51,36 +70,24 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
             {profilePic && (
               <Image src={profilePic} className={styles.image} alt={""} />
             )}
-            {isMobile && (
+            {isMobile && showActionButtons && (
               <div className={styles.buttonsContainer}>
-                {isLoggedIn ? (
-                  <>
-                    {isCaptain &&
-                      isSameTeam &&
-                      !isViewingSelf &&
-                      onMakeCaptainButtonClick &&
-                      makeCaptainButtonText && (
-                        <Button
-                          className="white_button_transparent"
-                          handleClick={onMakeCaptainButtonClick}
-                          content={makeCaptainButtonText}
-                        />
-                      )}
-                    {teamName &&
-                      onRemoveUserButtonClick &&
-                      isCaptain &&
-                      isSameTeam &&
-                      !isViewingSelf && (
-                        <Button
-                          className="white_icon_button"
-                          icon={removeUserIng}
-                          iconHeight={12}
-                          iconWidth={12}
-                          handleClick={onRemoveUserButtonClick}
-                        />
-                      )}
-                  </>
-                ) : null}
+                {showMakeCaptain && (
+                  <Button
+                    className="white_button_transparent"
+                    handleClick={onMakeCaptainButtonClick}
+                    content={makeCaptainButtonText}
+                  />
+                )}
+                {showRemoveUser && (
+                  <Button
+                    className="white_icon_button"
+                    icon={removeUserIng}
+                    iconHeight={12}
+                    iconWidth={12}
+                    handleClick={onRemoveUserButtonClick}
+                  />
+                )}
               </div>
             )}
           </div>

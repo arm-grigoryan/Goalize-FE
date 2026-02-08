@@ -50,6 +50,19 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
     }
   };
 
+  const getRouteByType = (type: string, id: string | number): string => {
+    switch (type) {
+      case 'league':
+        return `/leagues/${id}`;
+      case 'team':
+        return `/teams/${id}`;
+      case 'player':
+        return `/profile/${id}`;
+      default:
+        return `/profile/${id}`;
+    }
+  };
+
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
@@ -67,9 +80,8 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
 
           <input
             ref={inputRef}
-            className={`${styles.search_input} ${
-              open ? styles.search_input_open : styles.search_input_closed
-            }`}
+            className={`${styles.search_input} ${open ? styles.search_input_open : styles.search_input_closed
+              }`}
             placeholder="Search leagues, teams, players..."
             value={query}
             onChange={onSearchChange}
@@ -78,100 +90,58 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
         </div>
         <div
           ref={dropdownRef}
-          className={`${styles.search_dropdown} ${
-            open ? styles.open : styles.closed
-          }`}
+          className={`${styles.search_dropdown} ${open ? styles.open : styles.closed
+            }`}
         >
           {!searchLoading && results && (
             <div className={styles.search}>
               <div className={styles.search_tabs}>
                 <button
-                  className={`${styles.tab} ${
-                    activeTab === "all" ? styles.activeTab : ""
-                  }`}
+                  className={`${styles.tab} ${activeTab === "all" ? styles.activeTab : ""
+                    }`}
                   onClick={() => setActiveTab("all")}
                 >
                   All
                 </button>
                 <button
-                  className={`${styles.tab} ${
-                    activeTab === "leagues" ? styles.activeTab : ""
-                  }`}
+                  className={`${styles.tab} ${activeTab === "leagues" ? styles.activeTab : ""
+                    }`}
                   onClick={() => setActiveTab("leagues")}
                 >
                   Leagues
                 </button>
                 <button
-                  className={`${styles.tab} ${
-                    activeTab === "teams" ? styles.activeTab : ""
-                  }`}
+                  className={`${styles.tab} ${activeTab === "teams" ? styles.activeTab : ""
+                    }`}
                   onClick={() => setActiveTab("teams")}
                 >
                   Teams
                 </button>
                 <button
-                  className={`${styles.tab} ${
-                    activeTab === "players" ? styles.activeTab : ""
-                  }`}
+                  className={`${styles.tab} ${activeTab === "players" ? styles.activeTab : ""
+                    }`}
                   onClick={() => setActiveTab("players")}
                 >
                   Players
                 </button>
               </div>
-              {/* <div className={styles.search_list}>
-                        {(
-                            activeTab === "all"
-                              ? results?.all ?? []
-                              : activeTab === "leagues"
-                              ? results?.leagues ?? []
-                              : activeTab === "teams"
-                              ? results?.teams ?? []
-                              : results?.players ?? []
-                          ).map((it: SearchItem) => {
-                          const href =
-                            it.type === "league"
-                              ? `/leagues/${it.id}`
-                              : it.type === "team"
-                              ? `/teams/${it.id}`
-                              : `/profile/${it.id}`;
-                          return (
-                            <Link
-                              key={`${it.type}-${it.id}`}
-                              href={href}
-                              className={styles.search_item}
-                              onClick={() => {
-                                setQuery("");
-                                setSearchOpen(false);
-                              }}
-                            >
-                              <div className={styles.search_item_content}>
-                                <div className={styles.search_item_label}>
-                                  {renderHighlighted(it.mainText, query)}
-                                </div>
-                                {it.secondaryText && (
-                                  <div className={styles.search_item_secondary}>
-                                    {it.secondaryText}
-                                  </div>
-                                )}
-                              </div>
-                            </Link>
-                          );
-                        })}
-                      </div> */}
             </div>
           )}
+
           {!searchLoading && (
             <div className={styles.search_item_container}>
-              {results?.all?.map((it) => (
+              {(
+                activeTab === "all"
+                  ? results?.all ?? []
+                  : activeTab === "leagues"
+                    ? results?.leagues ?? []
+                    : activeTab === "teams"
+                      ? results?.teams ?? []
+                      : results?.players ?? []
+              ).map((it) => (
                 <Link
                   key={`${it.type}-${it.id}`}
-                  href={
-                    it.type === "league"
-                      ? `/leagues/${it.id}`
-                      : it.type === "team"
-                      ? `/teams/${it.id}`
-                      : `/profile/${it.id}`
-                  }
+                  href={getRouteByType(it.type, it.id)}
                   className={styles.search_item}
                 >
                   {it.pictureUrl && isValidUrl(it.pictureUrl) && (
@@ -202,9 +172,18 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
             <div className={styles.search_loading}>Loading...</div>
           )}
 
-          {!searchLoading && results?.all?.length === 0 && (
-            <div className={styles.search_no_results}>No results</div>
-          )}
+          {!searchLoading &&
+            (
+              activeTab === "all"
+                ? results?.all ?? []
+                : activeTab === "leagues"
+                  ? results?.leagues ?? []
+                  : activeTab === "teams"
+                    ? results?.teams ?? []
+                    : results?.players ?? []
+            ).length === 0 && (
+              <div className={styles.search_no_results}>No results</div>
+            )}
         </div>
       </div>
     </>

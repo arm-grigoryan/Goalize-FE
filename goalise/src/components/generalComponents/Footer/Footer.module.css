@@ -13,16 +13,19 @@
   flex-direction: column;
   gap: 10px;
 }
+
 .logo {
   width: 150px;
   height: auto;
   margin-bottom: 8px;
 }
+
 .socials {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
+
 .socials_icons {
   display: flex;
   flex-direction: row;
@@ -30,60 +33,72 @@
   align-items: center;
   gap: 12px;
 }
+
 .instaIcon {
   width: 34px;
   height: 34px;
 }
+
 .icon {
   width: 40px;
   height: 40px;
 }
+
 .top_footer {
   display: flex;
   padding-bottom: 34px;
   justify-content: space-between;
   border-bottom: 1px solid #a5a5a5;
 }
+
 .info_sections {
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-left: 100px;
 }
+
 .links {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
+
 .contact_info {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
+
 .bottom_footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 .privacy_terms {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
+
 .link {
   text-decoration: none;
   color: #a5a5a5;
 }
+
 .rights_language {
   display: flex;
   flex-direction: row;
   gap: 8px;
   margin-top: 20px;
 }
+
 .text {
   color: #a5a5a5;
 }
+
 .leagues {
   display: flex;
   flex-direction: column;
@@ -91,29 +106,53 @@
   cursor: pointer;
   color: #a5a5a5;
 }
+
 .leagues_label {
   display: flex;
   align-items: center;
   flex-direction: row;
   gap: 10px;
 }
+
+.dropdown_item {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+.leagues_dropdown_mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* Matching the gap from header for consistency */
+  padding-left: 10px;
+  /* Indentation for hierarchy */
+  margin-top: 5px;
+}
+
 .arrow {
   width: 8px;
   height: 8px;
 }
+
 .arrowOpen {
   transform: rotate(180deg);
 }
+
 /* ---------- mobile ---------- */
 .mobile .logo {
   margin: 0;
   height: 34px;
 }
+
 .mobile .top_footer {
   flex-direction: column;
   gap: 24px;
   border: none;
 }
+
 .mobile .logo_wrapper {
   display: flex;
   flex-direction: row;
@@ -134,6 +173,7 @@
   margin-top: 34px;
   font-size: 14px
 }
+
 .mobile .leagues_label {
   gap: 6px;
 }
