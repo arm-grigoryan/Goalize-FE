@@ -10,7 +10,6 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { usePlayerProfile } from "./usePlayerProfile";
-import PopupModal from "@/entities/PopupModal";
 import { useAuth } from "@/shared/auth/AuthContext";
 import {refreshTokens} from "@/shared/auth/oidcService"
 
@@ -180,99 +179,97 @@ export const PlayerProfile = () => {
           playerName={`${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName}`}
         />
       )}
-      <PopupModal
-        open={showInvitationErrorModal}
-        onClose={() => closeInvitationErrorModal()}
+      {showInvitationErrorModal &&
+      <PlayerInvitationCard
+        onCancelButtonClick={() => closeInvitationErrorModal()}
         title="Cannot Send Invitation"
         description={invitationError || "An error occurred."}
-        buttonContent="OK"
-      />
-      <PopupModal
-        open={showRemoveMemberErrorModal}
-        onClose={() => closeRemoveMemberErrorModal()}
+        confirmButtonText="OK"
+      />}
+      {showRemoveMemberErrorModal &&
+      <PlayerInvitationCard
+        onCancelButtonClick={() => closeRemoveMemberErrorModal()}
         title="Cannot Remove Player"
         description={removeMemberError || "An error occurred."}
-        buttonContent="OK"
-      />
-      <PopupModal
-        open={showMakeCaptainErrorModal}
-        onClose={() => closeMakeCaptainErrorModal()}
+        confirmButtonText="OK"
+      />}
+      {showMakeCaptainErrorModal &&
+      <PlayerInvitationCard
+        onCancelButtonClick={() => closeMakeCaptainErrorModal()}
         title="Cannot Make Captain"
         description={makeCaptainError || "An error occurred."}
-        buttonContent="OK"
-      />
-      <PopupModal
-        open={showQuitTeamErrorModal}
-        onClose={() => closeQuitTeamErrorModal()}
+        confirmButtonText="OK"
+      />}
+      {showQuitTeamErrorModal &&
+      <PlayerInvitationCard
+        onCancelButtonClick={() => closeQuitTeamErrorModal()}
         title="Cannot Quit Team"
         description={quitTeamError || "An error occurred."}
-        buttonContent="OK"
-      />
-      <PopupModal
-        open={showNotCaptainModal}
-        onClose={() => setShowNotCaptainModal(false)}
+        confirmButtonText="OK"
+      />}
+      {showNotCaptainModal &&
+      <PlayerInvitationCard
+        onCancelButtonClick={() => setShowNotCaptainModal(false)}
         title="Action Not Allowed"
         description="You must be a captain to send invitations."
-        buttonContent="OK"
+        confirmButtonText="OK"
       />
-      <PopupModal
-        open={showInvitationSuccessModal}
-        onClose={() => closeInvitationSuccessModal()}
+      }     
+      {showInvitationSuccessModal &&
+      <PlayerInvitationCard
+        onCancelButtonClick={() => closeInvitationSuccessModal()}
         title="Invitation Sent Successfully"
         description="The player has been invited to your team."
-        buttonContent="OK"
-      />
-      <PopupModal
-        open={showMakeCaptainConfirmModal}
-        onClose={() => setShowMakeCaptainConfirmModal(false)}
+        confirmButtonText="OK"
+      />}
+      {showMakeCaptainConfirmModal &&
+      <PlayerInvitationCard
+        onCancelButtonClick={() => setShowMakeCaptainConfirmModal(false)}
         title="Make Team Captain"
         description={`Are you sure you want to make ${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName} the team captain? You will lose your captain privileges.`}
-        buttonContent="Confirm"
-        onButtonClick={handleConfirmMakeCaptain}
-        showCancelButton
-        cancelButtonContent="Cancel"
-      />
-      <PopupModal
-        open={showMakeCaptainSuccessModal}
-        onClose={() => closeMakeCaptainSuccessModal()}
+        confirmButtonText="Confirm"
+        onConfirmButtonClick={handleConfirmMakeCaptain}
+        cancelButtonText="Cancel"
+      />}
+      {showMakeCaptainSuccessModal &&
+      <PlayerInvitationCard
+        onCancelButtonClick={() => closeMakeCaptainSuccessModal()}
         title="Captain Changed Successfully"
         description="The team captain has been updated."
-        buttonContent="OK"
-      />
-      <PopupModal
-        open={showRemoveMemberConfirmModal}
-        onClose={() => setShowRemoveMemberConfirmModal(false)}
+        confirmButtonText="OK"
+      />}
+      {showRemoveMemberConfirmModal && 
+      <PlayerInvitationCard
+        onCancelButtonClick={() => setShowRemoveMemberConfirmModal(false)}
         title="Remove Team Member"
         description={`Are you sure you want to remove ${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName} from the team?`}
-        buttonContent="Confirm"
-        onButtonClick={handleConfirmRemoveMember}
-        showCancelButton
-        cancelButtonContent="Cancel"
-      />
-      <PopupModal
-        open={showRemoveMemberSuccessModal}
-        onClose={() => closeRemoveMemberSuccessModal()}
+        confirmButtonText="Confirm"
+        onConfirmButtonClick={handleConfirmRemoveMember}
+        cancelButtonText="Cancel"
+      />}
+      {showRemoveMemberSuccessModal &&
+      <PlayerInvitationCard
+        onCancelButtonClick={() => closeRemoveMemberSuccessModal()}
         title="Member Removed Successfully"
         description="The team member has been removed."
-        buttonContent="OK"
-      />
-      <PopupModal
-        open={showQuitTeamConfirmModal}
-        onClose={() => setShowQuitTeamConfirmModal(false)}
+        confirmButtonText="OK"
+      />}
+      {showQuitTeamConfirmModal &&
+      <PlayerInvitationCard
+        onCancelButtonClick={() => setShowQuitTeamConfirmModal(false)}
         title="Quit Team"
         description="Are you sure you want to quit the team?"
-        buttonContent="Confirm"
-        onButtonClick={handleConfirmQuitTeam}
-        showCancelButton
-        cancelButtonContent="Cancel"
-      />
-      <PopupModal
-        open={showQuitTeamSuccessModal}
-        onClose={() => closeQuitTeamSuccessModal()}
+        confirmButtonText="Confirm"
+        onConfirmButtonClick={handleConfirmQuitTeam}
+        cancelButtonText="Cancel"
+      />}
+      {showQuitTeamSuccessModal &&
+      <PlayerInvitationCard
+        onCancelButtonClick={() => closeQuitTeamSuccessModal()}
         title="Successfully Quit Team"
         description="You have left the team."
-        buttonContent="OK"
-      />
+        confirmButtonText="OK"
+      />}
       {isSendingInvitation && (
         <div className={styles.loader_container}>
           <div className={styles.loader}></div>
@@ -296,3 +293,4 @@ export const PlayerProfile = () => {
     </div>
   );
 };
+ 

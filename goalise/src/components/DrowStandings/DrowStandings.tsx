@@ -184,12 +184,12 @@ const spacing = useResponsiveSpacing();
                 : ""
             }`}
           >
+            {displayData.awayTeam.name === 'TBD' && <Image src={tbdIcon} alt="" className={styles.tbdIconMobileSwapped} />}
+            {!(displayData.awayTeam.name === 'TBD') && <Image src={displayData.awayTeam.logoSrc} alt="" className={styles.teamLogoSwappedMobile} />}
+            {displayData.awayTeam.name.slice(0, 3).toUpperCase()}
             <div className={styles.score2Mobile}>
               {displayData.awayTeam.name === 'TBD' ? '' : displayData.awayTeamScore >= 0 && ` ${displayData.awayTeamScore}`}
             </div>
-            {displayData.awayTeam.name.slice(0, 3).toUpperCase()}
-            {displayData.awayTeam.name === 'TBD' && <Image src={tbdIcon} alt="" className={styles.tbdIconMobileSwapped} />}
-            {!(displayData.awayTeam.name === 'TBD') && <Image src={displayData.awayTeam.logoSrc} alt="" className={styles.teamLogoSwappedMobile} />}
           </div>
         </div>
       </div>

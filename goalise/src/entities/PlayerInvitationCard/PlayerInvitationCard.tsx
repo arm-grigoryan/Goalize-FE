@@ -5,12 +5,20 @@ import { useTranslations } from 'next-intl';
 interface IPlayerInvitationCardProps {
   onConfirmButtonClick?: () => void;
   onCancelButtonClick?: () => void;
-  playerName: string;
+  playerName?: string;
+  title?: string;
+  description?: string;
+  confirmButtonText?: string;
+  cancelButtonText?: string;
 }
 export const PlayerInvitationCard: React.FC<IPlayerInvitationCardProps> = ({
   onConfirmButtonClick,
   onCancelButtonClick,
-  playerName
+  playerName,
+  title,
+  description,
+  confirmButtonText,
+  cancelButtonText
 }) => {
   const t = useTranslations("playerProfile.playerInvitationCard");
 
@@ -19,10 +27,10 @@ export const PlayerInvitationCard: React.FC<IPlayerInvitationCardProps> = ({
       <div className={styles.cardContainer}>
         <div className={styles.titleWrapper}>
           <div className={styles.title}>
-            {t("title")}
+            {title? title :t("title")}
           </div>
           <div className={styles.label}>
-            {t('label', { playerName })}
+            {description ? description : playerName ? t('label', {playerName}) : t('label') }
           </div>
         </div>
 
@@ -30,14 +38,14 @@ export const PlayerInvitationCard: React.FC<IPlayerInvitationCardProps> = ({
           {onConfirmButtonClick && (
             <Button
               className="red_button"
-              content={t("confirmButtonText")}
+              content={confirmButtonText ? confirmButtonText : t("confirmButtonText")}
               handleClick={onConfirmButtonClick}
             />
           )}
           {onCancelButtonClick && (
             <Button
               className="red_button_transparant_white_text"
-              content={t("cancelButtonText")}
+              content={cancelButtonText ? cancelButtonText :t("cancelButtonText")}
               handleClick={onCancelButtonClick}
             />
           )}

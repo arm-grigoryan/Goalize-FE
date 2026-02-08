@@ -4,7 +4,7 @@ import styles from "./LeaguesResults.module.css";
 import PastMatchesInnerCard from "@/entities/PastMatchesInnerCard";
 import winnerIcon from "../../assets/pngs/winnerIcon.svg";
 import teamLogo from "../../assets/pngs/teamLogo.png";
-import drawIcon from "../../assets/pngs/drawIcon.png";
+import drawIcon from "../../assets/pngs/drawIcon.svg";
 import { useGetLeaguesResultsQuery } from "@/app/store/services/api";
 import { ILeaguesResultsItem } from "@/types/api/leaguesResults";
 import { handleLongStrings } from "@/helper/handleLongStrings";

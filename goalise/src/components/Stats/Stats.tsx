@@ -8,6 +8,8 @@ import styles from "./Stats.module.css";
 import { useParams } from "next/navigation";
 import { useGetLeaguesTopPlayersQuery } from "@/app/store/services/api";
 import { ITopPlayer } from "@/types/api/topPlayers";
+import Image from "next/image";
+import nextMatchEmpty from '../../assets/pngs/nextMatchEmpty.svg';
 
 export const Stats: React.FC = () => {
   const { width } = useWindowSize();
@@ -28,15 +30,38 @@ export const Stats: React.FC = () => {
   }
 
   if (isError || !data || (Array.isArray(data) && data.length === 0)) {
-    return <div className={styles.error}>No stats found for this league.</div>;
+    return <div className={''}>
+      <Image src={nextMatchEmpty} alt= ""/>
+      <div> No Stats Available Yet</div>
+    </div>;
   }
 
   // Handle both single object and array of objects as the user changed type to ITopPlayers[]
   const statsData = Array.isArray(data) ? data[0] : data;
 
   if (!statsData) {
-    return <div className={styles.error}>No stats found.</div>;
+    return <div className={''}>
+      <Image src={nextMatchEmpty} alt= ""/>
+      <div> No Stats Available Yet</div>
+    </div>;
   }
+  const isEmptyStats =
+    !statsData ||
+    [
+      statsData.topGoals,
+      statsData.topAssists,
+      statsData.topRatings,
+      statsData.topYellowCards,
+      statsData.topRedCards,
+    ].every((arr) => !arr || arr.length === 0);
+    if (isEmptyStats) {
+      return (
+        <div className={styles.emptyWrapper}>
+          <Image src={nextMatchEmpty} alt="" className={styles.img} />
+          <div className={styles.emptyTxt}>No Stats Available Yet</div>
+        </div>
+      );
+    }
 
   const mapToStatsCardProps = (
     players: ITopPlayer[] = []
@@ -57,7 +82,7 @@ export const Stats: React.FC = () => {
     }));
 
   return (
-    <div className={`${!isMobile ? styles.container : styles.mobileWrapper}`}>
+   <div className={`${!isMobile ? styles.container : styles.mobileWrapper}`}>
       <StatsCard
         title="Goals"
         object={mapToStatsCardProps(statsData.topGoals)}
@@ -78,6 +103,6 @@ export const Stats: React.FC = () => {
         title="Red Cards"
         object={mapToStatsCardProps(statsData.topRedCards)}
       />
-    </div>
-  );
+    </div> 
+)
 };
