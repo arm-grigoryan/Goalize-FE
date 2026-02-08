@@ -1,0 +1,73 @@
+.container {
+    display: flex;
+    padding: 10px 15px;
+    justify-content: center;
+    align-items: center;
+    color: #FFF;
+    height: 20px;
+    border-radius: 100px;
+    border: 1px solid transparent;
+    background-clip: padding-box, border-box;
+    background-origin: border-box;
+    background-image:
+        linear-gradient(
+        rgba(1, 1, 17, 0.97),
+        rgba(1, 1, 17, 0.87)
+    ),
+     linear-gradient(to right, #54A2FE, #F6465D);
+    cursor: pointer;
+}
+.liveWrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+}
+
+.liveText {
+    color: #FFF;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.dateWrapper {
+    display: flex;
+    flex-direction: row;
+    color: #FFF;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 44px;
+    border-radius: 0 0 7.381px 7.381px;
+    border-right: 0.615px solid rgba(255, 255, 255, 0.10);
+    border-bottom: 0.615px solid rgba(255, 255, 255, 0.10);
+    border-left: 0.615px solid rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.06);
+    position: relative;
+    bottom: 14px;
+}
+.dateIcon {
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+}
+.clockIcon {
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+    margin-left: 14px;
+}
+@media (max-width: 320px) {
+    .dateWrapper {
+        padding: 3px 12px;
+        font-size: 10px;
+        font-size: 12px;
+    }
+    
+}
+@media (max-width: 768px) {
+    .dateWrapper {
+        padding: 6px 22px;
+        bottom: 34px;
+        font-size: 12px;
+    }
+}

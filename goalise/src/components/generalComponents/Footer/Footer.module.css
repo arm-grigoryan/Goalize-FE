@@ -165,11 +165,13 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   margin: 0;
+  font-size: 12px;
 }
 
 .mobile .rights_language {
   justify-content: center;
   margin-top: 34px;
+  font-size: 14px
 }
 
 .mobile .leagues_label {
