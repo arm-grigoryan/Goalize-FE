@@ -46,7 +46,21 @@
   height: 50px;
   animation: spin 1s linear infinite;
 }
-
+.emptyWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding:  60px 20px;
+}
+.img {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 40px;
+}
+.emptyTxt {
+  color: #a5a5a5;
+}
 @keyframes spin {
   0% {
     transform: rotate(0deg);

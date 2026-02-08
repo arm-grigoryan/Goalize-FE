@@ -20,9 +20,11 @@ export const ChampionCard: React.FC<ChampionCardProps> = ({
     }`}>
       <div className={styles.badge}><span>CHAMPION </span></div>
       <div className={styles.content}>
-        <div className={styles.logo}>
-         { logoSrc && <Image src={logoSrc} alt="" width={80} height={80} />}
-        </div>
+        { logoSrc && 
+            <div className={styles.logo}>
+            <Image src={logoSrc} alt="" width={80} height={80} />
+            </div>
+          }
         <div className={styles.teamName}>{teamName}</div>
         {type === "draw" &&<Image src={championIcon} alt="Champion" className={styles.championIcon}/>}
       </div>

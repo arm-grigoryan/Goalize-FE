@@ -5,11 +5,11 @@ import Image from "next/image";
 import championsLeagueImg from "../../../public/images/championsLegue.png";
 import Button from "@/shared/Button";
 import Link from "next/link";
-import PopupModal from "@/entities/PopupModal";
 import { usePathname } from "next/navigation";
 import ChampionCard from "../ChampionCard";
 import joinedIcon from "../../assets/pngs/joinedIcon.svg";
 import { useLeagueHeader } from "./useLeagueHeader";
+import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 
 export const LeaguesHeader = () => {
   const {
@@ -58,25 +58,25 @@ export const LeaguesHeader = () => {
 
         <div className={styles.placePrize_container}>
         {leagueData?.firstPlacePrize && (
-            <div>
-            <div className={styles.placePrize_text}>1st place prize</div>
-            <div className={styles.placePrize}>
-              ֏ {formatPrize(leagueData.firstPlacePrize)}
-            </div>
+            <div className={styles.prizeContainer}>
+              <div className={styles.placePrize_text}>1st place</div>
+              <div className={styles.placePrize}>
+                ֏ {formatPrize(leagueData.firstPlacePrize)}
+              </div>
             </div>
         )}
         {leagueData?.secondPlacePrize && (
-         <div>  
-          <div className={styles.placePrize_text}>2nd place prize</div>
-          <div className={styles.placePrize}>
-              ֏ {formatPrize(leagueData.secondPlacePrize)}
-            </div>
+         <div className={styles.prizeContainer}>  
+            <div className={styles.placePrize_text}>2nd place</div>
+            <div className={styles.placePrize}>
+                ֏ {formatPrize(leagueData.secondPlacePrize)}
+              </div>
           </div>
         )}
        
         {leagueData?.semiFinalistPrize && (
-          <div>
-            <div className={styles.placePrize_text}>3rd place prize</div>
+          <div className={styles.prizeContainer}>
+            <div className={styles.placePrize_text}>Semi-finalist</div>
             <div className={styles.placePrize}>
               ֏ {formatPrize(leagueData.semiFinalistPrize)}
             </div>
@@ -85,8 +85,8 @@ export const LeaguesHeader = () => {
         </div>
       </div>
       }
-      {!(leagueData?.winner?.name )&&
-      leagueData?.paymentPerGame && (
+      {!(leagueData?.winner?.name ) ||
+      (leagueData?.paymentPerGame) && (
         <div
           className={
             isMobile
@@ -176,15 +176,12 @@ export const LeaguesHeader = () => {
               <Image src={championsLeagueImg} alt="champions league" />
               <div className={styles.league_name_and_button}>
                 <div className={styles.league_name}>{leagueData?.name}</div>
-                {/* Only show state button if NOT in finished state (design choice based on original code, but requirements say winner card) */}
-                {leagueData?.state !== "Finished" && (
                   <div className={styles.stageButton}>
                     <div className={styles.stageButtonWrapper}>
                       <div className={styles.stageButtonName}> State: </div>
                       <div className={styles.stage}>{leagueData?.state}</div>
                     </div>
                   </div>
-                )}
               </div>
             </div>
 
@@ -193,7 +190,7 @@ export const LeaguesHeader = () => {
                 <>
                   {renderPrizePool()}
                   <div className={styles.buttonTextWrapper}>
-                    {renderJoinButton()}
+                    <div className={styles.joinWrapper}>{renderJoinButton()} </div>
                     {!isRegistrationClosed &&
                       leagueData?.state === "Registration" && (
                         <p className={styles.registration_closed_text_mobile}>
@@ -330,26 +327,23 @@ export const LeaguesHeader = () => {
       {modalState.open &&
       modalState.type !== "error" &&
       modalState.type !== "success" ? (
-        <PopupModal
-          open={modalState.open}
-          onClose={handleCloseModal}
-          title={modalState.title}
-          description={modalState.description}
-          buttonContent="Confirm"
-          hasCloseButton
-          onButtonClick={handleConfirmAction}
+        <PlayerInvitationCard 
+           description={modalState.description}
+           title={modalState.title}
+           onCancelButtonClick={handleCloseModal}
+           onConfirmButtonClick={handleConfirmAction}
+           confirmButtonText="Confirm"
+           cancelButtonText="Cancel"
         />
       ) : null}
 
       {modalState.open &&
       (modalState.type === "error" || modalState.type === "success") ? (
-        <PopupModal
-          open={modalState.open}
-          onClose={handleCloseModal}
-          title={modalState.title}
+        <PlayerInvitationCard
+          onCancelButtonClick={handleCloseModal}
           description={modalState.description}
-          buttonContent="Close"
-          onButtonClick={handleCloseModal}
+          title={modalState.title}
+          cancelButtonText='Close'
         />
       ) : null}
     </div>

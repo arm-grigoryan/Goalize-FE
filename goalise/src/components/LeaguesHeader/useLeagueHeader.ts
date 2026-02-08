@@ -29,6 +29,7 @@ export const useLeagueHeader = () => {
   const { data: userInfo } = useGetUserInfoQuery(undefined, {
     skip: !isAuthenticated,
   });
+  const [isInvitationOpen, setIsInvitationOpen] = useState(false);
 
   const [joinLeague, { isLoading: isJoining }] = useJoinLeagueMutation();
   const [unjoinLeague, { isLoading: isUnjoining }] = useUnjoinLeagueMutation();
@@ -123,12 +124,7 @@ export const useLeagueHeader = () => {
       return;
     }
 
-    setModalState({
-      open: true,
-      type: "unjoin",
-      title: "Unjoin League",
-      description: "Are you sure you want to leave this league?",
-    });
+    setIsInvitationOpen(true);
   };
 
   const handleConfirmAction = async () => {
@@ -194,6 +190,8 @@ export const useLeagueHeader = () => {
     registrationClosedReason,
     isTeamJoined,
     modalState,
+    isInvitationOpen,
+    setIsInvitationOpen,
     isLoading: isLoading || isJoining || isUnjoining,
     handleOpenJoinModal,
     handleOpenUnjoinModal,

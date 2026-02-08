@@ -417,6 +417,11 @@
   font-size: 14px;
   max-width: 700px;
 }
+@media (min-width: 1280px) {
+  .past_matches_innerCard_fixtures .wrapper {
+    max-width: 1000px;
+  }
+}
 .past_matches_innerCard_fixtures .score_wrapper{
   display: flex;
 }
