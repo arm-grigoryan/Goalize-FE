@@ -1,6 +1,8 @@
 "use client";
 
+
 import styles from "./LeguesJoinedTeams.module.css";
+import { Loader } from "@/shared/Loader/Loader";
 import {
   useGetLeaguesInfoQuery,
   useGetLeaguesJoinedTeamsQuery,
@@ -16,11 +18,19 @@ export const LeguesJoinedTeams = () => {
   // debug: joined teams data
   // debug: league info
 
+  if (!leagueInfo || !data) {
+    return (
+      <div className={styles.leagues_joined_teams} style={{ minHeight: "200px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.leagues_joined_teams}>
       <div className={styles.titleWrapper}>
-         Joined Teams
-        <div className={styles.titleCount}>{'(' + data?.length  + '/' + leagueInfo?.maxTeamsCount + ')'}</div>
+        Joined Teams
+        <div className={styles.titleCount}>{'(' + data?.length + '/' + leagueInfo?.maxTeamsCount + ')'}</div>
       </div>
       <LeaguesJoinedTeamsProgressBar
         maxTeamsCount={leagueInfo?.maxTeamsCount || 0}

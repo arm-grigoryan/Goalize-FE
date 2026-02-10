@@ -114,7 +114,7 @@ export const useDrowStandings = () => {
   const [finalMatch, setFinalMatch] = useState<Match[]>([]);
   const { leagueId } = useParams();
   const leagueIdNum = Number(leagueId);
-  const { data: drawData } = useGetLeaguesDrawQuery(leagueIdNum, {
+  const { data: drawData, isLoading } = useGetLeaguesDrawQuery(leagueIdNum, {
     skip: !leagueId,
   });
 
@@ -154,5 +154,5 @@ export const useDrowStandings = () => {
     }
   }, [drawData]);
 
-  return { drawData, leftBlock, rightBlock, finalMatch };
+  return { drawData, leftBlock, rightBlock, finalMatch, isLoading };
 };

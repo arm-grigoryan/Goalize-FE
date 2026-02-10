@@ -5,12 +5,14 @@
     inset -40px 0 80px -40px rgba(255, 143, 163, 0.15);
   position: relative;
 }
+
 .leagues_header_inner {
   display: flex;
   justify-content: space-between;
   padding: 30px 40px;
   align-items: center;
 }
+
 .badge {
   position: absolute;
   top: -2px;
@@ -22,15 +24,14 @@
   font-weight: 600;
   font-size: 18px;
   white-space: nowrap;
-  clip-path: polygon(
-    0% 0%,
-    100% 0%,
-    88% 100%,
-    12% 100%
-  );
+  clip-path: polygon(0% 0%,
+      100% 0%,
+      88% 100%,
+      12% 100%);
   border-bottom-left-radius: 60px;
   border-bottom-right-radius: 60px;
 }
+
 .league_name_container {
   display: flex;
   gap: 40px;
@@ -44,12 +45,14 @@
   line-height: 24px;
   color: #ffffff;
 }
+
 .league_name_and_button {
   display: flex;
   flex-direction: column;
   gap: 20px;
   align-items: flex-start;
 }
+
 .joinedButton {
   display: flex;
   width: fit-content;
@@ -61,108 +64,120 @@
   background: rgba(21, 25, 30, 0.40);
   backdrop-filter: blur(10px);
   color: white;
+  cursor: pointer;
 }
+
 .joinedButtonWrapper {
   display: flex;
   flex-direction: row;
 }
+
 .joinedButtonIcon {
   margin-right: 10px;
 }
+
 .joinedButtonName {
   color: #FFF;
   font-size: 14px;
   font-weight: 700;
 }
-.stageButton{
-    display: flex;
-    width: fit-content;
-    padding: 10px 15px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    background: rgba(21, 25, 30, 0.40);
-    backdrop-filter: blur(10px);
-    color: white;
+
+.stageButton {
+  display: flex;
+  width: fit-content;
+  padding: 10px 15px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(21, 25, 30, 0.40);
+  backdrop-filter: blur(10px);
+  color: white;
 }
-.stageButtonWrapper{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+
+.stageButtonWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
-.stageButtonName{
+
+.stageButtonName {
   color: #A5A5A5;
   font-size: 14px;
   font-weight: 400;
 }
+
 .stage {
   color: #FFF;
   font-size: 14px;
   font-weight: 700;
 }
+
 .registration_closed_container {
   text-align: right;
-
 }
+
 .registration_closed_text {
   color: #ffffff;
-  position: relative;
-  top: 92px;
 }
+
 .registration_closed_text span {
   color: #f53a53;
 }
-.fee_container{
+
+.fee_container {
   display: flex;
   align-items: center;
   color: #ffffff;
   gap: 40px;
   font-size: 16px;
 }
-.total_value{
+
+.total_value {
   font-size: 20px;
   font-weight: 600;
 }
-.per_value_container{
+
+.per_value_container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 18px;
   padding-left: 40px;
   border-left: 1px solid rgba(255, 255, 255, 0.1);
-} 
-.per_value{
+}
+
+.per_value {
   font-size: 40px;
   font-weight: 500;
 }
-.prizeContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+
+.placePrize_container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  font-weight: 400;
 }
-.placePrize_container{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 10px;
-    font-weight: 400;
-}
-.placePrize{
+
+.placePrize {
   display: flex;
   flex-direction: row;
   white-space: nowrap;
 }
-.placePrize_text{
+
+.placePrize_text {
   font-size: 14px;
   color: #a5a5a5;
 }
-.valu_text{
+
+.valu_text {
   font-size: 14px;
   color: #a5a5a5;
 }
+
 .links {
   display: flex;
   gap: 30px;
@@ -172,9 +187,6 @@
   padding: 10px 50px 0;
 }
 
-.links::-webkit-scrollbar {
-  display: none;
-}
 .link {
   text-decoration: none;
   color: #a5a5a5;
@@ -205,17 +217,15 @@
   justify-content: space-around;
   width: 100%;
 }
+
 .registration_closed_text_mobile {
-  position: relative;
+  position: absolute;
   right: 0;
   max-width: 140px;
   color: #ffffff;
   text-align: right;
 }
-.buttonTextWrapper button {
-  min-width: 120px;
-  max-width: 140px;
-}
+
 .registration_closed_text_mobile span {
   color: #f53a53;
 }
@@ -227,92 +237,98 @@
   align-items: center;
   justify-content: center;
 }
-.joinWrapper{
-  display: flex;
-  justify-content: center;
-}
+
 
 .buttonTextWrapper {
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   height: 60px;
   position: relative;
   align-items: center;
-  gap: 10px;
   margin-top: 40px;
 }
+
 .fee_Title {
   font-size: 26px;
   font-weight: 600;
   margin-bottom: 10px;
 }
+
 .total_value_mobile {
   display: flex;
   align-items: center;
   gap: 20px;
   flex-direction: column;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-bottom: 20px;
 }
+
 .per_value_container_mobile {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
   gap: 6px;
 }
+
 .winner_prize_container {
   display: flex;
   gap: 20px;
 }
-@media (max-width: 875px) {
-  .winner_prize_container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-}
+
 @media (max-width: 768px) {
   .badge {
     left: 50%;
   }
+
   .leagues_header {
     overflow: hidden;
   }
+
   .link {
     white-space: nowrap;
   }
+
   .leagues_header_inner {
     flex-direction: column;
     align-items: center;
     gap: 20px;
   }
+
   .league_name_container_mobile {
     margin-top: 40px;
   }
+
   .league_name_and_button {
     align-items: center;
     text-align: center;
   }
+
   .registration_closed_container {
     text-align: center;
   }
+
   .links {
     padding: 10px 20px 0;
     overflow-x: auto;
+    width: 100%;
     gap: 40px;
     justify-content: flex-start;
   }
-  .registration_closed_container_mobile{
-      display: flex;
-      flex-direction: column;
-      font-size: 12px;
+
+  .registration_closed_container_mobile {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
   }
+
   .fee_container {
     display: flex;
     flex-direction: column;
     gap: 2px;
   }
+
   .total_value {
     display: flex;
     flex-direction: row;
@@ -321,14 +337,16 @@
     align-items: center;
     text-align: center;
   }
+
   .placePrize_container {
     display: flex;
     flex-direction: row;
     gap: 10px;
     align-items: center;
-    justify-content:center;
+    justify-content: center;
     font-size: 14px;
   }
+
   .per_value_container {
     display: flex;
     flex-direction: row;
@@ -336,10 +354,25 @@
     justify-content: center;
     align-items: center;
   }
+
   .per_value {
     font-size: 28px;
   }
+
   .valu_text {
     font-size: 14px;
   }
+}
+
+.loading_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }

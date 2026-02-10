@@ -1,4 +1,5 @@
 import LeaguesHeader from "@/components/LeaguesHeader";
+import { LeaguePageWrapper } from "@/components/LeaguePageWrapper/LeaguePageWrapper";
 
 export default function LeaguesLayout({
   children,
@@ -6,12 +7,12 @@ export default function LeaguesLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <LeaguePageWrapper>
       <div>
         <LeaguesHeader />
       </div>
 
       <div>{children}</div>
-    </div>
+    </LeaguePageWrapper>
   );
 }
