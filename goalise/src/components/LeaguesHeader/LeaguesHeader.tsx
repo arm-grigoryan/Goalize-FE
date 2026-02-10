@@ -10,7 +10,7 @@ import ChampionCard from "../ChampionCard";
 import joinedIcon from "../../assets/pngs/joinedIcon.svg";
 import { useLeagueHeader } from "./useLeagueHeader";
 import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
-
+import { Loader } from "@/shared/Loader/Loader";
 export const LeaguesHeader = () => {
   const {
     leagueData,
@@ -42,77 +42,77 @@ export const LeaguesHeader = () => {
 
   const winnerLogo =
     leagueData?.winner?.logoUrl &&
-    typeof leagueData.winner.logoUrl === "string" &&
-    leagueData.winner.logoUrl.startsWith("http")
+      typeof leagueData.winner.logoUrl === "string" &&
+      leagueData.winner.logoUrl.startsWith("http")
       ? leagueData.winner.logoUrl
       : undefined;
 
   const renderPrizePool = () => (
     <div className={isMobile ? styles.fee_container : styles.fee_container}>
-      {(leagueData?.firstPlacePrize || leagueData?.secondPlacePrize || leagueData?.semiFinalistPrize )&& 
-      <div
-        className={isMobile ? styles.total_value_mobile : styles.total_value}
-      >
-        {!isMobile && <div className={styles.fee_Title}>Prize Pool</div>}
-        {isMobile && <div className={styles.fee_Title}>Prize Pool</div>}
-
-        <div className={styles.placePrize_container}>
-        {leagueData?.firstPlacePrize && (
-            <div className={styles.prizeContainer}>
-              <div className={styles.placePrize_text}>1st place</div>
-              <div className={styles.placePrize}>
-                ֏ {formatPrize(leagueData.firstPlacePrize)}
-              </div>
-            </div>
-        )}
-        {leagueData?.secondPlacePrize && (
-         <div className={styles.prizeContainer}>  
-            <div className={styles.placePrize_text}>2nd place</div>
-            <div className={styles.placePrize}>
-                ֏ {formatPrize(leagueData.secondPlacePrize)}
-              </div>
-          </div>
-        )}
-       
-        {leagueData?.semiFinalistPrize && (
-          <div className={styles.prizeContainer}>
-            <div className={styles.placePrize_text}>Semi-finalist</div>
-            <div className={styles.placePrize}>
-              ֏ {formatPrize(leagueData.semiFinalistPrize)}
-            </div>
-          </div>
-        )} 
-        </div>
-      </div>
-      }
-      {!(leagueData?.winner?.name ) ||
-      (leagueData?.paymentPerGame) && (
+      {(leagueData?.firstPlacePrize || leagueData?.secondPlacePrize || leagueData?.semiFinalistPrize) &&
         <div
-          className={
-            isMobile
-              ? styles.per_value_container_mobile
-              : styles.per_value_container
-          }
+          className={isMobile ? styles.total_value_mobile : styles.total_value}
         >
-          <div className={styles.per_value}>
-            ֏ {formatPrize(leagueData.paymentPerGame)}
+          {!isMobile && <div className={styles.fee_Title}>Prize Pool</div>}
+          {isMobile && <div className={styles.fee_Title}>Prize Pool</div>}
+
+          <div className={styles.placePrize_container}>
+            {leagueData?.firstPlacePrize && (
+              <div className={styles.prizeContainer}>
+                <div className={styles.placePrize_text}>1st place</div>
+                <div className={styles.placePrize}>
+                  ֏ {formatPrize(leagueData.firstPlacePrize)}
+                </div>
+              </div>
+            )}
+            {leagueData?.secondPlacePrize && (
+              <div className={styles.prizeContainer}>
+                <div className={styles.placePrize_text}>2nd place</div>
+                <div className={styles.placePrize}>
+                  ֏ {formatPrize(leagueData.secondPlacePrize)}
+                </div>
+              </div>
+            )}
+
+            {leagueData?.semiFinalistPrize && (
+              <div className={styles.prizeContainer}>
+                <div className={styles.placePrize_text}>Semi-finalist</div>
+                <div className={styles.placePrize}>
+                  ֏ {formatPrize(leagueData.semiFinalistPrize)}
+                </div>
+              </div>
+            )}
           </div>
-          <div className={styles.valu_text}>/per game /per team</div>
-          {isRegistrationClosed && (
-            <div className={styles.registration_closed_reason}>
-              You can no longer register <br />
-              {registrationClosedReason}
-            </div>
-          )}
         </div>
-      )}
-    </div>
+      }
+      {/* Show Payment per game if league is NOT Finished */}
+      {
+        leagueData?.state !== "Finished" &&
+        leagueData?.paymentPerGame && (
+          <div
+            className={
+              isMobile
+                ? styles.per_value_container_mobile
+                : styles.per_value_container
+            }
+          >
+            <div className={styles.per_value}>
+              ֏ {formatPrize(leagueData.paymentPerGame)}
+            </div>
+            <div className={styles.valu_text}>/per game /per team</div>
+            {isRegistrationClosed && (
+              <div className={styles.registration_closed_reason}>
+                You can no longer register <br />
+                {registrationClosedReason}
+              </div>
+            )}
+          </div>
+        )
+      }
+    </div >
   );
 
   const renderJoinButton = () => {
-    if (leagueData?.state === "Registration" && isRegistrationClosed)
-      return null;
-
     if (isTeamJoined) {
       return (
         <div
@@ -143,7 +143,7 @@ export const LeaguesHeader = () => {
       );
     }
 
-    if (leagueData?.state === "Registration") {
+    if (leagueData?.state === "Registration" && !isRegistrationClosed) {
       return (
         <Button
           content="Join League"
@@ -159,11 +159,9 @@ export const LeaguesHeader = () => {
   return (
     <div className={styles.leagues_header}>
       {/* Registration Badge logic */}
-      {leagueData?.state === "Registration" && !isRegistrationClosed && (
-        <div className={styles.badge}>Join League</div>
-      )}
+      {/* "Join League" label is intentionally hidden for Registration Open state per requirements */}
       {isRegistrationClosed && (
-        <div className={styles.registration_closed_badge}>
+        <div className={styles.badge}>
           Registration Closed
         </div>
       )}
@@ -176,12 +174,12 @@ export const LeaguesHeader = () => {
               <Image src={championsLeagueImg} alt="champions league" />
               <div className={styles.league_name_and_button}>
                 <div className={styles.league_name}>{leagueData?.name}</div>
-                  <div className={styles.stageButton}>
-                    <div className={styles.stageButtonWrapper}>
-                      <div className={styles.stageButtonName}> State: </div>
-                      <div className={styles.stage}>{leagueData?.state}</div>
-                    </div>
+                <div className={styles.stageButton}>
+                  <div className={styles.stageButtonWrapper}>
+                    <div className={styles.stageButtonName}> State: </div>
+                    <div className={styles.stage}>{leagueData?.state}</div>
                   </div>
+                </div>
               </div>
             </div>
 
@@ -264,9 +262,8 @@ export const LeaguesHeader = () => {
         <div className={styles.links}>
           <Link
             href={`${base}`}
-            className={`${styles.link} ${
-              isActive(`${base}`) ? styles.selected : ""
-            }`}
+            className={`${styles.link} ${isActive(`${base}`) ? styles.selected : ""
+              }`}
           >
             Joined Teams
           </Link>
@@ -275,41 +272,36 @@ export const LeaguesHeader = () => {
         <div className={styles.links}>
           <Link
             href={base}
-            className={`${styles.link} ${
-              isActive(base) ? styles.selected : ""
-            }`}
+            className={`${styles.link} ${isActive(base) ? styles.selected : ""
+              }`}
           >
             Groups
           </Link>
           <Link
             href={`${base}/drawStandings`}
-            className={`${styles.link} ${
-              isActive(`${base}/drawStandings`) ? styles.selected : ""
-            }`}
+            className={`${styles.link} ${isActive(`${base}/drawStandings`) ? styles.selected : ""
+              }`}
           >
             Draw Standings
           </Link>
           <Link
             href={`${base}/results`}
-            className={`${styles.link} ${
-              isActive(`${base}/results`) ? styles.selected : ""
-            }`}
+            className={`${styles.link} ${isActive(`${base}/results`) ? styles.selected : ""
+              }`}
           >
             Results
           </Link>
           <Link
             href={`${base}/fixtures`}
-            className={`${styles.link} ${
-              isActive(`${base}/fixtures`) ? styles.selected : ""
-            }`}
+            className={`${styles.link} ${isActive(`${base}/fixtures`) ? styles.selected : ""
+              }`}
           >
             Fixtures
           </Link>
           <Link
             href={`${base}/stats`}
-            className={`${styles.link} ${
-              isActive(`${base}/stats`) ? styles.selected : ""
-            }`}
+            className={`${styles.link} ${isActive(`${base}/stats`) ? styles.selected : ""
+              }`}
           >
             Stats
           </Link>
@@ -319,26 +311,25 @@ export const LeaguesHeader = () => {
       {/* Modals and Loading */}
       {isLoading && (
         <div className={styles.loading_overlay}>
-          {/* Using a simple spinner or loading text, assuming no global loader component available immediately */}
-          <div style={{ color: "white" }}>Loading...</div>
+          <Loader />
         </div>
       )}
 
       {modalState.open &&
-      modalState.type !== "error" &&
-      modalState.type !== "success" ? (
-        <PlayerInvitationCard 
-           description={modalState.description}
-           title={modalState.title}
-           onCancelButtonClick={handleCloseModal}
-           onConfirmButtonClick={handleConfirmAction}
-           confirmButtonText="Confirm"
-           cancelButtonText="Cancel"
+        modalState.type !== "error" &&
+        modalState.type !== "success" ? (
+        <PlayerInvitationCard
+          description={modalState.description}
+          title={modalState.title}
+          onCancelButtonClick={handleCloseModal}
+          onConfirmButtonClick={handleConfirmAction}
+          confirmButtonText="Confirm"
+          cancelButtonText="Cancel"
         />
       ) : null}
 
       {modalState.open &&
-      (modalState.type === "error" || modalState.type === "success") ? (
+        (modalState.type === "error" || modalState.type === "success") ? (
         <PlayerInvitationCard
           onCancelButtonClick={handleCloseModal}
           description={modalState.description}
