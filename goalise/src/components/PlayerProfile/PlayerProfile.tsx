@@ -11,13 +11,13 @@ import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { usePlayerProfile } from "./usePlayerProfile";
 import { useAuth } from "@/shared/auth/AuthContext";
-import {refreshTokens} from "@/shared/auth/oidcService"
+import { refreshTokens } from "@/shared/auth/oidcService"
 
 export const PlayerProfile = () => {
   const [showInvitation, setShowInvitation] = useState(true);
   const { playerId } = useParams();
   const { signIn, tokens } = useAuth();
-  
+
 
   const t = useTranslations("common.playerProfile.playerBasicInfo");
   const {
@@ -180,96 +180,96 @@ export const PlayerProfile = () => {
         />
       )}
       {showInvitationErrorModal &&
-      <PlayerInvitationCard
-        onCancelButtonClick={() => closeInvitationErrorModal()}
-        title="Cannot Send Invitation"
-        description={invitationError || "An error occurred."}
-        confirmButtonText="OK"
-      />}
+        <PlayerInvitationCard
+          onCancelButtonClick={() => closeInvitationErrorModal()}
+          title="Cannot Send Invitation"
+          description={invitationError || "An error occurred."}
+          confirmButtonText="OK"
+        />}
       {showRemoveMemberErrorModal &&
-      <PlayerInvitationCard
-        onCancelButtonClick={() => closeRemoveMemberErrorModal()}
-        title="Cannot Remove Player"
-        description={removeMemberError || "An error occurred."}
-        confirmButtonText="OK"
-      />}
+        <PlayerInvitationCard
+          onCancelButtonClick={() => closeRemoveMemberErrorModal()}
+          title="Cannot Remove Player"
+          description={removeMemberError || "An error occurred."}
+          confirmButtonText="OK"
+        />}
       {showMakeCaptainErrorModal &&
-      <PlayerInvitationCard
-        onCancelButtonClick={() => closeMakeCaptainErrorModal()}
-        title="Cannot Make Captain"
-        description={makeCaptainError || "An error occurred."}
-        confirmButtonText="OK"
-      />}
+        <PlayerInvitationCard
+          onCancelButtonClick={() => closeMakeCaptainErrorModal()}
+          title="Cannot Make Captain"
+          description={makeCaptainError || "An error occurred."}
+          confirmButtonText="OK"
+        />}
       {showQuitTeamErrorModal &&
-      <PlayerInvitationCard
-        onCancelButtonClick={() => closeQuitTeamErrorModal()}
-        title="Cannot Quit Team"
-        description={quitTeamError || "An error occurred."}
-        confirmButtonText="OK"
-      />}
+        <PlayerInvitationCard
+          onCancelButtonClick={() => closeQuitTeamErrorModal()}
+          title="Cannot Quit Team"
+          description={quitTeamError || "An error occurred."}
+          confirmButtonText="OK"
+        />}
       {showNotCaptainModal &&
-      <PlayerInvitationCard
-        onCancelButtonClick={() => setShowNotCaptainModal(false)}
-        title="Action Not Allowed"
-        description="You must be a captain to send invitations."
-        confirmButtonText="OK"
-      />
-      }     
+        <PlayerInvitationCard
+          onCancelButtonClick={() => setShowNotCaptainModal(false)}
+          title="Action Not Allowed"
+          description="You must be a captain to send invitations."
+          confirmButtonText="OK"
+        />
+      }
       {showInvitationSuccessModal &&
-      <PlayerInvitationCard
-        onCancelButtonClick={() => closeInvitationSuccessModal()}
-        title="Invitation Sent Successfully"
-        description="The player has been invited to your team."
-        confirmButtonText="OK"
-      />}
+        <PlayerInvitationCard
+          onCancelButtonClick={() => closeInvitationSuccessModal()}
+          title="Invitation Sent Successfully"
+          description="The player has been invited to your team."
+          confirmButtonText="OK"
+        />}
       {showMakeCaptainConfirmModal &&
-      <PlayerInvitationCard
-        onCancelButtonClick={() => setShowMakeCaptainConfirmModal(false)}
-        title="Make Team Captain"
-        description={`Are you sure you want to make ${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName} the team captain? You will lose your captain privileges.`}
-        confirmButtonText="Confirm"
-        onConfirmButtonClick={handleConfirmMakeCaptain}
-        cancelButtonText="Cancel"
-      />}
+        <PlayerInvitationCard
+          onCancelButtonClick={() => setShowMakeCaptainConfirmModal(false)}
+          title="Make Team Captain"
+          description={`Are you sure you want to make ${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName} the team captain? You will lose your captain privileges.`}
+          confirmButtonText="Confirm"
+          onConfirmButtonClick={handleConfirmMakeCaptain}
+          cancelButtonText="Cancel"
+        />}
       {showMakeCaptainSuccessModal &&
-      <PlayerInvitationCard
-        onCancelButtonClick={() => closeMakeCaptainSuccessModal()}
-        title="Captain Changed Successfully"
-        description="The team captain has been updated."
-        confirmButtonText="OK"
-      />}
-      {showRemoveMemberConfirmModal && 
-      <PlayerInvitationCard
-        onCancelButtonClick={() => setShowRemoveMemberConfirmModal(false)}
-        title="Remove Team Member"
-        description={`Are you sure you want to remove ${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName} from the team?`}
-        confirmButtonText="Confirm"
-        onConfirmButtonClick={handleConfirmRemoveMember}
-        cancelButtonText="Cancel"
-      />}
+        <PlayerInvitationCard
+          onCancelButtonClick={() => closeMakeCaptainSuccessModal()}
+          title="Captain Changed Successfully"
+          description="The team captain has been updated."
+          confirmButtonText="OK"
+        />}
+      {showRemoveMemberConfirmModal &&
+        <PlayerInvitationCard
+          onCancelButtonClick={() => setShowRemoveMemberConfirmModal(false)}
+          title="Remove Team Member"
+          description={`Are you sure you want to remove ${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName} from the team?`}
+          confirmButtonText="Confirm"
+          onConfirmButtonClick={handleConfirmRemoveMember}
+          cancelButtonText="Cancel"
+        />}
       {showRemoveMemberSuccessModal &&
-      <PlayerInvitationCard
-        onCancelButtonClick={() => closeRemoveMemberSuccessModal()}
-        title="Member Removed Successfully"
-        description="The team member has been removed."
-        confirmButtonText="OK"
-      />}
+        <PlayerInvitationCard
+          onCancelButtonClick={() => closeRemoveMemberSuccessModal()}
+          title="Member Removed Successfully"
+          description="The team member has been removed."
+          confirmButtonText="OK"
+        />}
       {showQuitTeamConfirmModal &&
-      <PlayerInvitationCard
-        onCancelButtonClick={() => setShowQuitTeamConfirmModal(false)}
-        title="Quit Team"
-        description="Are you sure you want to quit the team?"
-        confirmButtonText="Confirm"
-        onConfirmButtonClick={handleConfirmQuitTeam}
-        cancelButtonText="Cancel"
-      />}
+        <PlayerInvitationCard
+          onCancelButtonClick={() => setShowQuitTeamConfirmModal(false)}
+          title="Quit Team"
+          description="Are you sure you want to quit the team?"
+          confirmButtonText="Confirm"
+          onConfirmButtonClick={handleConfirmQuitTeam}
+          cancelButtonText="Cancel"
+        />}
       {showQuitTeamSuccessModal &&
-      <PlayerInvitationCard
-        onCancelButtonClick={() => closeQuitTeamSuccessModal()}
-        title="Successfully Quit Team"
-        description="You have left the team."
-        confirmButtonText="OK"
-      />}
+        <PlayerInvitationCard
+          onCancelButtonClick={() => closeQuitTeamSuccessModal()}
+          title="Successfully Quit Team"
+          description="You have left the team."
+          confirmButtonText="OK"
+        />}
       {isSendingInvitation && (
         <div className={styles.loader_container}>
           <div className={styles.loader}></div>
@@ -293,4 +293,3 @@ export const PlayerProfile = () => {
     </div>
   );
 };
- 

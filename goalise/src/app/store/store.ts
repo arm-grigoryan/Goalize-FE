@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api, publicApi } from "./services/api";
+import errorReducer from "./slices/errorSlice";
 
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     [publicApi.reducerPath]: publicApi.reducer,
+    error: errorReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(api.middleware).concat(publicApi.middleware),

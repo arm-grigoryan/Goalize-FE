@@ -114,6 +114,7 @@
   "errors": {
     "networkError": "Something went wrong. Please try again later.",
     "backButtonText": "Back to home",
-    "notFound": "Oops! This page went out of bounds! ⚽"
-}
+    "notFound": "Oops! This page went out of bounds! ⚽",
+    "accessDenied": "Access Denied. You don't have permission to view this content."
+  }
 }
