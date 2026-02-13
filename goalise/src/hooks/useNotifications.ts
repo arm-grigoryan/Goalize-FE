@@ -10,7 +10,6 @@ import {
 import {
   NotificationItemDto,
   LiveNotificationDto,
-  NotificationFlowType,
   NotificationPresentation,
 } from "@/types/api/notifications";
 import { useTranslations } from "next-intl";
@@ -226,7 +225,7 @@ const loadSignalR = async () => {
 const toNotificationItemDto = (live: LiveNotificationDto): NotificationItemDto => {
   const id =
     (globalThis.crypto?.randomUUID?.() ?? `live_${Date.now()}_${Math.random()}`);
-    
+
   return {
     id,
     templateKey: live.templateKey,
