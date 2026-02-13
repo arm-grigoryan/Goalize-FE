@@ -21,6 +21,7 @@ import { IDrowStandings } from "@/types/api/drowStandings";
 import { ITopPlayers } from "@/types/api/topPlayers";
 import { startLoginRedirect } from "@/shared/auth/oidcService";
 import { setError } from "../slices/errorSlice";
+import { NotificationItemDto } from "@/types/api/notifications";
 
 // Prevent multiple simultaneous 401 redirects
 let is401HandlingInProgress = false;
@@ -282,6 +283,41 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    getInAppNotifications: builder.query<
+      NotificationItemDto[],
+      { skip: number; take: number }
+    >({
+      query: ({ skip, take }) => ({
+        url: "/api/Notifications/in-app",
+        params: { skip, take },
+      }),
+    }),
+    markAllNotificationsSeen: builder.mutation<void, void>({
+      query: () => ({
+        url: "/api/Notifications/mark-all-seen",
+        method: "POST",
+      }),
+    }),
+    respondToTeamInvitation: builder.mutation<
+      void,
+      { teamId: number; invitationId: number; status: "Accepted" | "Rejected" }
+    >({
+      query: ({ teamId, invitationId, status }) => ({
+        url: `/api/Teams/${teamId}/invitations/${invitationId}`,
+        method: "PATCH",
+        body: { status },
+      }),
+    }),
+    respondToTeamApplication: builder.mutation<
+      void,
+      { teamId: number; applicationId: number; status: "Accepted" | "Rejected" }
+    >({
+      query: ({ teamId, applicationId, status }) => ({
+        url: `/api/Teams/${teamId}/applications/${applicationId}`,
+        method: "PATCH",
+        body: { status },
+      }),
+    }),
   }),
 });
 
@@ -313,4 +349,8 @@ export const {
   useMakeTeamCaptainMutation,
   useJoinLeagueMutation,
   useUnjoinLeagueMutation,
+  useLazyGetInAppNotificationsQuery,
+  useMarkAllNotificationsSeenMutation,
+  useRespondToTeamInvitationMutation,
+  useRespondToTeamApplicationMutation,
 } = api;

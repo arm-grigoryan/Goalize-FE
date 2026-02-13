@@ -19,12 +19,12 @@ import notificationIcon from "../../../assets/pngs/notificationIcon.svg";
 import SearchCard from "@/shared/SearchCard";
 import NotificationCard from "@/shared/NotificationCard";
 import PortalDropdown from "@/shared/PortalDropdown";
-import { INotificationItemProps } from "@/shared/NotificationItem/NotificationItem.types";
-import teamLogo from "../../../assets/pngs/teamLogo.png";
 import ProfileCard from "@/shared/ProfileCard";
 import mobileLogo from "/public/pngs/logo/mobileLogo.svg";
 import { ErrorBanner } from "@/components/ErrorBanner/ErrorBanner";
 import arrowDown from "../../../assets/pngs/arrowDown.svg";
+import { useNotifications } from "@/hooks/useNotifications";
+import { NotificationPopUp } from "@/entities/NotificationPopUp/NotificationPopUp";
 
 export const Header = () => {
   const t = useTranslations();
@@ -45,7 +45,19 @@ export const Header = () => {
   const isMobile = width <= MEDIA_TABLET_SMALL;
 
   const { data: leaguesData } = useGetLeaguesQuery();
-  const { isAuthenticated, user, signIn, signOut, loading } = useAuth();
+  const { isAuthenticated, user, signIn, signOut, loading, tokens } = useAuth();
+  const {
+    notifications,
+    unseenCount,
+    hasMore,
+    isFetching,
+    toastNotification,
+    loadMore,
+    onBellOpen,
+    closeToast,
+    toPresentation,
+    decideFlow,
+  } = useNotifications(tokens?.accessToken);
 
   const [, setShowSearchInput] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -55,26 +67,6 @@ export const Header = () => {
 
   const userLabel = user?.name || user?.email || "Guest";
 
-  const obj = [
-    {
-      icon: teamLogo,
-      title: "New comment on your post",
-      description: "Someone has commented on your recent post.",
-    },
-    {
-      title: "New follower",
-      description: "You have a new follower.",
-    },
-    {
-      title: "Update available",
-      description: "A new update is available for your app.",
-      acceptButtonText: "Accept",
-      denyButtonText: "Deny",
-      onAcceptButtonClick: () => { },
-      onDenyButtonClick: () => { },
-    },
-  ] as INotificationItemProps[];
-  const notificationsCount = obj.length;
 
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
@@ -126,6 +118,14 @@ export const Header = () => {
   };
   return (
     <>
+      {toastNotification && (() => {
+        const presentation = toPresentation(toastNotification);
+        return (
+          <div className={styles.toastWrapper} onClick={() => { setShowNotifications(true); closeToast(); void onBellOpen(); }}>
+            <NotificationPopUp {...presentation} />
+          </div>
+        );
+      })()}
       {isMobile ? (
         <>
           {!mobileMenuOpen && (
@@ -165,24 +165,49 @@ export const Header = () => {
                             if (!prev) {
                               setShowProfileCard(false);
                               setSearchOpen(false);
+                              void onBellOpen();
                             }
                             return !prev;
                           });
                         }}
                       >
                         <Image src={notificationIcon} alt="Notifications" />
-                        {notificationsCount > 0 && (
+                        {unseenCount > 0 && (
                           <span className={styles.notificationBadge}>
-                            {notificationsCount > 99
+                            {unseenCount > 99
                               ? "99+"
-                              : notificationsCount}
+                              : unseenCount}
                           </span>
                         )}
                       </div>
 
                       {showNotifications && (
                         <div className={styles.notification_dropdown_mobile}>
-                          <NotificationCard object={obj} />
+                          <NotificationCard
+                            object={notifications.map((item) => {
+                              const presentation = toPresentation(item);
+                              const canRespond =
+                                Boolean(item.notificationRelatedFlowType) &&
+                                Boolean(item.notificationRelatedFlowId) &&
+                                !item.flowCompleted;
+
+                              return {
+                                id: item.id,
+                                ...presentation,
+                                acceptButtonText: canRespond ? t("home.notifications.accept") : undefined,
+                                denyButtonText: canRespond ? t("home.notifications.deny") : undefined,
+                                onAcceptButtonClick: canRespond
+                                  ? () => void decideFlow(item, "Accepted")
+                                  : undefined,
+                                onDenyButtonClick: canRespond
+                                  ? () => void decideFlow(item, "Rejected")
+                                  : undefined,
+                              };
+                            })}
+                            loading={isFetching}
+                            hasMore={hasMore}
+                            onLoadMore={loadMore}
+                          />
                         </div>
                       )}
                     </>
@@ -422,22 +447,49 @@ export const Header = () => {
                     onClick={(e) => {
                       e.stopPropagation();
                       setShowNotifications((prev) => {
-                        if (!prev) setShowProfileCard(false);
+                        if (!prev) {
+                          setShowProfileCard(false);
+                          void onBellOpen();
+                        }
                         return !prev;
                       });
                     }}
                   >
                     <Image src={notificationIcon} alt="Notifications" />
-                    {notificationsCount > 0 && (
+                    {unseenCount > 0 && (
                       <span className={styles.notificationBadge}>
-                        {notificationsCount > 99 ? "99+" : notificationsCount}
+                        {unseenCount > 99 ? "99+" : unseenCount}
                       </span>
                     )}
                   </div>
 
                   {showNotifications && (
                     <div className={styles.notification_dropdown}>
-                      <NotificationCard object={obj} />
+                      <NotificationCard
+                            object={notifications.map((item) => {
+                              const presentation = toPresentation(item);
+                              const canRespond =
+                                Boolean(item.notificationRelatedFlowType) &&
+                                Boolean(item.notificationRelatedFlowId) &&
+                                !item.flowCompleted;
+
+                              return {
+                                id: item.id,
+                                ...presentation,
+                                acceptButtonText: canRespond ? t("home.notifications.accept") : undefined,
+                                denyButtonText: canRespond ? t("home.notifications.deny") : undefined,
+                                onAcceptButtonClick: canRespond
+                                  ? () => void decideFlow(item, "Accepted")
+                                  : undefined,
+                                onDenyButtonClick: canRespond
+                                  ? () => void decideFlow(item, "Rejected")
+                                  : undefined,
+                              };
+                            })}
+                            loading={isFetching}
+                            hasMore={hasMore}
+                            onLoadMore={loadMore}
+                          />
                     </div>
                   )}
                 </>

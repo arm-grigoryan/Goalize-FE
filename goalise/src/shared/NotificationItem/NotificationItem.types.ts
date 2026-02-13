@@ -1,11 +1,12 @@
 import { StaticImageData } from "next/image";
 
 export interface INotificationItemProps {
-    icon?: StaticImageData;
-    title?: string;
-    description?: string;
-    acceptButtonText?: string;
-    denyButtonText?: string;
-    onAcceptButtonClick?: () => void;
-    onDenyButtonClick?: () => void;
+  id?: string;
+  icon?: StaticImageData | string;
+  title?: string;
+  description?: string;
+  acceptButtonText?: string;
+  denyButtonText?: string;
+  onAcceptButtonClick?: () => void;
+  onDenyButtonClick?: () => void;
 }

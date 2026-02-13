@@ -34,7 +34,32 @@
       "title": "Transfer News"
     },
     "notifications": {
-      "title": "Notification"
+      "title": "Notification",
+      "loading": "Loading notifications...",
+      "empty": "No notifications yet.",
+      "accept": "Accept",
+      "deny": "Deny",
+      "defaultTitle": "Notification",
+      "defaultDescription": "You have a new notification.",
+      "templates": {
+        "playerInvited": "{firstName} invites you to join {teamName}. Contact number: {phoneNumber}",
+        "playerApplied": "{firstName} applied to join to your team. Contact number: {phoneNumber}",
+        "playerQuit": "{firstName} quited from your team.",
+        "playerRemoved": "You were removed from team {teamName} by its captain.",
+        "playerPromoted": "You were promoted to team captain of {teamName}",
+        "shirtNumberChangedTitle": "Changed Shirt Number",
+        "playerShirtNumberChanged": "Your shirt number changed from {oldNumber} to {newNumber}",
+        "teamCreationApproved": "Your team creation is approved. Good Luck.",
+        "teamCreationRejected": "Your team creation is rejected for the following reason: {rejectionReason}",
+        "profilePictureApprovedTitle": "Profile Picture Approved",
+        "profilePictureApproved": "Your profile picture is approved.",
+        "profilePictureRejectedTitle": "Profile Picture Rejected",
+        "profilePictureRejected": "Your profile picture is rejected for the following reason: {rejectionReason}.",
+        "playerRespondedToInvitation": "{firstName} {response} your invitation to join to your team.",
+        "captainRespondedToApplication": "{firstName} {response} your application to join to {teamName}.",
+        "eventCancelled": "{eventName} event is cancelled.",
+        "eventUpdated": "{eventName}'s details are updated."
+      }
     },
     "profileCard": {
       "profile": "Profile",
@@ -59,7 +84,7 @@
       "email": "Email: contact@goalise.com",
       "phone": "Phone: +1 (555) 123-4567"
     },
-    "rights": "© Copyright 2025.",
+    "rights": "\u00a9 Copyright 2025.",
     "followUs": "Follow us"
   },
   "playerProfile": {
@@ -114,7 +139,7 @@
   "errors": {
     "networkError": "Something went wrong. Please try again later.",
     "backButtonText": "Back to home",
-    "notFound": "Oops! This page went out of bounds! ⚽",
+    "notFound": "Oops! This page went out of bounds! \u26bd",
     "accessDenied": "Access Denied. You don't have permission to view this content."
   }
 }
