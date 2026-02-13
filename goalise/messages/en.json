@@ -84,7 +84,7 @@
       "email": "Email: contact@goalise.com",
       "phone": "Phone: +1 (555) 123-4567"
     },
-    "rights": "\u00a9 Copyright 2025.",
+    "rights": "© Copyright 2025.",
     "followUs": "Follow us"
   },
   "playerProfile": {
@@ -139,7 +139,7 @@
   "errors": {
     "networkError": "Something went wrong. Please try again later.",
     "backButtonText": "Back to home",
-    "notFound": "Oops! This page went out of bounds! \u26bd",
+    "notFound": "Oops! This page went out of bounds! ⚽",
     "accessDenied": "Access Denied. You don't have permission to view this content."
   }
 }
