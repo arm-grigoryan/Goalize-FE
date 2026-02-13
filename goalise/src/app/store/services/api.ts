@@ -288,13 +288,13 @@ export const api = createApi({
       { skip: number; take: number }
     >({
       query: ({ skip, take }) => ({
-        url: "/api/Notifications/in-app",
+        url: "/Notifications/in-app",
         params: { skip, take },
       }),
     }),
     markAllNotificationsSeen: builder.mutation<void, void>({
       query: () => ({
-        url: "/api/Notifications/mark-all-seen",
+        url: "/Notifications/mark-all-seen",
         method: "POST",
       }),
     }),
@@ -303,7 +303,7 @@ export const api = createApi({
       { teamId: number; invitationId: number; status: "Accepted" | "Rejected" }
     >({
       query: ({ teamId, invitationId, status }) => ({
-        url: `/api/Teams/${teamId}/invitations/${invitationId}`,
+        url: `/Teams/${teamId}/invitations/${invitationId}`,
         method: "PATCH",
         body: { status },
       }),
@@ -313,7 +313,7 @@ export const api = createApi({
       { teamId: number; applicationId: number; status: "Accepted" | "Rejected" }
     >({
       query: ({ teamId, applicationId, status }) => ({
-        url: `/api/Teams/${teamId}/applications/${applicationId}`,
+        url: `/Teams/${teamId}/applications/${applicationId}`,
         method: "PATCH",
         body: { status },
       }),

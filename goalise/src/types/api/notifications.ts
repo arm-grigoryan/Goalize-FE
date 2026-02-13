@@ -2,6 +2,14 @@ export type NotificationStatus = "Unseen" | "Seen";
 
 export type NotificationFlowType = "TeamInvitation" | "TeamApplication" | string;
 
+export interface LiveNotificationDto {
+  templateKey: string;
+  payload: unknown;
+  notificationRelatedFlowType?: NotificationFlowType | null;
+  notificationRelatedFlowId?: number | null;
+  sentAtUtc: string;
+}
+
 export interface NotificationItemDto {
   id: string;
   templateKey: string;

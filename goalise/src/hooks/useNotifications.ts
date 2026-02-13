@@ -9,6 +9,8 @@ import {
 } from "@/app/store/services/api";
 import {
   NotificationItemDto,
+  LiveNotificationDto,
+  NotificationFlowType,
   NotificationPresentation,
 } from "@/types/api/notifications";
 import { useTranslations } from "next-intl";
@@ -24,7 +26,7 @@ declare global {
 }
 
 interface SignalRHubConnection {
-  on: (event: string, callback: (payload: NotificationItemDto) => void) => void;
+  on: (event: string, callback: (payload: unknown) => void) => void;
   onreconnected: (callback: () => void) => void;
   start: () => Promise<void>;
   stop: () => Promise<void>;
@@ -221,6 +223,22 @@ const loadSignalR = async () => {
   return Boolean(window.signalR);
 };
 
+const toNotificationItemDto = (live: LiveNotificationDto): NotificationItemDto => {
+  const id =
+    (globalThis.crypto?.randomUUID?.() ?? `live_${Date.now()}_${Math.random()}`);
+    
+  return {
+    id,
+    templateKey: live.templateKey,
+    data: JSON.stringify(live.payload ?? {}),
+    status: "Unseen",
+    createdAtUtc: live.sentAtUtc,
+    notificationRelatedFlowType: live.notificationRelatedFlowType,
+    notificationRelatedFlowId: live.notificationRelatedFlowId,
+    flowCompleted: false,
+  };
+};
+
 export const useNotifications = (accessToken?: string) => {
   const [notifications, setNotifications] = useState<NotificationItemDto[]>([]);
   const [toastNotification, setToastNotification] =
@@ -282,17 +300,17 @@ export const useNotifications = (accessToken?: string) => {
   }, [hasLoadedOnce, loadNotifications, markAllSeen, markSeenOptimistically, unseenCount]);
 
   const addLiveNotification = useCallback((notif: NotificationItemDto) => {
-    setNotifications((prev) => mergeById([notif, ...prev]));
-    setToastNotification(notif);
+      setNotifications((prev) => mergeById([notif, ...prev]));
+      setToastNotification(notif);
 
-    if (toastTimeoutRef.current) {
-      window.clearTimeout(toastTimeoutRef.current);
-    }
+      if (toastTimeoutRef.current) {
+        window.clearTimeout(toastTimeoutRef.current);
+      }
 
-    toastTimeoutRef.current = window.setTimeout(() => {
-      setToastNotification(null);
-    }, 4000);
-  }, []);
+      toastTimeoutRef.current = window.setTimeout(() => {
+        setToastNotification(null);
+      }, 4000);
+    }, []);
 
   const reconnectFetch = useCallback(async () => {
     await loadNotifications({ skip: 0, reset: true });
@@ -320,14 +338,16 @@ export const useNotifications = (accessToken?: string) => {
       const hubUrl = normalizeHubUrl(process.env.NEXT_PUBLIC_API_URL);
       const connection = new signalR.HubConnectionBuilder()
         .withUrl(hubUrl, {
-          accessTokenFactory: () => accessToken,
-          transport: signalR.HttpTransportType.WebSockets,
+          accessTokenFactory: () => accessToken
         })
         .withAutomaticReconnect()
         .build();
 
-      connection.on("ReceiveNotification", (payload: NotificationItemDto) => {
-        addLiveNotification(payload);
+      connection.on("Notify", (payload) => {
+        console.log("🔥 LIVE NOTIF:", payload);
+
+        const mapped = toNotificationItemDto(payload as LiveNotificationDto);
+        addLiveNotification(mapped);
       });
 
       connection.onreconnected(() => {
