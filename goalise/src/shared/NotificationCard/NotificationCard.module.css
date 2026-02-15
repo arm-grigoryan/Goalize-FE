@@ -68,3 +68,9 @@
   overflow: hidden;
   margin: 0 36px;
 }
+.empty,
+.loading {
+  color: #A5A5A5;
+  font-size: 14px;
+  padding: 8px 0 18px;
+}
