@@ -271,6 +271,9 @@ export const api = createApi({
     getPlayerBasicInfo: builder.query<IPlayerProfile, number>({
       query: (playerId) => `/players/${playerId}/info`,
     }),
+    getTeamDraft: builder.query<unknown, number>({
+      query: (teamId) => `/Teams/${teamId}/draft`,
+    }),
     joinLeague: builder.mutation<void, { leagueId: number; teamId: number }>({
       query: ({ leagueId, teamId }) => ({
         url: `/Leagues/${leagueId}/teams/${teamId}`,
@@ -343,6 +346,7 @@ export const {
 export const {
   useGetUserInfoQuery,
   useGetPlayerBasicInfoQuery,
+  useGetTeamDraftQuery,
   useSendTeamInvitationMutation,
   useRemoveTeamMemberMutation,
   useQuitTeamMutation,
