@@ -30,6 +30,8 @@ export const ProfileCard: React.FC<IProfileCardProps> = ({
   let teamMenuRoute = "/teams";
   if (shouldShowCreateTeam) {
     teamMenuRoute = "/teams/create";
+  } else if (team) {
+    teamMenuRoute = `/teams/${team.id}`;
   } else if (draftTeamId) {
     teamMenuRoute = `/teams/draft/${draftTeamId}`;
   }
