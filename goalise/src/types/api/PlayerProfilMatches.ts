@@ -14,6 +14,7 @@ export interface IPlayerProfileMatches {
 export interface HomeTeam {
   id: number;
   name: string;
+  abbreviation?: string;
   logoUrl: string;
   captainId: number;
 }
@@ -21,6 +22,7 @@ export interface HomeTeam {
 export interface AwayTeam {
   id: number;
   name: string;
+  abbreviation?: string;
   logoUrl: string;
   captainId: number;
 }

@@ -45,8 +45,9 @@ export const ProfileComplitionsProgresbar = () => {
               </div>
               <div className={styles.percentageText}>{pointDistance}%</div>
               <div
-                className={`${styles.circle} ${safeValue >= pointDistance ? styles.active : ""
-                  }`}
+                className={`${styles.circle} ${
+                  safeValue >= pointDistance ? styles.active : ""
+                }`}
               />
               <span className={styles.stepLabel}>{step.name}</span>
             </div>

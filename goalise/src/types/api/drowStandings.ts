@@ -1,5 +1,3 @@
-import { AwayTeam, HomeTeam } from "./PlayerProfilMatches";
-
 export type IDrowStandings = root[];
 
 export interface root {
@@ -13,10 +11,18 @@ export interface Playoff {
   name: string;
 }
 
+export interface DrawTeam {
+  id: number;
+  name: string;
+  abbreviation?: string;
+  logoSrc: string;
+  captainId: number;
+}
+
 export interface Match {
   id: number;
-  homeTeam: HomeTeam;
-  awayTeam: AwayTeam;
+  homeTeam: DrawTeam;
+  awayTeam: DrawTeam;
   homeTeamScore: number;
   awayTeamScore: number;
   homeTeamPoints: number;

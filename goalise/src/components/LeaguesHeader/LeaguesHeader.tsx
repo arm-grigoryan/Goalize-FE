@@ -10,7 +10,8 @@ import ChampionCard from "../ChampionCard";
 import joinedIcon from "../../assets/pngs/joinedIcon.svg";
 import { useLeagueHeader } from "./useLeagueHeader";
 import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
-import { Loader } from "@/shared/Loader/Loader";
+import { NotificationPopUp } from "@/entities/NotificationPopUp/NotificationPopUp";
+
 export const LeaguesHeader = () => {
   const {
     leagueData,
@@ -20,6 +21,8 @@ export const LeaguesHeader = () => {
     isTeamJoined,
     modalState,
     isLoading,
+    serverError,
+    clearServerError,
     handleOpenJoinModal,
     handleOpenUnjoinModal,
     handleConfirmAction,
@@ -310,8 +313,8 @@ export const LeaguesHeader = () => {
 
       {/* Modals and Loading */}
       {isLoading && (
-        <div className={styles.loading_overlay}>
-          <Loader />
+        <div className={styles.loader_container}>
+          <div className={styles.loader}></div>
         </div>
       )}
 
@@ -337,6 +340,15 @@ export const LeaguesHeader = () => {
           cancelButtonText='Close'
         />
       ) : null}
+
+      {serverError && (
+        <div className={styles.toastWrapper} onClick={clearServerError}>
+          <NotificationPopUp
+            title="Server Error"
+            description={serverError}
+          />
+        </div>
+      )}
     </div>
   );
 };
