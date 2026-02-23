@@ -186,7 +186,7 @@ export const publicApi = createApi({
     getLeaguesTopPlayers: builder.query<ITopPlayers[], number>({
       query: (leagueId) => `/leagues/${leagueId}/top-players`,
     }),
-    getEventById: builder.query<any, number>({
+    getEventById: builder.query<unknown, number>({
       query: (eventId) => `/Events/${eventId}`,
     }),
     getMatchById: builder.query<IMatches, number>({
