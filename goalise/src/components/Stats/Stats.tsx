@@ -4,10 +4,19 @@ import StatsCard from "@/entities/StatsCard";
 import { IStatsCardInnerCardProps } from "@/entities/StatsCardInnerCard/StatsCardInnerCard.types";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import React from "react";
+import Image from "next/image";
 import styles from "./Stats.module.css";
 import { useParams } from "next/navigation";
 import { useGetLeaguesTopPlayersQuery } from "@/app/store/services/api";
 import { ITopPlayer } from "@/types/api/topPlayers";
+import nextMatchEmpty from "../../assets/pngs/nextMatchEmpty.svg";
+
+const renderEmptyState = () => (
+  <div className={styles.emptyWrapper}>
+    <Image src={nextMatchEmpty} alt="" className={styles.img} />
+    <p className={styles.emptyTxt}>No Stats Available Yet</p>
+  </div>
+);
 
 export const Stats: React.FC = () => {
   const { width } = useWindowSize();
@@ -28,17 +37,17 @@ export const Stats: React.FC = () => {
   }
 
   if (isError || !data || (Array.isArray(data) && data.length === 0)) {
-    return <div className={styles.error}>No stats found for this league.</div>;
+    return renderEmptyState();
   }
 
   const statsData = Array.isArray(data) ? data[0] : data;
 
   if (!statsData) {
-    return <div className={styles.error}>No stats found.</div>;
+    return renderEmptyState();
   }
 
   const mapToStatsCardProps = (
-    players: ITopPlayer[] = []
+    players: ITopPlayer[] = [],
   ): IStatsCardInnerCardProps[] =>
     players.map((player) => ({
       teamPlayer: {
@@ -48,7 +57,7 @@ export const Stats: React.FC = () => {
         shirtNumber: player.teamPlayer.shirtNumber,
       },
       team: {
-        name: "—",
+        name: player.team.name || "—",
         logoUrl: "",
         captainId: 0,
       },
@@ -64,11 +73,11 @@ export const Stats: React.FC = () => {
   ];
 
   const nonEmptySections = sections.filter(
-    (section) => section.data && section.data.length > 0
+    (section) => section.data && section.data.length > 0,
   );
 
   if (nonEmptySections.length === 0) {
-    return <div className={styles.error}>No stats available for this league.</div>;
+    return renderEmptyState();
   }
 
   return (

@@ -7,8 +7,8 @@ export type MatchWithCount = Match & { matchCount: number };
 
 const createEmptyMatch = (id: number): Match => ({
   id,
-  homeTeam: { id: 0, name: "TBD", logoUrl: "", captainId: 0 },
-  awayTeam: { id: 0, name: "TBD", logoUrl: "", captainId: 0 },
+  homeTeam: { id: 0, name: "TBD", logoSrc: "", captainId: 0 },
+  awayTeam: { id: 0, name: "TBD", logoSrc: "", captainId: 0 },
   homeTeamScore: 0,
   awayTeamScore: 0,
   homeTeamPoints: 0,

@@ -13,7 +13,6 @@ import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import tbdIcon from "../../assets/pngs/tbdIcon.svg";
 import { useResponsiveSpacing } from "./useResponsiveSpacing";
 
-// Mobile-specific data preprocessing: skip to 1/8 finals if bracket is larger
 const filterPlayoffsForMobile = (
   blocks: MatchWithCount[],
   isMobile: boolean,
@@ -22,12 +21,10 @@ const filterPlayoffsForMobile = (
 
   const firstPlayoffMatchCount = blocks[0]?.matchCount;
 
-  // If first playoff is already 1/8 or smaller, no filtering needed
   if (!firstPlayoffMatchCount || firstPlayoffMatchCount <= 8) {
     return blocks;
   }
 
-  // Skip larger rounds, start from 1/8 finals (matchCount === 8)
   return blocks.filter((match) => match.matchCount <= 8);
 };
 
@@ -37,7 +34,6 @@ export const DrowStandings = () => {
   const { leftBlock, rightBlock, finalMatch, isLoading } = useDrowStandings();
   const spacing = useResponsiveSpacing();
 
-  // Apply mobile preprocessing to filter out rounds larger than 1/8
   const mobileLeftBlock = filterPlayoffsForMobile(leftBlock, isMobile);
   const mobileRightBlock = filterPlayoffsForMobile(rightBlock, isMobile);
 
@@ -127,7 +123,7 @@ export const DrowStandings = () => {
               {displayData.homeTeam.name === "TBD" && (
                 <Image src={tbdIcon} alt="" className={styles.tbdIconMobile} />
               )}
-              {displayData.homeTeam.name.slice(0, 3).toUpperCase()}
+              {displayData.homeTeam.abbreviation}
               <div className={styles.scoreMobile}>
                 {displayData.homeTeam.name === "TBD"
                   ? ""
@@ -166,7 +162,7 @@ export const DrowStandings = () => {
                   className={styles.teamLogoSwappedMobile}
                 />
               )}
-              {displayData.awayTeam.name.slice(0, 3).toUpperCase()}
+              {displayData.awayTeam.abbreviation}
               <div className={styles.score2Mobile}>
                 {displayData.awayTeam.name === "TBD"
                   ? ""
@@ -217,7 +213,7 @@ export const DrowStandings = () => {
                 className={styles.teamLogo}
               />
             )}
-            {displayData.homeTeam.name.slice(0, 3).toUpperCase()}
+            {displayData.homeTeam.abbreviation}
             <div className={styles.score}>
               {displayData.homeTeam.name === "TBD"
                 ? ""
@@ -247,7 +243,7 @@ export const DrowStandings = () => {
                 : displayData.awayTeamScore >= 0 &&
                   ` ${displayData.awayTeamScore}`}
             </div>
-            {displayData.awayTeam.name.slice(0, 3).toUpperCase()}
+            {displayData.awayTeam.abbreviation}
             {displayData.awayTeam.name === "TBD" && (
               <Image src={tbdIcon} alt="" className={styles.tbdIconSwapped} />
             )}
@@ -301,14 +297,14 @@ export const DrowStandings = () => {
         <div className={styles.final}>
           <div className={styles.circle}>
             <div className={styles.finalTeam}>
-              {finalMatchData.homeTeam.name.slice(0, 3).toUpperCase()}
+              {finalMatchData.homeTeam.abbreviation}
               <div>{finalMatchData.homeTeamScore}</div>
             </div>
 
             <Image src={bigVsIcon} alt="VS" className={styles.vs} />
 
             <div className={styles.finalTeam}>
-              {finalMatchData.awayTeam.name.slice(0, 3).toUpperCase()}
+              {finalMatchData.awayTeam.abbreviation}
               <div>{finalMatchData.awayTeamScore}</div>
             </div>
           </div>
@@ -535,7 +531,7 @@ export const DrowStandings = () => {
           {finalMatchData ? (
             <div className={styles.circle}>
               <div className={styles.finalTeam}>
-                {finalMatchData.homeTeam.name.slice(0, 3).toUpperCase()}
+                {finalMatchData.homeTeam.abbreviation}
                 <div>
                   {finalMatchData.homeTeamScore >= 0 &&
                     ` ${finalMatchData.homeTeamScore}`}
@@ -545,7 +541,7 @@ export const DrowStandings = () => {
                 <Image src={bigVsIcon} alt="VS" className={styles.vs} />
               </div>
               <div className={styles.finalTeam}>
-                {finalMatchData.awayTeam.name.slice(0, 3).toUpperCase()}
+                {finalMatchData.awayTeam.abbreviation}
                 <div>
                   {finalMatchData.awayTeamScore >= 0 &&
                     ` ${finalMatchData.awayTeamScore}`}

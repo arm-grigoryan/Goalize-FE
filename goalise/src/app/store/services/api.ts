@@ -7,6 +7,7 @@ import type { FetchBaseQueryMeta } from "@reduxjs/toolkit/query/react";
 import type { QueryReturnValue } from "@reduxjs/toolkit/query";
 import type { UpcomingMatch } from "../../../types/api/upComingMatches";
 import { IMatchesPast } from "@/types/api/matchesPast";
+import { IMatches } from "@/types/api/matches";
 import { ITransfers } from "@/types/api/transfers";
 import { ILeague } from "@/types/api/leagues";
 import { ILeaguesGroup } from "@/types/api/leaguesGroup";
@@ -78,7 +79,7 @@ const createErrorHandlingBaseQuery = (
           api.dispatch(
             setError({
               errorType: "5xx",
-              message: "Something went wrong, try again later.",
+              message: "Something went wrong,Please try again later.",
             }),
           );
         }
@@ -185,6 +186,12 @@ export const publicApi = createApi({
     getLeaguesTopPlayers: builder.query<ITopPlayers[], number>({
       query: (leagueId) => `/leagues/${leagueId}/top-players`,
     }),
+    getEventById: builder.query<any, number>({
+      query: (eventId) => `/Events/${eventId}`,
+    }),
+    getMatchById: builder.query<IMatches, number>({
+      query: (matchId) => `/Matches/${matchId}`,
+    }),
   }),
 });
 
@@ -231,7 +238,13 @@ export const api = createApi({
         return baseQuery({
           url: "/players/me",
           method: "GET",
-        }) as Promise<QueryReturnValue<IPlayerProfile, FetchBaseQueryError, FetchBaseQueryMeta>>;
+        }) as Promise<
+          QueryReturnValue<
+            IPlayerProfile,
+            FetchBaseQueryError,
+            FetchBaseQueryMeta
+          >
+        >;
       },
     }),
     sendTeamInvitation: builder.mutation<
@@ -273,6 +286,9 @@ export const api = createApi({
     }),
     getTeamDraft: builder.query<unknown, number>({
       query: (teamId) => `/Teams/${teamId}/draft`,
+    }),
+    getTeamInfo: builder.query<ITeam, number>({
+      query: (teamId) => `/Teams/${teamId}/info`,
     }),
     joinLeague: builder.mutation<void, { leagueId: number; teamId: number }>({
       query: ({ leagueId, teamId }) => ({
@@ -341,12 +357,15 @@ export const {
   useGetSearchAutoCompleteQuery,
   useLazyGetSearchAutoCompleteQuery,
   useGetLeaguesTopPlayersQuery,
+  useGetEventByIdQuery,
+  useGetMatchByIdQuery,
 } = publicApi;
 
 export const {
   useGetUserInfoQuery,
   useGetPlayerBasicInfoQuery,
   useGetTeamDraftQuery,
+  useGetTeamInfoQuery,
   useSendTeamInvitationMutation,
   useRemoveTeamMemberMutation,
   useQuitTeamMutation,

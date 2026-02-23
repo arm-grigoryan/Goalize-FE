@@ -4,10 +4,42 @@ import { useGetLeaguesInfoQuery } from "@/app/store/services/api";
 import LeaguesGroupContainer from "@/components/LeaguesGroupContainer";
 import LeguesJoinedTeams from "@/components/LeguesJoinedTeams";
 import { useParams } from "next/navigation";
+import { useHandle404 } from "@/hooks/useErrorHandling";
+import { useEffect } from "react";
+import { Loader } from "@/shared/Loader/Loader";
 
 export default function LeaguesGroupPage() {
   const { leagueId } = useParams();
-  const { data: leagueInfo } = useGetLeaguesInfoQuery(Number(leagueId));
+  const handle404 = useHandle404();
+  const {
+    data: leagueInfo,
+    error,
+    isLoading,
+  } = useGetLeaguesInfoQuery(Number(leagueId));
+
+  useEffect(() => {
+    if (error) {
+      handle404(error);
+    }
+  }, [error, handle404]);
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          minHeight: "400px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Loader />
+      </div>
+    );
+  }
+
+  if (!leagueInfo) return null;
+
   return (
     <div>
       {leagueInfo?.state === "Registration" ? (
@@ -15,8 +47,6 @@ export default function LeaguesGroupPage() {
       ) : (
         <LeaguesGroupContainer />
       )}
-      {/* <LeaguesGroupContainer />
-      <LeguesJoinedTeams /> */}
     </div>
   );
 }

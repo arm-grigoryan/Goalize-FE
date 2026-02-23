@@ -11,19 +11,22 @@ import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { usePlayerProfile } from "./usePlayerProfile";
 import { useAuth } from "@/shared/auth/AuthContext";
-import { refreshTokens } from "@/shared/auth/oidcService"
+import { refreshTokens } from "@/shared/auth/oidcService";
+import { useHandle404 } from "@/hooks/useErrorHandling";
+import { useEffect } from "react";
 
 export const PlayerProfile = () => {
   const [showInvitation, setShowInvitation] = useState(true);
   const { playerId } = useParams();
   const { signIn, tokens } = useAuth();
-
+  const handle404 = useHandle404();
 
   const t = useTranslations("common.playerProfile.playerBasicInfo");
   const {
     userInfo,
     playerBasicInfo,
     isLoadingPlayerInfo,
+    playerInfoError,
     sendTeamInvitation,
     isSendingInvitation,
     removeTeamMember,
@@ -65,6 +68,12 @@ export const PlayerProfile = () => {
     refreshTokens,
     tokens,
   });
+
+  useEffect(() => {
+    if (playerInfoError) {
+      handle404(playerInfoError);
+    }
+  }, [playerInfoError, handle404]);
 
   const onShowInvitationModal = () => {
     setShowInvitation(!showInvitation);

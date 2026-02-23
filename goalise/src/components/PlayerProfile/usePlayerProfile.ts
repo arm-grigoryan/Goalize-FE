@@ -18,7 +18,12 @@ interface UsePlayerProfileProps {
 
 export function usePlayerProfile({ playerId, refreshTokens, tokens }: UsePlayerProfileProps) {
   const { data: userInfo, refetch: refetchUserInfo } = useGetUserInfoQuery();
-  const { data: playerBasicInfo, refetch: refetchPlayerBasicInfo, isLoading: isLoadingPlayerInfo } = useGetPlayerBasicInfoQuery(playerId);
+  const {
+    data: playerBasicInfo,
+    refetch: refetchPlayerBasicInfo,
+    isLoading: isLoadingPlayerInfo,
+    error: playerInfoError,
+  } = useGetPlayerBasicInfoQuery(playerId);
   const { data: playerStats } = useGetPlayerStatsQuery(playerId);
 
   const [sendInvitation, { isLoading: isSendingInvitation }] =
@@ -271,6 +276,7 @@ export function usePlayerProfile({ playerId, refreshTokens, tokens }: UsePlayerP
     playerBasicInfo,
     playerStats,
     isLoadingPlayerInfo,
+    playerInfoError,
     sendTeamInvitation,
     isSendingInvitation,
     invitationError,
