@@ -1,0 +1,117 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    max-width: 924px;
+    height: 324px;
+    padding: 24px 26px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(55px);
+    background-image: linear-gradient(
+        rgba(15, 16, 17, 0.97), 
+        rgba(15, 16, 17, 0.95)), 
+        linear-gradient(
+            to right, 
+            #54A2FE,
+            #F6465D);
+}
+.buttonTitleWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-right: 1px solid rgba(255, 255, 255, 0.10);
+    height: 100%;
+    width: 24%;
+}
+.redButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 0, 81, 0.259);
+    position: relative;
+}
+.redGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle,
+      rgba(245, 58, 83, 0.801),
+      rgba(255, 0, 80, 0.1),
+      transparent 90%);
+  filter: blur(6px);
+  z-index: 0;
+}
+.calendarIcon {
+    z-index: 1;
+}
+.title {
+    color: #E8E8E8;
+    font-size: 22px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.matchWrapper {
+  display: flex;
+  width: 76%;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 20px;
+}
+.vsIcon {
+    width: 80px;
+    height: 100px;
+}
+.match_left_block,
+.match_right_block {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.match_left_block {
+  background-image: url("../../assets/pngs/upComingMatchBorderRed.png");
+  background-position: right;
+  background-repeat: no-repeat;
+}
+.match_left_block_inner_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: 80px;
+  gap: 20px;
+}
+.match_right_block {
+  background-image: url("../../assets/pngs/upComingMatchBorderBlue.png");
+  background-position: left;
+  background-repeat: no-repeat;
+}
+.match_right_block_inner_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: 80px;
+  gap: 20px;
+}
+.separatorImage {
+    z-index: 0;
+    position: absolute;
+}
+.team_name  {
+    color: #E8E8E8;
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.team_logo {
+    max-width: 106px;
+    width: 100%;
+    max-height: 106px;
+    height: 100%;
+}

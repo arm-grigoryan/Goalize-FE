@@ -1,3 +1,7 @@
+import TeamsPage from "@/components/TeamsPage";
+
 export default function Teams() {
-  return <div>this is teams page</div>;
+  return <div>
+      <TeamsPage />
+  </div>;
 }

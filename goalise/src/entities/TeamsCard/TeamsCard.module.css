@@ -1,0 +1,93 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 20px;
+    box-sizing: border-box;
+    background: rgba(21, 25, 30, 0.40);
+    background-image: linear-gradient(
+        rgba(15, 16, 17, 0.96), 
+        rgba(15, 16, 17, 0.96)),
+         linear-gradient(to right, #54A2FE, #F6465D);
+     backdrop-filter: blur(10px);
+}
+.logoNameWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 34px;
+    margin: 20px 20px 0;
+    margin: 20px 20px 0;
+}
+.logo {
+    width: 106px;
+    height: 106px;
+    object-fit: contain;
+}
+.nameWrapper {
+    display: flex;
+    flex-direction: column;
+    color: #A5A5A5;
+    font-size: 14px;
+    font-weight: 400;
+}
+.nameWrapper span {
+    color: #F53A53;
+    cursor: pointer;
+}
+.titleBoxWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin: 20px;
+}
+.titleWrapper {
+    color: #E8E8E8;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    cursor: pointer;
+}
+.boxesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+.box {
+    display: flex;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(21, 25, 30, 0.40);
+    backdrop-filter: blur(10px);
+    display: flex;
+    padding: 10px 15px;
+    align-items: center;
+    color: #A5A5A5;
+    color: #A5A5A5;
+    font-size: 14px;
+    font-weight: 400;
+    gap: 10px;
+}
+.box span {
+    color: white;
+    cursor: pointer;
+}
+.mobile {
+    max-width: 320px;
+}
+.mobile .nameWrapper {
+    font-size: 12px;
+}
+.mobile .logo {
+    width: 90px;
+    height: 90px;
+}
+.mobile .titleWrapper{
+    font-size: 20px;
+}
+.mobile .box {
+    font-size: 12px;
+}

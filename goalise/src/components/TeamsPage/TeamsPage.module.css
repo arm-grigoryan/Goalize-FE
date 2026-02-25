@@ -1,0 +1,104 @@
+.container {
+    display: flex;
+    flex-direction: column;
+
+}
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 44px;
+}
+.wrapper button {
+    height: 46px;
+}
+
+.buttonTitleWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+.button {
+    width: 56px;
+    height: 56px;
+    border: 1px solid rgba(150, 0, 48, 0.427);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.icon {
+    width: 24px;
+    height: 24px;
+    z-index: 1;
+}
+.iconWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    z-index: 1;
+}
+
+.redGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle,
+    rgba(255, 0, 80, 0.55),
+    rgba(255, 0, 80, 0.4),
+    transparent 90%
+  );
+  filter: blur(6px);
+  z-index: 0;
+}
+.title {
+    color: #E8E8E8;
+    font-size: 36px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.teamsContainer {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+    justify-content: center;
+}
+.mobile .title {
+    font-size: 26px;
+}
+.mobile .wrapper button {
+    height: 46px;
+    width: 46px;
+    padding: 10px;
+    gap: 0;
+    border-radius: 50%;
+}
+.mobile .wrapper button img {
+    margin: 0;
+    height: 20px;
+}
+@media (max-width: 1080px) {
+    .teamsContainer {
+        grid-template-columns: repeat(3,1fr);
+    }
+}
+@media (max-width: 810px) {
+    .teamsContainer {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+@media (max-width: 570px) {
+    .teamsContainer {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+    }
+}
