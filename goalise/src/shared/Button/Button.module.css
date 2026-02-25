@@ -122,9 +122,17 @@
   }
 }
 .icon_button_red {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 30px;
+  flex-direction: row;
   background-color: transparent;
+  gap: 4px;
+  background-color: transparent;
+  border-radius: 20px;
+  color: white;
   border: #f53a53 1px solid;
-  border-radius: 50%;
 }
 .icon_button_with_text {
     background-color: transparent;
@@ -172,4 +180,27 @@
 .active {
   background-color: #54a2fe;
   color: white;
+}
+.gray_buttonIcon {
+  width: 100%;
+  display: flex;
+  padding: 22px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.10);
+  color: #858585;
+  border: none;
+  font-weight: 500;
+  font-size: 16px;
+}
+.leftIconWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.leftIcon {
+  width: 14px;
+  height: 12px;
 }

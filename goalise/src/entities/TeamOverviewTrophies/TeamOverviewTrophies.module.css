@@ -1,0 +1,72 @@
+.container {
+    max-width: 924px;
+    padding: 24px 26px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(55px);
+    background-image: linear-gradient(
+        rgba(15, 16, 17, 0.97), 
+        rgba(15, 16, 17, 0.95)), 
+        linear-gradient(
+            to right, 
+            #54A2FE,
+            #F6465D);
+    overflow: hidden;
+    overflow-x: scroll;
+}
+.container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: #54a2fe;
+  border-radius: 4px;
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.buttonTitleWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    width: 24%;
+    margin-bottom: 20px;
+}
+.redButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 0, 81, 0.259);
+    position: relative;
+}
+.redGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle,
+      rgba(245, 58, 83, 0.801),
+      rgba(255, 0, 80, 0.1),
+      transparent 90%);
+  filter: blur(6px);
+  z-index: 0;
+}
+.trophieIcon {
+    z-index: 1;
+}
+.title {
+    color: #E8E8E8;
+    font-size: 22px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.trophies {
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+}

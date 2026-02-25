@@ -1,0 +1,130 @@
+.container {
+    border: solid 1px #a5a5a544;
+    border-radius: 12px;
+    box-shadow: inset 40px 0 80px -40px rgba(110, 193, 228, 0.18),
+        inset -40px 0 80px -40px rgba(255, 143, 163, 0.15);
+    position: relative;
+}
+
+.inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.links {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #ffffff00;
+  padding: 10px 50px 0;
+}
+
+.links::-webkit-scrollbar {
+  display: none;
+}
+
+.link {
+  text-decoration: none;
+  color: #a5a5a5;
+  padding-bottom: 6px;
+}
+.nameButtonWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.name_container {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 24px;
+  color: #ffffff;
+}
+
+.teamLogo {
+    width: 130px;
+    height: 130px;
+}
+
+.name_and_button {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.nameWrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 14px;
+}
+
+.editButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(21, 25, 30, 0.40);
+    backdrop-filter: blur(10px);
+}
+
+.playerName {
+    color: #E8E8E8;
+    font-size: 36px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.buttonsWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.button {
+  display: flex;
+  padding: 10px 15px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  background: rgba(21, 25, 30, 0.4);
+  backdrop-filter: blur(10px);
+  color: #a5a5a5;
+  text-transform: capitalize;
+  font-size: 14px;
+}
+
+.button>span {
+  color: #ffffff;
+}
+
+.playerImage {
+    max-width: 173px;
+    max-height: 221px;
+    border-radius: 14px;
+    background-color: red;
+}
+.infoImageWrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 28px;
+    margin: 20px 40px 0 0;
+}

@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 252px;
+    height: 136px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+     border-radius: 15px;
+     justify-content: space-between;
+     align-items: center;
+     flex-shrink: 0;
+}
+.logoNameWrapper {
+    margin-left: 20px;
+}
+.name {
+    color: #E8E8E8;
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin-top: 14px;
+}
+.trophie {
+    display: flex ;
+    width: 84px;
+    height: 108px;
+    justify-self: flex-end;
+}
