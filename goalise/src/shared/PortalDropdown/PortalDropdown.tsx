@@ -14,7 +14,6 @@ interface PortalDropdownProps {
 export const PortalDropdown: React.FC<PortalDropdownProps> = ({
   options,
   targetRef,
-  onClose,
 }) => {
   const [coords, setCoords] = useState<{ top: number; left: number } | null>(
     null
@@ -27,20 +26,14 @@ export const PortalDropdown: React.FC<PortalDropdownProps> = ({
       top: rect.bottom + window.scrollY,
       left: rect.left + window.scrollX,
     });
-
-    const handleClickOutside = (e: MouseEvent) => {
-      if (targetRef.current && !targetRef.current.contains(e.target as Node)) {
-        onClose?.();
-      }
-    };
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, [targetRef, onClose]);
+  }, [targetRef]);
 
   if (!coords) return null;
 
   return createPortal(
     <div
+      onPointerDown={(e) => e.stopPropagation()}
+      onMouseDown={(e) => e.stopPropagation()}
       style={{
         position: "absolute",
         top: coords.top,

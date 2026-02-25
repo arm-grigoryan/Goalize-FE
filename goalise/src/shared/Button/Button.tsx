@@ -13,6 +13,7 @@ interface ButtonProps {
   iconHeight?: number;
   iconWidth?: number;
   isActive?: boolean;
+  disabled?: boolean;
   handleClick: () => void;
 }
 
@@ -24,6 +25,7 @@ export const Button: FC<ButtonProps> = ({
   isActive,
   icon,
   leftIcon,
+  disabled,
   handleClick,
 }) => {
   return (
@@ -32,6 +34,7 @@ export const Button: FC<ButtonProps> = ({
         e.preventDefault();
         handleClick();
       }}
+      disabled={disabled}
       className={cn(styles.button, styles[className], {
         [styles.active]: isActive,
       })}

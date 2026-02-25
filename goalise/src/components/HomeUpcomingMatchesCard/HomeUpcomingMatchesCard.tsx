@@ -30,10 +30,9 @@ export const HomeUpcomingMatchesCard = () => {
 
   const { data, isFetching } = useGetUpComingMatchesQuery(
     { take: BATCH_SIZE, skip: offset },
-    { skip: !hasMore }
+    { skip: !hasMore },
   );
 
-  // Data processing effect: Append unique items and update hasMore
   useEffect(() => {
     if (!data) return;
 
@@ -48,17 +47,14 @@ export const HomeUpcomingMatchesCard = () => {
     }
   }, [data]);
 
-  // Infinite Scroll Handler
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
     const handleScroll = () => {
-      // Prevent multiple triggers or fetching when done
       if (isFetching || !hasMore) return;
 
       const { scrollTop, scrollHeight, clientHeight } = container;
-      // Trigger update when close to bottom
       if (scrollTop + clientHeight >= scrollHeight - 50) {
         setOffset((prev) => prev + BATCH_SIZE);
       }
@@ -68,7 +64,6 @@ export const HomeUpcomingMatchesCard = () => {
     return () => container.removeEventListener("scroll", handleScroll);
   }, [isFetching, hasMore, allMatches]);
 
-  // Initial fill effect: If content doesn't overflow, fetch more until it does
   useEffect(() => {
     if (!hasMore || isFetching || allMatches.length === 0) return;
 
@@ -77,10 +72,30 @@ export const HomeUpcomingMatchesCard = () => {
       setOffset((prev) => prev + BATCH_SIZE);
     }
   }, [allMatches, hasMore, isFetching]);
+  const firstMatch = allMatches[0];
+  const matches = allMatches.slice(1);
 
-  // Derived state for UI
-  const firstMatch = allMatches[0]; // Featured item
-  const matches = allMatches.slice(1); // Scrollable list
+  let centralMatchLabel = null;
+
+  if (firstMatch) {
+    if (firstMatch.isLive) {
+      centralMatchLabel = <LiveDateLabel isLive />;
+    } else {
+      const isValidDate =
+        firstMatch.date && !isNaN(new Date(firstMatch.date).getTime());
+
+      if (isValidDate) {
+        centralMatchLabel = (
+          <LiveDateLabel
+            date={formatUTCDate(firstMatch.date)}
+            time={formatUTCDate(firstMatch.date, "HH:MM")}
+          />
+        );
+      } else {
+        centralMatchLabel = <LiveDateLabel date="TBD" />;
+      }
+    }
+  }
 
   return (
     <>
@@ -109,39 +124,43 @@ export const HomeUpcomingMatchesCard = () => {
                   {t("home.upcomingMatches.title")}
                 </div>
               </div> */}
-              <LiveDateLabel date="25-06-25" time="10:25" />
+              {centralMatchLabel}
             </div>
-            <div className={styles.leftRightWrapper}> 
-            <div className={styles.match_left_block}>
-              <div className={styles.match_left_block_inner_wrapper}>
-                <div>
-                  <span className={styles.team_name}>
-                    {firstMatch?.homeTeam?.name}
-                  </span>
+            <div className={styles.leftRightWrapper}>
+              <div className={styles.match_left_block}>
+                <div className={styles.match_left_block_inner_wrapper}>
+                  <div>
+                    <span className={styles.team_name}>
+                      {firstMatch?.homeTeam?.name}
+                    </span>
+                  </div>
+                  <Image
+                    src={teamLogoLeft}
+                    alt=""
+                    className={styles.team_logo}
+                  />
                 </div>
-                <Image src={teamLogoLeft} alt="" className={styles.team_logo} />
               </div>
-            </div>
-            <div>
-              <Image src={vsIcon} alt="Upcoming Match" />
-            </div>
-            <div className={styles.match_right_block}>
-              <div className={styles.match_right_block_inner_wrapper}>
-                <div>
-                  <span className={styles.team_name}>
-                    {firstMatch?.awayTeam?.name}
-                  </span>
+              <div>
+                <Image src={vsIcon} alt="Upcoming Match" />
+              </div>
+              <div className={styles.match_right_block}>
+                <div className={styles.match_right_block_inner_wrapper}>
+                  <div>
+                    <span className={styles.team_name}>
+                      {firstMatch?.awayTeam?.name}
+                    </span>
+                  </div>
+                  <Image
+                    src={teamLogoRight}
+                    alt=""
+                    className={styles.team_logo}
+                  />
                 </div>
-                <Image
-                  src={teamLogoRight}
-                  alt=""
-                  className={styles.team_logo}
-                />
               </div>
             </div>
           </div>
-          </div>
-          
+
           <div className={styles.divider}>
             <CustomDivider orientation="vertical" />
           </div>

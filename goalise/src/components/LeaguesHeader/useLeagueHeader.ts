@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import {
   useGetLeaguesInfoQuery,
@@ -29,7 +29,7 @@ export const useLeagueHeader = () => {
   const { data: userInfo } = useGetUserInfoQuery(undefined, {
     skip: !isAuthenticated,
   });
-  const [isInvitationOpen, setIsInvitationOpen] = useState(false);
+
 
   const [joinLeague, { isLoading: isJoining }] = useJoinLeagueMutation();
   const [unjoinLeague, { isLoading: isUnjoining }] = useUnjoinLeagueMutation();
@@ -47,6 +47,19 @@ export const useLeagueHeader = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
+  const toastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showServerErrorToast = (message: string) => {
+    setServerError(message);
+    if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+    toastTimeoutRef.current = setTimeout(() => setServerError(null), 4000);
+  };
+
+  const clearServerError = () => {
+    if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+    setServerError(null);
+  };
 
   const isRegistrationClosed =
     leagueData?.state === "Registration" &&
@@ -114,6 +127,17 @@ export const useLeagueHeader = () => {
   };
 
   const handleOpenUnjoinModal = () => {
+    // Check if registration is closed due to date expiration
+    if (isRegistrationClosed && registrationClosedReason === "Registration date is expired") {
+      setModalState({
+        open: true,
+        type: "error",
+        title: "",
+        description: "If you want to unregister from league contact support",
+      });
+      return;
+    }
+
     if (!isUserCaptain) {
       setModalState({
         open: true,
@@ -124,15 +148,22 @@ export const useLeagueHeader = () => {
       return;
     }
 
-    setIsInvitationOpen(true);
+    setModalState({
+      open: true,
+      type: "unjoin",
+      title: "Unjoin League",
+      description: "Are you sure you want to leave this league?",
+    });
   };
 
   const handleConfirmAction = async () => {
     if (!userTeam) return;
 
+    const actionType = modalState.type;
+    setModalState((prev) => ({ ...prev, open: false }));
     setIsLoading(true);
     try {
-      if (modalState.type === "join") {
+      if (actionType === "join") {
         await joinLeague({ leagueId: id, teamId: userTeam.id }).unwrap();
         setModalState({
           open: true,
@@ -140,7 +171,7 @@ export const useLeagueHeader = () => {
           title: "Success",
           description: "You have successfully joined the league!",
         });
-      } else if (modalState.type === "unjoin") {
+      } else if (actionType === "unjoin") {
         await unjoinLeague({ leagueId: id, teamId: userTeam.id }).unwrap();
         setModalState({
           open: true,
@@ -152,14 +183,23 @@ export const useLeagueHeader = () => {
       refetchLeague();
       refetchJoinedTeams();
     } catch (error) {
-      const apiError = error as { data?: { message?: string } };
-      setModalState({
-        open: true,
-        type: "error",
-        title: "Error",
-        description:
-          apiError?.data?.message || "An error occurred. Please try again.",
-      });
+      const apiError = error as { status?: number; data?: { errorMessage?: string } };
+      const status = apiError?.status;
+      const isServerError = typeof status !== "number" || status >= 500;
+
+      if (isServerError) {
+        showServerErrorToast(
+          apiError?.data?.errorMessage || "Something went wrong. Please try again later."
+        );
+      } else {
+        setModalState({
+          open: true,
+          type: "error",
+          title: "Error",
+          description:
+            apiError?.data?.errorMessage || "An error occurred. Please try again.",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -189,10 +229,12 @@ export const useLeagueHeader = () => {
     isRegistrationClosed,
     registrationClosedReason,
     isTeamJoined,
+    isUserCaptain,
     modalState,
-    isInvitationOpen,
-    setIsInvitationOpen,
+
     isLoading: isLoading || isJoining || isUnjoining,
+    serverError,
+    clearServerError,
     handleOpenJoinModal,
     handleOpenUnjoinModal,
     handleConfirmAction,

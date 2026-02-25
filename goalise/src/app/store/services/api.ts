@@ -1,6 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import {
+  createApi,
+  fetchBaseQuery,
+  FetchBaseQueryError,
+} from "@reduxjs/toolkit/query/react";
+import type { FetchBaseQueryMeta } from "@reduxjs/toolkit/query/react";
+import type { QueryReturnValue } from "@reduxjs/toolkit/query";
 import type { UpcomingMatch } from "../../../types/api/upComingMatches";
 import { IMatchesPast } from "@/types/api/matchesPast";
+import { IMatches } from "@/types/api/matches";
 import { ITransfers } from "@/types/api/transfers";
 import { ILeague } from "@/types/api/leagues";
 import { ILeaguesGroup } from "@/types/api/leaguesGroup";
@@ -13,6 +20,75 @@ import { IPlayerTransferHistory } from "@/types/api/playerTransferHistory";
 import { IPlayerProfileMatches } from "@/types/api/PlayerProfilMatches";
 import { IDrowStandings } from "@/types/api/drowStandings";
 import { ITopPlayers } from "@/types/api/topPlayers";
+import { startLoginRedirect } from "@/shared/auth/oidcService";
+import { setError } from "../slices/errorSlice";
+import { NotificationItemDto } from "@/types/api/notifications";
+
+// Prevent multiple simultaneous 401 redirects
+let is401HandlingInProgress = false;
+
+// Helper function to handle 401 errors globally (once per session)
+const handle401Error = () => {
+  if (typeof window === "undefined") return;
+
+  if (is401HandlingInProgress) return;
+  is401HandlingInProgress = true;
+
+  // Clear auth tokens from localStorage
+  localStorage.removeItem("goalize_auth_tokens");
+
+  // Trigger storage event to notify AuthContext
+  window.dispatchEvent(
+    new StorageEvent("storage", {
+      key: "goalize_auth_tokens",
+      newValue: null,
+    }),
+  );
+
+  // Redirect to login page
+  startLoginRedirect();
+};
+
+// Custom error handler for base queries
+const createErrorHandlingBaseQuery = (
+  baseQuery: ReturnType<typeof fetchBaseQuery>,
+  isAuthenticatedApi: boolean = false,
+) => {
+  return async (
+    args: Parameters<typeof baseQuery>[0],
+    api: Parameters<typeof baseQuery>[1],
+    extraOptions: Parameters<typeof baseQuery>[2],
+  ) => {
+    const response = await baseQuery(args, api, extraOptions);
+
+    // Handle API errors
+    if (response.error) {
+      const status = (response.error as FetchBaseQueryError).status;
+
+      if (isAuthenticatedApi && status === 401) {
+        // 401 Unauthorized - Clear auth and redirect
+        handle401Error();
+      }
+
+      if (status === 403 || (typeof status === "number" && status >= 500)) {
+        if (status === 403) {
+          window.dispatchEvent(new CustomEvent("app:403"));
+        }
+        // For 5xx errors, dispatch to Redux to show banner
+        if (typeof status === "number" && status >= 500) {
+          api.dispatch(
+            setError({
+              errorType: "5xx",
+              message: "Something went wrong,Please try again later.",
+            }),
+          );
+        }
+      }
+    }
+
+    return response;
+  };
+};
 
 export const publicApi = createApi({
   reducerPath: "publicApi",
@@ -110,30 +186,66 @@ export const publicApi = createApi({
     getLeaguesTopPlayers: builder.query<ITopPlayers[], number>({
       query: (leagueId) => `/leagues/${leagueId}/top-players`,
     }),
+    getEventById: builder.query<unknown, number>({
+      query: (eventId) => `/Events/${eventId}`,
+    }),
+    getMatchById: builder.query<IMatches, number>({
+      query: (matchId) => `/Matches/${matchId}`,
+    }),
   }),
 });
 
 export const api = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API_URL,
-    prepareHeaders: (headers) => {
-      if (typeof window !== "undefined") {
-        const token = JSON.parse(
-          localStorage.getItem("goalize_auth_tokens") || "null"
-        );
+  baseQuery: createErrorHandlingBaseQuery(
+    fetchBaseQuery({
+      baseUrl: process.env.NEXT_PUBLIC_API_URL,
+      prepareHeaders: (headers) => {
+        if (typeof window !== "undefined") {
+          const token = JSON.parse(
+            localStorage.getItem("goalize_auth_tokens") || "null",
+          );
 
-        if (token) {
-          headers.set("Authorization", `Bearer ${token.accessToken}`);
+          if (token) {
+            headers.set("Authorization", `Bearer ${token.accessToken}`);
+          }
         }
-      }
 
-      return headers;
-    },
-  }),
+        return headers;
+      },
+    }),
+    true, // isAuthenticatedApi = true
+  ),
   endpoints: (builder) => ({
     getUserInfo: builder.query<IPlayerProfile, void>({
-      query: () => `/players/me`,
+      // Use queryFn instead of query to have conditional logic
+      // This prevents unnecessary API calls when user is not authenticated
+      queryFn: async (_, __, ___, baseQuery) => {
+        if (typeof window === "undefined") {
+          return { error: { status: 401, data: "Not in browser" } };
+        }
+
+        const tokens = JSON.parse(
+          localStorage.getItem("goalize_auth_tokens") || "null",
+        );
+
+        // Skip the query if no token exists - prevents 401 errors on initial load
+        if (!tokens) {
+          return { error: { status: 401, data: "No token found" } };
+        }
+
+        // Make the actual API call if token exists
+        return baseQuery({
+          url: "/players/me",
+          method: "GET",
+        }) as Promise<
+          QueryReturnValue<
+            IPlayerProfile,
+            FetchBaseQueryError,
+            FetchBaseQueryMeta
+          >
+        >;
+      },
     }),
     sendTeamInvitation: builder.mutation<
       void,
@@ -172,6 +284,12 @@ export const api = createApi({
     getPlayerBasicInfo: builder.query<IPlayerProfile, number>({
       query: (playerId) => `/players/${playerId}/info`,
     }),
+    getTeamDraft: builder.query<unknown, number>({
+      query: (teamId) => `/Teams/${teamId}/draft`,
+    }),
+    getTeamInfo: builder.query<ITeam, number>({
+      query: (teamId) => `/Teams/${teamId}/info`,
+    }),
     joinLeague: builder.mutation<void, { leagueId: number; teamId: number }>({
       query: ({ leagueId, teamId }) => ({
         url: `/Leagues/${leagueId}/teams/${teamId}`,
@@ -182,6 +300,41 @@ export const api = createApi({
       query: ({ leagueId, teamId }) => ({
         url: `/Leagues/${leagueId}/teams/${teamId}`,
         method: "DELETE",
+      }),
+    }),
+    getInAppNotifications: builder.query<
+      NotificationItemDto[],
+      { skip: number; take: number }
+    >({
+      query: ({ skip, take }) => ({
+        url: "/Notifications/in-app",
+        params: { skip, take },
+      }),
+    }),
+    markAllNotificationsSeen: builder.mutation<void, void>({
+      query: () => ({
+        url: "/Notifications/mark-all-seen",
+        method: "POST",
+      }),
+    }),
+    respondToTeamInvitation: builder.mutation<
+      void,
+      { teamId: number; invitationId: number; status: "Accepted" | "Rejected" }
+    >({
+      query: ({ teamId, invitationId, status }) => ({
+        url: `/Teams/${teamId}/invitations/${invitationId}`,
+        method: "PATCH",
+        body: { status },
+      }),
+    }),
+    respondToTeamApplication: builder.mutation<
+      void,
+      { teamId: number; applicationId: number; status: "Accepted" | "Rejected" }
+    >({
+      query: ({ teamId, applicationId, status }) => ({
+        url: `/Teams/${teamId}/applications/${applicationId}`,
+        method: "PATCH",
+        body: { status },
       }),
     }),
   }),
@@ -204,15 +357,23 @@ export const {
   useGetSearchAutoCompleteQuery,
   useLazyGetSearchAutoCompleteQuery,
   useGetLeaguesTopPlayersQuery,
+  useGetEventByIdQuery,
+  useGetMatchByIdQuery,
 } = publicApi;
 
 export const {
   useGetUserInfoQuery,
   useGetPlayerBasicInfoQuery,
+  useGetTeamDraftQuery,
+  useGetTeamInfoQuery,
   useSendTeamInvitationMutation,
   useRemoveTeamMemberMutation,
   useQuitTeamMutation,
   useMakeTeamCaptainMutation,
   useJoinLeagueMutation,
   useUnjoinLeagueMutation,
+  useLazyGetInAppNotificationsQuery,
+  useMarkAllNotificationsSeenMutation,
+  useRespondToTeamInvitationMutation,
+  useRespondToTeamApplicationMutation,
 } = api;

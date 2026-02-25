@@ -4,12 +4,19 @@ import StatsCard from "@/entities/StatsCard";
 import { IStatsCardInnerCardProps } from "@/entities/StatsCardInnerCard/StatsCardInnerCard.types";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import React from "react";
+import Image from "next/image";
 import styles from "./Stats.module.css";
 import { useParams } from "next/navigation";
 import { useGetLeaguesTopPlayersQuery } from "@/app/store/services/api";
 import { ITopPlayer } from "@/types/api/topPlayers";
-import Image from "next/image";
-import nextMatchEmpty from '../../assets/pngs/nextMatchEmpty.svg';
+import nextMatchEmpty from "../../assets/pngs/nextMatchEmpty.svg";
+
+const renderEmptyState = () => (
+  <div className={styles.emptyWrapper}>
+    <Image src={nextMatchEmpty} alt="" className={styles.img} />
+    <p className={styles.emptyTxt}>No Stats Available Yet</p>
+  </div>
+);
 
 export const Stats: React.FC = () => {
   const { width } = useWindowSize();
@@ -30,41 +37,17 @@ export const Stats: React.FC = () => {
   }
 
   if (isError || !data || (Array.isArray(data) && data.length === 0)) {
-    return <div className={''}>
-      <Image src={nextMatchEmpty} alt= ""/>
-      <div> No Stats Available Yet</div>
-    </div>;
+    return renderEmptyState();
   }
 
-  // Handle both single object and array of objects as the user changed type to ITopPlayers[]
   const statsData = Array.isArray(data) ? data[0] : data;
 
   if (!statsData) {
-    return <div className={''}>
-      <Image src={nextMatchEmpty} alt= ""/>
-      <div> No Stats Available Yet</div>
-    </div>;
+    return renderEmptyState();
   }
-  const isEmptyStats =
-    !statsData ||
-    [
-      statsData.topGoals,
-      statsData.topAssists,
-      statsData.topRatings,
-      statsData.topYellowCards,
-      statsData.topRedCards,
-    ].every((arr) => !arr || arr.length === 0);
-    if (isEmptyStats) {
-      return (
-        <div className={styles.emptyWrapper}>
-          <Image src={nextMatchEmpty} alt="" className={styles.img} />
-          <div className={styles.emptyTxt}>No Stats Available Yet</div>
-        </div>
-      );
-    }
 
   const mapToStatsCardProps = (
-    players: ITopPlayer[] = []
+    players: ITopPlayer[] = [],
   ): IStatsCardInnerCardProps[] =>
     players.map((player) => ({
       teamPlayer: {
@@ -74,35 +57,38 @@ export const Stats: React.FC = () => {
         shirtNumber: player.teamPlayer.shirtNumber,
       },
       team: {
-        name: "—", // Temporary placeholder as requested
+        name: player.team.name || "—",
         logoUrl: "",
         captainId: 0,
       },
       value: player.value,
     }));
 
+  const sections = [
+    { title: "Goals", data: statsData.topGoals },
+    { title: "Assists", data: statsData.topAssists },
+    { title: "Ratings", data: statsData.topRatings },
+    { title: "Yellow Cards", data: statsData.topYellowCards },
+    { title: "Red Cards", data: statsData.topRedCards },
+  ];
+
+  const nonEmptySections = sections.filter(
+    (section) => section.data && section.data.length > 0,
+  );
+
+  if (nonEmptySections.length === 0) {
+    return renderEmptyState();
+  }
+
   return (
-   <div className={`${!isMobile ? styles.container : styles.mobileWrapper}`}>
-      <StatsCard
-        title="Goals"
-        object={mapToStatsCardProps(statsData.topGoals)}
-      />
-      <StatsCard
-        title="Assists"
-        object={mapToStatsCardProps(statsData.topAssists)}
-      />
-      <StatsCard
-        title="Ratings"
-        object={mapToStatsCardProps(statsData.topRatings)}
-      />
-      <StatsCard
-        title="Yellow Cards"
-        object={mapToStatsCardProps(statsData.topYellowCards)}
-      />
-      <StatsCard
-        title="Red Cards"
-        object={mapToStatsCardProps(statsData.topRedCards)}
-      />
-    </div> 
-)
+    <div className={`${!isMobile ? styles.container : styles.mobileWrapper}`}>
+      {nonEmptySections.map((section) => (
+        <StatsCard
+          key={section.title}
+          title={section.title}
+          object={mapToStatsCardProps(section.data)}
+        />
+      ))}
+    </div>
+  );
 };

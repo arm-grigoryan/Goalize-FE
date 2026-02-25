@@ -9,7 +9,9 @@ import { CustomDivider } from "@/shared/Divider/Divider";
 import { useTranslations } from "next-intl";
 import LanguageSelect from "@/shared/LanguageSelect";
 import { useGetLeaguesQuery } from "@/app/store/services/api";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
+import { usePathname } from "next/navigation";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import burgerIcon from "../../../assets/pngs/burgerMenu.png";
@@ -19,84 +21,69 @@ import notificationIcon from "../../../assets/pngs/notificationIcon.svg";
 import SearchCard from "@/shared/SearchCard";
 import NotificationCard from "@/shared/NotificationCard";
 import PortalDropdown from "@/shared/PortalDropdown";
-import { INotificationItemProps } from "@/shared/NotificationItem/NotificationItem.types";
-import teamLogo from "../../../assets/pngs/teamLogo.png";
 import ProfileCard from "@/shared/ProfileCard";
 import mobileLogo from "/public/pngs/logo/mobileLogo.svg";
 import { ErrorBanner } from "@/components/ErrorBanner/ErrorBanner";
 import arrowDown from "../../../assets/pngs/arrowDown.svg";
+import { useNotifications } from "@/hooks/useNotifications";
+import { NotificationPopUp } from "@/entities/NotificationPopUp/NotificationPopUp";
+
+type ActiveDropdown = "search" | "notifications" | "profile" | "leagues" | null;
 
 export const Header = () => {
   const t = useTranslations();
-  const [showDropdown, setShowDropdown] = useState(false);
+  const pathname = usePathname();
+  const [activeDropdown, setActiveDropdown] = useState<ActiveDropdown>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const leaguesRef = useRef<HTMLSpanElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
-  const searchButtonRef = useRef<HTMLDivElement | null>(null);
-  const mobileSearchRef = useRef<HTMLDivElement | null>(null);
+  // Desktop: wraps the entire search icon + dropdown column.
+  // Mobile: just the icon button itself.
+  const searchContainerRef = useRef<HTMLDivElement | null>(null);
+  // Mobile: wraps the SearchCard panel (rendered below the icon row).
+  // Both refs are passed to useOnClickOutside so clicks inside either
+  // element keep the dropdown open.
+  const mobileSearchCardRef = useRef<HTMLDivElement | null>(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const leaguesButtonRef = useRef<HTMLSpanElement>(null);
   const leaguesDropdownRef = useRef<HTMLDivElement>(null);
-
 
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
 
   const { data: leaguesData } = useGetLeaguesQuery();
-  const { isAuthenticated, user, signIn, signOut, loading } = useAuth();
+  const { isAuthenticated, user, signIn, signOut, loading, tokens } = useAuth();
+  const {
+    notifications,
+    unseenCount,
+    hasMore,
+    isFetching,
+    toastNotification,
+    loadMore,
+    onBellOpen,
+    closeToast,
+    toPresentation,
+    decideFlow,
+  } = useNotifications(tokens?.accessToken);
 
-  const [, setShowSearchInput] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
-  const [showProfileCard, setShowProfileCard] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
+
+  // Stable callbacks required by useOnClickOutside
+  const closeSearch = useCallback(() => setActiveDropdown(null), []);
+  const closeNotifications = useCallback(() => setActiveDropdown(null), []);
+  const closeProfile = useCallback(() => setActiveDropdown(null), []);
+  const closeLeagues = useCallback(() => setActiveDropdown(null), []);
+
+  // Pass both refs: icon trigger (desktop wrapper / mobile button) + mobile card panel
+  useOnClickOutside([searchContainerRef, mobileSearchCardRef], closeSearch, activeDropdown === "search");
+  useOnClickOutside([notificationRef], closeNotifications, activeDropdown === "notifications");
+  useOnClickOutside([profileRef], closeProfile, activeDropdown === "profile");
+  useOnClickOutside([leaguesRef, leaguesButtonRef, leaguesDropdownRef], closeLeagues, activeDropdown === "leagues");
 
   const userLabel = user?.name || user?.email || "Guest";
 
-  const obj = [
-    {
-      icon: teamLogo,
-      title: "New comment on your post",
-      description: "Someone has commented on your recent post.",
-    },
-    {
-      title: "New follower",
-      description: "You have a new follower.",
-    },
-    {
-      title: "Update available",
-      description: "A new update is available for your app.",
-      acceptButtonText: "Accept",
-      denyButtonText: "Deny",
-      onAcceptButtonClick: () => { },
-      onDenyButtonClick: () => { },
-    },
-  ] as INotificationItemProps[];
-  const notificationsCount = obj.length;
 
-  useEffect(() => {
-    function onDocClick(e: MouseEvent) {
-      if (
-        dropdownRef.current?.contains(e.target as Node) ||
-        searchButtonRef.current?.contains(e.target as Node) ||
-        mobileSearchRef.current?.contains(e.target as Node) ||
-        searchInputRef.current?.contains(e.target as Node) ||
-        notificationRef.current?.contains(e.target as Node) ||
-        profileRef.current?.contains(e.target as Node) ||
-        leaguesRef.current?.contains(e.target as Node)
-      )
-        return;
-
-      setSearchOpen(false);
-      setShowSearchInput(false);
-      setShowNotifications(false);
-      setShowProfileCard(false);
-    }
-    document.addEventListener("click", onDocClick);
-    return () => document.removeEventListener("click", onDocClick);
-  }, []);
 
   useEffect(() => {
     if (mobileMenuOpen) document.body.classList.add("no-scroll");
@@ -105,16 +92,15 @@ export const Header = () => {
     return () => document.body.classList.remove("no-scroll");
   }, [mobileMenuOpen]);
 
+  useEffect(() => {
+    setActiveDropdown(null);
+  }, [pathname]);
+
   const toggleSearchInput = () => {
-    setShowSearchInput((prev) => {
-      const next = !prev;
-      if (next) {
-        setShowNotifications(false);
-        setShowProfileCard(false);
-        setSearchOpen(true);
+    setActiveDropdown((prev: ActiveDropdown) => {
+      const next = prev === "search" ? null : "search";
+      if (next === "search") {
         setTimeout(() => searchInputRef.current?.focus(), 50);
-      } else {
-        setSearchOpen(false);
       }
       return next;
     });
@@ -124,12 +110,29 @@ export const Header = () => {
     if (isAuthenticated) signOut("/");
     else signIn();
   };
+
   return (
     <>
+      {toastNotification &&
+        (() => {
+          const presentation = toPresentation(toastNotification);
+          return (
+            <div
+              className={styles.toastWrapper}
+              onClick={() => {
+                setActiveDropdown("notifications");
+                closeToast();
+                void onBellOpen();
+              }}
+            >
+              <NotificationPopUp {...presentation} />
+            </div>
+          );
+        })()}
       {isMobile ? (
         <>
           {!mobileMenuOpen && (
-            <div className={styles.header_mobile}>
+            <div className={styles.header_mobile} style={{ position: "relative" }}>
               <div className={styles.imagesWrapper}>
                 <Image
                   alt=""
@@ -147,12 +150,20 @@ export const Header = () => {
               </div>
               <div className={styles.burger_menu_closed}>
                 <div className={styles.leng_and_profile_wrapper_mobile}>
+                  {/* On mobile, searchContainerRef lives on the icon button
+                      and mobileSearchCardRef lives on the SearchCard panel.
+                      useOnClickOutside receives both, so tabs inside SearchCard
+                      are never treated as outside clicks. */}
                   <div
+                    ref={searchContainerRef}
                     className={`${styles.iconWrapper} ${styles.redGlow}`}
-                    ref={mobileSearchRef}
                     onClick={toggleSearchInput}
                   >
-                    <Image alt="" src={searchIcon} className={styles.searchIcon} />
+                    <Image
+                      alt=""
+                      src={searchIcon}
+                      className={styles.searchIcon}
+                    />
                   </div>
                   {isAuthenticated && (
                     <>
@@ -161,78 +172,116 @@ export const Header = () => {
                         ref={notificationRef}
                         onClick={(e) => {
                           e.stopPropagation();
-                          setShowNotifications((prev) => {
-                            if (!prev) {
-                              setShowProfileCard(false);
-                              setSearchOpen(false);
+                          setActiveDropdown((prev: ActiveDropdown) => {
+                            const next =
+                              prev === "notifications" ? null : "notifications";
+                            if (next === "notifications") {
+                              void onBellOpen();
                             }
-                            return !prev;
+                            return next;
                           });
                         }}
                       >
                         <Image src={notificationIcon} alt="Notifications" />
-                        {notificationsCount > 0 && (
+                        {unseenCount > 0 && (
                           <span className={styles.notificationBadge}>
-                            {notificationsCount > 99
-                              ? "99+"
-                              : notificationsCount}
+                            {unseenCount > 99 ? "99+" : unseenCount}
                           </span>
                         )}
                       </div>
 
-                      {showNotifications && (
+                      {activeDropdown === "notifications" && (
                         <div className={styles.notification_dropdown_mobile}>
-                          <NotificationCard object={obj} />
+                          <NotificationCard
+                            object={notifications.map((item) => {
+                              const presentation = toPresentation(item);
+                              const canRespond =
+                                Boolean(item.notificationRelatedFlowType) &&
+                                Boolean(item.notificationRelatedFlowId) &&
+                                !item.flowCompleted;
+
+                              return {
+                                id: item.id,
+                                ...presentation,
+                                acceptButtonText: canRespond
+                                  ? t("home.notifications.accept")
+                                  : undefined,
+                                denyButtonText: canRespond
+                                  ? t("home.notifications.deny")
+                                  : undefined,
+                                onAcceptButtonClick: canRespond
+                                  ? () => void decideFlow(item, "Accepted")
+                                  : undefined,
+                                onDenyButtonClick: canRespond
+                                  ? () => void decideFlow(item, "Rejected")
+                                  : undefined,
+                              };
+                            })}
+                            loading={isFetching}
+                            hasMore={hasMore}
+                            onLoadMore={loadMore}
+                          />
                         </div>
                       )}
                     </>
                   )}
-                </div>
-                <ErrorBanner visible={false} onClose={() => { }} />
-                {isAuthenticated ? (
-                  <div
-                    className={`${styles.name_and_img_wrapper
-                      }`}
-                    ref={profileRef}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowProfileCard((prev) => {
-                        if (!prev) {
-                          setShowNotifications(false);
-                          setSearchOpen(false);
-                        }
-                        return !prev;
-                      });
-                    }}
-                  >
-                    <div>
-                      <Image
-                        src={profileImg}
-                        alt=""
-                        className={styles.profile_img}
-                      />
-                    </div>
-                    {showProfileCard && (
-                      <div className={styles.profile_dropdown_mobile}>
-                        <ProfileCard
-                          logIn={isAuthenticated}
-                          onAuthClick={onAuthClick}
+                  <ErrorBanner visible={false} onClose={() => { }} />
+                  {isAuthenticated ? (
+                    <div
+                      className={`${styles.name_and_img_wrapper}`}
+                      ref={profileRef}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveDropdown((prev: ActiveDropdown) => {
+                          return prev === "profile" ? null : "profile";
+                        });
+                      }}
+                    >
+                      <div>
+                        <Image
+                          src={profileImg}
+                          alt=""
+                          className={styles.profile_img}
                         />
                       </div>
-                    )}
-                  </div>
-                ) : (
-                  <button
-                    className={styles.auth_button}
-                    onClick={onAuthClick}
-                    disabled={loading}
-                  >
-                    {loading ? "Loading..." : t("home.profileCard.logIn")}
-                  </button>
-                )}
+                      {activeDropdown === "profile" && (
+                        <div className={styles.profile_dropdown_mobile}>
+                          <ProfileCard
+                            logIn={isAuthenticated}
+                            onAuthClick={onAuthClick}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <button
+                      className={styles.auth_button}
+                      onClick={onAuthClick}
+                      disabled={loading}
+                    >
+                      {loading ? "Loading..." : t("home.profileCard.logIn")}
+                    </button>
+                  )}
+                </div>
               </div>
-              {searchOpen && (
-                <SearchCard open={searchOpen} inputRef={searchInputRef} />
+              {activeDropdown === "search" && (
+                <div
+                  ref={mobileSearchCardRef}
+                  style={{
+                    position: "absolute",
+                    top: "100%",
+                    left: 0,
+                    width: "100%",
+                    height: 0,
+                    overflow: "visible",
+                    zIndex: 9999,
+                  }}
+                >
+                  <SearchCard
+                    open={activeDropdown === "search"}
+                    inputRef={searchInputRef}
+                  />
+                </div>
               )}
             </div>
           )}
@@ -255,7 +304,7 @@ export const Header = () => {
               </div>
 
               <div className={styles.menu_wrapper}>
-                {showDropdown && leaguesRef.current && (
+                {activeDropdown === "leagues" && leaguesRef.current && (
                   <PortalDropdown
                     options={
                       leaguesData
@@ -266,7 +315,7 @@ export const Header = () => {
                         : []
                     }
                     targetRef={leaguesRef}
-                    onClose={() => setShowDropdown(false)}
+                    onClose={() => setActiveDropdown(null)}
                   />
                 )}
 
@@ -280,12 +329,14 @@ export const Header = () => {
                   </Link>
 
                   <span
-                    className={`${styles.leagues_mobile} ${showDropdown ? styles.active : ""
+                    className={`${styles.leagues_mobile} ${activeDropdown === "leagues" ? styles.active : ""
                       }`}
                     ref={leaguesButtonRef}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setShowDropdown((prev) => !prev);
+                      setActiveDropdown((prev: ActiveDropdown) =>
+                        prev === "leagues" ? null : "leagues",
+                      );
                     }}
                   >
                     <span className={styles.leagues_label}>
@@ -295,12 +346,12 @@ export const Header = () => {
                     <Image
                       alt=""
                       src={arrowDown}
-                      className={`${styles.arrow} ${showDropdown ? styles.arrowOpen : ""
+                      className={`${styles.arrow} ${activeDropdown === "leagues" ? styles.arrowOpen : ""
                         }`}
                       aria-hidden
                     />
 
-                    {showDropdown && (
+                    {activeDropdown === "leagues" && (
                       <div
                         ref={leaguesDropdownRef}
                         className={styles.leagues_dropdown_mobile}
@@ -312,7 +363,6 @@ export const Header = () => {
                             href={`/leagues/${league.id}`}
                             className={styles.dropdown_item}
                             onClick={() => {
-                              setShowDropdown(false);
                               setMobileMenuOpen(false);
                             }}
                           >
@@ -359,7 +409,11 @@ export const Header = () => {
               <span
                 className={styles.sele}
                 ref={leaguesRef}
-                onClick={() => setShowDropdown((prev) => !prev)}
+                onClick={() =>
+                  setActiveDropdown((prev: ActiveDropdown) =>
+                    prev === "leagues" ? null : "leagues",
+                  )
+                }
               >
                 {t("header.menu.leagues")}
               </span>
@@ -370,7 +424,7 @@ export const Header = () => {
               <Link href="/events" className={styles.link}>
                 {t("header.menu.events")}
               </Link>
-              {showDropdown && leaguesRef.current && (
+              {activeDropdown === "leagues" && leaguesRef.current && (
                 <PortalDropdown
                   options={
                     leaguesData
@@ -381,16 +435,18 @@ export const Header = () => {
                       : []
                   }
                   targetRef={leaguesRef}
-                  onClose={() => setShowDropdown(false)}
+                  onClose={() => setActiveDropdown(null)}
                 />
               )}
             </div>
 
-            <div className={styles.searchContainer}>
-              <div className={styles.iconWrapper} ref={searchButtonRef}>
+            {/* searchContainerRef wraps the icon trigger AND the dropdown
+                content so any click inside either is "inside". */}
+            <div className={styles.searchContainer} ref={searchContainerRef}>
+              <div className={styles.iconWrapper}>
                 <div
                   className={
-                    searchOpen
+                    activeDropdown === "search"
                       ? styles.search_icon_wrapper_open
                       : styles.search_icon_wrapper
                   }
@@ -399,11 +455,13 @@ export const Header = () => {
                   <Image alt="" src={searchIcon} />
                 </div>
                 <div
-                  ref={dropdownRef}
-                  className={`${styles.search_dropdown} ${searchOpen ? styles.open : styles.closed
+                  className={`${styles.search_dropdown} ${activeDropdown === "search" ? styles.open : styles.closed
                     }`}
                 >
-                  <SearchCard open={searchOpen} inputRef={searchInputRef} />
+                  <SearchCard
+                    open={activeDropdown === "search"}
+                    inputRef={searchInputRef}
+                  />
                 </div>
               </div>
             </div>
@@ -421,23 +479,55 @@ export const Header = () => {
                     ref={notificationRef}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setShowNotifications((prev) => {
-                        if (!prev) setShowProfileCard(false);
-                        return !prev;
+                      setActiveDropdown((prev: ActiveDropdown) => {
+                        const next =
+                          prev === "notifications" ? null : "notifications";
+                        if (next === "notifications") {
+                          void onBellOpen();
+                        }
+                        return next;
                       });
                     }}
                   >
                     <Image src={notificationIcon} alt="Notifications" />
-                    {notificationsCount > 0 && (
+                    {unseenCount > 0 && (
                       <span className={styles.notificationBadge}>
-                        {notificationsCount > 99 ? "99+" : notificationsCount}
+                        {unseenCount > 99 ? "99+" : unseenCount}
                       </span>
                     )}
                   </div>
 
-                  {showNotifications && (
+                  {activeDropdown === "notifications" && (
                     <div className={styles.notification_dropdown}>
-                      <NotificationCard object={obj} />
+                      <NotificationCard
+                        object={notifications.map((item) => {
+                          const presentation = toPresentation(item);
+                          const canRespond =
+                            Boolean(item.notificationRelatedFlowType) &&
+                            Boolean(item.notificationRelatedFlowId) &&
+                            !item.flowCompleted;
+
+                          return {
+                            id: item.id,
+                            ...presentation,
+                            acceptButtonText: canRespond
+                              ? t("home.notifications.accept")
+                              : undefined,
+                            denyButtonText: canRespond
+                              ? t("home.notifications.deny")
+                              : undefined,
+                            onAcceptButtonClick: canRespond
+                              ? () => void decideFlow(item, "Accepted")
+                              : undefined,
+                            onDenyButtonClick: canRespond
+                              ? () => void decideFlow(item, "Rejected")
+                              : undefined,
+                          };
+                        })}
+                        loading={isFetching}
+                        hasMore={hasMore}
+                        onLoadMore={loadMore}
+                      />
                     </div>
                   )}
                 </>
@@ -454,14 +544,13 @@ export const Header = () => {
             <ErrorBanner visible={false} onClose={() => { }} />
             {isAuthenticated ? (
               <div
-                className={`${showProfileCard && styles.img_selected} ${styles.name_and_img_wrapper
+                className={`${activeDropdown === "profile" && styles.img_selected} ${styles.name_and_img_wrapper
                   }`}
                 ref={profileRef}
                 onClick={(e) => {
                   e.stopPropagation();
-                  setShowProfileCard((prev) => {
-                    if (!prev) setShowNotifications(false);
-                    return !prev;
+                  setActiveDropdown((prev: ActiveDropdown) => {
+                    return prev === "profile" ? null : "profile";
                   });
                 }}
               >
@@ -476,7 +565,7 @@ export const Header = () => {
                     className={styles.profile_img}
                   />
                 </div>
-                {showProfileCard && (
+                {activeDropdown === "profile" && (
                   <div className={styles.profile_dropdown}>
                     <ProfileCard
                       logIn={isAuthenticated}

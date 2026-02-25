@@ -26,11 +26,13 @@ export const PlayerInvitationCard: React.FC<IPlayerInvitationCardProps> = ({
     <div className={styles.cardOverlay}>
       <div className={styles.cardContainer}>
         <div className={styles.titleWrapper}>
-          <div className={styles.title}>
-            {title? title :t("title")}
-          </div>
+          {title !== "" && (
+            <div className={styles.title}>
+              {title ? title : t("title")}
+            </div>
+          )}
           <div className={styles.label}>
-            {description ? description : playerName ? t('label', {playerName}) : t('label') }
+            {description ? description : playerName ? t('label', { playerName }) : t('label')}
           </div>
         </div>
 
@@ -45,7 +47,7 @@ export const PlayerInvitationCard: React.FC<IPlayerInvitationCardProps> = ({
           {onCancelButtonClick && (
             <Button
               className="red_button_transparant_white_text"
-              content={cancelButtonText ? cancelButtonText :t("cancelButtonText")}
+              content={cancelButtonText ? cancelButtonText : t("cancelButtonText")}
               handleClick={onCancelButtonClick}
             />
           )}

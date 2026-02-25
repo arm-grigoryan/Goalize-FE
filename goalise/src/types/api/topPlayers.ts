@@ -8,6 +8,13 @@ export interface ITopPlayer {
     picture: string | null;
     shirtNumber: number;
   };
+  team: {
+    id: number;
+    name: string;
+    abbreviation: string;
+    logoUrl: string;
+    captainId: number;
+  };
   value: number;
 }
 

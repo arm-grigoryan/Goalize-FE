@@ -421,3 +421,20 @@
     margin-left: 10px;
   }
 }
+.toastWrapper {
+  position: fixed;
+  top: 92px;
+  right: 32px;
+  z-index: 1200;
+  width: min(360px, calc(100vw - 32px));
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .toastWrapper {
+    right: 16px;
+    left: 16px;
+    top: 72px;
+    width: auto;
+  }
+}

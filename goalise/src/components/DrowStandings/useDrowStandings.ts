@@ -7,8 +7,8 @@ export type MatchWithCount = Match & { matchCount: number };
 
 const createEmptyMatch = (id: number): Match => ({
   id,
-  homeTeam: { id: 0, name: "TBD", logoUrl: "", captainId: 0 },
-  awayTeam: { id: 0, name: "TBD", logoUrl: "", captainId: 0 },
+  homeTeam: { id: 0, name: "TBD", logoSrc: "", captainId: 0 },
+  awayTeam: { id: 0, name: "TBD", logoSrc: "", captainId: 0 },
   homeTeamScore: 0,
   awayTeamScore: 0,
   homeTeamPoints: 0,
@@ -114,7 +114,7 @@ export const useDrowStandings = () => {
   const [finalMatch, setFinalMatch] = useState<Match[]>([]);
   const { leagueId } = useParams();
   const leagueIdNum = Number(leagueId);
-  const { data: drawData } = useGetLeaguesDrawQuery(leagueIdNum, {
+  const { data: drawData, isLoading } = useGetLeaguesDrawQuery(leagueIdNum, {
     skip: !leagueId,
   });
 
@@ -154,5 +154,5 @@ export const useDrowStandings = () => {
     }
   }, [drawData]);
 
-  return { drawData, leftBlock, rightBlock, finalMatch };
+  return { drawData, leftBlock, rightBlock, finalMatch, isLoading };
 };

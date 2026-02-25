@@ -18,7 +18,12 @@ interface UsePlayerProfileProps {
 
 export function usePlayerProfile({ playerId, refreshTokens, tokens }: UsePlayerProfileProps) {
   const { data: userInfo, refetch: refetchUserInfo } = useGetUserInfoQuery();
-  const { data: playerBasicInfo, refetch: refetchPlayerBasicInfo, isLoading: isLoadingPlayerInfo } = useGetPlayerBasicInfoQuery(playerId);
+  const {
+    data: playerBasicInfo,
+    refetch: refetchPlayerBasicInfo,
+    isLoading: isLoadingPlayerInfo,
+    error: playerInfoError,
+  } = useGetPlayerBasicInfoQuery(playerId);
   const { data: playerStats } = useGetPlayerStatsQuery(playerId);
 
   const [sendInvitation, { isLoading: isSendingInvitation }] =
@@ -98,7 +103,13 @@ export function usePlayerProfile({ playerId, refreshTokens, tokens }: UsePlayerP
 
       return { success: false, error };
     }
-  }, [userInfo?.playerInfo?.team?.id, playerId, sendInvitation]);
+  }, [
+    userInfo?.playerInfo?.team?.id,
+    playerId,
+    sendInvitation,
+    refetchUserInfo,
+    refetchPlayerBasicInfo,
+  ]);
 
   const removeTeamMember = useCallback(async () => {
     const teamId = userInfo?.playerInfo?.team?.id;
@@ -140,6 +151,8 @@ export function usePlayerProfile({ playerId, refreshTokens, tokens }: UsePlayerP
     userInfo?.playerInfo?.team?.id,
     playerBasicInfo?.playerInfo?.id,
     removeMember,
+    refetchUserInfo,
+    refetchPlayerBasicInfo,
   ]);
 
   const quitTeam = useCallback(async () => {
@@ -197,6 +210,8 @@ export function usePlayerProfile({ playerId, refreshTokens, tokens }: UsePlayerP
     quitTeamMutation,
     refreshTokens,
     tokens?.refreshToken,
+    refetchUserInfo,
+    refetchPlayerBasicInfo,
   ]);
 
   const makeTeamCaptain = useCallback(async () => {
@@ -252,6 +267,8 @@ export function usePlayerProfile({ playerId, refreshTokens, tokens }: UsePlayerP
     makeCaptain,
     refreshTokens,
     tokens?.refreshToken,
+    refetchUserInfo,
+    refetchPlayerBasicInfo,
   ]);
 
   return {
@@ -259,6 +276,7 @@ export function usePlayerProfile({ playerId, refreshTokens, tokens }: UsePlayerP
     playerBasicInfo,
     playerStats,
     isLoadingPlayerInfo,
+    playerInfoError,
     sendTeamInvitation,
     isSendingInvitation,
     invitationError,

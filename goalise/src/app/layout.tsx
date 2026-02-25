@@ -4,9 +4,10 @@ import { Providers } from "./provider";
 import { NextIntlClientProvider } from "next-intl";
 import Footer from "@/components/generalComponents/Footer";
 import localFont from "next/font/local";
+import GlobalErrorHandler from "@/components/generalComponents/GlobalErrorHandler";
 import './globals.css';
 const onest = localFont({
-   src: [
+  src: [
     {
       path: './fonts/onest/Onest-Regular.ttf',
       weight: "400",
@@ -43,6 +44,7 @@ export default async function RootLayout({
         <NextIntlClientProvider>
           <Providers>
             <Header />
+            <GlobalErrorHandler />
 
             <main className="container">
               {children}

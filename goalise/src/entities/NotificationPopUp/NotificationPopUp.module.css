@@ -39,3 +39,9 @@
     color: #A5A5A5;
     font-size: 14px;
 }
+.iconImage {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
