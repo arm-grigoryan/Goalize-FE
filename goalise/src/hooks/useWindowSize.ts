@@ -14,7 +14,7 @@ export const useWindowSize = () => {
       });
     };
 
-    updateSize(); // Set initial size after mount
+    updateSize();
 
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);

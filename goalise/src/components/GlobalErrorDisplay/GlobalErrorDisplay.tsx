@@ -7,11 +7,6 @@ import { RootState } from "@/app/store/store";
 import { ErrorBanner } from "@/components/ErrorBanner/ErrorBanner";
 import { PopupModal } from "@/entities/PopupModal/PopupModal";
 
-/**
- * Global error display component
- * Shows error banner for 5xx errors
- * Shows modal for 403 action errors
- */
 export const GlobalErrorDisplay: React.FC = () => {
   const dispatch = useDispatch();
   const { errorType, message, visible } = useSelector(
@@ -46,14 +41,12 @@ export const GlobalErrorDisplay: React.FC = () => {
 
   return (
     <>
-      {/* 5xx Server Error Banner */}
       <ErrorBanner
         visible={showBanner}
         message={message}
         onClose={handleBannerClose}
       />
 
-      {/* 403 Action Forbidden Modal */}
       <PopupModal
         open={showModal}
         onClose={handleModalClose}

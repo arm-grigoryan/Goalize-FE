@@ -127,7 +127,6 @@ export const useLeagueHeader = () => {
   };
 
   const handleOpenUnjoinModal = () => {
-    // Check if registration is closed due to date expiration
     if (isRegistrationClosed && registrationClosedReason === "Registration date is expired") {
       setModalState({
         open: true,

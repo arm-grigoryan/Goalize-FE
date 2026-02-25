@@ -21,7 +21,6 @@ export function useSearchAutoComplete(query: string) {
     }
 
     debounceRef.current = window.setTimeout(() => {
-      // avoid duplicate triggers
       if (lastQueryRef.current === q) return;
       lastQueryRef.current = q;
       trigger(q);
