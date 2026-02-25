@@ -88,7 +88,6 @@ export const LeaguesHeader = () => {
           </div>
         </div>
       }
-      {/* Show Payment per game if league is NOT Finished */}
       {
         leagueData?.state !== "Finished" &&
         leagueData?.paymentPerGame && (
@@ -161,8 +160,6 @@ export const LeaguesHeader = () => {
 
   return (
     <div className={styles.leagues_header}>
-      {/* Registration Badge logic */}
-      {/* "Join League" label is intentionally hidden for Registration Open state per requirements */}
       {isRegistrationClosed && (
         <div className={styles.badge}>
           Registration Closed

@@ -22,7 +22,6 @@ export const NotificationItem: React.FC<INotificationItemProps> = ({
         {icon && (
           <div className={styles.icon}>
             {isRemoteImage(icon) ? (
-              // eslint-disable-next-line @next/next/no-img-element
               <img src={icon} alt="" className={styles.iconImage} />
             ) : (
               <Image src={icon} alt="" className={styles.iconImage} />

@@ -10,7 +10,6 @@ import UnassignedPlayerCard from "../UnassignedPlayerCard";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { useTranslations } from "next-intl";
-// import { useGetPlayerStatsQuery } from "@/app/store/services/api";
 import { useParams } from "next/navigation";
 import { usePlayerProfile } from "@/components/PlayerProfile/usePlayerProfile";
 
@@ -110,7 +109,6 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
                   <div className={isMobile ? styles.numberNameWrapper : ""}>
                     {" "}
                     <div className={styles.name}>{fullName}</div>
-                    {/* Free Agent label removed per request */}
                     {isMobile && teamName && (
                       <div className={styles.playerNumberContainer}>
                         {playerNumber && (

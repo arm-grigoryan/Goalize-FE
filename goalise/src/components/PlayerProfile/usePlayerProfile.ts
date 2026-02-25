@@ -52,7 +52,6 @@ export function usePlayerProfile({ playerId, refreshTokens, tokens }: UsePlayerP
 
   const [showNotCaptainModal, setShowNotCaptainModal] = useState(false);
 
-  // Confirmation modals
   const [showMakeCaptainConfirmModal, setShowMakeCaptainConfirmModal] =
     useState(false);
   const [showRemoveMemberConfirmModal, setShowRemoveMemberConfirmModal] =
@@ -60,7 +59,6 @@ export function usePlayerProfile({ playerId, refreshTokens, tokens }: UsePlayerP
   const [showQuitTeamConfirmModal, setShowQuitTeamConfirmModal] =
     useState(false);
 
-  // Success modals
   const [showMakeCaptainSuccessModal, setShowMakeCaptainSuccessModal] =
     useState(false);
   const [showRemoveMemberSuccessModal, setShowRemoveMemberSuccessModal] =
@@ -167,7 +165,6 @@ export function usePlayerProfile({ playerId, refreshTokens, tokens }: UsePlayerP
     try {
       await quitTeamMutation({ teamId }).unwrap();
 
-      // Refresh access token if user was captain (captain role will be gone)
       if (isUserCaptain && refreshTokens && tokens?.refreshToken) {
         try {
           await refreshTokens(tokens.refreshToken);
@@ -225,7 +222,6 @@ export function usePlayerProfile({ playerId, refreshTokens, tokens }: UsePlayerP
     try {
       await makeCaptain({ teamId, playerId: targetPlayerId }).unwrap();
 
-      // Refresh access token since current user's captain role is now gone
       if (refreshTokens && tokens?.refreshToken) {
         try {
           await refreshTokens(tokens.refreshToken);

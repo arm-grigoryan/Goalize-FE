@@ -116,14 +116,6 @@ export const HomeUpcomingMatchesCard = () => {
         <div className={styles.Home_main_card}>
           <div className={styles.match_inner_wrapper}>
             <div>
-              {/* <LiveDateLabel isLive/>
-              <div
-                className={`${styles.title} ${isMobile && styles.title_mobile}`}
-              >
-                <div className={styles.title_text}>
-                  {t("home.upcomingMatches.title")}
-                </div>
-              </div> */}
               {centralMatchLabel}
             </div>
             <div className={styles.leftRightWrapper}>

@@ -24,20 +24,16 @@ import { startLoginRedirect } from "@/shared/auth/oidcService";
 import { setError } from "../slices/errorSlice";
 import { NotificationItemDto } from "@/types/api/notifications";
 
-// Prevent multiple simultaneous 401 redirects
 let is401HandlingInProgress = false;
 
-// Helper function to handle 401 errors globally (once per session)
 const handle401Error = () => {
   if (typeof window === "undefined") return;
 
   if (is401HandlingInProgress) return;
   is401HandlingInProgress = true;
 
-  // Clear auth tokens from localStorage
   localStorage.removeItem("goalize_auth_tokens");
 
-  // Trigger storage event to notify AuthContext
   window.dispatchEvent(
     new StorageEvent("storage", {
       key: "goalize_auth_tokens",
@@ -45,11 +41,9 @@ const handle401Error = () => {
     }),
   );
 
-  // Redirect to login page
   startLoginRedirect();
 };
 
-// Custom error handler for base queries
 const createErrorHandlingBaseQuery = (
   baseQuery: ReturnType<typeof fetchBaseQuery>,
   isAuthenticatedApi: boolean = false,
@@ -61,12 +55,10 @@ const createErrorHandlingBaseQuery = (
   ) => {
     const response = await baseQuery(args, api, extraOptions);
 
-    // Handle API errors
     if (response.error) {
       const status = (response.error as FetchBaseQueryError).status;
 
       if (isAuthenticatedApi && status === 401) {
-        // 401 Unauthorized - Clear auth and redirect
         handle401Error();
       }
 
@@ -74,7 +66,6 @@ const createErrorHandlingBaseQuery = (
         if (status === 403) {
           window.dispatchEvent(new CustomEvent("app:403"));
         }
-        // For 5xx errors, dispatch to Redux to show banner
         if (typeof status === "number" && status >= 500) {
           api.dispatch(
             setError({
@@ -214,12 +205,10 @@ export const api = createApi({
         return headers;
       },
     }),
-    true, // isAuthenticatedApi = true
+    true,
   ),
   endpoints: (builder) => ({
     getUserInfo: builder.query<IPlayerProfile, void>({
-      // Use queryFn instead of query to have conditional logic
-      // This prevents unnecessary API calls when user is not authenticated
       queryFn: async (_, __, ___, baseQuery) => {
         if (typeof window === "undefined") {
           return { error: { status: 401, data: "Not in browser" } };
@@ -229,12 +218,10 @@ export const api = createApi({
           localStorage.getItem("goalize_auth_tokens") || "null",
         );
 
-        // Skip the query if no token exists - prevents 401 errors on initial load
         if (!tokens) {
           return { error: { status: 401, data: "No token found" } };
         }
 
-        // Make the actual API call if token exists
         return baseQuery({
           url: "/players/me",
           method: "GET",

@@ -37,12 +37,7 @@ export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const leaguesRef = useRef<HTMLSpanElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
-  // Desktop: wraps the entire search icon + dropdown column.
-  // Mobile: just the icon button itself.
   const searchContainerRef = useRef<HTMLDivElement | null>(null);
-  // Mobile: wraps the SearchCard panel (rendered below the icon row).
-  // Both refs are passed to useOnClickOutside so clicks inside either
-  // element keep the dropdown open.
   const mobileSearchCardRef = useRef<HTMLDivElement | null>(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -69,13 +64,11 @@ export const Header = () => {
 
   const profileRef = useRef<HTMLDivElement>(null);
 
-  // Stable callbacks required by useOnClickOutside
   const closeSearch = useCallback(() => setActiveDropdown(null), []);
   const closeNotifications = useCallback(() => setActiveDropdown(null), []);
   const closeProfile = useCallback(() => setActiveDropdown(null), []);
   const closeLeagues = useCallback(() => setActiveDropdown(null), []);
 
-  // Pass both refs: icon trigger (desktop wrapper / mobile button) + mobile card panel
   useOnClickOutside([searchContainerRef, mobileSearchCardRef], closeSearch, activeDropdown === "search");
   useOnClickOutside([notificationRef], closeNotifications, activeDropdown === "notifications");
   useOnClickOutside([profileRef], closeProfile, activeDropdown === "profile");
@@ -150,10 +143,6 @@ export const Header = () => {
               </div>
               <div className={styles.burger_menu_closed}>
                 <div className={styles.leng_and_profile_wrapper_mobile}>
-                  {/* On mobile, searchContainerRef lives on the icon button
-                      and mobileSearchCardRef lives on the SearchCard panel.
-                      useOnClickOutside receives both, so tabs inside SearchCard
-                      are never treated as outside clicks. */}
                   <div
                     ref={searchContainerRef}
                     className={`${styles.iconWrapper} ${styles.redGlow}`}
@@ -440,8 +429,6 @@ export const Header = () => {
               )}
             </div>
 
-            {/* searchContainerRef wraps the icon trigger AND the dropdown
-                content so any click inside either is "inside". */}
             <div className={styles.searchContainer} ref={searchContainerRef}>
               <div className={styles.iconWrapper}>
                 <div

@@ -15,8 +15,6 @@ export const LeguesJoinedTeams = () => {
   const { leagueId } = useParams();
   const { data: leagueInfo } = useGetLeaguesInfoQuery(Number(leagueId));
   const { data } = useGetLeaguesJoinedTeamsQuery(Number(leagueId));
-  // debug: joined teams data
-  // debug: league info
 
   if (!leagueInfo || !data) {
     return (

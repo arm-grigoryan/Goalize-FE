@@ -9,8 +9,6 @@ export const LeaguesGroupContainer = () => {
   const { data: groupsData, isLoading: isLoadingGroups } =
     useGetLeagueGroupsQuery(Number(leagueId));
 
-  // debug: leagueId
-
   return (
     <div className={styles.group_card}>
       {groupsData &&

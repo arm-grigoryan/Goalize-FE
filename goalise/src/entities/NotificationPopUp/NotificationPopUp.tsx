@@ -12,7 +12,6 @@ export const NotificationPopUp: React.FC<INotificationPopUpProps> = ({
       <div className={styles.info}>
         {icon && (
           <div className={styles.icon}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={icon} alt="" className={styles.iconImage} />
           </div>
         )}
