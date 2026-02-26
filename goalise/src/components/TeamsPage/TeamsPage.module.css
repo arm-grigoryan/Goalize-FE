@@ -102,3 +102,38 @@
        justify-content: center;
     }
 }
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 0;
+    width: 100%;
+}
+.loader {
+    border: 6px solid rgba(15, 15, 15, 0.11);
+    border-top: 6px solid #f53a53;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.errorText {
+    color: #a5a5a5;
+    font-size: 14px;
+    text-align: center;
+    padding: 32px 0;
+}
+.emptyText {
+    color: #a5a5a5;
+    font-size: 14px;
+    text-align: center;
+    padding: 32px 0;
+}
+.sentinel {
+    height: 1px;
+    width: 100%;
+}
