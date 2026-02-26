@@ -91,3 +91,7 @@
 .mobile .box {
     font-size: 12px;
 }
+.noData {
+    color: white;
+    cursor: default;
+}

@@ -12,7 +12,7 @@ import { ITransfers } from "@/types/api/transfers";
 import { ILeague } from "@/types/api/leagues";
 import { ILeaguesGroup } from "@/types/api/leaguesGroup";
 import { ILeaguesResults } from "@/types/api/leaguesResults";
-import { ITeam } from "@/types/api/temas";
+import { ITeam, ITeamListItem } from "@/types/api/temas";
 import { IPlayerProfile } from "@/types/api/userInfo";
 import type { SearchResponse } from "@/types/api/search";
 import { IPlayerStats } from "@/types/api/playerStats";
@@ -183,6 +183,12 @@ export const publicApi = createApi({
     getMatchById: builder.query<IMatches, number>({
       query: (matchId) => `/Matches/${matchId}`,
     }),
+    getTeams: builder.query<ITeamListItem[], { take: number; skip: number }>({
+      query: ({ take, skip }) => ({
+        url: "/Teams",
+        params: { take, skip },
+      }),
+    }),
   }),
 });
 
@@ -346,6 +352,7 @@ export const {
   useGetLeaguesTopPlayersQuery,
   useGetEventByIdQuery,
   useGetMatchByIdQuery,
+  useGetTeamsQuery,
 } = publicApi;
 
 export const {

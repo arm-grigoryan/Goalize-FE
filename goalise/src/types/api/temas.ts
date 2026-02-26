@@ -16,3 +16,30 @@ export interface ITeam {
     workingFoot: "Left" | "Right";
   };
 }
+
+export interface ITeamInfo {
+  id: number;
+  name: string;
+  abbreviation: string;
+  logoUrl: string;
+  captainId: number;
+}
+
+export interface ITeamCaptain {
+  id: string;
+  firstName: string;
+  lastName: string;
+  profilePic: string;
+  profilePicStatus: string;
+  birthDate: string;
+  age: number;
+  workingFoot: string;
+}
+
+export interface ITeamListItem {
+  team: ITeamInfo;
+  matchDate: string;
+  matchId: number | null;
+  opponent: ITeamInfo | null;
+  captain: ITeamCaptain;
+}
