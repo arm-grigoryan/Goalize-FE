@@ -30,6 +30,23 @@
   color: #a5a5a5;
   padding-bottom: 6px;
 }
+
+.selected {
+  color: #ffffff;
+  position: relative;
+}
+
+.selected::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #54a2fe;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
 .nameButtonWrapper{
     display: flex;
     flex-direction: column;
