@@ -1,0 +1,349 @@
+.matches_innerCard {
+  display: grid;
+  grid-template-columns: 180px 1px auto 1px 180px;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #15191e66;
+  border-radius: 10px;
+  color: #e8e8e8;
+}
+.date {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+/* ---------- ICON ---------- */
+.iconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  z-index: 1;
+}
+.wrapper {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px auto;
+}
+.blueGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle,
+    rgba(0, 144, 286, 0.99),
+    rgba(30, 177, 255, 0.3),
+    transparent 100%
+  );
+  filter: blur(5px);
+  z-index: 0;
+}
+/* ---------- SIDES ---------- */
+.side_left {
+  display: grid;
+  grid-template-columns: 80px 100px;
+  align-items: center;
+  gap: 12px;
+  right: 4px;
+  position: relative;
+}
+
+.side_right {
+  display: grid;
+  grid-template-columns: 100px 80px;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  left: 8px;
+}
+
+/* ---------- TEAM ---------- */
+.team {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.team_name {
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.vsIcon {
+  width: 22px;
+  height: 26px;
+  object-fit: contain;
+}
+/* ---------- WINNER SLOT ---------- */
+.winner_slot,
+.winner_slot2 {
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.matches_innerCard .date {
+  display: flex;
+  align-items: center;
+}
+
+.matches_innerCard .wrapper {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 940px
+}
+.matches_innerCard .score2 {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 7px;
+  background: linear-gradient(
+    90deg,
+    rgba(245, 179, 0, 0) 0%,
+    rgba(245, 179, 0, 0.12) 0%,
+    rgba(245, 179, 0, 0) 100%
+  );
+  z-index: 1;
+}
+.matches_innerCard .winner1 {
+  height: 32px;
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  margin-bottom: 8px;
+}
+.matches_innerCard .side_left {
+    display: grid;
+    grid-template-columns: 100px 140px;
+}
+.matches_innerCard .side_right {
+    display: grid;
+    grid-template-columns: 140px 100px;  
+}
+.matches_innerCard .side_right .team {
+    justify-content: flex-end;
+}
+.score2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1px 0;
+  border-radius: inherit;
+  background: linear-gradient(
+        to right,
+        rgba(245, 179, 0, 0) 0%,
+        rgba(245, 179, 0, 0.7) 0%,
+        rgba(245, 179, 0, 0) 90%
+      )
+      top / 100% 1px no-repeat,
+    linear-gradient(
+        to right,
+        rgba(245, 179, 0, 0) 0%,
+        rgba(245, 179, 0, 0.7) 0%,
+        rgba(245, 179, 0, 0) 90%
+      )
+      bottom / 100% 1px no-repeat;
+  z-index: -1;
+}
+
+.matches_innerCard .score1 {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 7px;
+  background: linear-gradient(
+    90deg,
+    rgba(245, 179, 0, 0) 0%,
+    rgba(245, 179, 0, 0.12) 100%,
+    rgba(245, 179, 0, 0) 100%
+  );
+  z-index: 1;
+}
+.score1::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  padding: 1px 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+        to left,
+        rgba(245, 179, 0, 0) 0%,
+        rgba(245, 179, 0, 0.7) 0%,
+        rgba(245, 179, 0, 0) 90%
+      )
+      top / 100% 1px no-repeat,
+    linear-gradient(
+        to left,
+        rgba(245, 179, 0, 0) 0%,
+        rgba(245, 179, 0, 0.7) 0%,
+        rgba(245, 179, 0, 0) 90%
+      )
+      bottom / 100% 1px no-repeat;
+  z-index: -1;
+}
+.score_wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.matches_innerCard .score_wrapper {
+    justify-self: center;
+    align-self: center;
+    width: 100%;
+    max-width: 260px;
+    gap: 0;
+    font-size: 22px;
+    font-weight: 700;
+    max-width: 226px;
+    width: 100%;
+}
+.fixturesScoreWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* .matches_innerCard_results_mobile {
+   display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 17px 33px;
+
+  border: 1px solid #ffffff1a;
+  background-color: #15191e66;
+  border-radius: 10px;
+  color: #e8e8e8;
+  font-size: 12px;
+} */
+/* ------------ fixtures page ----------- */
+.matches_innerCard_fixtures {
+  display: grid;
+  grid-template-columns:180px 1px auto 1px 180px;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+  padding: 7px 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #15191e66;
+  border-radius: 10px;
+  color: #e8e8e8;
+  overflow: clip;
+  margin:  0 auto;
+}
+.matches_innerCard_fixtures .wrapper {
+  display: grid;
+  grid-template-columns: 200px auto 200px ;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  max-width: 700px;
+}
+@media (min-width: 1280px) {
+  .matches_innerCard_fixtures .wrapper {
+    max-width: 1000px;
+  }
+}
+.matches_innerCard_fixtures .score_wrapper{
+  display: flex;
+}
+.matches_innerCard_fixtures .side_left {
+    justify-content: flex-start;
+}
+.matches_innerCard_fixtures .side_right .team {
+    justify-content: flex-end;
+}
+
+.matches_innerCard_fixtures_mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 17px 33px;
+
+  border: 1px solid #ffffff1a;
+  background-color: #15191e66;
+  border-radius: 10px;
+  color: #e8e8e8;
+  font-size: 14px;
+}
+.matches_innerCard_fixtures_mobile .score_wrapper {
+  display: flex;
+}
+
+.matches_innerCard_results_mobile .score1::before {
+  display: none;
+}
+.matches_innerCard_results_mobile .score2::before {
+  display: none;
+}
+.leagueName {
+    padding-left: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #E8E8E8;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: capitalize;
+    justify-self: flex-end;
+    text-decoration: none
+}
+
+@media (max-width: 930px) and (min-width: 761px) {
+  .winner_slot img {
+    width: 60px;
+    height: 28px;
+  }
+  .winner_slot2 img {
+    width: 60px;
+    height: 28px;
+  }
+  .side_left {
+    grid-template-columns: 60px 100px !important;
+    
+  }
+  .side_right {
+    grid-template-columns: 100px 60px !important;
+  }
+  .team {
+    gap: 10px;
+  }
+  .score_wrapper {
+    max-width: 100px !important;
+  }
+}

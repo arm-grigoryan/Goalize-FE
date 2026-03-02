@@ -1,3 +1,5 @@
+import TeamTransfer from "@/entities/TeamTransfer";
+
 export default function TeamTransfersPage() {
-  return <div />;
+  return <TeamTransfer />;
 }
