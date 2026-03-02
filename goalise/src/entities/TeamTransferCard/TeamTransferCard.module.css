@@ -1,0 +1,234 @@
+.card {
+  display: grid;
+  grid-template-columns: 180px 1px 240px auto 1px 260px;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #15191e66;
+  border-radius: 10px;
+  color: #e8e8e8;
+}
+.date {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  padding-left: 10px;
+}
+
+/* ---------- ICON ---------- */
+.iconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  z-index: 1;
+}
+.wrapper {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px auto;
+}
+.blueGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle,
+    rgba(0, 144, 286, 0.99),
+    rgba(30, 177, 255, 0.3),
+    transparent 100%
+  );
+  filter: blur(5px);
+  z-index: 0;
+}
+.infoWrapperBlue {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  align-items: center;
+  width: 80%;
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    inset rgba(6, 122, 0, 0)0%,
+    inset rgba(6, 122, 254, 0) 40%,
+    inset rgba(6, 122, 254, 0) 70%
+  );
+  z-index: 1;
+  margin: 10px 0;
+}
+
+.infoWrapperBlue::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle,
+    rgba(6, 122, 254, 0.702)0%,
+    rgba(6, 122, 254, 0.435) 40%,
+    rgba(6, 122, 254, 0.108) 70%
+  );
+  filter: blur(14px);
+  z-index: -2;
+}
+
+.infoWrapperBlue::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+        to right,
+        rgba(245, 179, 0, 0) 0%,
+        rgb(2, 118, 250) 50%,
+        rgba(245, 179, 0, 0) 100%
+      )
+      top / 100% 1px no-repeat,
+    linear-gradient(
+        to right,
+        rgba(245, 179, 0, 0) 0%,
+         rgb(2, 118, 250) 50%,
+        rgba(245, 179, 0, 0) 100%
+      )
+      bottom / 100% 1px no-repeat;
+  z-index: -1;
+}
+.infoWrapperRed {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  align-items: center;
+  width: 80%;
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    inset rgba(245, 58, 83, 0)0%,
+    inset rgba(245, 58, 83, 0) 40%,
+    inset rgba(245, 58, 83, 0) 70%
+  );
+  z-index: 1;
+  margin: 10px 0;
+}
+
+.infoWrapperRed::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle,
+    rgba(245, 58, 83, 0.702) 0%,
+    rgba(245, 58, 83, 0.368) 40%,
+    rgba(245, 58, 83, 0.108) 70%
+  );
+  filter: blur(14px);
+  z-index: -2;
+}
+
+.infoWrapperRed::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+        to right,
+        rgba(255, 9, 42, 0) 0%,
+        rgba(255, 9, 42) 50%,
+        rgba(255, 9, 42, 0) 100%
+      )
+      top / 100% 1px no-repeat,
+    linear-gradient(
+        to right,
+        rgba(255, 9, 42, 0) 0%,
+        rgba(255, 9, 42) 50%,
+        rgba(255, 9, 42, 0) 100%
+      )
+      bottom / 100% 1px no-repeat;
+  z-index: -1;
+}
+
+.inOutButton {
+    display: flex;
+    padding: 4px 9px;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    border-radius: 30px;
+    border: 1px solid #FFF;
+    background: rgba(21, 25, 30, 0.4);
+    backdrop-filter: blur(10px);
+    height: 26px;
+    z-index: 10;
+    box-shadow: 0 0 10px rgba(254, 254, 255, 0.4);
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
+}
+.teamWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.teamName {
+    margin-left: 10px;
+    text-decoration: none;
+    color: #FFF;
+}
+.playerWrapper {
+    display: flex;
+    margin-left: 10px;
+    gap: 10px;
+}
+.playerNameWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+}
+.playerNameWrapper span {
+    color: #A5A5A5;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.playerName {
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+.infoWrapper {
+    display: flex;
+    flex-direction: row;
+}
+.contractWrapper {
+    margin-left: 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.contractWrapper span {
+    color: #B8B8B8;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.contract {
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
