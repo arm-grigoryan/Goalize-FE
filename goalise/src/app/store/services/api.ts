@@ -330,6 +330,13 @@ export const api = createApi({
         body: { status },
       }),
     }),
+    createTeam: builder.mutation<void, FormData>({
+      query: (formData) => ({
+        url: "/Teams",
+        method: "POST",
+        body: formData,
+      }),
+    }),
   }),
 });
 
@@ -370,4 +377,5 @@ export const {
   useMarkAllNotificationsSeenMutation,
   useRespondToTeamInvitationMutation,
   useRespondToTeamApplicationMutation,
+  useCreateTeamMutation,
 } = api;

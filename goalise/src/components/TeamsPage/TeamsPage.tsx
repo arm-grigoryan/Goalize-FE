@@ -8,8 +8,10 @@ import Button from "@/shared/Button";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import CreateTeamPopUp from "@/entities/CreateTeamPopUp";
-import { useGetTeamsQuery } from "@/app/store/services/api";
+import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
+import { useGetTeamsQuery, useGetUserInfoQuery } from "@/app/store/services/api";
 import { ITeamListItem } from "@/types/api/temas";
+import { useAuth } from "@/shared/auth/AuthContext";
 
 const TAKE = 8;
 
@@ -17,7 +19,23 @@ export const TeamsPage = () => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
   const text = isMobile ? "" : "Create Team";
+
+  const { isAuthenticated, signIn } = useAuth();
+  const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery(
+    undefined,
+    { skip: !isAuthenticated },
+  );
+
+  const userTeam = userInfo?.playerInfo?.team ?? null;
+  const draftTeamId = userInfo?.playerInfo?.draftTeamId ?? null;
+  const isCaptainOfActiveTeam =
+    userTeam !== null &&
+    userTeam.captainId === userInfo?.playerInfo?.id;
+  const hasDraftTeam = draftTeamId !== null;
+  const isPlayerInTeam = userTeam !== null && !isCaptainOfActiveTeam;
+
   const [open, setIsOpen] = useState(false);
+  const [infoMessage, setInfoMessage] = useState<string | null>(null);
 
   const [skip, setSkip] = useState(0);
   const [teams, setTeams] = useState<ITeamListItem[]>([]);
@@ -61,12 +79,44 @@ export const TeamsPage = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isFetching, hasMore]);
 
+  const handleCreateTeamClick = () => {
+    if (!isAuthenticated) {
+      signIn();
+      return;
+    }
+
+    if (isUserInfoLoading) return;
+
+    if (isCaptainOfActiveTeam) {
+      setInfoMessage(
+        `You are already the captain of ${userTeam!.name}. Transfer the captain role and quit if you want to create a new team.`,
+      );
+      return;
+    }
+
+    if (hasDraftTeam) {
+      setInfoMessage(
+        "You already created a team, which is under review. You will be notified once we review it.",
+      );
+      return;
+    }
+
+    if (isPlayerInTeam) {
+      setInfoMessage(
+        `You are already in ${userTeam!.name}. Quit if you want to create a new team.`,
+      );
+      return;
+    }
+
+    setIsOpen(true);
+  };
+
   return (
     <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
       <div className={styles.wrapper}>
         <div className={styles.buttonTitleWrapper}>
           {!isMobile && (
-            <div className={styles.button} onClick={() => setIsOpen(!open)}>
+            <div className={styles.button} onClick={handleCreateTeamClick}>
               <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
                 <Image src={teamsAdditionIcon} alt="" className={styles.icon} />
               </div>
@@ -78,7 +128,7 @@ export const TeamsPage = () => {
           className="icon_button_red"
           icon={teamsAdditionIcon}
           content={text}
-          handleClick={() => setIsOpen(!open)}
+          handleClick={handleCreateTeamClick}
         />
       </div>
 
@@ -104,7 +154,16 @@ export const TeamsPage = () => {
         <div className={styles.emptyText}>No teams to show at the moment.</div>
       )}
 
-      <CreateTeamPopUp open={open} onClose={() => setIsOpen(!open)} />
+      <CreateTeamPopUp open={open} onClose={() => setIsOpen(false)} />
+
+      {infoMessage && (
+        <PlayerInvitationCard
+          title=""
+          description={infoMessage}
+          confirmButtonText="OK"
+          onConfirmButtonClick={() => setInfoMessage(null)}
+        />
+      )}
     </div>
   );
 };
