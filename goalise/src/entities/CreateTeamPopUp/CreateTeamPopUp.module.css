@@ -125,3 +125,146 @@
 .buttonWrappper {
     width: 100%;
 }
+.dragOver {
+    border: 2px dashed #54A2FE;
+    border-radius: 10px;
+    background: rgba(84, 162, 254, 0.06);
+}
+.inputError {
+    border-bottom-color: #F53A53;
+}
+.error {
+    color: #F53A53;
+    font-size: 12px;
+    margin-top: 6px;
+}
+.inviteSection {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.searchDropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: #1a1a1a;
+    border: 1px solid #3a3a3a;
+    border-radius: 5px;
+    z-index: 10;
+    max-height: 180px;
+    overflow-y: auto;
+}
+.searchDropdownItem {
+    padding: 10px 14px;
+    color: #E8E8E8;
+    font-size: 14px;
+    cursor: pointer;
+}
+.searchDropdownItem:hover {
+    background: #2a2a2a;
+}
+.chipsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+.chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(84, 162, 254, 0.15);
+    border: 1px solid rgba(84, 162, 254, 0.4);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 13px;
+    color: #E8E8E8;
+}
+.chipRemove {
+    background: none;
+    border: none;
+    color: #a5a5a5;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Crop modal */
+.cropOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cropModal {
+    background: #1a1a1a;
+    border-radius: 16px;
+    border: 1px solid #2e2e2e;
+    width: 420px;
+    max-width: calc(100vw - 32px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.cropArea {
+    position: relative;
+    width: 100%;
+    height: 340px;
+    background: #000;
+}
+.cropControls {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+}
+.cropSliderLabel {
+    color: #7a7a7a;
+    font-size: 13px;
+}
+.cropSlider {
+    width: 100%;
+    accent-color: #54A2FE;
+    cursor: pointer;
+}
+.cropButtons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+.cropCancelBtn {
+    background: transparent;
+    border: 1px solid #3a3a3a;
+    border-radius: 100px;
+    color: #a5a5a5;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+.cropCancelBtn:hover {
+    border-color: #5a5a5a;
+}
+.cropSaveBtn {
+    background: white;
+    border: none;
+    border-radius: 100px;
+    color: #171717;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+.cropSaveBtn:hover {
+    opacity: 0.88;
+}
