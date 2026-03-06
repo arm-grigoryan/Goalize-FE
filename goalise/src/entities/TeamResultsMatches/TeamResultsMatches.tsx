@@ -13,7 +13,7 @@ export const TeamResultsMatches: React.FC = () => {
                     teamLogo2={teamLogo}
                     teamName1={'Team Name'}
                     teamName2={'Team Name'}
-                    teamScore1={0} 
+                    teamScore1={110} 
                     teamScore2={10}
                     variant={"results"}
                     />

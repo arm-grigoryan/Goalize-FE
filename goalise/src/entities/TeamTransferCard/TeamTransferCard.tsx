@@ -7,6 +7,8 @@ import CustomDivider from "@/shared/Divider";
 import left from '../../assets/pngs/left.svg';
 import out from '../../assets/pngs/out.svg';
 import Link from "next/link";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 
 export interface ITeamTransferCardProps {
   date: string;
@@ -27,16 +29,19 @@ export const TeamTransferCard: React.FC<ITeamTransferCardProps>= ({
     contract,
     playerIn
 }) => {
-    return <div className={`${styles.card}`}>
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
+
+    return <div className={`${styles.card} ${isMobile ? styles.mobile : ''}`}>
       <div> 
-        <div className={styles.date}>
+        {!isMobile && <div className={styles.date}>
         <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
           <Image src={calendarIcon} alt="" className={styles.icon} />
         </div>
         {date}
+      </div>}
       </div>
-      </div>
-      <CustomDivider flexItem orientation="vertical" />
+      {!isMobile && <CustomDivider flexItem orientation="vertical" />}
         <div className={styles.playerWrapper}>
             {playerLogo && <Image src={playerLogo} alt=""/>}
             <div className={styles.playerNameWrapper}>
@@ -47,7 +52,7 @@ export const TeamTransferCard: React.FC<ITeamTransferCardProps>= ({
     <div className={`${playerIn ? styles.infoWrapperBlue : styles.infoWrapperRed}`}> 
             <div className={styles.inOutButton}>
                 <Image src={playerIn ? left : out} alt="" className={styles.inOutIcon}/>
-                <div> {playerIn ? "Player In" : "Player Out"}</div>
+                <div> {(playerIn && !isMobile )? "Player In" : (!playerIn && !isMobile ) ? "Player Out" : (playerIn && isMobile)? 'In' : 'Out'}</div>
             </div>
             <div className={styles.teamWrapper}>  
                 <Image src={teamLogo} alt="" />
@@ -56,6 +61,12 @@ export const TeamTransferCard: React.FC<ITeamTransferCardProps>= ({
     </div>
     <CustomDivider flexItem orientation="vertical"/>
     <div className={styles.contractWrapper}>
+      {isMobile && <div className={styles.date}>
+        <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
+          <Image src={calendarIcon} alt="" className={styles.icon} />
+        </div>
+        {date}
+      </div>}
         <span> Contract:</span>
         <div className={styles.contract}>{contract}</div>
     </div>

@@ -232,3 +232,22 @@
     font-weight: 600;
     text-transform: capitalize;
 }
+
+.mobile {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile .contractWrapper {
+    margin: 10px;
+    align-items: center;
+}
+.mobile .playerWrapper {
+  margin: 10px 0;
+}
+.mobile .teamWrapper {
+  padding: 10px 0;
+}
+.mobile .contract {
+  font-size: 14px;
+}

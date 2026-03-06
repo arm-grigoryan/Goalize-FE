@@ -9,8 +9,12 @@ import teamLogo from '.././../assets/pngs/teamLogo.png';
 import edit from '../../assets/pngs/edit.svg';
 import toBeDeteled from '../../assets/pngs/toBeDeleted.png';
 import { useParams, usePathname } from "next/navigation";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 export const TeamOverviewHeader: React.FC = () => {
+  const {width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
   const { teamId } = useParams();
   const pathname = usePathname();
   const base = `/teams/${teamId}`;
@@ -22,22 +26,27 @@ export const TeamOverviewHeader: React.FC = () => {
     return pathname.startsWith(href);
   };
 
-  return <div className={styles.container}>
+  return <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`}>
       <div className={styles.inner}>
           <div className={styles.name_container}>
           <Image src={teamLogo} alt="champions league" className={styles.teamLogo}/>
           <div className={styles.name_and_button}>
               <div className={styles.nameWrapper}>
                  <div className={styles.name}> {'name'}</div>
-                  <div className={styles.editButton}>
+                  {!isMobile && <div className={styles.editButton}>
                       <Image src={edit} alt="" />
-                  </div>
+                  </div>}
               </div>
-              <Button
+              <div className={styles.buttonsWrapper}> 
+                <Button
                   handleClick={()=> {}}
                   content="Apply"
                   className="red_button_transparant_white_text"
                   />
+                  { isMobile && <div className={styles.editButton}>
+                      <Image src={edit} alt="" />
+                  </div>}
+                </div>
           </div>
       </div>
       <div className={styles.infoImageWrapper}>

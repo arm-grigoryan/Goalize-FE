@@ -6,8 +6,8 @@ import calendarIcon from '../../assets/pngs/calendarIcon.svg';
 import CustomDivider from "@/shared/Divider";
 import drawIcon from '../../assets/pngs/drawIcon.svg';
 import winnerIcon from '../../assets/pngs/winnerIcon.svg';
-// import { useWindowSize } from "@/hooks/useWindowSize";
-// import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import winnerIconSwapped from '../../assets/pngs/winnerIconSwapped.svg';
 import drawSwappedIcon from '../../assets/pngs/drawIconSwapped.svg';
 import vsIcon from '../../assets/pngs/bigVsIcon.svg';
@@ -40,21 +40,21 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
     teamScore2,
     variant
 }) => {
-    //   const { width } = useWindowSize();
-    //   const isMobile = width <= MEDIA_TABLET_SMALL;
+      const { width } = useWindowSize();
+      const isMobile = width <= MEDIA_TABLET_SMALL;
     
       const winner1 = teamScore1 > teamScore2;
       const winner2 = teamScore2 > teamScore1;
       const draw = teamScore1 === teamScore2;
       
-    return <div className={`${variant === "fixtures" ? styles.matches_innerCard_fixtures : styles.matches_innerCard}`}>
+    return <div className={`${variant === "fixtures" ? styles.matches_innerCard_fixtures : styles.matches_innerCard} ${isMobile ? styles.mobile : ''}`}>
       <div className={styles.date}>
         <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
           <Image src={calendarIcon} alt="" className={styles.icon} />
         </div>
         {date}
       </div>
-      <CustomDivider orientation="vertical" flexItem />
+      {!isMobile && <CustomDivider orientation="vertical" flexItem />}
       <div className={styles.wrapper}> 
       <div className={styles.side_left}>
         <div className={styles.winner_slot}>
@@ -102,7 +102,7 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
         </div>
       </div>
       </div>
-        <CustomDivider orientation="vertical" flexItem />
+        <CustomDivider orientation={isMobile ?  "horizontal" : "vertical"}flexItem />
         <Link className={styles.leagueName} href={'#'}> 
             League Name Here
         </Link>

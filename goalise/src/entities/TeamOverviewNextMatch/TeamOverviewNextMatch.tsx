@@ -4,11 +4,15 @@ import Image from "next/image";
 import calendarIcon from '../../assets/pngs/calendarIcon.svg';
 import vsIcon from '../../assets/pngs/bigVsIcon.svg';
 import teamLogo from '../../assets/pngs/teamLogo.png';
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import { useWindowSize } from "@/hooks/useWindowSize";
 export interface ITeamOverviewNextMatchProps {
     date?: string;
 }
 export const TeamOverviewNextMatch: React.FC<ITeamOverviewNextMatchProps> = () => {
-    return <div className={styles.container}>
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
+    return <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`}>
             <div className={styles.buttonTitleWrapper}>
                 <div className={`${styles.redButton} ${styles.redGlow}`}> 
                     <Image src={calendarIcon} alt="" className={styles.calendarIcon}/>
