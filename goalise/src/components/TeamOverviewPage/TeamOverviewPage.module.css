@@ -16,3 +16,11 @@
     gap: 20px;
     width: 100%;
 }
+@media (max-width: 1250px) {
+    .bottomContainer {
+        flex-direction: column;
+    }
+    .innerBottomContainer {
+        width: 100%;
+    }
+}

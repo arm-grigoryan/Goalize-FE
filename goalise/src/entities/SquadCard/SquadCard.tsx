@@ -4,7 +4,7 @@ import styles from './SquadCard.module.css';
 import Image from "next/image";
 import toBeDeleted from '../../assets/pngs/toBeDeleted.png';
 import dots from '../../assets/pngs/dots.svg';
-import ShowMoreCard from "../ShowMoreCard";
+// import ShowMoreCard from "../ShowMoreCard";
 import Link from "next/link";
 
 export interface ISquadCardProps {
@@ -31,7 +31,7 @@ export const SquadCard: React.FC<ISquadCardProps> =({
         </div>
         <Link href={'#'} className={styles.teamName}>{teamName}</Link>
         <Image src={dots} alt="" className={styles.more} />
-        <ShowMoreCard isCaptain/>
+        {/* <ShowMoreCard isCaptain/> */}
         </div>
     </div>
 }

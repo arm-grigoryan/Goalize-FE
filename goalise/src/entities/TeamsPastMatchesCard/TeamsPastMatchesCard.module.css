@@ -347,3 +347,52 @@
     max-width: 100px !important;
   }
 }
+
+.mobile {
+   display: flex;
+  flex-direction: column;
+  /* gap: 16px; */
+  padding: 10px;
+  border: 1px solid #ffffff1a;
+  background-color: #15191e66;
+  border-radius: 10px;
+  color: #e8e8e8;
+  font-size: 12px;
+}
+.mobile .wrapper {
+  display: flex;
+  flex-direction: row;
+  margin: 14px 0;
+}
+.mobile .side_left {
+  display: flex;
+  flex-direction: column;
+}
+.mobile .side_right {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+}
+.mobile .team {
+  display: flex;
+  flex-direction: column;
+}
+.mobile .side_right .team {
+   flex-direction: column-reverse;
+}
+.mobile .leagueName {
+  padding-left: 0;
+  justify-self: center;
+  margin-top: 12px;
+}
+
+.mobile .winner_slot2 {
+  position: absolute;
+  bottom: 35px;
+  /* top: 15px; */
+}
+
+.mobile .winner_slot {
+  position: absolute;
+    bottom: 35px;
+}
