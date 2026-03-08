@@ -12,7 +12,7 @@ import { ITransfers } from "@/types/api/transfers";
 import { ILeague } from "@/types/api/leagues";
 import { ILeaguesGroup } from "@/types/api/leaguesGroup";
 import { ILeaguesResults } from "@/types/api/leaguesResults";
-import { ITeamT, ITeamListItem, ITeamNextMatch, ITeamTrophy } from "@/types/api/temas";
+import { ITeamListItem, ITeamNextMatch, ITeamTrophy } from "@/types/api/temas";
 import { IPlayerProfile } from "@/types/api/userInfo";
 import type { SearchResponse } from "@/types/api/search";
 import { IPlayerStats } from "@/types/api/playerStats";
