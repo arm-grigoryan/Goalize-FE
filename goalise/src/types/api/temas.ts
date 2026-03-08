@@ -1,4 +1,4 @@
-export type ITeam {
+export interface ITeamJoined {
   id: number;
   name: string;
   logoUrl: string;
@@ -12,7 +12,7 @@ export type ITeam {
     lastName: string;
     profilePic: string;
     profilePicStatus: "Pending" | "Approved" | "Rejected";
-    birthDate: "2025-10-08T12:44:58.131Z";
+    birthDate: string;
     workingFoot: "Left" | "Right";
   };
 }
@@ -42,7 +42,7 @@ export interface ITeamStats {
   lose: number;
 }
 
-export type ITeam {
+export interface ITeam {
   team: ITeamInfo;
   captain: ITeamCaptain;
   stats: ITeamStats;
