@@ -42,7 +42,7 @@ export interface ITeamStats {
   lose: number;
 }
 
-export interface ITeam {
+export interface ITeamT {
   team: ITeamInfo;
   captain: ITeamCaptain;
   stats: ITeamStats;
