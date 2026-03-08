@@ -1,4 +1,4 @@
-export interface ITeam {
+export type ITeam {
   id: number;
   name: string;
   logoUrl: string;
@@ -42,7 +42,7 @@ export interface ITeamStats {
   lose: number;
 }
 
-export interface ITeamT {
+export type ITeam {
   team: ITeamInfo;
   captain: ITeamCaptain;
   stats: ITeamStats;
