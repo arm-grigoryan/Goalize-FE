@@ -66,9 +66,21 @@
     text-transform: capitalize;
 }
 .trophies {
-    display: flex;
-    flex-direction: row;
-    gap: 18px;
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+}
+.loaderWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+}
+.noTrophies {
+  color: #7a7a7a;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 8px 0;
 }
 
 .mobile .trophies {

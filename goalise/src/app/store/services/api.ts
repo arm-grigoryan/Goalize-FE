@@ -12,7 +12,7 @@ import { ITransfers } from "@/types/api/transfers";
 import { ILeague } from "@/types/api/leagues";
 import { ILeaguesGroup } from "@/types/api/leaguesGroup";
 import { ILeaguesResults } from "@/types/api/leaguesResults";
-import { ITeam, ITeamListItem } from "@/types/api/temas";
+import { ITeam, ITeamJoined, ITeamListItem, ITeamNextMatch, ITeamTrophy } from "@/types/api/temas";
 import { IPlayerProfile } from "@/types/api/userInfo";
 import type { SearchResponse } from "@/types/api/search";
 import { IPlayerStats } from "@/types/api/playerStats";
@@ -141,7 +141,7 @@ export const publicApi = createApi({
         params: { skip, take },
       }),
     }),
-    getLeaguesJoinedTeams: builder.query<ITeam[], number>({
+    getLeaguesJoinedTeams: builder.query<ITeamJoined[], number>({
       query: (leagueId) => `/leagues/${leagueId}/joined-teams`,
     }),
     getLeaguesDraw: builder.query<IDrowStandings, number>({
@@ -188,6 +188,12 @@ export const publicApi = createApi({
         url: "/Teams",
         params: { take, skip },
       }),
+    }),
+    getTeamNextMatch: builder.query<ITeamNextMatch | null, number>({
+      query: (teamId) => `/Teams/${teamId}/next-match`,
+    }),
+    getTeamTrophies: builder.query<ITeamTrophy[], number>({
+      query: (teamId) => `/Teams/${teamId}/trophies`,
     }),
   }),
 });
@@ -360,6 +366,8 @@ export const {
   useGetEventByIdQuery,
   useGetMatchByIdQuery,
   useGetTeamsQuery,
+  useGetTeamNextMatchQuery,
+  useGetTeamTrophiesQuery,
 } = publicApi;
 
 export const {
