@@ -1,22 +1,47 @@
 import React from "react";
 import Image from "next/image";
-import teamLogo from '../../assets/pngs/teamLogo.png';
+import Link from "next/link";
 import styles from './TeamOverviewStatisticsCard.module.css';
 import CustomDivider from "@/shared/Divider";
+import profilePictureFallback from '../../assets/pngs/profilePictureIcon.svg';
 
 export interface ITeamOverviewStatisticsCardProps {
-    title?: string;
+  title: string;
+  playerName: string;
+  playerPictureUrl: string | null;
+  playerId: number;
+  value: number | string;
 }
-export const TeamOverviewStatisticsCard: React.FC<ITeamOverviewStatisticsCardProps> = () => {
-    return <div className={styles.container}> 
-            <div className={styles.logoNameWrapper}>
-               <Image src={teamLogo} alt=""/>
-                <div className={styles.texts}>
-                    <div className={styles.subTitle}>Highest Rating</div>
-                    <div className={styles.name}>Poghos Poghosyan</div>
-                </div> 
-            </div>
-                <CustomDivider orientation="vertical" variant="middle" flexItem />
-            <div className={styles.number}> 9/10</div>
+
+export const TeamOverviewStatisticsCard: React.FC<ITeamOverviewStatisticsCardProps> = ({
+  title,
+  playerName,
+  playerPictureUrl,
+  playerId,
+  value,
+}) => {
+  return (
+    <div className={styles.container}>
+      <div className={styles.logoNameWrapper}>
+        <Link href={`/profile/${playerId}`} className={styles.imageLink}>
+          <Image
+            src={playerPictureUrl || profilePictureFallback}
+            alt={playerName}
+            width={44}
+            height={44}
+            className={styles.playerImage}
+            unoptimized
+          />
+        </Link>
+        <div className={styles.texts}>
+          <div className={styles.subTitle}>{title}</div>
+          <Link href={`/profile/${playerId}`} className={styles.nameLink}>
+            <div className={styles.name}>{playerName}</div>
+          </Link>
+        </div>
+      </div>
+      <CustomDivider orientation="vertical" variant="middle" flexItem />
+      <div className={styles.number}>{value}</div>
     </div>
-}
+  );
+};

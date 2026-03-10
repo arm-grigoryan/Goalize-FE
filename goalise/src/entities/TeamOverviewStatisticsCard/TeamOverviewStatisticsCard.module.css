@@ -47,3 +47,19 @@
 .divider {
   height: 100%;
 }
+.imageLink {
+  display: flex;
+  flex-shrink: 0;
+}
+.playerImage {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.nameLink {
+  text-decoration: none;
+}
+.nameLink:hover .name {
+  text-decoration: underline;
+}

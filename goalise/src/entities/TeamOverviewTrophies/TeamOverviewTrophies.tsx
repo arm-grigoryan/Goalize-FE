@@ -46,11 +46,11 @@ export const TeamOverviewTrophies: React.FC = () => {
         <div className={styles.trophies}>
           {trophies.map((trophy, index) => (
             <TeamOverviewTrophiesCard
-              key={`${trophy.leagueId}-${trophy.season}-${index}`}
-              leagueId={trophy.leagueId}
-              leagueName={trophy.leagueName}
-              leagueLogoUrl={trophy.leagueLogoUrl}
-              season={trophy.season}
+              key={`${trophy.league.id}-${index}`}
+              leagueId={trophy.league.id}
+              leagueName={trophy.league.name}
+              leagueLogoUrl={trophy.league.logoUrl}
+              season=""
               type={typeMap[trophy.type]}
             />
           ))}

@@ -19,7 +19,7 @@ import { IPlayerStats } from "@/types/api/playerStats";
 import { IPlayerTransferHistory } from "@/types/api/playerTransferHistory";
 import { IPlayerProfileMatches } from "@/types/api/PlayerProfilMatches";
 import { IDrowStandings } from "@/types/api/drowStandings";
-import { ITopPlayers } from "@/types/api/topPlayers";
+import { ITopPlayers, ITeamTopPlayers } from "@/types/api/topPlayers";
 import { startLoginRedirect } from "@/shared/auth/oidcService";
 import { setError } from "../slices/errorSlice";
 import { NotificationItemDto } from "@/types/api/notifications";
@@ -195,6 +195,9 @@ export const publicApi = createApi({
     getTeamTrophies: builder.query<ITeamTrophy[], number>({
       query: (teamId) => `/Teams/${teamId}/trophies`,
     }),
+    getTeamTopPlayers: builder.query<ITeamTopPlayers, number>({
+      query: (teamId) => `/Teams/${teamId}/top-players`,
+    }),
   }),
 });
 
@@ -368,6 +371,7 @@ export const {
   useGetTeamsQuery,
   useGetTeamNextMatchQuery,
   useGetTeamTrophiesQuery,
+  useGetTeamTopPlayersQuery,
 } = publicApi;
 
 export const {
