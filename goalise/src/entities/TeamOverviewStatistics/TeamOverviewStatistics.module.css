@@ -71,3 +71,20 @@
     max-width: unset;
     width: unset;
 }
+.innerContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.loaderWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+}
+.noData {
+    color: #7a7a7a;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 8px 0;
+}

@@ -26,3 +26,24 @@ export interface ITopPlayers {
   topYellowCards: ITopPlayer[];
   topRedCards: ITopPlayer[];
 }
+
+export interface ITeamTopPlayerEntry {
+  value: number;
+  teamPlayer: {
+    id: number;
+    playerId: number;
+    userId: string;
+    firstName: string;
+    lastName: string;
+    picture: string | null;
+    shirtNumber: number;
+  };
+}
+
+export interface ITeamTopPlayers {
+  topGoal: ITeamTopPlayerEntry | null;
+  topAssist: ITeamTopPlayerEntry | null;
+  topYellowCard: ITeamTopPlayerEntry | null;
+  topRedCard: ITeamTopPlayerEntry | null;
+  topRating: ITeamTopPlayerEntry | null;
+}

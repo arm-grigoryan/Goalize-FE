@@ -86,9 +86,18 @@ export interface ITeamNextMatch {
 }
 
 export interface ITeamTrophy {
-  leagueId: number;
-  leagueName: string;
-  leagueLogoUrl: string;
-  season: string;
   type: "Winner" | "RunnerUp" | "SemiFinalist";
+  league: {
+    id: number;
+    name: string;
+    logoUrl: string;
+    winner: ITeamInfo | null;
+    state: string;
+    maxTeamsCount: number;
+    registrationDate: string;
+    paymentPerGame: number;
+    firstPlacePrize: number;
+    secondPlacePrize: number;
+    semiFinalistPrize: number | null;
+  };
 }
