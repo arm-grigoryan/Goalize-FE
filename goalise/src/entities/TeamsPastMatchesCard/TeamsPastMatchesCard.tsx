@@ -15,7 +15,7 @@ import Link from "next/link";
 
 type TeamsPastMatchesVariants = "results" | "fixtures";
 
-export interface ITeamsPastMatchesCardProps { 
+export interface ITeamsPastMatchesCardProps {
  variant?: TeamsPastMatchesVariants;
   date: string;
   teamLogo1: string | StaticImageData;
@@ -26,6 +26,8 @@ export interface ITeamsPastMatchesCardProps {
   teamName2: string;
   teamName2Tooltip?: string;
   teamScore2: number;
+  leagueName?: string;
+  leagueId?: number;
 }
 
 export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
@@ -38,7 +40,9 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
     teamName2,
     teamName2Tooltip,
     teamScore2,
-    variant
+    variant,
+    leagueName,
+    leagueId,
 }) => {
       const { width } = useWindowSize();
       const isMobile = width <= MEDIA_TABLET_SMALL;
@@ -63,7 +67,7 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
         </div>
 
         <div className={styles.team}>
-          <Image src={teamLogo1} alt="" />
+          <Image src={teamLogo1} alt="" width={36} height={36} unoptimized />
           <span className={styles.team_name} title={teamName1Tooltip}>
             {teamName1}
           </span>
@@ -93,7 +97,7 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
           <span className={styles.team_name} title={teamName2Tooltip}>
             {teamName2}
           </span>
-          <Image src={teamLogo2} alt="" />
+          <Image src={teamLogo2} alt="" width={36} height={36} unoptimized />
         </div>
 
         <div className={styles.winner_slot2}>
@@ -103,8 +107,8 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
       </div>
       </div>
         <CustomDivider orientation={isMobile ?  "horizontal" : "vertical"}flexItem />
-        <Link className={styles.leagueName} href={'#'}> 
-            League Name Here
+        <Link className={styles.leagueName} href={leagueId ? `/leagues/${leagueId}` : '#'}>
+          {leagueName ?? 'League'}
         </Link>
     </div>
 }
