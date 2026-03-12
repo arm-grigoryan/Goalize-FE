@@ -1,5 +1,5 @@
 import React from "react";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { IProfileCardProps } from "./ProfileCard.types";
 import styles from "./ProfileCard.module.css";
 import { useTranslations } from "next-intl";
@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useGetUserInfoQuery } from "@/app/store/services/api";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import CreateTeamPopUp from "@/entities/CreateTeamPopUp";
 
 export const ProfileCard: React.FC<IProfileCardProps> = ({
   logIn,
@@ -27,10 +28,10 @@ export const ProfileCard: React.FC<IProfileCardProps> = ({
     ? t("home.profileCard.createTeam")
     : t("home.profileCard.myTeam");
 
+  const [createTeamOpen, setCreateTeamOpen] = useState(false);
+
   let teamMenuRoute = "/teams";
-  if (shouldShowCreateTeam) {
-    teamMenuRoute = "/teams/create";
-  } else if (team) {
+  if (team) {
     teamMenuRoute = `/teams/${team.id}`;
   } else if (draftTeamId) {
     teamMenuRoute = `/teams/draft/${draftTeamId}`;
@@ -45,8 +46,12 @@ export const ProfileCard: React.FC<IProfileCardProps> = ({
   }, [playerId, router]);
 
   const handleTeamClick = useCallback(() => {
+    if (shouldShowCreateTeam) {
+      setCreateTeamOpen(true);
+      return;
+    }
     router.push(teamMenuRoute);
-  }, [router, teamMenuRoute]);
+  }, [router, teamMenuRoute, shouldShowCreateTeam]);
 
   const handleAccountClick = useCallback(() => {
     const authority = process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY;
@@ -75,19 +80,27 @@ export const ProfileCard: React.FC<IProfileCardProps> = ({
   }
 
   return (
-    <div className={`${isMobile ? styles.mobile : styles.container}`}>
-      <div className={styles.item} onClick={handleProfileClick}>
-        {t("home.profileCard.profile")}
+    <>
+      <div className={`${isMobile ? styles.mobile : styles.container}`}>
+        <div className={styles.item} onClick={handleProfileClick}>
+          {t("home.profileCard.profile")}
+        </div>
+        <div className={styles.item} onClick={handleTeamClick}>
+          {teamMenuLabel}
+        </div>
+        <div className={styles.item} onClick={handleAccountClick}>
+          {t("home.profileCard.account")}
+        </div>
+        <div className={`${styles.item} ${styles.login}`} onClick={onAuthClick}>
+          {t("home.profileCard.logOut")}
+        </div>
       </div>
-      <div className={styles.item} onClick={handleTeamClick}>
-        {teamMenuLabel}
-      </div>
-      <div className={styles.item} onClick={handleAccountClick}>
-        {t("home.profileCard.account")}
-      </div>
-      <div className={`${styles.item} ${styles.login}`} onClick={onAuthClick}>
-        {t("home.profileCard.logOut")}
-      </div>
-    </div>
+
+      <CreateTeamPopUp
+        open={createTeamOpen}
+        onClose={() => setCreateTeamOpen(false)}
+      />
+
+    </>
   );
 };
