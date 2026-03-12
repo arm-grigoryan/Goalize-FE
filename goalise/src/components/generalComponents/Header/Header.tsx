@@ -38,6 +38,7 @@ export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const leaguesRef = useRef<HTMLSpanElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
+  const notificationDropdownRef = useRef<HTMLDivElement>(null);
   const searchContainerRef = useRef<HTMLDivElement | null>(null);
   const mobileSearchCardRef = useRef<HTMLDivElement | null>(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
@@ -77,7 +78,7 @@ export const Header = () => {
   }, []);
 
   useOnClickOutside([searchContainerRef, mobileSearchCardRef], closeSearch, activeDropdown === "search");
-  useOnClickOutside([notificationRef], closeNotifications, activeDropdown === "notifications");
+  useOnClickOutside([notificationRef, notificationDropdownRef], closeNotifications, activeDropdown === "notifications");
   useOnClickOutside([profileRef], closeProfile, activeDropdown === "profile");
   useOnClickOutside([leaguesRef, leaguesButtonRef, leaguesDropdownRef], closeLeagues, activeDropdown === "leagues");
 
@@ -187,7 +188,7 @@ export const Header = () => {
                       </div>
 
                       {activeDropdown === "notifications" && (
-                        <div className={styles.notification_dropdown_mobile}>
+                        <div ref={notificationDropdownRef} className={styles.notification_dropdown_mobile}>
                           <NotificationCard
                             object={notifications.map((item) => {
                               const presentation = toPresentation(item);
@@ -493,7 +494,7 @@ export const Header = () => {
                   </div>
 
                   {activeDropdown === "notifications" && (
-                    <div className={styles.notification_dropdown}>
+                    <div ref={notificationDropdownRef} className={styles.notification_dropdown}>
                       <NotificationCard
                         object={notifications.map((item) => {
                           const presentation = toPresentation(item);
