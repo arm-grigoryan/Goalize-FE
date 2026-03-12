@@ -27,6 +27,7 @@ import { ErrorBanner } from "@/components/ErrorBanner/ErrorBanner";
 import arrowDown from "../../../assets/pngs/arrowDown.svg";
 import { useNotifications } from "@/hooks/useNotifications";
 import { NotificationPopUp } from "@/entities/NotificationPopUp/NotificationPopUp";
+import CreateTeamPopUp from "@/entities/CreateTeamPopUp";
 
 type ActiveDropdown = "search" | "notifications" | "profile" | "leagues" | null;
 
@@ -68,6 +69,12 @@ export const Header = () => {
   const closeNotifications = useCallback(() => setActiveDropdown(null), []);
   const closeProfile = useCallback(() => setActiveDropdown(null), []);
   const closeLeagues = useCallback(() => setActiveDropdown(null), []);
+
+  const [createTeamOpen, setCreateTeamOpen] = useState(false);
+  const handleCreateTeamClick = useCallback(() => {
+    setActiveDropdown(null);
+    setCreateTeamOpen(true);
+  }, []);
 
   useOnClickOutside([searchContainerRef, mobileSearchCardRef], closeSearch, activeDropdown === "search");
   useOnClickOutside([notificationRef], closeNotifications, activeDropdown === "notifications");
@@ -238,6 +245,7 @@ export const Header = () => {
                           <ProfileCard
                             logIn={isAuthenticated}
                             onAuthClick={onAuthClick}
+                            onCreateTeamClick={handleCreateTeamClick}
                           />
                         </div>
                       )}
@@ -557,6 +565,7 @@ export const Header = () => {
                     <ProfileCard
                       logIn={isAuthenticated}
                       onAuthClick={onAuthClick}
+                      onCreateTeamClick={handleCreateTeamClick}
                     />
                   </div>
                 )}
@@ -573,6 +582,10 @@ export const Header = () => {
           </div>
         </div>
       )}
+      <CreateTeamPopUp
+        open={createTeamOpen}
+        onClose={() => setCreateTeamOpen(false)}
+      />
     </>
   );
 };
