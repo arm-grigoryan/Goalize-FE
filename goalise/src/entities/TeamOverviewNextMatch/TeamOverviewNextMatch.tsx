@@ -33,11 +33,8 @@ export const TeamOverviewNextMatch: React.FC = () => {
     skip: !id,
   });
 
-  // Determine which side is the current team and which is the opponent
-  const currentTeam =
-    nextMatch?.homeTeam.id === id ? nextMatch.homeTeam : nextMatch?.awayTeam;
-  const opponent =
-    nextMatch?.homeTeam.id === id ? nextMatch?.awayTeam : nextMatch?.homeTeam;
+  const homeTeam = nextMatch?.homeTeam;
+  const awayTeam = nextMatch?.awayTeam;
 
   return (
     <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
@@ -61,17 +58,17 @@ export const TeamOverviewNextMatch: React.FC = () => {
           role="link"
           tabIndex={0}
         >
-          {/* Current team */}
+          {/* Home team */}
           <div className={styles.match_left_block}>
             <div className={styles.match_left_block_inner_wrapper}>
-              <span className={styles.team_name}>{currentTeam?.name ?? ""}</span>
+              <span className={styles.team_name}>{homeTeam?.name ?? ""}</span>
               <Image
                 src={
-                  currentTeam?.logoUrl && isValidUrl(currentTeam.logoUrl)
-                    ? currentTeam.logoUrl
+                  homeTeam?.logoUrl && isValidUrl(homeTeam.logoUrl)
+                    ? homeTeam.logoUrl
                     : teamLogoFallback
                 }
-                alt={currentTeam?.name ?? "Team"}
+                alt={homeTeam?.name ?? "Home Team"}
                 className={styles.team_logo}
                 width={106}
                 height={106}
@@ -111,21 +108,21 @@ export const TeamOverviewNextMatch: React.FC = () => {
             )}
           </div>
 
-          {/* Opponent */}
+          {/* Away Team */}
           <div className={styles.match_right_block}>
             <div className={styles.match_right_block_inner_wrapper}>
               <Link
-                href={`/teams/${opponent?.id}`}
+                href={`/teams/${awayTeam?.id}`}
                 style={{ textDecoration: "none" }}
                 onClick={(e) => e.stopPropagation()}
               >
                 <Image
                   src={
-                    opponent?.logoUrl && isValidUrl(opponent.logoUrl)
-                      ? opponent.logoUrl
+                    awayTeam?.logoUrl && isValidUrl(awayTeam.logoUrl)
+                      ? awayTeam.logoUrl
                       : teamLogoFallback
                   }
-                  alt={opponent?.name ?? "Opponent"}
+                  alt={awayTeam?.name ?? "Away Team"}
                   className={styles.team_logo}
                   width={106}
                   height={106}
@@ -133,11 +130,11 @@ export const TeamOverviewNextMatch: React.FC = () => {
                 />
               </Link>
               <Link
-                href={`/teams/${opponent?.id}`}
+                href={`/teams/${awayTeam?.id}`}
                 style={{ textDecoration: "none" }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <span className={styles.team_name}>{opponent?.name ?? ""}</span>
+                <span className={styles.team_name}>{awayTeam?.name ?? ""}</span>
               </Link>
             </div>
           </div>
