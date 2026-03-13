@@ -43,8 +43,9 @@ export const ProfileCard: React.FC<IProfileCardProps> = ({
     }
   }, [playerId, router]);
 
-  const handleTeamClick = useCallback(() => {
+  const handleTeamClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (shouldShowCreateTeam) {
+      e.stopPropagation();
       onCreateTeamClick?.();
       return;
     }
