@@ -13,7 +13,7 @@ import { useGetTeamsQuery, useGetUserInfoQuery } from "@/app/store/services/api"
 import { ITeamListItem } from "@/types/api/temas";
 import { useAuth } from "@/shared/auth/AuthContext";
 
-const TAKE = 8;
+const TAKE = 20;
 
 export const TeamsPage = () => {
   const { width } = useWindowSize();

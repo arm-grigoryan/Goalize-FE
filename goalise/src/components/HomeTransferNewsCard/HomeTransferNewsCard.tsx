@@ -14,13 +14,13 @@ import transferEmpty from '../../assets/pngs/transferEmpty.svg';
 import Image from "next/image";
 export const HomeTransferNewsCard = () => {
   const t = useTranslations();
-
+  const BATCH_SIZE = 10;
   const [offset, setOffset] = useState<number>(0);
   const [transfers, setTransfers] = useState<ITransfers[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const { data, isFetching } = useGetTransferNewsQuery(
-    { take: 10, skip: offset },
+    { take: BATCH_SIZE, skip: offset },
     { skip: !hasMore }
   );
 
@@ -34,7 +34,7 @@ export const HomeTransferNewsCard = () => {
         );
         return unique;
       });
-      if (data.length < 5) {
+      if (data.length < BATCH_SIZE) {
         setHasMore(false);
       }
     }
@@ -48,7 +48,7 @@ export const HomeTransferNewsCard = () => {
       const { scrollTop, scrollHeight, clientHeight } = container;
 
       if (scrollTop + clientHeight >= scrollHeight - 4) {
-        setOffset((prev) => prev + 5);
+        setOffset((prev) => prev + BATCH_SIZE);
       }
     };
 
@@ -61,53 +61,53 @@ export const HomeTransferNewsCard = () => {
   }, [isFetching]);
 
   return (
-    <div className={styles.border}> 
-    <div
-      className={
-        transfers?.length ? styles.transfer_news : styles.transfer_news_empty
-      }
-    >
-      <div className={styles.button_and_title_wrapper}>
-        <div className={styles.button_wrapper}>
-           <Image src={transferHistoryIcon} className={styles.icon} alt="" />
+    <div className={styles.border}>
+      <div
+        className={
+          transfers?.length ? styles.transfer_news : styles.transfer_news_empty
+        }
+      >
+        <div className={styles.button_and_title_wrapper}>
+          <div className={styles.button_wrapper}>
+            <Image src={transferHistoryIcon} className={styles.icon} alt="" />
+          </div>
+          <div className={styles.title_wrapper}>
+            <Title content={t("home.transferNews.title")} />
+          </div>
         </div>
-        <div className={styles.title_wrapper}>
-          <Title content={t("home.transferNews.title")} />
-        </div>
-      </div>
 
-      {!transfers?.length && (
-        <div className={styles.no_transfer_wrapper}>
-          <Image src={transferEmpty} alt="" className={styles.transfer_empty_image} />
-          <span className={styles.no_transfer_text}>
-            No transfer news is scheduled at the moment
-          </span>
-        </div>
-      )}
-      <div ref={scrollContainerRef} className={styles.transfer_wrapper}>
-        {transfers.map((transfer) => {
-          return (
-            <TransferInnerCard
-              key={transfer.id}
-              playerImage={playerImg}
-              PlayerName={`${transfer.firstName} ${transfer.lastName}`}
-              transferDate={formatUTCDate(transfer.transferDate)}
-              teamLogoFrom={playerImg}
-              teamNameFrom={handleLongStrings(transfer.fromTeam.name, 8)}
-              teamNameFromTooltip={transfer.fromTeam.name}
-              teamLogoTo={playerImg}
-              teamNameTo={handleLongStrings(transfer.toTeam.name, 8)}
-              teamNameToTooltip={transfer.toTeam.name}
-            />
-          );
-        })}
-        {isFetching && (
-          <div className={styles.loader_container}>
-            <div className={styles.loader}></div>
+        {!transfers?.length && (
+          <div className={styles.no_transfer_wrapper}>
+            <Image src={transferEmpty} alt="" className={styles.transfer_empty_image} />
+            <span className={styles.no_transfer_text}>
+              No transfer news is scheduled at the moment
+            </span>
           </div>
         )}
+        <div ref={scrollContainerRef} className={styles.transfer_wrapper}>
+          {transfers.map((transfer) => {
+            return (
+              <TransferInnerCard
+                key={transfer.id}
+                playerImage={playerImg}
+                PlayerName={`${transfer.firstName} ${transfer.lastName}`}
+                transferDate={formatUTCDate(transfer.transferDate)}
+                teamLogoFrom={playerImg}
+                teamNameFrom={handleLongStrings(transfer.fromTeam.name, 8)}
+                teamNameFromTooltip={transfer.fromTeam.name}
+                teamLogoTo={playerImg}
+                teamNameTo={handleLongStrings(transfer.toTeam.name, 8)}
+                teamNameToTooltip={transfer.toTeam.name}
+              />
+            );
+          })}
+          {isFetching && (
+            <div className={styles.loader_container}>
+              <div className={styles.loader}></div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </div>
   );
 };
