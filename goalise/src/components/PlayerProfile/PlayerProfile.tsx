@@ -229,7 +229,7 @@ export const PlayerProfile = () => {
           onCancelButtonClick={() => closeInvitationSuccessModal()}
           title="Invitation Sent Successfully"
           description="The player has been invited to your team."
-          confirmButtonText="OK"
+          cancelButtonText="Close"
         />}
       {showMakeCaptainConfirmModal &&
         <PlayerInvitationCard
@@ -245,7 +245,7 @@ export const PlayerProfile = () => {
           onCancelButtonClick={() => closeMakeCaptainSuccessModal()}
           title="Captain Changed Successfully"
           description="The team captain has been updated."
-          confirmButtonText="OK"
+          cancelButtonText="Close"
         />}
       {showRemoveMemberConfirmModal &&
         <PlayerInvitationCard
@@ -261,7 +261,7 @@ export const PlayerProfile = () => {
           onCancelButtonClick={() => closeRemoveMemberSuccessModal()}
           title="Member Removed Successfully"
           description="The team member has been removed."
-          confirmButtonText="OK"
+          cancelButtonText="Close"
         />}
       {showQuitTeamConfirmModal &&
         <PlayerInvitationCard
@@ -277,7 +277,7 @@ export const PlayerProfile = () => {
           onCancelButtonClick={() => closeQuitTeamSuccessModal()}
           title="Successfully Quit Team"
           description="You have left the team."
-          confirmButtonText="OK"
+          cancelButtonText="Close"
         />}
       {isSendingInvitation && (
         <div className={styles.loader_container}>
