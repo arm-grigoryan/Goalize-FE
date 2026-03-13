@@ -11,6 +11,7 @@ import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 export const ProfileCard: React.FC<IProfileCardProps> = ({
   logIn,
   onAuthClick,
+  onCreateTeamClick,
 }) => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
@@ -28,9 +29,7 @@ export const ProfileCard: React.FC<IProfileCardProps> = ({
     : t("home.profileCard.myTeam");
 
   let teamMenuRoute = "/teams";
-  if (shouldShowCreateTeam) {
-    teamMenuRoute = "/teams/create";
-  } else if (team) {
+  if (team) {
     teamMenuRoute = `/teams/${team.id}`;
   } else if (draftTeamId) {
     teamMenuRoute = `/teams/draft/${draftTeamId}`;
@@ -44,9 +43,14 @@ export const ProfileCard: React.FC<IProfileCardProps> = ({
     }
   }, [playerId, router]);
 
-  const handleTeamClick = useCallback(() => {
+  const handleTeamClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (shouldShowCreateTeam) {
+      e.stopPropagation();
+      onCreateTeamClick?.();
+      return;
+    }
     router.push(teamMenuRoute);
-  }, [router, teamMenuRoute]);
+  }, [router, teamMenuRoute, shouldShowCreateTeam, onCreateTeamClick]);
 
   const handleAccountClick = useCallback(() => {
     const authority = process.env.NEXT_PUBLIC_IDENTITY_AUTHORITY;

@@ -27,6 +27,7 @@ import { ErrorBanner } from "@/components/ErrorBanner/ErrorBanner";
 import arrowDown from "../../../assets/pngs/arrowDown.svg";
 import { useNotifications } from "@/hooks/useNotifications";
 import { NotificationPopUp } from "@/entities/NotificationPopUp/NotificationPopUp";
+import CreateTeamPopUp from "@/entities/CreateTeamPopUp";
 
 type ActiveDropdown = "search" | "notifications" | "profile" | "leagues" | null;
 
@@ -37,6 +38,7 @@ export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const leaguesRef = useRef<HTMLSpanElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
+  const notificationDropdownRef = useRef<HTMLDivElement>(null);
   const searchContainerRef = useRef<HTMLDivElement | null>(null);
   const mobileSearchCardRef = useRef<HTMLDivElement | null>(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
@@ -69,8 +71,14 @@ export const Header = () => {
   const closeProfile = useCallback(() => setActiveDropdown(null), []);
   const closeLeagues = useCallback(() => setActiveDropdown(null), []);
 
+  const [createTeamOpen, setCreateTeamOpen] = useState(false);
+  const handleCreateTeamClick = useCallback(() => {
+    setActiveDropdown(null);
+    setCreateTeamOpen(true);
+  }, []);
+
   useOnClickOutside([searchContainerRef, mobileSearchCardRef], closeSearch, activeDropdown === "search");
-  useOnClickOutside([notificationRef], closeNotifications, activeDropdown === "notifications");
+  useOnClickOutside([notificationRef, notificationDropdownRef], closeNotifications, activeDropdown === "notifications");
   useOnClickOutside([profileRef], closeProfile, activeDropdown === "profile");
   useOnClickOutside([leaguesRef, leaguesButtonRef, leaguesDropdownRef], closeLeagues, activeDropdown === "leagues");
 
@@ -180,7 +188,7 @@ export const Header = () => {
                       </div>
 
                       {activeDropdown === "notifications" && (
-                        <div className={styles.notification_dropdown_mobile}>
+                        <div ref={notificationDropdownRef} className={styles.notification_dropdown_mobile}>
                           <NotificationCard
                             object={notifications.map((item) => {
                               const presentation = toPresentation(item);
@@ -238,6 +246,7 @@ export const Header = () => {
                           <ProfileCard
                             logIn={isAuthenticated}
                             onAuthClick={onAuthClick}
+                            onCreateTeamClick={handleCreateTeamClick}
                           />
                         </div>
                       )}
@@ -485,7 +494,7 @@ export const Header = () => {
                   </div>
 
                   {activeDropdown === "notifications" && (
-                    <div className={styles.notification_dropdown}>
+                    <div ref={notificationDropdownRef} className={styles.notification_dropdown}>
                       <NotificationCard
                         object={notifications.map((item) => {
                           const presentation = toPresentation(item);
@@ -557,6 +566,7 @@ export const Header = () => {
                     <ProfileCard
                       logIn={isAuthenticated}
                       onAuthClick={onAuthClick}
+                      onCreateTeamClick={handleCreateTeamClick}
                     />
                   </div>
                 )}
@@ -573,6 +583,10 @@ export const Header = () => {
           </div>
         </div>
       )}
+      <CreateTeamPopUp
+        open={createTeamOpen}
+        onClose={() => setCreateTeamOpen(false)}
+      />
     </>
   );
 };

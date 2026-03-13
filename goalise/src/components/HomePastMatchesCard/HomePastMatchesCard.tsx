@@ -18,6 +18,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 
 export const HomePastMatchesCard = () => {
+  const BATCH_SIZE = 10;
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
   const t = useTranslations();
@@ -26,7 +27,7 @@ export const HomePastMatchesCard = () => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const { data, isFetching } = useGetPastMatchesQuery(
-    { take: 10, skip: offset },
+    { take: BATCH_SIZE, skip: offset },
     { skip: !hasMore }
   );
 
@@ -40,7 +41,7 @@ export const HomePastMatchesCard = () => {
         );
         return unique;
       });
-      if (data.length < 5) {
+      if (data.length < BATCH_SIZE) {
         setHasMore(false);
       }
     }
@@ -53,8 +54,8 @@ export const HomePastMatchesCard = () => {
 
       const { scrollTop, scrollHeight, clientHeight } = container;
 
-      if (scrollTop + clientHeight >= scrollHeight) {
-        setOffset((prev) => prev + 5);
+      if (scrollTop + clientHeight >= scrollHeight - 4) {
+        setOffset((prev) => prev + BATCH_SIZE);
       }
     };
 
