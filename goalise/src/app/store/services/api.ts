@@ -8,7 +8,7 @@ import type { QueryReturnValue } from "@reduxjs/toolkit/query";
 import type { UpcomingMatch } from "../../../types/api/upComingMatches";
 import { IMatchesPast } from "@/types/api/matchesPast";
 import { IMatches } from "@/types/api/matches";
-import { ITransfers } from "@/types/api/transfers";
+import { ITransfers, ITeamTransfer } from "@/types/api/transfers";
 import { ILeague } from "@/types/api/leagues";
 import { ILeaguesGroup } from "@/types/api/leaguesGroup";
 import { ILeaguesResults } from "@/types/api/leaguesResults";
@@ -208,6 +208,15 @@ export const publicApi = createApi({
         params: { isPast, skip, take },
       }),
     }),
+    getTeamTransfers: builder.query<
+      ITeamTransfer[],
+      { teamId: number; skip: number; take: number }
+    >({
+      query: ({ teamId, skip, take }) => ({
+        url: `/Teams/${teamId}/transfers`,
+        params: { skip, take },
+      }),
+    }),
   }),
 });
 
@@ -383,6 +392,7 @@ export const {
   useGetTeamTrophiesQuery,
   useGetTeamTopPlayersQuery,
   useGetTeamMatchesQuery,
+  useGetTeamTransfersQuery,
 } = publicApi;
 
 export const {

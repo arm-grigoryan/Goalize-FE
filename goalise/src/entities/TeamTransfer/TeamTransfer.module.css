@@ -1,8 +1,14 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 680px;
+}
 .tabsContainer {
     display: flex;
     flex-direction: row;
     gap: 14px;
     margin-top: 30px;
+    flex-shrink: 0;
 }
 .tab {
     display: flex;
@@ -18,6 +24,7 @@
     font-weight: 500;
     text-transform: capitalize;
     width: fit-content;
+    cursor: pointer;
 }
 
 .isActive {
@@ -31,9 +38,41 @@
     inset 0 0 15px rgba(246, 70, 93, 0.3);
   z-index: 99;
 }
+.scrollContainer {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 16px;
+}
+.scrollContainer::-webkit-scrollbar {
+    width: 6px;
+}
+.scrollContainer::-webkit-scrollbar-thumb {
+    background-color: #54a2fe;
+    border-radius: 4px;
+}
+.scrollContainer::-webkit-scrollbar-track {
+    background-color: transparent;
+}
 .transfers {
     display: flex;
     flex-direction: column;
     margin-top: 20px;
     gap: 12px;
+}
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    padding: 16px 0;
+}
+.loader {
+    border: 6px solid rgba(15, 15, 15, 0.11);
+    border-top: 6px solid #f53a53;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
