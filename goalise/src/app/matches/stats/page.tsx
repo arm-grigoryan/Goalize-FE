@@ -1,3 +1,7 @@
+import Statistics from "@/components/Statistics";
+
 export default function MatchesStats() {
-  return <div>this is matches stats tab</div>;
+  return <div>
+    <Statistics />
+  </div>;
 }

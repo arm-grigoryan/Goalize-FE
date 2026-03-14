@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./NotificationPopUp.module.css";
 import { INotificationPopUpProps } from "./NotificationPopUp.types";
+import Image from "next/image";
 
 export const NotificationPopUp: React.FC<INotificationPopUpProps> = ({
   icon,
@@ -12,7 +13,7 @@ export const NotificationPopUp: React.FC<INotificationPopUpProps> = ({
       <div className={styles.info}>
         {icon && (
           <div className={styles.icon}>
-            <img src={icon} alt="" className={styles.iconImage} />
+            <Image src={icon} alt="" className={styles.iconImage} />
           </div>
         )}
         <div className={styles.content}>

@@ -228,7 +228,6 @@ export const LeaguesHeader = () => {
                 </div>
               </div>
             </div>
-
             <div className={styles.registration_closed_container}>
               {leagueData?.state === "Finished" ? (
                 <div className={styles.winner_prize_container}>

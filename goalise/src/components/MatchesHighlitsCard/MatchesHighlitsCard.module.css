@@ -1,0 +1,242 @@
+.container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 100px 1fr 120px;
+    flex-direction: row;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 10px;
+    background: rgba(21, 25, 30, 0.40);
+    backdrop-filter: blur(10px);
+}
+
+.shirtWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    border-right: 1px solid rgba(255, 255, 255, 0.10);
+    padding: 0 20px;
+}
+.playerNumber {
+    color: #E8E8E8;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.iconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.redGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle,
+      rgba(245, 58, 83, 1),
+      rgba(255, 0, 80, 0.1),
+      transparent 90%);
+  filter: blur(6px);
+  z-index: 0;
+}
+.icon {
+    z-index: 1;
+}
+.infoWrapper {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    width: 100%;
+    justify-content: space-between;
+    padding: 16px 0 16px 20px;
+}
+.playerInfoWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+.playerImage {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+}
+.playerName {
+    color: #FFF;
+    text-align: right;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+
+.assistWrapper {
+    display: flex;
+    flex-direction: row;
+}
+.assistInfoWrapper {
+    display: flex;
+    flex-direction: column;
+   margin-right: 20px;
+}
+.assistWrapper span {
+    color: rgba(255, 255, 255, 0.50);
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.assistName {
+    color: rgba(255, 255, 255, 0.70);
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+
+.goal {
+    display: flex;
+    border-radius: inherit;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(rgba(21, 25, 30, 0.40), rgba(21, 25, 30, 0.40)), 
+    linear-gradient(to left, #54a3fe83, rgba(79 104 135 / 0%));
+    z-index: 10;
+    height: 100%;
+}
+
+  .goal::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1px;
+    border-radius: 8px;
+    background: linear-gradient(to left, #54A2FE 10%, transparent 60%);
+    -webkit-mask: linear-gradient(#54A2fe 0 0) content-box, linear-gradient(#54A2FE 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.goal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    color: #E8E8E8;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.icon {
+    width: 22px;
+    height: 24px;
+    z-index: 1;
+}
+.blueGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle,
+      #54A2FE,
+      rgba(63, 175, 250, 0.7),
+      transparent 70%);
+  filter: blur(6px);
+  z-index: 0;
+}
+
+.redCard {
+    display: flex;
+    border-radius: inherit;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(rgba(21, 25, 30, 0.40), rgba(21, 25, 30, 0.40)), 
+    linear-gradient(to left, #f53a5390, rgba(79 104 135 / 0%));
+    z-index: 10;
+    height: 100%;
+}
+
+  .redCard::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1px;
+    border-radius: 8px;
+    background: linear-gradient(to left, #F53A53 10%, transparent 60%);
+    -webkit-mask: linear-gradient(#F53A53 0 0) content-box, linear-gradient(#F53A53 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    height: 100%;
+}
+
+.redCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    color: #E8E8E8;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.yellowCard {
+    display: flex;
+    border-radius: inherit;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(rgba(21, 25, 30, 0.40), rgba(21, 25, 30, 0.40)), 
+    linear-gradient(to left, rgba(245, 176, 58, 0.526), rgba(79 104 135 / 0%));
+    z-index: 10;
+    height: 100%;
+}
+
+  .yellowCard::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1px;
+    border-radius: 8px;
+    background: linear-gradient(to left, rgba(245, 176, 58, 1) 10%, transparent 60%);
+    -webkit-mask: linear-gradient(rgba(245, 176, 58, 1) 0 0) content-box, linear-gradient(rgba(245, 176, 58, 1) 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    height: 100%;
+}
+
+.yellowCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    color: #E8E8E8;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.yellowGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle,
+      rgba(245, 176, 58, 1),
+      rgba(245, 176, 58, 0.7),
+      transparent 70%);
+  filter: blur(6px);
+  z-index: 0;
+}
