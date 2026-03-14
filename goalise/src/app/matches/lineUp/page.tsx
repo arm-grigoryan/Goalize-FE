@@ -1,3 +1,7 @@
+import LineUp from "@/entities/LineUp";
+
 export default function MatchesLineUp() {
-  return <div>this is matches line up tab</div>;
+  return <div>
+          <LineUp />
+  </div>;
 }

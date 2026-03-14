@@ -1,3 +1,7 @@
+import MatchesPage from "@/entities/Matches";
+
 export default function Matches() {
-  return <div>this is matches highlights tab</div>;
+  return <div>
+          <MatchesPage />
+        </div>;
 }
