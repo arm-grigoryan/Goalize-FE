@@ -21,6 +21,7 @@ import { IPlayerProfileMatches } from "@/types/api/PlayerProfilMatches";
 import { IDrowStandings } from "@/types/api/drowStandings";
 import { ITopPlayers, ITeamTopPlayers } from "@/types/api/topPlayers";
 import { ITeamMatchResponse } from "@/types/api/teamMatches";
+import { ISquadPlayer } from "@/types/api/squad";
 import { startLoginRedirect } from "@/shared/auth/oidcService";
 import { setError } from "../slices/errorSlice";
 import { NotificationItemDto } from "@/types/api/notifications";
@@ -217,6 +218,9 @@ export const publicApi = createApi({
         params: { skip, take },
       }),
     }),
+    getTeamSquad: builder.query<ISquadPlayer[], number>({
+      query: (teamId) => `/Teams/${teamId}/squad`,
+    }),
   }),
 });
 
@@ -393,6 +397,7 @@ export const {
   useGetTeamTopPlayersQuery,
   useGetTeamMatchesQuery,
   useGetTeamTransfersQuery,
+  useGetTeamSquadQuery,
 } = publicApi;
 
 export const {
