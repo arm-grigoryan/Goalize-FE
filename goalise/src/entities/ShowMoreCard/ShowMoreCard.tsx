@@ -8,36 +8,45 @@ import invite from '../../assets/pngs/invite.svg';
 
 export interface IShowMoreCardProps {
     isCaptain?: boolean;
+    onMakeCaptain?: () => void;
+    onRemove?: () => void;
+    onEditShirtNumber?: () => void;
+    onInvite?: () => void;
 }
-export const ShowMoreCard: React.FC<IShowMoreCardProps>= ({
-    isCaptain
+
+export const ShowMoreCard: React.FC<IShowMoreCardProps> = ({
+    isCaptain,
+    onMakeCaptain,
+    onRemove,
+    onEditShirtNumber,
+    onInvite,
 }) => {
     return <div className={styles.container}>
         {isCaptain ? <div>
-                        <div className={styles.item}>
-                            <div className={`${styles.iconWrapper} ${styles.redGlow}`}> 
+                        <div className={styles.item} onClick={onMakeCaptain}>
+                            <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
                                 <Image src={chessPiece} alt="" className={styles.icon}/>
                             </div>
-                            <div className={styles.text}>  Make Captain </div>
+                            <div className={styles.text}>Make Captain</div>
                         </div>
-                        <div className={styles.item}>
-                            <div className={`${styles.iconWrapper} ${styles.redGlow}`}> 
+                        <div className={styles.item} onClick={onRemove}>
+                            <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
                                 <Image src={remove} alt="" className={styles.icon}/>
                             </div>
-                            <div className={styles.text}> Remove</div>
+                            <div className={styles.text}>Remove</div>
                         </div>
-                        <div className={styles.item}>
-                           <div className={`${styles.iconWrapper} ${styles.redGlow}`}> 
+                        <div className={styles.item} onClick={onEditShirtNumber}>
+                           <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
                              <Image src={shirt} alt="" className={styles.icon}/>
                              </div>
-                            <div className={styles.text}> Edit Shirt Number </div>
+                            <div className={styles.text}>Edit Shirt Number</div>
                         </div>
                     </div> : <div>
-                                <div className={styles.item}>
-                                    <div className={`${styles.iconWrapper} ${styles.redGlow}`}> 
+                                <div className={styles.item} onClick={onInvite}>
+                                    <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
                                         <Image src={invite} alt="" className={styles.icon}/>
                                     </div>
-                                   <div className={styles.text}> Invite </div>
+                                   <div className={styles.text}>Invite</div>
                                 </div>
                             </div>
             }
