@@ -141,5 +141,27 @@
     "backButtonText": "Back to home",
     "notFound": "Oops! This page went out of bounds! ⚽",
     "accessDenied": "Access Denied. You don't have permission to view this content."
+  },
+  "matches": {
+      "statusCard":{
+        "playerStats": {
+          "title": "Stats as Player",
+          "rating": "Rating",
+          "goals": "Goals",
+          "assists": "Assists",
+          "tackles": "Tackles",
+          "interceptions": "Interceptions",
+          "passes": "passes",
+          "shots": "shots"
+        },
+        "goalkeeperStats": {
+          "title": "Stats as Goalkeeper",
+          "rating": "Rating",
+          "saves": "Saves",
+          "goalsConceded": "Goals Conceded",
+          "penaltiesSaved": "Penalties Saved"
+        },
+        "playerProfile": "Player Profile"
+      }
   }
 }

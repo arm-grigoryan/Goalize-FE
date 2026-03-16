@@ -66,6 +66,12 @@
     cursor: pointer;
   }
 }
+.red_text_button {
+  color:#f53a53;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+}
 .red_button_transparant_white_text {
   background-color: transparent;
   border: #f53a53 1px solid;
