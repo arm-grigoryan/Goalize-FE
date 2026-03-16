@@ -1,0 +1,133 @@
+.overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9998;
+}
+.container {
+    display: flex;
+    padding: 27px 24px;
+    flex-direction: column;
+    justify-self: center;
+    align-self: center;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    background-clip: padding-box, border-box;
+    background-origin: border-box;
+    background-image: linear-gradient(rgba(15, 16, 17, 0.97),
+      rgba(15, 16, 17, 0.87)), linear-gradient(to right, #54A2FE, #F6465D);
+    box-shadow:
+    0 0 10px rgba(84, 162, 254, 0.4),
+    0 0 15px rgba(246, 70, 93, 0.3);
+    z-index: 99;
+    width: 470px;
+}
+.titleWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.title {
+    color: #E8E8E8;
+    font-size: 30px;
+    font-weight: 500;
+    text-transform: capitalize; 
+}
+.subTitle {
+    color: #A5A5A5;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.inputsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.editText {
+    color: #7A7A7A;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.inputsWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    width: 100%;
+}
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.inputWrapper input {
+  padding: 12px 10px;
+  font-size: 16px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.166);
+  border-radius: 5px;
+}
+
+.inputWrapper label {
+  position: absolute;
+  left: 10px;
+  top: 14px;
+  font-size: 16px;
+  color: gray;
+  transition: 0.2s;
+  pointer-events: none;
+}
+
+/* when input focused or has text */
+.inputWrapper input:focus + label,
+.inputWrapper input:not(:placeholder-shown) + label {
+  top: 4px;
+  font-size: 12px;
+  color: #555;
+}
+.describtionWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.describtion {
+    color: #A5A5A5;
+    font-size: 14px;
+    font-weight: 400;
+}
+.iconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon {
+    z-index: 1;
+    width: 14px;
+    height: 14px;
+}
+.blueGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle,
+      #54A2FE,
+      rgba(63, 175, 250, 0.7),
+      transparent 70%);
+  filter: blur(6px);
+  z-index: 0;
+}
