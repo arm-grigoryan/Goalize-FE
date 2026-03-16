@@ -1,45 +1,108 @@
-import React from "react";
+'use client'
+import React, { useState } from "react";
 import styles from './EditShirtNumberPopUp.module.css';
 import Image from "next/image";
 import redArrowRight from '../../assets/pngs/redArrowRight.svg';
 import shirt from '../../assets/pngs/shirt.svg';
 import Button from "@/shared/Button";
 import arrowRightIcon from '../../assets/pngs/arrowRightIcon.png';
+import { ISquadPlayer } from "@/types/api/squad";
+
 export interface IEditShirtNumberPopUpProps {
-    shirtNumber?: string;
-    onButtonClick: () => void;
+  player: ISquadPlayer;
+  squad: ISquadPlayer[];
+  onClose: () => void;
+  onSubmit: (newShirtNumber: number) => void;
+  isLoading?: boolean;
 }
+
 export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
-    shirtNumber,
-    onButtonClick
+  player,
+  squad,
+  onClose,
+  onSubmit,
+  isLoading,
 }) => {
-    return <div className={styles.overlay}>
-        <div className={styles.container}>
-            <div className={styles.titleWrapper}> 
-                <div className={styles.title}>Edit Shirt Number</div>
-                <div className={styles.subTitle}>Your winning journey starts here!</div>
+  const [value, setValue] = useState('');
+
+  const parsed = parseInt(value, 10);
+  const isValid = value !== '' && !isNaN(parsed) && parsed >= 1 && parsed <= 26;
+
+  const conflictPlayer = isValid
+    ? squad.find((p) => p.shirtNumber === parsed && p.playerId !== player.playerId)
+    : null;
+
+  const message = isValid
+    ? conflictPlayer
+      ? `${player.firstName} ${player.lastName} and ${conflictPlayer.firstName} ${conflictPlayer.lastName} will be switched`
+      : 'Chosen shirt number is free'
+    : '';
+
+  const handleSubmit = () => {
+    if (!isValid || isLoading) return;
+    onSubmit(parsed);
+  };
+
+  return (
+    <div className={styles.overlay} onClick={onClose}>
+      <div className={styles.container} onClick={(e) => e.stopPropagation()}>
+        <div className={styles.titleWrapper}>
+          <div className={styles.title}>Edit Shirt Number</div>
+          <div className={styles.subTitle}>Your winning journey starts here!</div>
+        </div>
+
+        <div className={styles.inputsContainer}>
+          <div className={styles.editText}>Edit Shirt Number</div>
+          <div className={styles.inputsWrapper}>
+            <div className={styles.inputWrapper}>
+              <input
+                type="text"
+                value={player.shirtNumber}
+                readOnly
+                className={styles.readOnly}
+              />
             </div>
-            <div className={styles.inputsContainer}>
-                <div className={styles.editText}>Edit Shirt Number</div>
-                <div className={styles.inputsWrapper}>
-                    <div className={styles.inputWrapper}>
-                        <input type="text" required />
-                            <label>Current</label>
-                    </div>
-                    <Image src={redArrowRight} alt=""/>
-                    <div className={styles.inputWrapper}>
-                        <input type="text" required />
-                            <label>New</label>
-                    </div>
-                </div>
+            <Image src={redArrowRight} alt="" />
+            <div className={styles.inputWrapper}>
+              <input
+                type="number"
+                min={1}
+                max={26}
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                placeholder=" "
+              />
+              <label>New</label>
             </div>
-            <div className={styles.describtionWrapper}>
-                <div className={`${styles.iconWrapper} ${styles.blueGlow}`}> 
-                    <Image src={shirt} alt="" className={styles.icon}/>
-                </div>
-                <div className={styles.describtion}>The player with shirt number {shirtNumber} will be switch to new number</div>
+          </div>
+        </div>
+
+        {message && (
+          <div className={styles.describtionWrapper}>
+            <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
+              <Image src={shirt} alt="" className={styles.icon} />
             </div>
-            <Button className="gray_buttonIcon" handleClick={onButtonClick} content="Save" icon={arrowRightIcon}/>
+            <div className={`${styles.describtion} ${conflictPlayer ? styles.warning : styles.success}`}>
+              {message}
+            </div>
+          </div>
+        )}
+
+        <div className={styles.actions}>
+          <Button
+            className="gray_buttonIcon"
+            handleClick={handleSubmit}
+            content="Save"
+            icon={arrowRightIcon}
+            disabled={!isValid || isLoading}
+          />
+          <Button
+            className="red_button_transparant_white_text"
+            handleClick={onClose}
+            content="Cancel"
+          />
+        </div>
+      </div>
     </div>
-    </div> 
-}
+  );
+};

@@ -1,10 +1,11 @@
 'use client'
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from './SquadCard.module.css';
 import Image from "next/image";
 import dots from '../../assets/pngs/dots.svg';
 import Link from "next/link";
 import profilePictureFallback from '../../assets/pngs/profilePictureIcon.svg';
+import ShowMoreCard from "../ShowMoreCard";
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -20,6 +21,11 @@ export interface ISquadCardProps {
   shirtNumber: number;
   picture: string | null;
   playerId: number;
+  menuType: 'captain' | 'invite' | 'none';
+  onMakeCaptain?: () => void;
+  onRemove?: () => void;
+  onEditShirtNumber?: () => void;
+  onInvite?: () => void;
 }
 
 export const SquadCard: React.FC<ISquadCardProps> = ({
@@ -27,7 +33,26 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
   shirtNumber,
   picture,
   playerId,
+  menuType,
+  onMakeCaptain,
+  onRemove,
+  onEditShirtNumber,
+  onInvite,
 }) => {
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showMenu) return;
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [showMenu]);
+
   const resolvedPicture =
     picture && isValidUrl(picture) ? picture : profilePictureFallback;
 
@@ -52,7 +77,29 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
         <Link href={`/profile/${playerId}`} className={styles.teamName}>
           {playerName}
         </Link>
-        <Image src={dots} alt="" className={styles.more} />
+        {menuType !== 'none' && (
+          <div className={styles.menuWrapper} ref={menuRef}>
+            <Image
+              src={dots}
+              alt=""
+              width={24}
+              height={24}
+              className={styles.more}
+              onClick={() => setShowMenu((prev) => !prev)}
+            />
+            {showMenu && (
+              <div className={styles.menuDropdown}>
+                <ShowMoreCard
+                  isCaptain={menuType === 'captain'}
+                  onMakeCaptain={() => { setShowMenu(false); onMakeCaptain?.(); }}
+                  onRemove={() => { setShowMenu(false); onRemove?.(); }}
+                  onEditShirtNumber={() => { setShowMenu(false); onEditShirtNumber?.(); }}
+                  onInvite={() => { setShowMenu(false); onInvite?.(); }}
+                />
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

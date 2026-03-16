@@ -369,6 +369,16 @@ export const api = createApi({
         body: formData,
       }),
     }),
+    updateShirtNumber: builder.mutation<
+      void,
+      { teamId: number; playerId: number; shirtNumber: number }
+    >({
+      query: ({ teamId, playerId, shirtNumber }) => ({
+        url: `/Teams/${teamId}/members/${playerId}/shirt-number`,
+        method: "PUT",
+        body: { number: shirtNumber },
+      }),
+    }),
   }),
 });
 
@@ -416,4 +426,5 @@ export const {
   useRespondToTeamInvitationMutation,
   useRespondToTeamApplicationMutation,
   useCreateTeamMutation,
+  useUpdateShirtNumberMutation,
 } = api;

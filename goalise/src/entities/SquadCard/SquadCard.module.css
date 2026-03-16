@@ -66,10 +66,23 @@
     text-transform: capitalize; 
     cursor: pointer;
 }
+.menuWrapper {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+}
+
 .more {
     display: flex;
-    position: absolute;
-    top: 0;
-    right: 0;
     cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.menuDropdown {
+    position: absolute;
+    top: 28px;
+    right: 0;
+    z-index: 100;
+    min-width: 220px;
 }

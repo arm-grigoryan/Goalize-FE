@@ -131,3 +131,23 @@
   filter: blur(6px);
   z-index: 0;
 }
+
+.readOnly {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.warning {
+  color: #f6aa3a;
+}
+
+.success {
+  color: #4caf7d;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
