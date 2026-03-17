@@ -1,0 +1,215 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9998;
+}
+.container {
+    display: flex;
+    max-width: 618px;
+    width: 100%;
+    padding: 27px 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 23px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #101010;
+    border-radius: 15px;
+    border: 1px solid transparent;
+    background-clip: padding-box, border-box;
+    background-origin: border-box;
+    background-image: linear-gradient(
+        rgba(15, 16, 17, 0.96),
+        rgba(15, 16, 17, 0.95)
+    ), linear-gradient(to right, #54A2FE, #F6465D);
+    box-shadow:
+        0 0 10px rgba(84, 162, 254, 0.4),
+        0 0 15px rgba(246, 70, 93, 0.3);
+    z-index: 9999;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+.titleWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.title {
+    color: #E8E8E8;
+    font-family: Onest;
+    font-size: 30px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.subTitle {
+    color: #A5A5A5;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.imageWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 26px;
+    justify-content: center;
+    align-items: center;
+}
+.image {
+    width: 114px;
+    height: 130px;
+}
+.editWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.editIcon {
+    width: 27px;
+    height: 26px;
+}
+.editText {
+    color: #939393;
+    font-size: 16px;
+    font-weight: 300;
+}
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+.label {
+    color: #7A7A7A;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+}
+.inputWrapper {
+    width: 100%;
+}
+.inputWithIcon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.inputIcon {
+    position: absolute;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+.input {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #4B4B4B;
+    background: #1717176d;
+    padding: 16px 10px;
+    padding-left: 40px;
+    color: #E8E8E8;
+    font-size: 14px;
+    outline: none;
+}
+.buttonWrappper {
+    width: 100%;
+}
+.dragOver {
+    border: 2px dashed #54A2FE;
+    border-radius: 10px;
+    background: rgba(84, 162, 254, 0.06);
+}
+.inputError {
+    border-bottom-color: #F53A53;
+}
+.error {
+    color: #F53A53;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+/* Crop modal */
+.cropOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cropModal {
+    background: #1a1a1a;
+    border-radius: 16px;
+    border: 1px solid #2e2e2e;
+    width: 420px;
+    max-width: calc(100vw - 32px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.cropArea {
+    position: relative;
+    width: 100%;
+    height: 340px;
+    background: #000;
+}
+.cropControls {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+}
+.cropSliderLabel {
+    color: #7a7a7a;
+    font-size: 13px;
+}
+.cropSlider {
+    width: 100%;
+    accent-color: #54A2FE;
+    cursor: pointer;
+}
+.cropButtons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+.cropCancelBtn {
+    background: transparent;
+    border: 1px solid #3a3a3a;
+    border-radius: 100px;
+    color: #a5a5a5;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+.cropCancelBtn:hover {
+    border-color: #5a5a5a;
+}
+.cropSaveBtn {
+    background: white;
+    border: none;
+    border-radius: 100px;
+    color: #171717;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+.cropSaveBtn:hover {
+    opacity: 0.88;
+}

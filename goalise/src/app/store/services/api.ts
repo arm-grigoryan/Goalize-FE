@@ -369,6 +369,19 @@ export const api = createApi({
         body: formData,
       }),
     }),
+    updateTeam: builder.mutation<void, { teamId: number; formData: FormData }>({
+      query: ({ teamId, formData }) => ({
+        url: `/Teams/${teamId}`,
+        method: "PUT",
+        body: formData,
+      }),
+    }),
+    applyToTeam: builder.mutation<void, { teamId: number }>({
+      query: ({ teamId }) => ({
+        url: `/Teams/${teamId}/applications`,
+        method: "POST",
+      }),
+    }),
     updateShirtNumber: builder.mutation<
       void,
       { teamId: number; playerId: number; shirtNumber: number }
@@ -426,5 +439,7 @@ export const {
   useRespondToTeamInvitationMutation,
   useRespondToTeamApplicationMutation,
   useCreateTeamMutation,
+  useUpdateTeamMutation,
+  useApplyToTeamMutation,
   useUpdateShirtNumberMutation,
 } = api;
