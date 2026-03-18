@@ -14,7 +14,7 @@ import { ILeaguesGroup } from "@/types/api/leaguesGroup";
 import { ILeaguesResults } from "@/types/api/leaguesResults";
 import { ITeam, ITeamJoined, ITeamListItem, ITeamNextMatch, ITeamTrophy } from "@/types/api/temas";
 import { IPlayerProfile } from "@/types/api/userInfo";
-import type { SearchResponse } from "@/types/api/search";
+import type { SearchResponse, PlayerInviteResult } from "@/types/api/search";
 import { IPlayerStats } from "@/types/api/playerStats";
 import { IPlayerTransferHistory } from "@/types/api/playerTransferHistory";
 import { IPlayerProfileMatches } from "@/types/api/PlayerProfilMatches";
@@ -272,6 +272,12 @@ export const api = createApi({
         >;
       },
     }),
+    getPlayersInvite: builder.query<PlayerInviteResult[], string>({
+      query: (searchText) => ({
+        url: `/Search/players-invite`,
+        params: { searchText },
+      }),
+    }),
     sendTeamInvitation: builder.mutation<
       void,
       { teamId: number; playerId: number }
@@ -425,6 +431,7 @@ export const {
 
 export const {
   useGetUserInfoQuery,
+  useLazyGetPlayersInviteQuery,
   useGetPlayerBasicInfoQuery,
   useGetTeamDraftQuery,
   useGetTeamInfoQuery,
