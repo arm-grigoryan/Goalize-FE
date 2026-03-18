@@ -161,9 +161,55 @@
     color: #E8E8E8;
     font-size: 14px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
 }
 .searchDropdownItem:hover {
     background: #2a2a2a;
+}
+.searchDropdownItemDisabled {
+    opacity: 0.45;
+    cursor: default;
+}
+.searchDropdownItemDisabled:hover {
+    background: transparent;
+}
+.warningIcon {
+    flex-shrink: 0;
+    cursor: pointer;
+    opacity: 1;
+    pointer-events: all;
+}
+.warningTooltip {
+    position: fixed;
+    z-index: 10001;
+    background: #1a1a1a;
+    border: 1px solid #f53a53;
+    border-radius: 10px;
+    padding: 12px 14px;
+    width: 220px;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.warningTooltipTitle {
+    color: #E8E8E8;
+    font-size: 13px;
+    font-weight: 600;
+}
+.warningTooltipDesc {
+    color: #a5a5a5;
+    font-size: 12px;
+    line-height: 1.5;
+}
+.warningTooltipFooter {
+    color: #f53a53;
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 4px;
 }
 .chipsContainer {
     display: flex;

@@ -13,8 +13,10 @@ import searchIconGray from "../../assets/pngs/searchIconGray.svg";
 import abbreviationIcon from "../../assets/pngs/abbreviation.svg";
 import inviteIcon from "../../assets/pngs/inviteIcon.svg";
 import Button from "@/shared/Button";
-import { useCreateTeamMutation } from "@/app/store/services/api";
-import { useSearchAutoComplete } from "@/hooks/useSearchAutoComplete";
+import { useCreateTeamMutation, useLazyGetPlayersInviteQuery } from "@/app/store/services/api";
+import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
+import warningIcon from "../../assets/pngs/error.svg";
+import type { PlayerInviteResult } from "@/types/api/search";
 
 type CreateTeamFormData = {
   Name: string;
@@ -71,6 +73,12 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
   open,
   onClose,
 }) => {
+  const [warningTooltip, setWarningTooltip] = useState<{
+    x: number;
+    y: number;
+    player: PlayerInviteResult;
+  } | null>(null);
+
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [logoError, setLogoError] = useState<string | null>(null);
@@ -78,6 +86,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
   const [invitedPlayers, setInvitedPlayers] = useState<InvitedPlayer[]>([]);
   const [inviteQuery, setInviteQuery] = useState("");
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [showCropper, setShowCropper] = useState(false);
@@ -86,9 +95,20 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const debounceRef = useRef<number | null>(null);
 
-  const { results: searchResults, isLoading: isSearchLoading } =
-    useSearchAutoComplete(inviteQuery);
+  const [triggerPlayersInvite, { data: inviteResults, isFetching: isSearchLoading }] =
+    useLazyGetPlayersInviteQuery();
+
+  const handleInviteQueryChange = (value: string) => {
+    setInviteQuery(value);
+    if (debounceRef.current) window.clearTimeout(debounceRef.current);
+    const q = value.trim();
+    if (q.length < 1) return;
+    debounceRef.current = window.setTimeout(() => {
+      triggerPlayersInvite(q);
+    }, 300);
+  };
 
   const [createTeam, { isLoading: isSubmitting }] = useCreateTeamMutation();
 
@@ -211,17 +231,31 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
 
     try {
       await createTeam(formData).unwrap();
-      handleClose();
-    } catch {
-      setSubmitError("Failed to create team. Please try again.");
+      setShowSuccessModal(true);
+    } catch (error) {
+      const errorData = error as { data?: { errorMessage?: string } };
+      setSubmitError(
+        errorData?.data?.errorMessage || "Failed to create team. Please try again."
+      );
     }
   };
 
-  const playerResults = searchResults.players.filter(
-    (p) => !invitedPlayers.some((ip) => ip.id === p.id),
+  const playerResults = (inviteResults ?? []).filter(
+    (p) => !invitedPlayers.some((ip) => ip.id === p.playerId),
   );
 
-  if (!open) return null;
+  if (!open && !showSuccessModal) return null;
+
+  if (showSuccessModal) {
+    return (
+      <PlayerInvitationCard
+        onCancelButtonClick={handleClose}
+        title="Team Creation Successful"
+        description="Your team has been created successfully!"
+        cancelButtonText="Close"
+      />
+    );
+  }
 
   return (
     <>
@@ -334,7 +368,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                   className={styles.input}
                   placeholder="Search players..."
                   value={inviteQuery}
-                  onChange={(e) => setInviteQuery(e.target.value)}
+                  onChange={(e) => handleInviteQueryChange(e.target.value)}
                   autoComplete="off"
                 />
                 <Image
@@ -357,13 +391,29 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                   {!isSearchLoading &&
                     playerResults.map((player) => (
                       <div
-                        key={player.id}
-                        className={styles.searchDropdownItem}
-                        onClick={() =>
-                          handleAddPlayer(player.id, player.mainText)
-                        }
+                        key={player.playerId}
+                        className={`${styles.searchDropdownItem} ${player.showDisabled ? styles.searchDropdownItemDisabled : ""}`}
+                        onClick={() => {
+                          if (!player.showDisabled) {
+                            handleAddPlayer(player.playerId, player.fullName);
+                          }
+                        }}
                       >
-                        {player.mainText}
+                        <span>{player.fullName}</span>
+                        {player.showDisabled && (
+                          <Image
+                            src={warningIcon}
+                            alt="warning"
+                            className={styles.warningIcon}
+                            width={16}
+                            height={16}
+                            onMouseEnter={(e) => {
+                              const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                              setWarningTooltip({ x: rect.right + 8, y: rect.top, player });
+                            }}
+                            onMouseLeave={() => setWarningTooltip(null)}
+                          />
+                        )}
                       </div>
                     ))}
                 </div>
@@ -449,6 +499,21 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {warningTooltip && (
+        <div
+          className={styles.warningTooltip}
+          style={{ left: warningTooltip.x, top: warningTooltip.y }}
+        >
+          <div className={styles.warningTooltipTitle}>Can&apos;t Send Invite</div>
+          <div className={styles.warningTooltipDesc}>
+            This player is unable to receive an invite due to an incomplete profile.
+          </div>
+          <div className={styles.warningTooltipFooter}>
+            Required: {warningTooltip.player.requiredCompletionPercentage}% &nbsp;|&nbsp; Current: {warningTooltip.player.completionPercentage}%
           </div>
         </div>
       )}
