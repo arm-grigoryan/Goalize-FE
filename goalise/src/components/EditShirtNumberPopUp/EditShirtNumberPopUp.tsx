@@ -26,13 +26,16 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
   const [value, setValue] = useState('');
 
   const parsed = parseInt(value, 10);
+  const isOutOfRange = value !== '' && !isNaN(parsed) && (parsed < 1 || parsed > 26);
   const isValid = value !== '' && !isNaN(parsed) && parsed >= 1 && parsed <= 26;
 
   const conflictPlayer = isValid
     ? squad.find((p) => p.shirtNumber === parsed && p.playerId !== player.playerId)
     : null;
 
-  const message = isValid
+  const message = isOutOfRange
+    ? 'Shirt number must be between 1 and 26'
+    : isValid
     ? conflictPlayer
       ? `${player.firstName} ${player.lastName} and ${conflictPlayer.firstName} ${conflictPlayer.lastName} will be switched`
       : 'Chosen shirt number is free'
@@ -82,7 +85,7 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
             <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
               <Image src={shirt} alt="" className={styles.icon} />
             </div>
-            <div className={`${styles.describtion} ${conflictPlayer ? styles.warning : styles.success}`}>
+            <div className={`${styles.describtion} ${isOutOfRange || conflictPlayer ? styles.warning : styles.success}`}>
               {message}
             </div>
           </div>

@@ -166,6 +166,7 @@ export const Squad: React.FC = () => {
             picture={player.picture}
             playerId={player.playerId}
             menuType={menuType}
+            isOwnCard={player.playerId === userPlayerId}
             onMakeCaptain={() => handleMakeCaptainClick(player)}
             onRemove={() => handleRemoveClick(player)}
             onEditShirtNumber={() => handleEditShirtNumberClick(player)}
