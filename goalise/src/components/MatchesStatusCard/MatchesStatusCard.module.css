@@ -136,3 +136,7 @@
     font-weight: 400;
     text-decoration: none;
 }
+
+.mobile .container{
+    width: 100%;
+}

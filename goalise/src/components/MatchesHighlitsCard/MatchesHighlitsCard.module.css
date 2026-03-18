@@ -2,13 +2,14 @@
     width: 100%;
     display: grid;
     grid-template-columns: 100px 1fr 120px;
-    flex-direction: row;
     border: 1px solid rgba(255, 255, 255, 0.10);
     border-radius: 10px;
     background: rgba(21, 25, 30, 0.40);
     backdrop-filter: blur(10px);
 }
-
+.swapped {
+    grid-template-columns: 140px  1fr  100px;
+}
 .shirtWrapper {
     display: flex;
     flex-direction: row;
@@ -17,12 +18,19 @@
     border-right: 1px solid rgba(255, 255, 255, 0.10);
     padding: 0 20px;
 }
+
+.swapped .shirtWrapper {
+    border-right: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.10);
+}
+
 .playerNumber {
     color: #E8E8E8;
     font-size: 16px;
     font-weight: 500;
     text-transform: capitalize;
 }
+
 .iconWrapper {
   position: relative;
   display: flex;
@@ -30,21 +38,44 @@
   justify-content: center;
 }
 
-.redGlow::before {
+.redGlow::before,
+.yellowGlow::before,
+.blueGlow::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
+  filter: blur(6px);
+  z-index: 0;
+}
+
+.redGlow::before {
   background: radial-gradient(circle,
       rgba(245, 58, 83, 1),
       rgba(255, 0, 80, 0.1),
       transparent 90%);
-  filter: blur(6px);
-  z-index: 0;
 }
+
+.yellowGlow::before {
+  background: radial-gradient(circle,
+      rgba(245, 176, 58, 1),
+      rgba(245, 176, 58, 0.7),
+      transparent 70%);
+}
+
+.blueGlow::before {
+  background: radial-gradient(circle,
+      #54A2FE,
+      rgba(63, 175, 250, 0.7),
+      transparent 70%);
+}
+
 .icon {
     z-index: 1;
+    width: 22px;
+    height: 24px;
 }
+
 .infoWrapper {
     display: grid;
     grid-template-columns: 1fr 220px;
@@ -52,11 +83,26 @@
     justify-content: space-between;
     padding: 16px 0 16px 20px;
 }
+
+.swapped .infoWrapper {
+    grid-template-columns: 220px 1fr;
+    padding-left: 0;
+    padding-right: 20px;
+}
+
 .playerInfoWrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 12px;
+}
+
+.infoWrapper {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    width: 100%;
+    justify-content: space-between;
+    padding: 16px 0 16px 20px;
 }
 .playerImage {
     width: 38px;
@@ -75,6 +121,9 @@
 .assistWrapper {
     display: flex;
     flex-direction: row;
+}
+.swapped .assistInfoWrapper {
+    padding-left: 20px;
 }
 .assistInfoWrapper {
     display: flex;
@@ -106,7 +155,7 @@
     height: 100%;
 }
 
-  .goal::before{
+.goal::before{
     content: "";
     position: absolute;
     top: 0;
@@ -121,7 +170,13 @@
     mask-composite: exclude;
     pointer-events: none;
 }
-
+.swapped .goal {
+    background-image: linear-gradient(rgba(21, 25, 30, 0.40), rgba(21, 25, 30, 0.40)), 
+     linear-gradient(to right, #54a3fe83, rgba(79 104 135 / 0%));
+}
+.swapped .goal::before {
+  background: linear-gradient(to right, #54A2FE 10%, transparent 60%);
+}
 .goal {
     display: flex;
     flex-direction: row;
@@ -189,7 +244,10 @@
     font-weight: 500;
     text-transform: capitalize;
 }
-
+.swapped .redCard {
+    background-image: linear-gradient(rgba(21, 25, 30, 0.40), rgba(21, 25, 30, 0.40)), 
+                      linear-gradient(to right, #f53a5390, rgba(79 104 135 / 0%));
+}
 .yellowCard {
     display: flex;
     border-radius: inherit;
@@ -200,8 +258,11 @@
     z-index: 10;
     height: 100%;
 }
-
-  .yellowCard::before{
+.swapped .yellowCard {
+    background-image: linear-gradient(rgba(21, 25, 30, 0.40), rgba(21, 25, 30, 0.40)), 
+                      linear-gradient(to right, rgba(245, 176, 58, 0.526), rgba(79 104 135 / 0%));
+}
+.yellowCard::before{
     content: "";
     position: absolute;
     top: 0;
@@ -217,7 +278,19 @@
     pointer-events: none;
     height: 100%;
 }
+.swapped .redCard::before {
+    background: linear-gradient(to right, #F53A53 10%, transparent 60%);
+}
 
+/* YellowCard swapped */
+.swapped .yellowCard::before {
+    background: linear-gradient(to right, rgba(245, 176, 58, 1) 10%, transparent 60%);
+}
+.swapped .rightWrapper {
+    display: flex;
+    align-self: flex-end;
+    height: 100%;
+}
 .yellowCard {
     display: flex;
     flex-direction: row;
@@ -239,4 +312,68 @@
       transparent 70%);
   filter: blur(6px);
   z-index: 0;
+}
+
+.mobile {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile .infoWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: unset;
+    padding: 20px;
+}
+
+.mobile .rightWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.mobile .shirtWrapper {
+    border: none;
+    padding: unset;
+}
+.centered {
+    justify-content: center !important;
+}
+.mobile .goal,
+.mobile .redCard,
+.mobile .yellowCard {
+    height: 100%;
+    padding-right: 20px;
+}
+
+.mobile .goal::before,
+.mobile .yellowCard::before,
+.mobile .redCard::before {
+    height: 100%;
+}
+.mobile .assistWrapper {
+    padding:20px;
+}
+.swappedWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.swapped {
+    flex-direction: column-reverse;
+}
+.mobile {
+ .swapped {
+    margin-left: 20px;
+}
+}
+
+.mobile  {
+    margin-right: 20px;
+}
+.swapped .goal,
+.swapped .yellowCard,
+.swapped .redCard {
+    padding-left: 20px;
 }

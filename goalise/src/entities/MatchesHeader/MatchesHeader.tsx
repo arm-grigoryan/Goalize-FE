@@ -8,20 +8,27 @@ import Link from "next/link";
 import Breadcrumbs from "../Breadcrumb/Breadcrumb";
 import { LiveDateLabel } from "../LiveDateLabel/LiveDateLabel";
 import localFont from "next/font/local";
-
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import winnerIcon from '../../assets/pngs/winnerIcon.svg';
+import winnerIconSwappped from '../../assets/pngs/winnerIconSwapped.svg';
 const chopsic = localFont({
    src: "../../../src/app/fonts/chopsic/Chopsic.otf",
 })
 
 export const MatchesHeader: React.FC = () => {
-    return <div className={styles.container}>
+   const { width } = useWindowSize();
+   const isMobile = width <= MEDIA_TABLET_SMALL;
+    const isWinner = true;
+    return <div className={`${styles.container} ${isMobile ? styles.mobileContainer : ''}`}>
         <div className={styles.leftPart}>
             <div className={styles.teamInfo}>
                 <Image src={teamLogo} alt="Team Logo" className={styles.teamLogo}/>
-                <Link href={'#'} className={styles.leagueName}> League Name</Link>
+                {!isMobile && <Link href={'#'} className={styles.leagueName}> League Name</Link>}
             </div>
-            <CustomDivider orientation="horizontal" flexItem />
+            {!isMobile &&<CustomDivider orientation="horizontal" flexItem />}
             <div className={styles.breadcrumbsWrapper}>
+              {isMobile && <Link href={'#'} className={styles.leagueName}> League Name</Link>}
                 <Breadcrumbs 
                     items={[
                         { label: "Teams", href: "#" }, 
@@ -33,8 +40,8 @@ export const MatchesHeader: React.FC = () => {
                     ]} />
             </div>
         </div>
-        <CustomDivider orientation="vertical" flexItem />
-
+        {!isMobile && <CustomDivider orientation="vertical" flexItem />}
+        {isMobile && <CustomDivider orientation="horizontal" flexItem />}
         <div className={styles.rightPart}>
         <div
           className={styles.matchWrapper}
@@ -58,15 +65,21 @@ export const MatchesHeader: React.FC = () => {
           <div className={styles.matchCenterCol}>
             <LiveDateLabel isLive={true} />
             <div className={styles.scoreWrapper}>
-                <div className={`${styles.score} ${chopsic.className}`}>2</div>
-                <div className={`${styles.score} ${chopsic.className}`}>:</div>
-                <div className={`${styles.score} ${chopsic.className}`}>3</div>
+                <div className={styles.scoreIconWRapper}>
+                  <div className={`${styles.score} ${chopsic.className}`}>2</div>
+                  {isWinner && <Image src={winnerIcon} alt="" />} 
+                </div>
+                {!isMobile && <div className={`${styles.score} ${chopsic.className}`}>:</div>}
+                <div className={`${isMobile ?  styles.scoreIconWRapperRight :  styles.scoreIconWRapper}`}>
+                  <div className={`${styles.score} ${chopsic.className}`}>3</div>
+                  {isWinner && <Image src={winnerIconSwappped} alt="" />}
+                </div>
             </div>
             {/* <Image src={vsIcon} alt="vs" className={styles.vsIcon} /> */}
             {/* <span className={styles.matchDate}>
               {formatUTCDate(nextMatch.matchDate, "dd/mm/yyyy")}
             </span> */}
-              <Link
+              {/* <Link
                 href={`#`}
                 className={styles.leagueLink}
                 style={{ textDecoration: "none" }}
@@ -83,7 +96,7 @@ export const MatchesHeader: React.FC = () => {
                 <span className={styles.league}>
                   League Name
                 </span>
-              </Link>
+              </Link> */}
           </div>
 
           {/* Opponent */}

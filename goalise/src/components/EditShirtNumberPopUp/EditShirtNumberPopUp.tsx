@@ -7,6 +7,8 @@ import shirt from '../../assets/pngs/shirt.svg';
 import Button from "@/shared/Button";
 import arrowRightIcon from '../../assets/pngs/arrowRightIcon.png';
 import { ISquadPlayer } from "@/types/api/squad";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 
 export interface IEditShirtNumberPopUpProps {
   player: ISquadPlayer;
@@ -23,6 +25,8 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
   onSubmit,
   isLoading,
 }) => {
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
   const [value, setValue] = useState('');
 
   const parsed = parseInt(value, 10);
@@ -47,7 +51,7 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
   };
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
+    <div className={`${styles.overlay} ${isMobile ? styles.mobile : ''}`} onClick={onClose}>
       <div className={styles.container} onClick={(e) => e.stopPropagation()}>
         <div className={styles.titleWrapper}>
           <div className={styles.title}>Edit Shirt Number</div>
