@@ -44,7 +44,7 @@
       "templates": {
         "playerInvited": "{firstName} invites you to join {teamName}. Contact number: {phoneNumber}",
         "playerApplied": "{firstName} applied to join to your team. Contact number: {phoneNumber}",
-        "playerQuit": "{firstName} quited from your team.",
+        "playerQuit": "{firstName} has quit your team.",
         "playerRemoved": "You were removed from team {teamName} by its captain.",
         "playerPromoted": "You were promoted to team captain of {teamName}",
         "shirtNumberChangedTitle": "Changed Shirt Number",
