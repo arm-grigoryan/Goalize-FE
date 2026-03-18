@@ -191,3 +191,11 @@
     rgba(245, 58, 83, 1) 100%
   );
 }
+
+.mobile .progressTextLeft {
+  margin-left: 6px;
+}
+
+.mobile .progressText {
+  margin-right: 6px;
+}

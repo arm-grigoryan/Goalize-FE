@@ -51,6 +51,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 }
 .editText {
     color: #7A7A7A;
@@ -79,6 +80,7 @@
   border: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.166);
   border-radius: 5px;
+  width: 100%;
 }
 
 .inputWrapper label {
@@ -91,7 +93,6 @@
   pointer-events: none;
 }
 
-/* when input focused or has text */
 .inputWrapper input:focus + label,
 .inputWrapper input:not(:placeholder-shown) + label {
   top: 4px;
@@ -150,4 +151,8 @@
   display: flex;
   gap: 12px;
   align-items: center;
+}
+
+.mobile {
+  width: 100%;
 }

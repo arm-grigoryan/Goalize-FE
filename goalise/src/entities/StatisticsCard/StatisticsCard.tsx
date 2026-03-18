@@ -1,5 +1,7 @@
 import React from "react";
 import styles from './StatisticsCard.module.css'
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 export interface IStatisticsCardProps {
     title?: string;
@@ -15,7 +17,8 @@ export const StatisticsCard: React.FC<IStatisticsCardProps> = ({
     leftVariant = "blue",
     rightVariant = "blue"
 }) => {
-
+    const { width } = useWindowSize();
+    const isMobile = width <= MEDIA_TABLET_SMALL;
     const leftClass =
         leftVariant === "red"
             ? `${styles.progressFillLeft} ${styles.red}`
@@ -27,7 +30,7 @@ export const StatisticsCard: React.FC<IStatisticsCardProps> = ({
             : styles.progressFill;
 
     return (
-        <div className={styles.wrapper}>
+        <div className={`${styles.wrapper} ${isMobile ? styles.mobile : ''}`}>
             <div className={styles.title}>{title}</div>
 
             <div className={styles.container}>

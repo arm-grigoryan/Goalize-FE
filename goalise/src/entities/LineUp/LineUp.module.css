@@ -83,3 +83,9 @@
     margin-top: 40px;
     gap: 30px;
 }
+
+@media (max-width: 610px) {
+    .teamsWrapper {
+        grid-template-columns: 1fr;
+    }
+}

@@ -176,3 +176,122 @@
     text-transform: capitalize;
     font-family: "chopsic";
 }
+.scoreIconWRapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.mobileContainer {
+  flex-direction: column;
+  height: unset;
+}
+
+.mobileContainer .leftPart {
+  flex-direction: row;
+    gap: 10px;
+}
+
+@media (max-width: 1060px)  {
+  .match_right_block_inner_wrapper {
+    top: 10px;
+    gap: 8px;
+  }
+  .team_logo {
+    width: 30px;
+  }
+  .score {
+    font-size: 40px;
+  }
+}
+@media (min-width: 1060px) and  (max-width: 1260px) {
+  .match_right_block_inner_wrapper {
+    top: 36px;
+  }
+  .team_logo {
+    width: 60px;
+  }
+  .score {
+    font-size: 60px;
+  }
+}
+
+.mobileContainer .breadcrumbsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding-bottom: 20px;
+}
+
+.mobileContainer .leagueName {
+  border: none;
+  padding: 0;
+}
+.mobileContainer .teamLogo {
+  width: 60px;
+  height: 60px;
+}
+
+.mobileContainer .matchWrapper {
+  flex-direction: column;
+}
+
+.mobileContainer .match_left_block {
+  rotate: 90deg;
+}
+.mobileContainer .match_left_block_inner_wrapper {
+  rotate: 270deg;
+}
+.mobileContainer .match_right_block {
+  rotate: 90deg;
+}
+.mobileContainer .match_right_block_inner_wrapper {
+  rotate: 270deg;
+}
+
+@media (max-width: 390px) {
+  .match_left_block_inner_wrapper {
+    top: 64px;
+  }
+  .match_right_block_inner_wrapper {
+    top: 60px;
+  }
+}
+
+@media (min-width: 390px) and (max-width: 700px) {
+  .match_left_block_inner_wrapper {
+    top: 102px;
+  }
+  .team_logo {
+    width: 80px;
+  }
+  .match_right_block_inner_wrapper {
+    top: 60px;
+  }
+}
+
+.mobileContainer .matchCenterCol {
+  position: absolute;
+}
+
+.mobileContainer .scoreWrapper {
+  flex-direction: column;
+}
+.mobileContainer .scoreIconWRapper {
+  flex-direction: row;
+  position: relative;
+  top: 215px;
+  left: 144px;
+}
+
+.scoreIconWRapperRight {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  top: 285px;
+  right: 80px;
+}
+
+.mobileContainer .rightPart {
+      margin: 10px 0
+}

@@ -116,3 +116,11 @@
 .iconWrapper:nth-child(4) { top: 310px; }
 .iconWrapper:nth-child(5) { top: 410px; }
 .iconWrapper:nth-child(6) { top: 500px; }
+
+
+.mobile .mobileList{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+}

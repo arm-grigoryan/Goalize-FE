@@ -5,6 +5,8 @@ import Link from "next/link";
 import Button from "@/shared/Button";
 import teamLogo from '../../assets/pngs/teamLogo.png';
 import { useTranslations } from "next-intl";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 export interface IMatchesStatusCardProps {
     rating?: number;
@@ -32,8 +34,10 @@ export const MatchesStatusCard: React.FC<IMatchesStatusCardProps> = ({
     goalsConceded,
     penaltiesSaved
 }) => {
+      const { width } = useWindowSize();
+      const isMobile = width <= MEDIA_TABLET_SMALL;
     const t = useTranslations();
-    return <div className={styles.overlay}>
+    return <div className={`${styles.overlay} ${isMobile ? styles.mobile : ''}`}>
         <div className={styles.container}>
             <div className={styles.content}>
                 <div className={styles.infoWrapper}>

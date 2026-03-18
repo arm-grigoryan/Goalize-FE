@@ -4,7 +4,11 @@ import MatchesHeader from "../MatchesHeader";
 import styles from './Matches.module.css';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 export const MatchesPage: React.FC = () => {
+  const { width } = useWindowSize();
+      const isMobile = width <= MEDIA_TABLET_SMALL;
       const pathname = usePathname();
       const base = `/matches`;
     
@@ -14,7 +18,7 @@ export const MatchesPage: React.FC = () => {
         }
         return pathname.startsWith(href);
       };
-    return  <div className={styles.container}>
+    return  <div className={`${styles.container} ${isMobile ? styles.mobileContainer : ''}`}>
                 <MatchesHeader />
                 <div className={styles.tabs}>
                     <Link className={`${styles.tab} ${isActive(`${base}`) ? styles.isActive : ""}`} href={base}>
