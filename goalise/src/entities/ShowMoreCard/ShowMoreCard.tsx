@@ -8,6 +8,7 @@ import invite from '../../assets/pngs/invite.svg';
 
 export interface IShowMoreCardProps {
     isCaptain?: boolean;
+    isOwnCard?: boolean;
     onMakeCaptain?: () => void;
     onRemove?: () => void;
     onEditShirtNumber?: () => void;
@@ -16,6 +17,7 @@ export interface IShowMoreCardProps {
 
 export const ShowMoreCard: React.FC<IShowMoreCardProps> = ({
     isCaptain,
+    isOwnCard,
     onMakeCaptain,
     onRemove,
     onEditShirtNumber,
@@ -23,18 +25,18 @@ export const ShowMoreCard: React.FC<IShowMoreCardProps> = ({
 }) => {
     return <div className={styles.container}>
         {isCaptain ? <div>
-                        <div className={styles.item} onClick={onMakeCaptain}>
+                        {!isOwnCard && <div className={styles.item} onClick={onMakeCaptain}>
                             <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
                                 <Image src={chessPiece} alt="" className={styles.icon}/>
                             </div>
                             <div className={styles.text}>Make Captain</div>
-                        </div>
-                        <div className={styles.item} onClick={onRemove}>
+                        </div>}
+                        {!isOwnCard && <div className={styles.item} onClick={onRemove}>
                             <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
                                 <Image src={remove} alt="" className={styles.icon}/>
                             </div>
                             <div className={styles.text}>Remove</div>
-                        </div>
+                        </div>}
                         <div className={styles.item} onClick={onEditShirtNumber}>
                            <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
                              <Image src={shirt} alt="" className={styles.icon}/>

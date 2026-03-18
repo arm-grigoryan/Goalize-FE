@@ -22,6 +22,7 @@ export interface ISquadCardProps {
   picture: string | null;
   playerId: number;
   menuType: 'captain' | 'invite' | 'none';
+  isOwnCard?: boolean;
   onMakeCaptain?: () => void;
   onRemove?: () => void;
   onEditShirtNumber?: () => void;
@@ -34,6 +35,7 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
   picture,
   playerId,
   menuType,
+  isOwnCard,
   onMakeCaptain,
   onRemove,
   onEditShirtNumber,
@@ -91,6 +93,7 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
               <div className={styles.menuDropdown}>
                 <ShowMoreCard
                   isCaptain={menuType === 'captain'}
+                  isOwnCard={isOwnCard}
                   onMakeCaptain={() => { setShowMenu(false); onMakeCaptain?.(); }}
                   onRemove={() => { setShowMenu(false); onRemove?.(); }}
                   onEditShirtNumber={() => { setShowMenu(false); onEditShirtNumber?.(); }}
