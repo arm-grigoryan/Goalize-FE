@@ -7,12 +7,14 @@ import card from '../../assets/pngs/card.svg';
 import Link from "next/link";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
-export interface IMatchesHighlitsCardProps { 
+export interface IMatchesHighlitsCardProps {
     swapped?: boolean;
     playerNumber?: number;
-    playerImage?: StaticImageData;
+    playerImage?: string | StaticImageData;
     playerName?: string;
+    playerHref?: string;
     assistName?: string;
+    assistHref?: string;
     goal?: boolean;
     redGard?: boolean;
     yellowCard?: boolean;
@@ -22,7 +24,9 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
   playerNumber,
   playerImage,
   playerName,
+  playerHref = "#",
   assistName,
+  assistHref = "#",
   goal,
   redGard,
   yellowCard,
@@ -83,7 +87,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
                <div className={styles.assistWrapper}>
             <div className={styles.assistInfoWrapper}>
               <span>Assist By</span>
-              <Link href="#" className={styles.assistName}>{assistName}</Link>
+              <Link href={assistHref} className={styles.assistName}>{assistName}</Link>
             </div>
           </div>
         )}
@@ -93,8 +97,17 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
 
       <div className={styles.infoWrapper}>
         <div className={styles.playerInfoWrapper}>
-          {playerImage && <Image src={playerImage} alt="" className={styles.playerImage} />}
-          <Link href="#" className={styles.playerName}>{playerName}</Link>
+          {playerImage && (
+            <Image
+              src={playerImage as string}
+              alt=""
+              className={styles.playerImage}
+              width={38}
+              height={38}
+              unoptimized={typeof playerImage === 'string'}
+            />
+          )}
+          <Link href={playerHref} className={styles.playerName}>{playerName}</Link>
         </div>
 
         {isMobile && renderShirt()}
@@ -103,7 +116,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
           <div className={styles.assistWrapper}>
             <div className={styles.assistInfoWrapper}>
               <span>Assist By</span>
-              <Link href="#" className={styles.assistName}>{assistName}</Link>
+              <Link href={assistHref} className={styles.assistName}>{assistName}</Link>
             </div>
             <CustomDivider orientation="vertical" flexItem />
           </div>
@@ -117,7 +130,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
           <div className={styles.assistWrapper}>
             <div className={styles.assistInfoWrapper}>
               <span>Assist By</span>
-              <Link href="#" className={styles.assistName}>{assistName}</Link>
+              <Link href={assistHref} className={styles.assistName}>{assistName}</Link>
             </div>
           </div>
         )}

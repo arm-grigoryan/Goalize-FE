@@ -1,9 +1,8 @@
 'use client'
-import React from "react";
+import React, { useEffect } from "react";
 import styles from './MatchesHeader.module.css';
 import CustomDivider from "@/shared/Divider";
 import Image from "next/image";
-import teamLogo from '../../assets/pngs/teamLogo.png';
 import Link from "next/link";
 import Breadcrumbs from "../Breadcrumb/Breadcrumb";
 import { LiveDateLabel } from "../LiveDateLabel/LiveDateLabel";
@@ -12,120 +11,182 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import winnerIcon from '../../assets/pngs/winnerIcon.svg';
 import winnerIconSwappped from '../../assets/pngs/winnerIconSwapped.svg';
+import vsIcon from '../../assets/pngs/vsIcon.svg';
+import { useParams, useRouter } from "next/navigation";
+import { useGetMatchByIdQuery } from "@/app/store/services/api";
+import { formatUTCDate } from "@/helper/formatDateAndTime";
+
 const chopsic = localFont({
    src: "../../../src/app/fonts/chopsic/Chopsic.otf",
 })
 
 export const MatchesHeader: React.FC = () => {
-   const { width } = useWindowSize();
-   const isMobile = width <= MEDIA_TABLET_SMALL;
-    const isWinner = true;
-    return <div className={`${styles.container} ${isMobile ? styles.mobileContainer : ''}`}>
-        <div className={styles.leftPart}>
-            <div className={styles.teamInfo}>
-                <Image src={teamLogo} alt="Team Logo" className={styles.teamLogo}/>
-                {!isMobile && <Link href={'#'} className={styles.leagueName}> League Name</Link>}
-            </div>
-            {!isMobile &&<CustomDivider orientation="horizontal" flexItem />}
-            <div className={styles.breadcrumbsWrapper}>
-              {isMobile && <Link href={'#'} className={styles.leagueName}> League Name</Link>}
-                <Breadcrumbs 
-                    items={[
-                        { label: "Teams", href: "#" }, 
-                        { label: "Members", href: "#" },
-                        { label: "Matches", href: "#"}, 
-                        { label: "Teams", href: "#" }, 
-                        { label: "Members", href: "#" },
-                        { label: "Matches", href: "#"}
-                    ]} />
-            </div>
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
+  const { matchId } = useParams();
+  const router = useRouter();
+
+  const { data: match, isLoading, error } = useGetMatchByIdQuery(Number(matchId));
+
+  useEffect(() => {
+    if (error && 'status' in error && error.status === 404) {
+      router.replace('/not-found');
+    }
+  }, [error, router]);
+
+  if (isLoading) {
+    return (
+      <div className={`${styles.container} ${isMobile ? styles.mobileContainer : ''}`}>
+        <div className={styles.loaderWrapper}>
+          <div className="loader"></div>
         </div>
-        {!isMobile && <CustomDivider orientation="vertical" flexItem />}
-        {isMobile && <CustomDivider orientation="horizontal" flexItem />}
-        <div className={styles.rightPart}>
-        <div
-          className={styles.matchWrapper}
-          tabIndex={0}
-        >
-          {/* Current team */}
-          <div className={styles.match_left_block}>
-            <div className={styles.match_left_block_inner_wrapper}>
-              <span className={styles.team_name}>{"Team Name"}</span>
+      </div>
+    );
+  }
+
+  if (!match) return null;
+
+  const leagueHref = `/leagues/${match.matchPhase.league.id}`;
+  const leagueName = match.matchPhase.league.name;
+
+  const breadcrumbItems = (() => {
+    const items: { label: string; href: string }[] = [{ label: leagueName, href: leagueHref }];
+    if (match.matchPhase.playoff) {
+      items.push(
+        { label: "Playoff", href: leagueHref },
+        { label: match.matchPhase.playoff.name, href: leagueHref }
+      );
+    } else if (match.matchPhase.groupRound) {
+      items.push(
+        { label: "Group Stage", href: leagueHref },
+        { label: match.matchPhase.groupRound.round.name, href: leagueHref }
+      );
+    }
+    return items;
+  })();
+
+  const homeIsWinner = match.state !== "Upcoming" && match.homeTeamScore > match.awayTeamScore;
+  const awayIsWinner = match.state !== "Upcoming" && match.awayTeamScore > match.homeTeamScore;
+
+  const formattedDate = formatUTCDate(match.date, "dd-mm-yyyy");
+  const formattedTime = formatUTCDate(match.date, "HH:MM");
+  const isTBA = formattedDate === "To-Be-Announced";
+
+  const leagueLogoUrl = match.matchPhase.league.logoUrl?.startsWith('http')
+    ? match.matchPhase.league.logoUrl
+    : undefined;
+
+  const homeLogoUrl = match.homeTeam.logoUrl?.startsWith('http')
+    ? match.homeTeam.logoUrl
+    : undefined;
+
+  const awayLogoUrl = match.awayTeam.logoUrl?.startsWith('http')
+    ? match.awayTeam.logoUrl
+    : undefined;
+
+  const renderScoreContent = () => (
+    <div className={styles.scoreWrapper}>
+      <div className={styles.scoreIconWRapper}>
+        <div className={`${styles.score} ${chopsic.className}`}>{match.homeTeamScore}</div>
+        {homeIsWinner && <Image src={winnerIcon} alt="" />}
+      </div>
+      {!isMobile && <div className={`${styles.score} ${chopsic.className}`}>:</div>}
+      <div className={`${isMobile ? styles.scoreIconWRapperRight : styles.scoreIconWRapper}`}>
+        <div className={`${styles.score} ${chopsic.className}`}>{match.awayTeamScore}</div>
+        {awayIsWinner && <Image src={winnerIconSwappped} alt="" />}
+      </div>
+    </div>
+  );
+
+  const renderCenterCol = () => {
+    if (match.state === "Upcoming") {
+      return (
+        <div className={styles.matchCenterCol}>
+          {isTBA
+            ? <span className={styles.matchDate}>TBA</span>
+            : <LiveDateLabel date={formattedDate} time={formattedTime} />
+          }
+          <Image src={vsIcon} alt="vs" className={styles.vsIcon} />
+        </div>
+      );
+    }
+
+    if (match.state === "Live") {
+      return (
+        <div className={styles.matchCenterCol}>
+          <LiveDateLabel isLive />
+          {renderScoreContent()}
+        </div>
+      );
+    }
+
+    // Finished — date label above score
+    return (
+      <div className={styles.matchCenterCol}>
+        <LiveDateLabel date={formattedDate} time={formattedTime} />
+        {renderScoreContent()}
+      </div>
+    );
+  };
+
+  return <div className={`${styles.container} ${isMobile ? styles.mobileContainer : ''}`}>
+    <div className={styles.leftPart}>
+      <div className={styles.teamInfo}>
+        {leagueLogoUrl && (
+          <Image src={leagueLogoUrl} alt="League Logo" className={styles.teamLogo} width={92} height={92} unoptimized />
+        )}
+        {!isMobile && <Link href={leagueHref} className={styles.leagueName}>{leagueName}</Link>}
+      </div>
+      {!isMobile && <CustomDivider orientation="horizontal" flexItem />}
+      <div className={styles.breadcrumbsWrapper}>
+        {isMobile && <Link href={leagueHref} className={styles.leagueName}>{leagueName}</Link>}
+        <Breadcrumbs items={breadcrumbItems} />
+      </div>
+    </div>
+    {!isMobile && <CustomDivider orientation="vertical" flexItem />}
+    {isMobile && <CustomDivider orientation="horizontal" flexItem />}
+    <div className={styles.rightPart}>
+      <div className={styles.matchWrapper} tabIndex={0}>
+        {/* Home team */}
+        <div className={styles.match_left_block}>
+          <div className={styles.match_left_block_inner_wrapper}>
+            <span className={styles.team_name}>{match.homeTeam.name}</span>
+            {homeLogoUrl && (
               <Image
-                src={teamLogo}
-                alt={"Team"}
+                src={homeLogoUrl}
+                alt={match.homeTeam.name}
                 className={styles.team_logo}
                 width={106}
                 height={106}
                 unoptimized
               />
-            </div>
+            )}
           </div>
+        </div>
 
-          <div className={styles.matchCenterCol}>
-            <LiveDateLabel isLive={true} />
-            <div className={styles.scoreWrapper}>
-                <div className={styles.scoreIconWRapper}>
-                  <div className={`${styles.score} ${chopsic.className}`}>2</div>
-                  {isWinner && <Image src={winnerIcon} alt="" />} 
-                </div>
-                {!isMobile && <div className={`${styles.score} ${chopsic.className}`}>:</div>}
-                <div className={`${isMobile ?  styles.scoreIconWRapperRight :  styles.scoreIconWRapper}`}>
-                  <div className={`${styles.score} ${chopsic.className}`}>3</div>
-                  {isWinner && <Image src={winnerIconSwappped} alt="" />}
-                </div>
-            </div>
-            {/* <Image src={vsIcon} alt="vs" className={styles.vsIcon} /> */}
-            {/* <span className={styles.matchDate}>
-              {formatUTCDate(nextMatch.matchDate, "dd/mm/yyyy")}
-            </span> */}
-              {/* <Link
-                href={`#`}
-                className={styles.leagueLink}
-                style={{ textDecoration: "none" }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                    <Image
-                      src={teamLogo}
-                      alt={''}
-                      width={18}
-                      height={18}
-                      unoptimized
-                      className={styles.leagueLogo}
-                    />
-                <span className={styles.league}>
-                  League Name
-                </span>
-              </Link> */}
-          </div>
+        {renderCenterCol()}
 
-          {/* Opponent */}
-          <div className={styles.match_right_block}>
-            <div className={styles.match_right_block_inner_wrapper}>
-              <Link
-                href={`#`}
-                style={{ textDecoration: "none" }}
-                onClick={(e) => e.stopPropagation()}
-              >
+        {/* Away team */}
+        <div className={styles.match_right_block}>
+          <div className={styles.match_right_block_inner_wrapper}>
+            <Link href={`/teams/${match.awayTeam.id}`} style={{ textDecoration: "none" }} onClick={(e) => e.stopPropagation()}>
+              {awayLogoUrl && (
                 <Image
-                  src={teamLogo}
-                  alt={"Opponent"}
+                  src={awayLogoUrl}
+                  alt={match.awayTeam.name}
                   className={styles.team_logo}
                   width={106}
                   height={106}
                   unoptimized
                 />
-              </Link>
-              <Link
-                href={`#`}
-                style={{ textDecoration: "none" }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <span className={styles.team_name}> {"Team Name"}</span>
-              </Link>
-            </div>
+              )}
+            </Link>
+            <Link href={`/teams/${match.awayTeam.id}`} style={{ textDecoration: "none" }} onClick={(e) => e.stopPropagation()}>
+              <span className={styles.team_name}>{match.awayTeam.name}</span>
+            </Link>
           </div>
         </div>
-        </div>
+      </div>
     </div>
+  </div>
 }
