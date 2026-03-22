@@ -1,3 +1,24 @@
+type MatchHighlightPlayer = {
+  id: number;
+  playerId: number;
+  userId: string;
+  firstName: string;
+  lastName: string;
+  picture: string;
+  shirtNumber: number;
+};
+
+export type MatchHighlight = {
+  id: number;
+  matchId: number;
+  player: MatchHighlightPlayer;
+  type: "Goal" | "RedCard" | "YellowCard" | "OwnGoal";
+  order: number;
+  relatedHighlight: {
+    player: MatchHighlightPlayer;
+  } | null;
+};
+
 export interface IMatches {
   id: number;
   matchPhase: {
@@ -12,11 +33,11 @@ export interface IMatches {
         roundNumber: number;
         name: string;
       };
-    };
+    } | null;
     playoff: {
       id: number;
       name: string;
-    };
+    } | null;
     stage: {
       id: number;
       leagueId: number;
@@ -24,55 +45,27 @@ export interface IMatches {
       order: number;
     };
     league: {
-      id: 0;
-      name: "string";
-      logoUrl: "string";
+      id: number;
+      name: string;
+      logoUrl: string;
     };
   };
   homeTeam: {
-    id: 0;
-    name: "string";
-    logoUrl: "string";
-    captainId: 0;
+    id: number;
+    name: string;
+    logoUrl: string;
+    captainId: number;
   };
   awayTeam: {
-    id: 0;
-    name: "string";
-    logoUrl: "string";
-    captainId: 0;
+    id: number;
+    name: string;
+    logoUrl: string;
+    captainId: number;
   };
-  date: "2025-07-30T18:27:57.065Z";
-  state: "Finished";
-  homeTeamHighlights: [
-    {
-      id: 0;
-      matchId: 0;
-      player: {
-        id: 0;
-        playerId: 0;
-        userId: "string";
-        firstName: "string";
-        lastName: "string";
-        picture: "string";
-        shirtNumber: 0;
-      };
-      type: "Goal";
-    }
-  ];
-  awayTeamHighlights: [
-    {
-      id: 0;
-      matchId: 0;
-      player: {
-        id: 0;
-        playerId: 0;
-        userId: "string";
-        firstName: "string";
-        lastName: "string";
-        picture: "string";
-        shirtNumber: 0;
-      };
-      type: "Goal";
-    }
-  ];
+  homeTeamScore: number;
+  awayTeamScore: number;
+  date: string;
+  state: "Upcoming" | "Live" | "Finished";
+  homeTeamHighlights: MatchHighlight[];
+  awayTeamHighlights: MatchHighlight[];
 }

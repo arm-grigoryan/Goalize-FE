@@ -1,21 +1,22 @@
 'use client';
 import MatchesHeader from "@/entities/MatchesHeader";
 import styles from './Statistics.module.css';
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import statistics from '../../assets/pngs/statistics.svg';
 import StatisticsCard from "@/entities/StatisticsCard";
 export const Statistics: React.FC = () => {
     const pathname = usePathname();
-          const base = `/matches`;
-        
-          const isActive = (href: string) => {
-            if (href === base) {
-              return pathname === base || pathname === `${base}/groups`;
-            }
-            return pathname.startsWith(href);
-          };
+    const { matchId } = useParams();
+    const base = `/matches/${matchId}`;
+
+    const isActive = (href: string) => {
+      if (href === base) {
+        return pathname === base || pathname === `${base}/groups`;
+      }
+      return pathname.startsWith(href);
+    };
     return (
         <div className={styles.container}>
             <MatchesHeader />
@@ -26,7 +27,7 @@ export const Statistics: React.FC = () => {
                     <Link className={`${styles.tab} ${isActive(`${base}/stats`) ? styles.isActive : ""}`} href={`${base}/stats`}> 
                         Stats
                     </Link>
-                    <Link className={`${styles.tab} ${isActive(`${base}/lineUp`) ? styles.isActive : ""}`} href={`${base}/lineUp`}> 
+                    <Link className={`${styles.tab} ${isActive(`${base}/lineUp`) ? styles.isActive : ""}`} href={`${base}/lineup`}>
                         Lineup
                     </Link>
                 </div>

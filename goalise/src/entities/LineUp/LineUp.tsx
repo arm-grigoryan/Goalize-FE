@@ -3,19 +3,20 @@ import LineUpCard from "@/components/LineUpCard"
 import MatchesHeader from "../MatchesHeader"
 import Link from "next/link"
 import styles from './LineUp.module.css';
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
 import Image from "next/image";
 import clipboard from '../../assets/pngs/clipboard.svg';
 export const LineUp = () => {
      const pathname = usePathname();
-           const base = `/matches`;
-         
-           const isActive = (href: string) => {
-             if (href === base) {
-               return pathname === base || pathname === `${base}/groups`;
-             }
-             return pathname.startsWith(href);
-           };
+     const { matchId } = useParams();
+     const base = `/matches/${matchId}`;
+
+     const isActive = (href: string) => {
+       if (href === base) {
+         return pathname === base || pathname === `${base}/groups`;
+       }
+       return pathname.startsWith(href);
+     };
     return  <div className={styles.container}>
                 <MatchesHeader />
                 <div className={styles.tabs}>
@@ -25,7 +26,7 @@ export const LineUp = () => {
                     <Link className={`${styles.tab} ${isActive(`${base}/stats`) ? styles.isActive : ""}`} href={`${base}/stats`}> 
                         Stats
                     </Link>
-                    <Link className={`${styles.tab} ${isActive(`${base}/lineUp`) ? styles.isActive : ""}`} href={`${base}/lineUp`}> 
+                    <Link className={`${styles.tab} ${isActive(`${base}/lineUp`) ? styles.isActive : ""}`} href={`${base}/lineup`}>
                         Lineup
                     </Link>
                 </div>
