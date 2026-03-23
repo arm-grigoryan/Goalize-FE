@@ -1,14 +1,19 @@
 'use client';
 import MatchesHeader from "@/entities/MatchesHeader";
 import styles from './Statistics.module.css';
-import { usePathname, useParams } from "next/navigation";
+import { usePathname, useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import statistics from '../../assets/pngs/statistics.svg';
+import matchEmptyState from '../../assets/pngs/matchEmptyState.png';
 import StatisticsCard from "@/entities/StatisticsCard";
+import { useGetMatchStatsQuery } from "@/app/store/services/api";
+import { useEffect } from "react";
+
 export const Statistics: React.FC = () => {
     const pathname = usePathname();
     const { matchId } = useParams();
+    const router = useRouter();
     const base = `/matches/${matchId}`;
 
     const isActive = (href: string) => {
@@ -17,6 +22,60 @@ export const Statistics: React.FC = () => {
       }
       return pathname.startsWith(href);
     };
+
+    const { data: stats, isLoading, isSuccess, error } = useGetMatchStatsQuery(Number(matchId));
+
+    useEffect(() => {
+        if (error && 'status' in error && error.status === 404) {
+            router.replace('/not-found');
+        }
+    }, [error, router]);
+
+    const renderContent = () => {
+        if (isLoading) return null;
+
+        // 204 — match exists but stats not filled yet
+        if (isSuccess && !stats) {
+            return <Image src={matchEmptyState} alt="" />;
+        }
+
+        if (!stats) return null;
+
+        const rows: { title: string; home: number; away: number }[] = [
+            { title: "Total Shots",            home: stats.homeTeamShots,         away: stats.awayTeamShots },
+            { title: "Shots On Target",        home: stats.homeTeamShotsComplete, away: stats.awayTeamShotsComplete },
+            { title: "Total Passes",           home: stats.homeTeamPass,          away: stats.awayTeamPass },
+            { title: "Passes Completed",       home: stats.homeTeamPassComplete,  away: stats.awayTeamPassComplete },
+            { title: "Fouls",                  home: stats.homeTeamFouls,         away: stats.awayTeamFouls },
+            { title: "Corners",                home: stats.homeTeamCorners,       away: stats.awayTeamCorners },
+        ];
+
+        return (
+            <div>
+                {rows.map((row) => {
+                    const total = row.home + row.away;
+                    const leftWidth = total === 0 ? 0 : (row.home / total) * 100;
+                    const rightWidth = total === 0 ? 0 : (row.away / total) * 100;
+                    const leftVariant: "blue" | "red" = row.home < row.away ? "red" : "blue";
+                    const rightVariant: "blue" | "red" = row.away < row.home ? "red" : "blue";
+
+                    return (
+                        <StatisticsCard
+                            key={row.title}
+                            title={row.title}
+                            progressLeft={leftWidth}
+                            progressRight={rightWidth}
+                            valueLeft={row.home}
+                            valueRight={row.away}
+                            leftVariant={leftVariant}
+                            rightVariant={rightVariant}
+                        />
+                    );
+                })}
+            </div>
+        );
+    };
+
     return (
         <div className={styles.container}>
             <MatchesHeader />
@@ -24,25 +83,20 @@ export const Statistics: React.FC = () => {
                     <Link className={`${styles.tab} ${isActive(`${base}`) ? styles.isActive : ""}`} href={base}>
                          Highlight
                     </Link>
-                    <Link className={`${styles.tab} ${isActive(`${base}/stats`) ? styles.isActive : ""}`} href={`${base}/stats`}> 
+                    <Link className={`${styles.tab} ${isActive(`${base}/stats`) ? styles.isActive : ""}`} href={`${base}/stats`}>
                         Stats
                     </Link>
                     <Link className={`${styles.tab} ${isActive(`${base}/lineUp`) ? styles.isActive : ""}`} href={`${base}/lineup`}>
                         Lineup
                     </Link>
                 </div>
-            <div className={styles.titleWrapper}> 
+            <div className={styles.titleWrapper}>
                     <div className={`${styles.button} ${styles.redGlow}`}>
                         <Image src={statistics} alt="" className={styles.icon} />
                     </div>
                 <div className={styles.title}> Statistics </div>
             </div>
-            <div>
-                <StatisticsCard title="Total Shots" progressLeft={20} progressRight={10} leftVariant="red"/>
-                <StatisticsCard title="Total Shots Completed" progressLeft={65} progressRight={55} rightVariant="red"/>
-                <StatisticsCard title="Total Passes" progressLeft={10} progressRight={15} leftVariant="red"/>
-                <StatisticsCard title="Corners" progressLeft={8} progressRight={12} leftVariant="red"/>
-            </div>
+            {renderContent()}
         </div>
     );
-} 
+}

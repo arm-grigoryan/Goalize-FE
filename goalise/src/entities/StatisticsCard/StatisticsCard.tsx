@@ -7,6 +7,8 @@ export interface IStatisticsCardProps {
     title?: string;
     progressLeft?: number;
     progressRight?: number;
+    valueLeft?: number;
+    valueRight?: number;
     leftVariant?: "blue" | "red";
     rightVariant?: "blue" | "red";
 }
@@ -14,6 +16,8 @@ export const StatisticsCard: React.FC<IStatisticsCardProps> = ({
     title,
     progressLeft = 0,
     progressRight = 0,
+    valueLeft,
+    valueRight,
     leftVariant = "blue",
     rightVariant = "blue"
 }) => {
@@ -40,7 +44,7 @@ export const StatisticsCard: React.FC<IStatisticsCardProps> = ({
                 >
                     <div className={leftClass}>
                         <span className={styles.progressTextLeft}>
-                            {progressLeft}
+                            {valueLeft ?? progressLeft}
                         </span>
                     </div>
                 </div>
@@ -51,7 +55,7 @@ export const StatisticsCard: React.FC<IStatisticsCardProps> = ({
                 >
                     <div className={rightClass}>
                         <span className={styles.progressText}>
-                            {progressRight}
+                            {valueRight ?? progressRight}
                         </span>
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 'use client'
+import React from 'react';
 import styles from './MatchesHighlights.module.css';
 import Image from "next/image";
 import calendarIcon from '../../assets/pngs/calendar.svg'
@@ -67,7 +68,7 @@ export const MatchesHighlights: React.FC = () => {
       <div className={styles.highlightsWrapper}>
         {isMobile ? (
           <div className={styles.mobileList}>
-            {sortedAll.map(h => renderCard(h, h.isHome))}
+            {sortedAll.map(h => <React.Fragment key={h.id}>{renderCard(h, h.isHome)}</React.Fragment>)}
           </div>
         ) : (
           <>
