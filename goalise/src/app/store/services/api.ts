@@ -8,6 +8,7 @@ import type { QueryReturnValue } from "@reduxjs/toolkit/query";
 import type { UpcomingMatch } from "../../../types/api/upComingMatches";
 import { IMatchesPast } from "@/types/api/matchesPast";
 import { IMatches } from "@/types/api/matches";
+import { IMatchStats } from "@/types/api/matchStats";
 import { ITransfers, ITeamTransfer } from "@/types/api/transfers";
 import { ILeague } from "@/types/api/leagues";
 import { ILeaguesGroup } from "@/types/api/leaguesGroup";
@@ -184,6 +185,15 @@ export const publicApi = createApi({
     }),
     getMatchById: builder.query<IMatches, number>({
       query: (matchId) => `/Matches/${matchId}`,
+    }),
+    getMatchStats: builder.query<IMatchStats | null, number>({
+      query: (matchId) => ({
+        url: `/Matches/${matchId}/stats`,
+        responseHandler: async (response) => {
+          if (response.status === 204) return null;
+          return response.json();
+        },
+      }),
     }),
     getTeams: builder.query<ITeamListItem[], { take: number; skip: number }>({
       query: ({ take, skip }) => ({
@@ -420,6 +430,7 @@ export const {
   useGetLeaguesTopPlayersQuery,
   useGetEventByIdQuery,
   useGetMatchByIdQuery,
+  useGetMatchStatsQuery,
   useGetTeamsQuery,
   useGetTeamNextMatchQuery,
   useGetTeamTrophiesQuery,

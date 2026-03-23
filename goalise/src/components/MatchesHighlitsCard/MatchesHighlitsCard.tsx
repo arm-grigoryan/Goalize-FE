@@ -30,6 +30,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
   goal,
   redGard,
   yellowCard,
+  selfGoal,
   swapped
 }) => {
   const { width } = useWindowSize();
@@ -74,40 +75,59 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
     </div>
   );
 
+  const mobileContainerStyle: React.CSSProperties = isMobile ? (() => {
+    const direction = swapped ? 'to left' : 'to right';
+    let color = 'transparent';
+    if (goal || selfGoal) color = '#54a3fe83';
+    else if (redGard) color = '#f53a5390';
+    else if (yellowCard) color = 'rgba(245, 176, 58, 0.526)';
+    return {
+      backgroundImage: `linear-gradient(rgba(21, 25, 30, 0.40), rgba(21, 25, 30, 0.40)), linear-gradient(${direction}, ${color}, transparent 50%)`
+    };
+  })() : {};
+
   return (
-    <div className={`${styles.container} ${isMobile ? styles.mobile : ''} ${swapped ? styles.swapped : ''}`}>
+    <div
+      className={`${styles.container} ${isMobile ? styles.mobile : ''} ${swapped ? styles.swapped : ''}`}
+      style={mobileContainerStyle}
+    >
       {!isMobile && !swapped && renderShirt()}
 
       {swapped && (
-          <div className={styles.swappedWrapper}>
-          {goal && renderGoal()}
+        <div className={`${styles.swappedWrapper} ${isMobile && !assistName ? styles.centered : ''}`}>
+          {(goal || selfGoal) && renderGoal()}
           {redGard && renderRedCard()}
           {yellowCard && renderYellowCard()}
-           {isMobile && assistName && swapped && (
-               <div className={styles.assistWrapper}>
-            <div className={styles.assistInfoWrapper}>
-              <span>Assist By</span>
-              <Link href={assistHref} className={styles.assistName}>{assistName}</Link>
+          {isMobile && assistName && swapped && (
+            <div className={styles.assistWrapper}>
+              <div className={`${styles.assistInfoWrapper} ${styles.assistRight}`}>
+                <span>Assist By</span>
+                <Link href={assistHref} className={styles.assistName}>{assistName}</Link>
+              </div>
             </div>
-          </div>
-        )}
+          )}
         </div>
       )}
     {isMobile && swapped && <CustomDivider orientation="horizontal" flexItem />}
 
       <div className={styles.infoWrapper}>
         <div className={styles.playerInfoWrapper}>
-          {playerImage && (
-            <Image
-              src={playerImage as string}
-              alt=""
-              className={styles.playerImage}
-              width={38}
-              height={38}
-              unoptimized={typeof playerImage === 'string'}
-            />
-          )}
-          <Link href={playerHref} className={styles.playerName}>{playerName}</Link>
+          <span className={styles.playerLabel}>
+            {goal ? 'Goal By' : redGard ? 'Red Card By' : yellowCard ? 'Yellow Card By' : selfGoal ? 'Own Goal By' : ''}
+          </span>
+          <div className={styles.playerNameRow}>
+            {playerImage && (
+              <Image
+                src={playerImage as string}
+                alt=""
+                className={styles.playerImage}
+                width={28}
+                height={28}
+                unoptimized={typeof playerImage === 'string'}
+              />
+            )}
+            <Link href={playerHref} className={styles.playerName}>{playerName}</Link>
+          </div>
         </div>
 
         {isMobile && renderShirt()}
@@ -137,7 +157,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
 
         {!swapped && (
           <>
-            {goal && renderGoal()}
+            {(goal || selfGoal) && renderGoal()}
             {redGard && renderRedCard()}
             {yellowCard && renderYellowCard()}
           </>
