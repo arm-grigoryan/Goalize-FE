@@ -20,6 +20,7 @@ import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { Tooltip } from "@mui/material";
 
 export const PlayerStatistics: React.FC<IPlayerStatisticsProps> = ({
+  noData,
   gamesPlayed,
   averageRate,
   goals,
@@ -42,20 +43,21 @@ export const PlayerStatistics: React.FC<IPlayerStatisticsProps> = ({
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
   const t = useTranslations("playerProfile.playerStatistics");
+  const v = (val: string | number | undefined): string | number | undefined => (noData ? '-' : val);
   const stats = [
-    { label: t("avergaePlayerRate"), value: averageRate, icon: startIcon },
-    { label: t("goals"), value: goals, icon: ballIcon },
-    { label: t("assists"), value: assists, icon: assistsIcon },
-    { label: t("shotsCompleted"), value: shots && shotsCompleted ? `${shotsCompleted}/${shots}` : shotsCompleted, icon: shotsIcon, shotsAccuracy: shotAccuracyPercent },
-    { label: t("passesCompleted"), value: passes && passesCompleted ? `${passesCompleted}/${passes}` : passesCompleted, icon: passesIcon, passesAccuracy: passAccuracyPercent },
-    { label: t("tackles"), value: tackles, icon: tacklesIcon },
-    { label: t("interceptions"), value: interceptions, icon: interceptionsIcon },
-    { label: t("redCards"), value: redCards, icon: cardIcon },
-    { label: t("yellowCards"), value: yellowCards, icon: cardIcon, isYellowCard: true },
-    { label: t("averageGoalKeeperRate"), value: averageGoalkeeperRate, icon: startIcon, isGoalKeeper: true },
-    { label: t("goalsConceded"), value: goalsConceded, icon: goalsConcededIcon, isGoalKeeper: true },
-    { label: t("savedPenalties"), value: savedPenalties, icon: savedPenaltiesIcon, isGoalKeeper: true },
-    { label: t("saves"), value: saves, icon: savesIcon, isGoalKeeper: true },
+    { label: t("avergaePlayerRate"), value: v(averageRate), icon: startIcon },
+    { label: t("goals"), value: v(goals), icon: ballIcon },
+    { label: t("assists"), value: v(assists), icon: assistsIcon },
+    { label: t("shotsCompleted"), value: noData ? '-' : shots && shotsCompleted ? `${shotsCompleted}/${shots}` : shotsCompleted, icon: shotsIcon, shotsAccuracy: noData ? undefined : shotAccuracyPercent },
+    { label: t("passesCompleted"), value: noData ? '-' : passes && passesCompleted ? `${passesCompleted}/${passes}` : passesCompleted, icon: passesIcon, passesAccuracy: noData ? undefined : passAccuracyPercent },
+    { label: t("tackles"), value: v(tackles), icon: tacklesIcon },
+    { label: t("interceptions"), value: v(interceptions), icon: interceptionsIcon },
+    { label: t("redCards"), value: v(redCards), icon: cardIcon },
+    { label: t("yellowCards"), value: v(yellowCards), icon: cardIcon, isYellowCard: true },
+    { label: t("averageGoalKeeperRate"), value: v(averageGoalkeeperRate), icon: startIcon, isGoalKeeper: true },
+    { label: t("goalsConceded"), value: v(goalsConceded), icon: goalsConcededIcon, isGoalKeeper: true },
+    { label: t("savedPenalties"), value: v(savedPenalties), icon: savedPenaltiesIcon, isGoalKeeper: true },
+    { label: t("saves"), value: v(saves), icon: savesIcon, isGoalKeeper: true },
   ];
 
 

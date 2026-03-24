@@ -1,4 +1,4 @@
-interface IMatchlineUp {
+export interface IMatchlineUp {
   id: number;
   playerId: number;
   userId: string;

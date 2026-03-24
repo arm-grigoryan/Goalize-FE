@@ -9,6 +9,9 @@ import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
 
 export interface IMatchesStatusCardProps {
+    playerName?: string;
+    playerPicture?: string;
+    playerId?: number;
     rating?: number;
     goals?: number;
     assists?: number;
@@ -20,8 +23,12 @@ export interface IMatchesStatusCardProps {
     saves?: number;
     goalsConceded?: number;
     penaltiesSaved?: number;
+    onClose?: () => void;
 }
 export const MatchesStatusCard: React.FC<IMatchesStatusCardProps> = ({
+    playerName,
+    playerPicture,
+    playerId,
     rating,
     goals,
     assists,
@@ -32,7 +39,8 @@ export const MatchesStatusCard: React.FC<IMatchesStatusCardProps> = ({
     goalKeeperRating,
     saves,
     goalsConceded,
-    penaltiesSaved
+    penaltiesSaved,
+    onClose,
 }) => {
       const { width } = useWindowSize();
       const isMobile = width <= MEDIA_TABLET_SMALL;
@@ -42,10 +50,12 @@ export const MatchesStatusCard: React.FC<IMatchesStatusCardProps> = ({
             <div className={styles.content}>
                 <div className={styles.infoWrapper}>
                     <div className={styles.imagesWrapper}>
-                        <Image src={teamLogo} alt="" className={styles.playerImage}/>
-                        <Image src={teamLogo} alt="" className={styles.teamImage}/>
+                        {playerPicture
+                            ? <Image src={playerPicture} alt="" width={74} height={74} className={styles.playerImage}/>
+                            : <Image src={teamLogo} alt="" className={styles.playerImage}/>
+                        }
                     </div>
-                    <div className={styles.playerName}>Leonel Messi</div>
+                    <div className={styles.playerName}>{playerName}</div>
                 </div>
                 <div className={styles.statsContainer}>
                     <div className={styles.title}>{t("matches.statusCard.playerStats.title")}</div>
@@ -104,9 +114,9 @@ export const MatchesStatusCard: React.FC<IMatchesStatusCardProps> = ({
             <div className={styles.playerProfileWrapper}>
                <div className={styles.imageTextWrapper}> 
                     <Image src={teamLogo} alt="" className={styles.profileImage}/>
-                    <Link href={'#'} className={styles.playerProfile}>{t("matches.statusCard.playerProfile")}</Link>
+                    <Link href={playerId ? `/profile/${playerId}` : '#'} className={styles.playerProfile}>{t("matches.statusCard.playerProfile")}</Link>
                 </div> 
-                <Button className="red_text_button" content="Close" handleClick={()=> {}}/>
+                <Button className="red_text_button" content="Close" handleClick={onClose ?? (() => {})}/>
             </div>
         </div>
     </div>

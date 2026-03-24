@@ -1,4 +1,5 @@
 export interface IPlayerStatisticsProps {
+    noData?: boolean;
     gamesPlayed?: number;
     averageRate?: number;
     goals?: number;

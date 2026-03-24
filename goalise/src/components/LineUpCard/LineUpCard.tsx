@@ -1,27 +1,25 @@
-
 import LineUpInnerCard from '../LineUpInnerCard';
 import styles from './LineUpCard.module.css';
-import teamLogo from '../../assets/pngs/teamLogo.png';
+import { IMatchlineUp } from '@/types/api/matchLineUps';
 
-export const LineUpCard: React.FC= () => {
-    return <div className={styles.container}>
-            <LineUpInnerCard 
-                playerImage={teamLogo}
-                playerName={'Vruyr Saghatelyan'}
-                playerNumber={23}
-            />
-            <LineUpInnerCard 
-                playerImage={teamLogo}
-                playerName={'Vruyr Saghatelyan'}
-                playerNumber={23}
-            /><LineUpInnerCard 
-                playerImage={teamLogo}
-                playerName={'Vruyr Saghatelyan'}
-                playerNumber={23}
-            /><LineUpInnerCard 
-                playerImage={teamLogo}
-                playerName={'Vruyr Saghatelyan'}
-                playerNumber={23}
-            />
-    </div>
+interface ILineUpCardProps {
+  players: IMatchlineUp[];
+  onPlayerClick: (player: IMatchlineUp) => void;
 }
+
+export const LineUpCard: React.FC<ILineUpCardProps> = ({ players, onPlayerClick }) => {
+  return (
+    <div className={styles.container}>
+      {players.map((player) => (
+        <LineUpInnerCard
+          key={player.id}
+          playerImage={player.picture}
+          playerName={`${player.firstName} ${player.lastName}`}
+          playerNumber={player.shirtNumber}
+          playerHref={`/profile/${player.playerId}`}
+          onClick={() => onPlayerClick(player)}
+        />
+      ))}
+    </div>
+  );
+};
