@@ -17,6 +17,8 @@ import { ITeam, ITeamJoined, ITeamListItem, ITeamNextMatch, ITeamTrophy } from "
 import { IPlayerProfile } from "@/types/api/userInfo";
 import type { SearchResponse, PlayerInviteResult } from "@/types/api/search";
 import { IPlayerStats } from "@/types/api/playerStats";
+import { IMatchLineUps } from "@/types/api/matchLineUps";
+import { IMatchPlayerStat } from "@/types/api/matchPlayerStats";
 import { IPlayerTransferHistory } from "@/types/api/playerTransferHistory";
 import { IPlayerProfileMatches } from "@/types/api/PlayerProfilMatches";
 import { IDrowStandings } from "@/types/api/drowStandings";
@@ -185,6 +187,12 @@ export const publicApi = createApi({
     }),
     getMatchById: builder.query<IMatches, number>({
       query: (matchId) => `/Matches/${matchId}`,
+    }),
+    getMatchLineup: builder.query<IMatchLineUps, number>({
+      query: (matchId) => `/Matches/${matchId}/lineup`,
+    }),
+    getMatchPlayerStats: builder.query<IMatchPlayerStat[], number>({
+      query: (matchId) => `/Matches/${matchId}/player-stats`,
     }),
     getMatchStats: builder.query<IMatchStats | null, number>({
       query: (matchId) => ({
@@ -431,6 +439,8 @@ export const {
   useGetEventByIdQuery,
   useGetMatchByIdQuery,
   useGetMatchStatsQuery,
+  useGetMatchLineupQuery,
+  useGetMatchPlayerStatsQuery,
   useGetTeamsQuery,
   useGetTeamNextMatchQuery,
   useGetTeamTrophiesQuery,

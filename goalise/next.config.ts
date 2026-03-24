@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "goalize-images-dev.s3.dualstack.eu-north-1.amazonaws.com",
       },
+      {
+        protocol: "https",
+        hostname: "goalize-images-dev.s3.eu-north-1.amazonaws.com",
+      },
     ],
   },
 };
