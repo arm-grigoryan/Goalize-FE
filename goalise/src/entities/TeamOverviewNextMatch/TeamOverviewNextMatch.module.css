@@ -1,7 +1,6 @@
 .container {
     display: flex;
     flex-direction: row;
-    max-width: 924px;
     height: 324px;
     padding: 24px 26px;
     border-radius: 15px;
@@ -86,14 +85,14 @@
   gap: 5px;
 }
 .leagueLogo {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   object-fit: cover;
 }
 .leagueName {
   color: #a5a5a5;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   white-space: nowrap;
   overflow: hidden;
@@ -109,10 +108,12 @@
 }
 .noMatch {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   flex: 1;
   margin-left: 20px;
+  gap: 20px;
   color: #7a7a7a;
   font-size: 16px;
   font-weight: 400;
@@ -166,6 +167,8 @@
     width: 100%;
     max-height: 106px;
     height: 100%;
+    border-radius: 50%;
+    object-fit: contain;
 }
 .mobile {
   flex-direction: column;
@@ -190,4 +193,17 @@
     width: 50px;
     height: 50px;
   }
+}
+
+.mobile .matchWrapper{
+  flex-direction: column;
+}
+
+.mobile .match_left_block, .mobile .match_right_block {
+  rotate: 90deg;
+}
+
+.mobile .match_left_block_inner_wrapper, .mobile .match_right_block_inner_wrapper {
+      rotate: 270deg;
+      top: 60px;
 }

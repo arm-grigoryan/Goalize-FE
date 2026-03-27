@@ -7,6 +7,7 @@ import card from '../../assets/pngs/card.svg';
 import Link from "next/link";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import selfGoalIcon from '../../assets/pngs/selfGoal.svg';
 export interface IMatchesHighlitsCardProps {
     swapped?: boolean;
     playerNumber?: number;
@@ -54,7 +55,14 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
       Goal
     </div>
   );
-
+ const renderSelfGoal = () => ( 
+  <div className={styles.goal}> 
+    {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
+    <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
+      <Image src={selfGoalIcon} alt="" className={styles.icon} />
+    </div>
+  </div>
+ );
   const renderRedCard = () => (
     <div className={styles.redCard}>
       {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
@@ -95,7 +103,8 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
 
       {swapped && (
         <div className={`${styles.swappedWrapper} ${isMobile && !assistName ? styles.centered : ''}`}>
-          {(goal || selfGoal) && renderGoal()}
+          {goal && renderGoal()}
+          {selfGoal && renderSelfGoal()}
           {redGard && renderRedCard()}
           {yellowCard && renderYellowCard()}
           {isMobile && assistName && swapped && (
@@ -157,7 +166,8 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
 
         {!swapped && (
           <>
-            {(goal || selfGoal) && renderGoal()}
+            {goal && renderGoal()}
+            {selfGoal && renderSelfGoal()}
             {redGard && renderRedCard()}
             {yellowCard && renderYellowCard()}
           </>

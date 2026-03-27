@@ -37,7 +37,8 @@
     width: 84px;
     height: 108px;
     justify-self: flex-end;
+    margin-right: 20px;
 }
 .mobile  {
-    width: 100%;
+    width: unset;
 }

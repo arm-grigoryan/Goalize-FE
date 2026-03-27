@@ -1,5 +1,4 @@
 .container {
-    max-width: 924px;
     padding: 24px 26px;
     border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.10);
@@ -82,7 +81,9 @@
   font-weight: 400;
   padding: 8px 0;
 }
-
+.noTrophies img {
+  width: 100%;
+}
 .mobile .trophies {
   flex-direction: column;
   width: 100%;

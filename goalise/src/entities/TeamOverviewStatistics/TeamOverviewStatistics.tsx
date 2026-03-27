@@ -12,11 +12,13 @@ import { Loader } from "@/shared/Loader/Loader";
 import type { ITeamTopPlayerEntry, ITeamTopPlayers } from "@/types/api/topPlayers";
 
 const CATEGORY_MAP: { key: keyof ITeamTopPlayers; title: string }[] = [
+  { key: "topRating", title: "Player Rating" },
   { key: "topGoal", title: "Most Goals" },
   { key: "topAssist", title: "Most Assists" },
   { key: "topYellowCard", title: "Most Yellow Cards" },
   { key: "topRedCard", title: "Most Red Cards" },
-  { key: "topRating", title: "Best Rating" },
+  { key: "topGoalKeeperRating", title: "Goalkeeper Rating"},
+  { key: "topSaves", title: "Most Saves"},
 ];
 
 export interface ITeamOverviewStatisticsProps {
@@ -61,10 +63,10 @@ export const TeamOverviewStatistics: React.FC<ITeamOverviewStatisticsProps> = ()
             <TeamOverviewStatisticsCard
               key={title}
               title={title}
-              playerName={`${entry.teamPlayer.firstName} ${entry.teamPlayer.lastName}`}
-              playerPictureUrl={entry.teamPlayer.picture}
-              playerId={entry.teamPlayer.playerId}
-              value={entry.value}
+              playerName={`${entry?.teamPlayer?.firstName} ${entry?.teamPlayer?.lastName}`}
+              playerPictureUrl={entry?.teamPlayer?.picture}
+              playerId={entry?.teamPlayer?.playerId}
+              value={entry?.value}
             />
           ))}
         </div>

@@ -6,6 +6,8 @@ import dots from '../../assets/pngs/dots.svg';
 import Link from "next/link";
 import profilePictureFallback from '../../assets/pngs/profilePictureIcon.svg';
 import ShowMoreCard from "../ShowMoreCard";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -27,6 +29,7 @@ export interface ISquadCardProps {
   onRemove?: () => void;
   onEditShirtNumber?: () => void;
   onInvite?: () => void;
+  onSquadCardClick?: () => void;
 }
 
 export const SquadCard: React.FC<ISquadCardProps> = ({
@@ -40,10 +43,13 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
   onRemove,
   onEditShirtNumber,
   onInvite,
+  onSquadCardClick
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
   useEffect(() => {
     if (!showMenu) return;
     const handleOutsideClick = (e: MouseEvent) => {
@@ -59,7 +65,7 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
     picture && isValidUrl(picture) ? picture : profilePictureFallback;
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`} onClick={onSquadCardClick}>
       <div className={styles.wrapper}>
         <div className={styles.nameNumberContainer}>
           <Link href={`/profile/${playerId}`}>

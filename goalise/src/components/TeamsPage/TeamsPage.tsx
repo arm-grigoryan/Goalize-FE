@@ -116,7 +116,7 @@ export const TeamsPage = () => {
       <div className={styles.wrapper}>
         <div className={styles.buttonTitleWrapper}>
           {!isMobile && (
-            <div className={styles.button} onClick={handleCreateTeamClick}>
+            <div className={styles.button}>
               <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
                 <Image src={teamsAdditionIcon} alt="" className={styles.icon} />
               </div>
@@ -125,7 +125,7 @@ export const TeamsPage = () => {
           <div className={styles.title}>Teams</div>
         </div>
         <Button
-          className="icon_button_red"
+          className="icon_button_red_small"
           icon={teamsAdditionIcon}
           content={text}
           handleClick={handleCreateTeamClick}

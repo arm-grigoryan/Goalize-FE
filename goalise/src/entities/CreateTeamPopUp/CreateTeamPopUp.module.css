@@ -5,6 +5,8 @@
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(8px);
     z-index: 9998;
+    justify-content: center;
+    align-items: center;
 }
 .container {
     display: flex;
@@ -30,6 +32,7 @@
     z-index: 9999;
     margin-top: 24px;
     justify-self: center;
+    align-self: center;
 }
 .titleWrapper {
     display: flex;
@@ -120,7 +123,8 @@
     border-bottom: 1px solid #4B4B4B;
     background: #1717176d;
     padding: 16px 10px;
-     padding-left: 40px
+    padding-left: 40px;
+    color: white;
 }
 .buttonWrappper {
     width: 100%;
@@ -165,6 +169,16 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
+}
+.serachDropdownItemName {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+.serachDropdownItemImage {
+    width: 24px;
+    height: 24px;
 }
 .searchDropdownItem:hover {
     background: #2a2a2a;
@@ -313,4 +327,16 @@
 }
 .cropSaveBtn:hover {
     opacity: 0.88;
+}
+
+.mobile {
+    width: unset;
+    max-width: unset;
+}
+
+.mobile .warningTooltip {
+    display: flex;
+    top: unset;
+    left: unset;
+    right: 0;
 }

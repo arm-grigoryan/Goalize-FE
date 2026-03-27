@@ -12,6 +12,8 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { useGetTeamNextMatchQuery } from "@/app/store/services/api";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
 import { Loader } from "@/shared/Loader/Loader";
+import upcomingEmpty from '../../assets/pngs/upcomingEmpty.svg';
+import matchMobileEmpty from '../../assets/pngs/matchMobileEmpty.svg';
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -50,7 +52,10 @@ export const TeamOverviewNextMatch: React.FC = () => {
           <Loader />
         </div>
       ) : !nextMatch ? (
-        <div className={styles.noMatch}>No upcoming match</div>
+        <div className={styles.noMatch}>
+          {!isMobile ? <Image src={upcomingEmpty} alt="" /> : <Image src={matchMobileEmpty} alt=" " />}
+          <div>No match is scheduled at the moment</div>
+        </div>
       ) : (
         <div
           className={styles.matchWrapper}

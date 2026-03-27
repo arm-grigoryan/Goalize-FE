@@ -66,10 +66,18 @@
     padding: 10px 15px;
     align-items: center;
     color: #A5A5A5;
-    color: #A5A5A5;
     font-size: 14px;
     font-weight: 400;
     gap: 10px;
+}
+.nextMatch {
+    cursor: pointer;
+}
+.box a {
+    text-decoration: none;
+    color: #A5A5A5;
+    font-size: 14px;
+    font-weight: 400;
 }
 .box span {
     color: white;

@@ -77,7 +77,10 @@
   line-height: 24px;
   color: #ffffff;
 }
-
+.captainLabel {
+  font-size: 20px;
+  color: #a5a5a5;
+}
 .teamLogo {
     width: 130px;
     height: 130px;
@@ -104,12 +107,16 @@
     width: 52px;
     height: 52px;
     border-radius: 100px;
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid #f53a53;
     background: rgba(21, 25, 30, 0.40);
     backdrop-filter: blur(10px);
 }
 
 .playerName {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
     color: #E8E8E8;
     font-size: 36px;
     font-weight: 500;
@@ -141,7 +148,17 @@
 .button>span {
   color: #ffffff;
 }
-
+.abandoned{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+.abandonedText {
+  color: #f53a53;
+  font-weight: 400;
+  font-size: 16px;
+}
 .playerImage {
     max-width: 173px;
     width: 100%;

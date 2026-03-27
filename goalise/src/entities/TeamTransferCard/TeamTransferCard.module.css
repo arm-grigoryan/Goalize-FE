@@ -1,9 +1,7 @@
 .card {
   display: grid;
-  grid-template-columns: 180px 1px 240px auto 1px 260px;
+  grid-template-columns: 180px 1px 300px auto;
   align-items: center;
-  width: 100%;
-  margin: 0 auto;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background-color: #15191e66;
   border-radius: 10px;
@@ -48,7 +46,8 @@
 }
 .infoWrapperBlue {
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: 124px 228px;
   justify-content: center;
   gap: 24px;
   align-items: center;
@@ -105,7 +104,8 @@
 }
 .infoWrapperRed {
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: 124px 228px;
   justify-content: center;
   gap: 24px;
   align-items: center;
@@ -178,7 +178,7 @@
 }
 .teamWrapper {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 .teamName {
@@ -219,24 +219,6 @@
 .infoWrapper {
     display: flex;
     flex-direction: row;
-}
-.contractWrapper {
-    margin-left: 30px;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-.contractWrapper span {
-    color: #B8B8B8;
-    font-size: 16px;
-    font-weight: 400;
-    text-transform: capitalize;
-}
-.contract {
-    color: #FFF;
-    font-size: 16px;
-    font-weight: 600;
-    text-transform: capitalize;
 }
 
 .mobile {

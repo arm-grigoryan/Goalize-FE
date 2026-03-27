@@ -10,6 +10,7 @@ import { useParams } from "next/navigation";
 import { useGetTeamTrophiesQuery } from "@/app/store/services/api";
 import { Loader } from "@/shared/Loader/Loader";
 import type { ITeamTrophy } from "@/types/api/temas";
+import trophiesEmpty from '../../assets/pngs/trophiesEpmty.svg';
 
 const typeMap: Record<ITeamTrophy["type"], "gold" | "silver" | "bronze"> = {
   Winner: "gold",
@@ -41,7 +42,9 @@ export const TeamOverviewTrophies: React.FC = () => {
           <Loader />
         </div>
       ) : !trophies || trophies.length === 0 ? (
-        <div className={styles.noTrophies}>No trophies yet</div>
+        <div className={styles.noTrophies}>
+          <Image src={trophiesEmpty} alt="" />
+        </div>
       ) : (
         <div className={styles.trophies}>
           {trophies.map((trophy, index) => (
