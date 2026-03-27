@@ -2,10 +2,12 @@ import { StaticImageData } from "next/image";
 
 export interface ITransferItemCardProps {
   date: string;
-  fromTeamLogo: string | StaticImageData;
+  fromTeamLogo?: string | StaticImageData;
   fromTeamName: string;
-  toTeamLogo: string | StaticImageData;
+  fromTeamId?: number;
+  toTeamLogo?: string | StaticImageData;
   toTeamName: string;
+  toTeamId?: number;
   fromTeamNameToolTip?: string;
   toTeamNameToolTip?: string;
 }

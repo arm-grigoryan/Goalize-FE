@@ -5,6 +5,7 @@ import Button from "@/shared/Button";
 import plusButtonImg from "../../assets/pngs/plusButton.svg";
 import removeUserIng from "../../assets/pngs/removeUser.svg";
 import Image from "next/image";
+import Link from "next/link";
 import PlayerStatistics from "../PlayerStatistics";
 import UnassignedPlayerCard from "../UnassignedPlayerCard";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
@@ -34,6 +35,7 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
   onQuitTeamButtonClick,
   playerHasTeam,
   isLoggedIn,
+  teamId,
 }) => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
@@ -67,7 +69,7 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
         <div className={styles.playerContainer}>
           <div className={styles.imageWrapper}>
             {profilePic && (
-              <Image src={profilePic} className={styles.image} alt={""} />
+              <Image src={profilePic} className={styles.image} alt={""} width={260} height={350} />
             )}
             {isMobile && showActionButtons && (
               <div className={styles.buttonsContainer}>
@@ -188,9 +190,15 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
             )}
           </div>
           {!isMobile && teamLogo && (
-            <div className={styles.teamLogoWrapper}>
-              <Image src={teamLogo} alt="" className={styles.teamLogo} />
-            </div>
+            teamId ? (
+              <Link href={`/teams/${teamId}`} className={styles.teamLogoWrapper}>
+                <Image src={teamLogo} alt="" className={styles.teamLogo} width={66} height={66} />
+              </Link>
+            ) : (
+              <div className={styles.teamLogoWrapper}>
+                <Image src={teamLogo} alt="" className={styles.teamLogo} width={66} height={66} />
+              </div>
+            )
           )}
           {!isMobile && teamName && (
             <div className={styles.playerNumberContainer}>
@@ -203,12 +211,21 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
         {teamName && (
           <div className={styles.teamContainer}>
             <div className={styles.team}>
-              <div className={styles.teamInfo}>
-                {teamLogo && (
-                  <Image className={styles.teamImg} alt="" src={teamLogo} />
-                )}
-                <div className={styles.teamName}>{teamName}</div>
-              </div>
+              {teamId ? (
+                <Link href={`/teams/${teamId}`} className={styles.teamInfo} style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}>
+                  {teamLogo && (
+                    <Image className={styles.teamImg} alt="" src={teamLogo} width={42} height={42} />
+                  )}
+                  <div className={styles.teamName}>{teamName}</div>
+                </Link>
+              ) : (
+                <div className={styles.teamInfo}>
+                  {teamLogo && (
+                    <Image className={styles.teamImg} alt="" src={teamLogo} width={42} height={42} />
+                  )}
+                  <div className={styles.teamName}>{teamName}</div>
+                </div>
+              )}
               {isLoggedIn &&
                 onQuitTeamButtonClick &&
                 quitTeamButtonText &&

@@ -1,6 +1,5 @@
 "use client";
 import PlayerProfileCard from "@/entities/PlayerProfileCard";
-import toBeDeleted from "../../assets/pngs/toBeDeleted.png";
 import TransferHistoryCard from "@/entities/TransferHistoryCard";
 import styles from "./PlayerProfile.module.css";
 import MatchList from "@/entities/MatchList";
@@ -147,7 +146,7 @@ export const PlayerProfile = () => {
             makeCaptainButtonText={t("makeCaptainButtonText")}
             onMakeCaptainButtonClick={handleMakeCaptainClick}
             onRemoveUserButtonClick={handleRemoveMemberClick}
-            profilePic={toBeDeleted}
+            profilePic={playerBasicInfo?.playerInfo.userInfo.profilePic}
             fullName={`${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName}`}
             age={String(playerBasicInfo?.playerInfo.userInfo.age || "")}
             foot={playerBasicInfo?.playerInfo.userInfo.workingFoot || ""}
@@ -157,9 +156,8 @@ export const PlayerProfile = () => {
             isCaptain={isUserCaptain}
             isSameTeam={isSameTeam}
             isViewingSelf={isViewingSelf}
-            teamLogo={
-              playerBasicInfo?.playerInfo.team ? toBeDeleted : undefined
-            }
+            teamLogo={playerBasicInfo?.playerInfo.team?.logoUrl}
+            teamId={playerBasicInfo?.playerInfo.team?.id}
             isLoggedIn={isLoggedIn}
             playerHasTeam={Boolean(playerBasicInfo?.playerInfo.team)}
           />

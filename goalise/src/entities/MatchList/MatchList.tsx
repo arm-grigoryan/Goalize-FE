@@ -1,6 +1,7 @@
 import styles from "./MatchList.module.css";
 import MatchCard from "../MatchCard";
 import Image from "next/image";
+import Link from "next/link";
 import matchesIcon from "../../assets/pngs/calendar.svg";
 import matchEmptyState from "../../assets/pngs/matchEmptyState.png";
 import { useTranslations } from "next-intl";
@@ -83,18 +84,19 @@ export const MatchList = () => {
         {matches.map((match, i) => {
           const key = `${match.matchDate}-${match.homeTeam.id}-${match.awayTeam.id}-${i}`;
           return (
-            <MatchCard
-              key={key}
-              homeTeamName={match.homeTeam.name}
-              homeTeamScore={match.homeTeamScore}
-              awayTeamName={match.awayTeam.name}
-              awayTeamScore={match.awayTeamScore}
-              date={formatUTCDate(match.matchDate)}
-              goalsCount={match.playerGoalsCount}
-              peopleCount={match.playerAssistsCount}
-              redCardsCount={match.playerRedsCount}
-              yellowCardsCount={match.playerYellowsCount}
-            />
+            <Link key={key} href={`/matches/${match.id}`} style={{ textDecoration: "none", color: "inherit", display: "block", cursor: "pointer" }}>
+              <MatchCard
+                homeTeamName={match.homeTeam.name}
+                homeTeamScore={match.homeTeamScore}
+                awayTeamName={match.awayTeam.name}
+                awayTeamScore={match.awayTeamScore}
+                date={formatUTCDate(match.matchDate)}
+                goalsCount={match.playerGoalsCount}
+                peopleCount={match.playerAssistsCount}
+                redCardsCount={match.playerRedsCount}
+                yellowCardsCount={match.playerYellowsCount}
+              />
+            </Link>
           );
         })}
         {isFetching && (
