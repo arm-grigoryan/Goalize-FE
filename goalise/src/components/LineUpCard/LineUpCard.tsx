@@ -16,7 +16,6 @@ export const LineUpCard: React.FC<ILineUpCardProps> = ({ players, onPlayerClick 
           playerImage={player.picture}
           playerName={`${player.firstName} ${player.lastName}`}
           playerNumber={player.shirtNumber}
-          playerHref={`/profile/${player.playerId}`}
           onClick={() => onPlayerClick(player)}
         />
       ))}

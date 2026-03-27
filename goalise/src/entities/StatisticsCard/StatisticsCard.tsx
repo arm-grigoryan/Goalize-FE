@@ -38,22 +38,16 @@ export const StatisticsCard: React.FC<IStatisticsCardProps> = ({
             <div className={styles.title}>{title}</div>
 
             <div className={styles.container}>
-                <div
-                    className={styles.progressContainer}
-                    style={{ width: `${progressLeft}%` }}
-                >
-                    <div className={leftClass}>
+                <div className={styles.progressSideLeft}>
+                    <div className={leftClass} style={{ width: `${progressLeft}%` }}>
                         <span className={styles.progressTextLeft}>
                             {valueLeft ?? progressLeft}
                         </span>
                     </div>
                 </div>
 
-                <div
-                    className={styles.progressContainer}
-                    style={{ width: `${progressRight}%` }}
-                >
-                    <div className={rightClass}>
+                <div className={styles.progressSideRight}>
+                    <div className={rightClass} style={{ width: `${progressRight}%` }}>
                         <span className={styles.progressText}>
                             {valueRight ?? progressRight}
                         </span>

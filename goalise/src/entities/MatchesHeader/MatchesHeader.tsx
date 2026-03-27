@@ -12,6 +12,7 @@ import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import winnerIcon from '../../assets/pngs/winnerIcon.svg';
 import winnerIconSwappped from '../../assets/pngs/winnerIconSwapped.svg';
 import vsIcon from '../../assets/pngs/vsIcon.svg';
+import vsIconBig from '../../assets/pngs/vsIcon.png';
 import { useParams, useRouter } from "next/navigation";
 import { useGetMatchByIdQuery } from "@/app/store/services/api";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
@@ -65,8 +66,8 @@ export const MatchesHeader: React.FC = () => {
     return items;
   })();
 
-  const homeIsWinner = match.state !== "Upcoming" && match.homeTeamScore > match.awayTeamScore;
-  const awayIsWinner = match.state !== "Upcoming" && match.awayTeamScore > match.homeTeamScore;
+  const homeIsWinner = match.state === "Finished" && match.homeTeamScore > match.awayTeamScore;
+  const awayIsWinner = match.state === "Finished" && match.awayTeamScore > match.homeTeamScore;
 
   const formattedDate = formatUTCDate(match.date, "dd-mm-yyyy");
   const formattedTime = formatUTCDate(match.date, "HH:MM");
@@ -98,32 +99,29 @@ export const MatchesHeader: React.FC = () => {
     </div>
   );
 
+  const renderTopLabel = () => {
+    if (match.state === "Upcoming") {
+      return isTBA
+        ? <span className={styles.matchDate}>TBA</span>
+        : <LiveDateLabel date={formattedDate} time={formattedTime} />;
+    }
+    if (match.state === "Live") {
+      return <LiveDateLabel isLive />;
+    }
+    return <LiveDateLabel date={formattedDate} time={formattedTime} />;
+  };
+
   const renderCenterCol = () => {
     if (match.state === "Upcoming") {
       return (
         <div className={styles.matchCenterCol}>
-          {isTBA
-            ? <span className={styles.matchDate}>TBA</span>
-            : <LiveDateLabel date={formattedDate} time={formattedTime} />
-          }
-          <Image src={vsIcon} alt="vs" className={styles.vsIcon} />
+          <Image src={vsIconBig} alt="vs" className={styles.vsIcon} />
         </div>
       );
     }
 
-    if (match.state === "Live") {
-      return (
-        <div className={styles.matchCenterCol}>
-          <LiveDateLabel isLive />
-          {renderScoreContent()}
-        </div>
-      );
-    }
-
-    // Finished — date label above score
     return (
       <div className={styles.matchCenterCol}>
-        <LiveDateLabel date={formattedDate} time={formattedTime} />
         {renderScoreContent()}
       </div>
     );
@@ -146,21 +144,28 @@ export const MatchesHeader: React.FC = () => {
     {!isMobile && <CustomDivider orientation="vertical" flexItem />}
     {isMobile && <CustomDivider orientation="horizontal" flexItem />}
     <div className={styles.rightPart}>
+      <div className={styles.upcomingLabel}>
+        {renderTopLabel()}
+      </div>
       <div className={styles.matchWrapper} tabIndex={0}>
         {/* Home team */}
         <div className={styles.match_left_block}>
           <div className={styles.match_left_block_inner_wrapper}>
-            <span className={styles.team_name}>{match.homeTeam.name}</span>
-            {homeLogoUrl && (
-              <Image
-                src={homeLogoUrl}
-                alt={match.homeTeam.name}
-                className={styles.team_logo}
-                width={106}
-                height={106}
-                unoptimized
-              />
-            )}
+            <Link href={`/teams/${match.homeTeam.id}`} style={{ textDecoration: "none" }} onClick={(e) => e.stopPropagation()}>
+              <span className={styles.team_name}>{match.homeTeam.name}</span>
+            </Link>
+            <Link href={`/teams/${match.homeTeam.id}`} style={{ textDecoration: "none" }} onClick={(e) => e.stopPropagation()}>
+              {homeLogoUrl && (
+                <Image
+                  src={homeLogoUrl}
+                  alt={match.homeTeam.name}
+                  className={styles.team_logo}
+                  width={106}
+                  height={106}
+                  unoptimized
+                />
+              )}
+            </Link>
           </div>
         </div>
 

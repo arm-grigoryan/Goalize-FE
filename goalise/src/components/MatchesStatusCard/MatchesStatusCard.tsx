@@ -3,7 +3,7 @@ import styles from './MatchesStatusCard.module.css'
 import Image from "next/image";
 import Link from "next/link";
 import Button from "@/shared/Button";
-import teamLogo from '../../assets/pngs/teamLogo.png';
+import defaultAvatar from '../../assets/pngs/teamLogo.png';
 import { useTranslations } from "next-intl";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
@@ -11,6 +11,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 export interface IMatchesStatusCardProps {
     playerName?: string;
     playerPicture?: string;
+    teamPicture?: string;
     playerId?: number;
     rating?: number;
     goals?: number;
@@ -18,7 +19,9 @@ export interface IMatchesStatusCardProps {
     tackles?: number;
     interceptions?: number;
     passes?: number;
+    passesCompleted?: number;
     shots?: number;
+    shotsCompleted?: number;
     goalKeeperRating?: number;
     saves?: number;
     goalsConceded?: number;
@@ -28,6 +31,7 @@ export interface IMatchesStatusCardProps {
 export const MatchesStatusCard: React.FC<IMatchesStatusCardProps> = ({
     playerName,
     playerPicture,
+    teamPicture,
     playerId,
     rating,
     goals,
@@ -35,7 +39,9 @@ export const MatchesStatusCard: React.FC<IMatchesStatusCardProps> = ({
     tackles,
     interceptions,
     passes,
+    passesCompleted,
     shots,
+    shotsCompleted,
     goalKeeperRating,
     saves,
     goalsConceded,
@@ -50,10 +56,24 @@ export const MatchesStatusCard: React.FC<IMatchesStatusCardProps> = ({
             <div className={styles.content}>
                 <div className={styles.infoWrapper}>
                     <div className={styles.imagesWrapper}>
-                        {playerPicture
-                            ? <Image src={playerPicture} alt="" width={74} height={74} className={styles.playerImage}/>
-                            : <Image src={teamLogo} alt="" className={styles.playerImage}/>
-                        }
+                        <Image
+                            src={playerPicture ?? defaultAvatar}
+                            alt=""
+                            width={74}
+                            height={74}
+                            className={styles.playerImage}
+                            unoptimized={!!playerPicture}
+                        />
+                        {teamPicture && (
+                            <Image
+                                src={teamPicture}
+                                alt=""
+                                width={74}
+                                height={74}
+                                className={styles.teamImage}
+                                unoptimized
+                            />
+                        )}
                     </div>
                     <div className={styles.playerName}>{playerName}</div>
                 </div>
@@ -62,31 +82,31 @@ export const MatchesStatusCard: React.FC<IMatchesStatusCardProps> = ({
                     <div className={styles.wrapper}>
                         <div className={styles.wrapperCard}>
                             <span>{t("matches.statusCard.playerStats.rating")}</span>
-                            <div>{rating}</div>
+                            <div>{rating ?? '-'}</div>
                         </div>
                         <div className={styles.wrapperCard}>
                             <span>{t("matches.statusCard.playerStats.goals")}</span>
-                            <div>{goals}</div>
+                            <div>{goals ?? '-'}</div>
                         </div>
                         <div className={styles.wrapperCard}>
                             <span>{t("matches.statusCard.playerStats.assists")}</span>
-                            <div>{assists}</div>
+                            <div>{assists ?? '-'}</div>
                         </div>
                         <div className={styles.wrapperCard}>
                             <span>{t("matches.statusCard.playerStats.tackles")}</span>
-                            <div>{tackles}</div>
+                            <div>{tackles ?? '-'}</div>
                         </div>
                         <div className={styles.wrapperCard}>
                             <span>{t("matches.statusCard.playerStats.interceptions")}</span>
-                            <div>{interceptions}</div>
+                            <div>{interceptions ?? '-'}</div>
                         </div>
                         <div className={styles.wrapperCard}>
                             <span>{t("matches.statusCard.playerStats.passes")}</span>
-                            <div>{passes}</div>
+                            <div>{passes != null && passesCompleted != null ? `${passes > 0 ? Math.round((passesCompleted / passes) * 100) : 0}% ${passesCompleted}/${passes}` : '-'}</div>
                         </div>
                         <div className={styles.wrapperCard}>
                             <span>{t("matches.statusCard.playerStats.shots")}</span>
-                            <div>{shots}</div>
+                            <div>{shots != null && shotsCompleted != null ? `${shots > 0 ? Math.round((shotsCompleted / shots) * 100) : 0}% ${shotsCompleted}/${shots}` : '-'}</div>
                         </div>
                     </div>
 
@@ -94,28 +114,35 @@ export const MatchesStatusCard: React.FC<IMatchesStatusCardProps> = ({
                      <div className={styles.wrapper}>
                         <div className={styles.wrapperCard}>
                             <span>{t("matches.statusCard.goalkeeperStats.rating")}</span>
-                            <div>{goalKeeperRating}</div>
+                            <div>{goalKeeperRating ?? '-'}</div>
                         </div>
                         <div className={styles.wrapperCard}>
                             <span>{t("matches.statusCard.goalkeeperStats.saves")}</span>
-                            <div>{saves}</div>
+                            <div>{saves ?? '-'}</div>
                         </div>
                         <div className={styles.wrapperCard}>
                             <span>{t("matches.statusCard.goalkeeperStats.goalsConceded")}</span>
-                            <div>{goalsConceded}</div>
+                            <div>{goalsConceded ?? '-'}</div>
                         </div>
                         <div className={styles.wrapperCard}>
                             <span>{t("matches.statusCard.goalkeeperStats.penaltiesSaved")}</span>
-                            <div>{penaltiesSaved}</div>
+                            <div>{penaltiesSaved ?? '-'}</div>
                         </div>
                     </div>
                 </div>
                 </div>
             <div className={styles.playerProfileWrapper}>
-               <div className={styles.imageTextWrapper}> 
-                    <Image src={teamLogo} alt="" className={styles.profileImage}/>
+               <div className={styles.imageTextWrapper}>
+                    <Image
+                        src={playerPicture ?? defaultAvatar}
+                        alt=""
+                        className={styles.profileImage}
+                        width={36}
+                        height={36}
+                        unoptimized={!!playerPicture}
+                    />
                     <Link href={playerId ? `/profile/${playerId}` : '#'} className={styles.playerProfile}>{t("matches.statusCard.playerProfile")}</Link>
-                </div> 
+                </div>
                 <Button className="red_text_button" content="Close" handleClick={onClose ?? (() => {})}/>
             </div>
         </div>

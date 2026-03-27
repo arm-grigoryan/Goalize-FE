@@ -9,7 +9,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import clipboard from '../../assets/pngs/clipboard.svg';
 import matchEmptyState from '../../assets/pngs/matchEmptyState.png';
-import { useGetMatchLineupQuery, useGetMatchPlayerStatsQuery } from '@/app/store/services/api';
+import { useGetMatchLineupQuery, useGetMatchPlayerStatsQuery, useGetMatchByIdQuery } from '@/app/store/services/api';
 import MatchesStatusCard from '@/components/MatchesStatusCard';
 import type { IMatchlineUp } from '@/types/api/matchLineUps';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
@@ -20,7 +20,7 @@ export const LineUp = () => {
   const base = `/matches/${matchId}`;
   const matchIdNum = Number(matchId);
 
-  const [selectedPlayer, setSelectedPlayer] = useState<IMatchlineUp | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<{ player: IMatchlineUp; teamLogo?: string } | null>(null);
 
   const {
     data: lineup,
@@ -33,6 +33,8 @@ export const LineUp = () => {
     isLoading: statsLoading,
     error: statsError,
   } = useGetMatchPlayerStatsQuery(matchIdNum);
+
+  const { data: match } = useGetMatchByIdQuery(matchIdNum);
 
   const isActive = (href: string) => {
     if (href === base) {
@@ -54,6 +56,9 @@ export const LineUp = () => {
   const awayPlayers = lineup?.awayPlayers ?? [];
   const allEmpty = homePlayers.length === 0 && awayPlayers.length === 0;
 
+  const getTeamLogo = (logoUrl?: string) =>
+    logoUrl?.startsWith('http') ? logoUrl : undefined;
+
   const buildStatsProps = (player: IMatchlineUp) => {
     const stats = (playerStats ?? []).find(s => s.teamPlayerId === player.id);
     if (!stats) return {};
@@ -61,8 +66,10 @@ export const LineUp = () => {
       rating: stats.rate,
       goals: stats.goals,
       assists: stats.assists,
-      shots: stats.shots,
       passes: stats.passes,
+      passesCompleted: stats.passesCompleted,
+      shots: stats.shots,
+      shotsCompleted: stats.shotsCompleted,
       tackles: stats.tackles,
       interceptions: stats.interceptions,
       goalKeeperRating: stats.goalKeeperRate,
@@ -100,11 +107,11 @@ export const LineUp = () => {
         <div className={styles.teamsWrapper}>
           <div>
             <div className={styles.title}>Team A</div>
-            <LineUpCard players={homePlayers} onPlayerClick={setSelectedPlayer} />
+            <LineUpCard players={homePlayers} onPlayerClick={(p) => setSelectedPlayer({ player: p, teamLogo: getTeamLogo(match?.homeTeam.logoUrl) })} />
           </div>
           <div>
             <div className={styles.title}>Team B</div>
-            <LineUpCard players={awayPlayers} onPlayerClick={setSelectedPlayer} />
+            <LineUpCard players={awayPlayers} onPlayerClick={(p) => setSelectedPlayer({ player: p, teamLogo: getTeamLogo(match?.awayTeam.logoUrl) })} />
           </div>
         </div>
       )}
@@ -113,10 +120,11 @@ export const LineUp = () => {
 
     {selectedPlayer && (
       <MatchesStatusCard
-        {...buildStatsProps(selectedPlayer)}
-        playerName={`${selectedPlayer.firstName} ${selectedPlayer.lastName}`}
-        playerPicture={selectedPlayer.picture}
-        playerId={selectedPlayer.playerId}
+        {...buildStatsProps(selectedPlayer.player)}
+        playerName={`${selectedPlayer.player.firstName} ${selectedPlayer.player.lastName}`}
+        playerPicture={selectedPlayer.player.picture?.startsWith('http') ? selectedPlayer.player.picture : undefined}
+        teamPicture={selectedPlayer.teamLogo}
+        playerId={selectedPlayer.player.playerId}
         onClose={() => setSelectedPlayer(null)}
       />
     )}
