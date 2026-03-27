@@ -11,7 +11,6 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import winnerIcon from '../../assets/pngs/winnerIcon.svg';
 import winnerIconSwappped from '../../assets/pngs/winnerIconSwapped.svg';
-import vsIcon from '../../assets/pngs/vsIcon.svg';
 import vsIconBig from '../../assets/pngs/vsIcon.png';
 import { useParams, useRouter } from "next/navigation";
 import { useGetMatchByIdQuery } from "@/app/store/services/api";
