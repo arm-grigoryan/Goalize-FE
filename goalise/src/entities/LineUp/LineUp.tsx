@@ -106,11 +106,11 @@ export const LineUp = () => {
       ) : (
         <div className={styles.teamsWrapper}>
           <div>
-            <div className={styles.title}>Team A</div>
+            <div className={styles.title}>{match?.homeTeam.name ?? 'Team A'}</div>
             <LineUpCard players={homePlayers} onPlayerClick={(p) => setSelectedPlayer({ player: p, teamLogo: getTeamLogo(match?.homeTeam.logoUrl) })} />
           </div>
           <div>
-            <div className={styles.title}>Team B</div>
+            <div className={styles.title}>{match?.awayTeam.name ?? 'Team B'}</div>
             <LineUpCard players={awayPlayers} onPlayerClick={(p) => setSelectedPlayer({ player: p, teamLogo: getTeamLogo(match?.awayTeam.logoUrl) })} />
           </div>
         </div>
