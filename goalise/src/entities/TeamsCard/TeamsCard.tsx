@@ -11,9 +11,10 @@ import teamLogoFallback from "../../assets/pngs/teamLogo.png";
 
 export interface ITeamsCardProps {
   item: ITeamListItem;
+  onNextMatchClick?: () => void;
 }
 
-export const TeamsCard: React.FC<ITeamsCardProps> = ({ item }) => {
+export const TeamsCard: React.FC<ITeamsCardProps> = ({ item, onNextMatchClick }) => {
   const { team, captain, matchDate, matchId, opponent } = item;
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
@@ -42,8 +43,8 @@ export const TeamsCard: React.FC<ITeamsCardProps> = ({ item }) => {
           <div className={styles.titleWrapper}>{team.name}</div>
         </Link>
         <div className={styles.boxesContainer}>
-          <div className={styles.box}>
-            Next Match:
+          <div className={`${styles.box} ${styles.nextMatch}`} onClick={onNextMatchClick}>
+            <Link href={'#'}> Next Match: </Link>
             {matchId !== null ? (
               <Link href={`/matches/${matchId}`} style={{ textDecoration: 'none' }}>
                 <span>{formattedDate}</span>

@@ -17,6 +17,8 @@ import { useCreateTeamMutation, useLazyGetPlayersInviteQuery } from "@/app/store
 import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 import warningIcon from "../../assets/pngs/error.svg";
 import type { PlayerInviteResult } from "@/types/api/search";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 type CreateTeamFormData = {
   Name: string;
@@ -78,6 +80,8 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
     y: number;
     player: PlayerInviteResult;
   } | null>(null);
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
 
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
@@ -259,8 +263,11 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
 
   return (
     <>
-      <div className={styles.overlay} onClick={handleClose} />
-      <div className={styles.container}>
+      <div className={styles.overlay}  onClick={() => {
+                                        setWarningTooltip(null);
+                                        handleClose();
+                                      }} />
+      <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`}>
         <div className={styles.titleWrapper}>
           <div className={styles.title}>Create Team</div>
           <div className={styles.subTitle}>
@@ -399,7 +406,10 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                           }
                         }}
                       >
-                        <span>{player.fullName}</span>
+                        <div className={styles.serachDropdownItemName}> 
+                          <Image src={teamLogo} alt="" className={styles.serachDropdownItemImage}/>
+                          <span>{player.fullName}</span>
+                        </div>
                         {player.showDisabled && (
                           <Image
                             src={warningIcon}
@@ -407,11 +417,29 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                             className={styles.warningIcon}
                             width={16}
                             height={16}
-                            onMouseEnter={(e) => {
-                              const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-                              setWarningTooltip({ x: rect.right + 8, y: rect.top, player });
+                           onClick={(e) => {
+                              if (isMobile) {
+                                const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                                setWarningTooltip({
+                                  x: rect.left + rect.width / 2,
+                                  y: rect.top - 8,
+                                  player,
+                                });
+                              }
                             }}
-                            onMouseLeave={() => setWarningTooltip(null)}
+                            onMouseEnter={(e) => {
+                              if (!isMobile) {
+                                const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                                setWarningTooltip({
+                                  x: rect.right + 8,
+                                  y: rect.top,
+                                  player,
+                                });
+                              }
+                            }}
+                            onMouseLeave={() => {
+                              if (!isMobile) setWarningTooltip(null);
+                            }}
                           />
                         )}
                       </div>
@@ -423,6 +451,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                 <div className={styles.chipsContainer}>
                   {invitedPlayers.map((player) => (
                     <div key={player.id} className={styles.chip}>
+                      <Image src={teamLogo} alt="" className={styles.serachDropdownItemImage}/>
                       <span>{player.name}</span>
                       <button
                         type="button"
@@ -506,7 +535,11 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
       {warningTooltip && (
         <div
           className={styles.warningTooltip}
-          style={{ left: warningTooltip.x, top: warningTooltip.y }}
+          style={{
+            left: warningTooltip.x,
+            top: warningTooltip.y,
+            transform: isMobile ? "translate(-50%, -100%)" : "none",
+          }}
         >
           <div className={styles.warningTooltipTitle}>Can&apos;t Send Invite</div>
           <div className={styles.warningTooltipDesc}>

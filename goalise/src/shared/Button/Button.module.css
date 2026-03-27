@@ -140,6 +140,24 @@
   color: white;
   border: #f53a53 1px solid;
 }
+.icon_button_red_small {
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 30px;
+  flex-direction: row;
+  background-color: transparent;
+  gap: 4px;
+  background-color: transparent;
+  border-radius: 20px;
+  color: white;
+  border: #f53a53 1px solid;
+  font-size: 14px
+}
+.icon_button_red_small img {
+  height: 22px;
+  width: 22px;
+}
 .icon_button_with_text {
     background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.10);

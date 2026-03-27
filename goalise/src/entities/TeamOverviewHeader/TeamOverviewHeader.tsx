@@ -6,6 +6,7 @@ import styles from "./TeamOverviewHeader.module.css";
 import Image from "next/image";
 import Button from "@/shared/Button";
 import teamLogoFallback from "../../assets/pngs/teamLogo.png";
+import infoIcon from '../../assets/pngs/infoIcon.svg';
 import playerFallback from "../../assets/pngs/unassigned.png";
 import edit from "../../assets/pngs/edit.svg";
 import { useParams, usePathname } from "next/navigation";
@@ -89,6 +90,8 @@ export const TeamOverviewHeader: React.FC = () => {
   const userTeamId = userInfo?.playerInfo?.team?.id;
   const userId = userInfo?.playerInfo?.id;
 
+  const isAbandoned = true;
+  
   const isOnThisTeam = isAuthenticated && Number(userTeamId) === Number(id);
 
   const isCaptain =
@@ -244,6 +247,12 @@ export const TeamOverviewHeader: React.FC = () => {
                   className="red_button_transparant_white_text"
                 />
               )}
+              {isAbandoned &&
+                <div className={styles.abandoned}>
+                  <Image src={infoIcon} alt=""/>
+                  <div className={styles.abandonedText}>Abandoned</div>
+                </div>
+              }
               {isOnThisTeam && (
                 <Button
                   handleClick={() => setShowQuitConfirmModal(true)}
@@ -302,7 +311,10 @@ export const TeamOverviewHeader: React.FC = () => {
                 href={`/profile/${teamInfo.team.captainId}`}
                 style={{ textDecoration: "none" }}
               >
-                <div className={styles.playerName}>{captainFullName}</div>
+                <div className={styles.playerName}>{captainFullName}
+                {!isCaptain &&
+                  <div className={styles.captainLabel}> (C) </div>}
+                </div>
               </Link>
               <div className={styles.buttonsWrapper}>
                 {captainAge !== null && (
@@ -317,10 +329,6 @@ export const TeamOverviewHeader: React.FC = () => {
                     {teamInfo.captain.workingFoot}
                   </div>
                 )}
-                <div className={styles.button}>
-                  <span>Rank: </span>
-                  Captain
-                </div>
               </div>
             </div>
 

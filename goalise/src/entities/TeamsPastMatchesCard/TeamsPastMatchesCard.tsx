@@ -28,6 +28,7 @@ export interface ITeamsPastMatchesCardProps {
   teamScore2: number;
   leagueName?: string;
   leagueId?: number;
+  onCardClick?: () => void;
 }
 
 export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
@@ -43,6 +44,7 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
     variant,
     leagueName,
     leagueId,
+    onCardClick
 }) => {
       const { width } = useWindowSize();
       const isMobile = width <= MEDIA_TABLET_SMALL;
@@ -51,7 +53,11 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
       const winner2 = teamScore2 > teamScore1;
       const draw = teamScore1 === teamScore2;
       
-    return <div className={`${variant === "fixtures" ? styles.matches_innerCard_fixtures : styles.matches_innerCard} ${isMobile ? styles.mobile : ''}`}>
+    return <div className={`${variant === "fixtures" ? 
+                                styles.matches_innerCard_fixtures 
+                                : styles.matches_innerCard} 
+                            ${isMobile ? styles.mobile : ''}`}
+                            onClick={onCardClick}>
       <div className={styles.date}>
         <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
           <Image src={calendarIcon} alt="" className={styles.icon} />

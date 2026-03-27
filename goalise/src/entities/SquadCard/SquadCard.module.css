@@ -13,6 +13,7 @@
             #F6465D);
     justify-content: flex-start;
     align-items: flex-start;
+    cursor: pointer;
 }
 .wrapper {
     position: relative;
@@ -78,11 +79,21 @@
     padding: 6px;
     border-radius: 6px;
 }
-
 .menuDropdown {
     position: absolute;
     top: 28px;
     right: 0;
     z-index: 100;
     min-width: 220px;
+}
+.mobile {
+    width: 100%;
+}
+.mobile .nameNumberContainer {
+    gap: unset;
+    justify-content: space-between;
+}
+
+.mobile .playerNumber {
+    font-size: 120px;
 }

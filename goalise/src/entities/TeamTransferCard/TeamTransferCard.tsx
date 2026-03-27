@@ -21,7 +21,6 @@ export interface ITeamTransferCardProps {
   playerName?: string;
   playerLogo?: string | StaticImageData | null;
   playerId?: number;
-  contract?: string;
   playerIn?: boolean;
 }
 
@@ -43,7 +42,6 @@ export const TeamTransferCard: React.FC<ITeamTransferCardProps> = ({
   playerName,
   playerLogo,
   playerId,
-  contract,
   playerIn,
 }) => {
   const { width } = useWindowSize();
@@ -141,23 +139,6 @@ export const TeamTransferCard: React.FC<ITeamTransferCardProps> = ({
             </Link>
           )}
         </div>
-      </div>
-      <CustomDivider flexItem orientation="vertical" />
-      <div className={styles.contractWrapper}>
-        {isMobile && (
-          <div className={styles.date}>
-            <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
-              <Image src={calendarIcon} alt="" className={styles.icon} />
-            </div>
-            {date}
-          </div>
-        )}
-        {contract && (
-          <>
-            <span>Contract:</span>
-            <div className={styles.contract}>{contract}</div>
-          </>
-        )}
       </div>
     </div>
   );
