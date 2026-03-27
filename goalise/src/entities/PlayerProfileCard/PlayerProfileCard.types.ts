@@ -50,4 +50,5 @@ export interface IPlayerProfileProps {
   quitTeamButtonText?: string;
   onQuitTeamButtonClick?: () => void;
   playerHasTeam?: boolean;
+  teamId?: number;
 }

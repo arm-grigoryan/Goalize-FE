@@ -8,7 +8,6 @@ import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useTranslations } from "next-intl";
 import { useGetPlayerTransferHistoryQuery } from "@/app/store/services/api";
 import { useParams } from "next/navigation";
-import tranferHistoryIcon from "../../assets/pngs/transferHistoryIcon.png";
 import { handleLongStrings } from "@/helper/handleLongStrings";
 import { useEffect, useRef, useState } from "react";
 import { IPlayerTransferHistory } from "@/types/api/playerTransferHistory";
@@ -87,12 +86,14 @@ export const TransferHistoryCard = () => {
             <TransferItemCard
               key={obj.id}
               date={formatUTCDate(obj.transferDate)}
-              fromTeamLogo={tranferHistoryIcon}
+              fromTeamLogo={obj.fromTeam.logoUrl}
               fromTeamName={handleLongStrings(obj.fromTeam.name, 7)}
               fromTeamNameToolTip={obj.fromTeam.name}
-              toTeamLogo={tranferHistoryIcon}
+              fromTeamId={obj.fromTeam.id}
+              toTeamLogo={obj.toTeam.logoUrl}
               toTeamName={handleLongStrings(obj.toTeam.name, 7)}
               toTeamNameToolTip={obj.toTeam.name}
+              toTeamId={obj.toTeam.id}
             />
           );
         })}
