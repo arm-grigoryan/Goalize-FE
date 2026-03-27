@@ -25,11 +25,22 @@
     justify-content: center;
 }
 
-.progressContainer {
-  position: relative;
+.progressSideLeft {
+  width: 50%;
   height: 30px;
-  border-radius: 12px;
+  display: flex;
+  justify-content: flex-end;
   overflow: hidden;
+  border-radius: 12px 0 0 12px;
+}
+
+.progressSideRight {
+  width: 50%;
+  height: 30px;
+  display: flex;
+  justify-content: flex-start;
+  overflow: hidden;
+  border-radius: 0 12px 12px 0;
 }
 
 .progressFill {

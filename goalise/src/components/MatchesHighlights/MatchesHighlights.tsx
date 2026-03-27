@@ -35,14 +35,14 @@ export const MatchesHighlights: React.FC = () => {
     const assistName = assistPlayer
       ? `${assistPlayer.firstName} ${assistPlayer.lastName}`
       : undefined;
-    const assistHref = assistPlayer ? `/players/${assistPlayer.playerId}` : undefined;
+    const assistHref = assistPlayer ? `/profile/${assistPlayer.playerId}` : undefined;
 
     return (
       <MatchesHighlitsCard
         playerNumber={highlight.player.shirtNumber}
         playerImage={highlight.player.picture}
         playerName={`${highlight.player.firstName} ${highlight.player.lastName}`}
-        playerHref={`/players/${highlight.player.playerId}`}
+        playerHref={`/profile/${highlight.player.playerId}`}
         assistName={assistName}
         assistHref={assistHref}
         goal={highlight.type === 'Goal'}
