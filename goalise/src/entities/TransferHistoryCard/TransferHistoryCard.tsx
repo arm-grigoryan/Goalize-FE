@@ -89,11 +89,11 @@ export const TransferHistoryCard = () => {
               fromTeamLogo={obj.fromTeam.logoUrl}
               fromTeamName={handleLongStrings(obj.fromTeam.name, 7)}
               fromTeamNameToolTip={obj.fromTeam.name}
-              fromTeamId={obj.fromTeam.id}
+              fromTeamId={obj.fromTeam.name?.toLowerCase() === 'free agent' ? undefined : obj.fromTeam.id}
               toTeamLogo={obj.toTeam.logoUrl}
               toTeamName={handleLongStrings(obj.toTeam.name, 7)}
               toTeamNameToolTip={obj.toTeam.name}
-              toTeamId={obj.toTeam.id}
+              toTeamId={obj.toTeam.name?.toLowerCase() === 'free agent' ? undefined : obj.toTeam.id}
             />
           );
         })}
