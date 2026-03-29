@@ -3,9 +3,8 @@ import styles from "./HomeUpcomingMatchesCard.module.css";
 import Title from "@/shared/Title";
 import Image from "next/image";
 import vsIcon from "../../assets/pngs/vsIcon.png";
-import teamLogoLeft from "../../assets/pngs/teamLoroLeft.png";
-import teamLogoRight from "../../assets/pngs/teamLogoRight.png";
 import MatchListInnerCard from "@/entities/MatchListInnerCard";
+import Link from "next/link";
 import { useGetUpComingMatchesQuery } from "@/app/store/services/api";
 import CustomDivider from "@/shared/Divider";
 import { useEffect, useRef, useState } from "react";
@@ -114,7 +113,7 @@ export const HomeUpcomingMatchesCard = () => {
         </div>
       ) : (
         <div className={styles.Home_main_card}>
-          <div className={styles.match_inner_wrapper}>
+          <Link href={`/matches/${firstMatch.id}`} className={styles.match_inner_wrapper} style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}>
             <div>
               {centralMatchLabel}
             </div>
@@ -126,11 +125,15 @@ export const HomeUpcomingMatchesCard = () => {
                       {firstMatch?.homeTeam?.name}
                     </span>
                   </div>
-                  <Image
-                    src={teamLogoLeft}
-                    alt=""
-                    className={styles.team_logo}
-                  />
+                  {firstMatch?.homeTeam?.logoUrl && (
+                    <Image
+                      src={firstMatch.homeTeam.logoUrl}
+                      alt=""
+                      className={styles.team_logo}
+                      width={80}
+                      height={80}
+                    />
+                  )}
                 </div>
               </div>
               <div>
@@ -143,15 +146,19 @@ export const HomeUpcomingMatchesCard = () => {
                       {firstMatch?.awayTeam?.name}
                     </span>
                   </div>
-                  <Image
-                    src={teamLogoRight}
-                    alt=""
-                    className={styles.team_logo}
-                  />
+                  {firstMatch?.awayTeam?.logoUrl && (
+                    <Image
+                      src={firstMatch.awayTeam.logoUrl}
+                      alt=""
+                      className={styles.team_logo}
+                      width={80}
+                      height={80}
+                    />
+                  )}
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
 
           <div className={styles.divider}>
             <CustomDivider orientation="vertical" />
@@ -166,15 +173,16 @@ export const HomeUpcomingMatchesCard = () => {
             >
               {matches.map((match) => {
                 return (
-                  <MatchListInnerCard
-                    key={match.id}
-                    teamNameHome={match.homeTeam.name}
-                    homeTeamPoints={match.homeTeamPoints}
-                    teamNameAway={match.awayTeam.name}
-                    awayTeamPoints={match.awayTeamPoints}
-                    matchDate={formatUTCDate(match.date)}
-                    matchTime={formatUTCDate(match.date, "HH:MM")}
-                  />
+                  <Link key={match.id} href={`/matches/${match.id}`} style={{ textDecoration: "none", color: "inherit", display: "block", cursor: "pointer" }}>
+                    <MatchListInnerCard
+                      teamNameHome={match.homeTeam.name}
+                      homeTeamPoints={match.homeTeamPoints}
+                      teamNameAway={match.awayTeam.name}
+                      awayTeamPoints={match.awayTeamPoints}
+                      matchDate={formatUTCDate(match.date)}
+                      matchTime={formatUTCDate(match.date, "HH:MM")}
+                    />
+                  </Link>
                 );
               })}
             </div>

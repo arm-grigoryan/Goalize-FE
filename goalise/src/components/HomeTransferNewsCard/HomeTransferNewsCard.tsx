@@ -3,7 +3,6 @@ import styles from "./HomeTransferNewsCard.module.css";
 import transferHistoryIcon from "../../assets/pngs/TransferIcon.svg";
 import Title from "@/shared/Title";
 import TransferInnerCard from "../../entities/TransferInnerCard";
-import playerImg from "../../assets/pngs/teamLogo.png";
 import { useGetTransferNewsQuery } from "@/app/store/services/api";
 import { useEffect, useRef, useState } from "react";
 import { ITransfers } from "@/types/api/transfers";
@@ -89,15 +88,18 @@ export const HomeTransferNewsCard = () => {
             return (
               <TransferInnerCard
                 key={transfer.id}
-                playerImage={playerImg}
+                playerImage={transfer.playerPicture}
+                playerId={transfer.playerId}
                 PlayerName={`${transfer.firstName} ${transfer.lastName}`}
                 transferDate={formatUTCDate(transfer.transferDate)}
-                teamLogoFrom={playerImg}
+                teamLogoFrom={transfer.fromTeam.logoUrl}
                 teamNameFrom={handleLongStrings(transfer.fromTeam.name, 8)}
                 teamNameFromTooltip={transfer.fromTeam.name}
-                teamLogoTo={playerImg}
+                fromTeamId={transfer.fromTeam.name?.toLowerCase() === 'free agent' ? undefined : transfer.fromTeam.id}
+                teamLogoTo={transfer.toTeam.logoUrl}
                 teamNameTo={handleLongStrings(transfer.toTeam.name, 8)}
                 teamNameToTooltip={transfer.toTeam.name}
+                toTeamId={transfer.toTeam.name?.toLowerCase() === 'free agent' ? undefined : transfer.toTeam.id}
               />
             );
           })}
