@@ -12,6 +12,11 @@ import winnerIconSwapped from "../../assets/pngs/winnerIconSwapped.svg";
 import drawSwappedIcon from "../../assets/pngs/drawIconSwapped.svg";
 import calendarIcon from "../../assets/pngs/dateIcon.svg";
 
+const isValidImageSrc = (src: string | StaticImageData): boolean => {
+  if (typeof src !== "string") return true;
+  return src.startsWith("http://") || src.startsWith("https://") || src.startsWith("/");
+};
+
 type PatchMatchesInnerCardVariant = "default" | "results" | "fixtures";
 interface PastMatchesInnerCardProps {
   variant?: PatchMatchesInnerCardVariant;
@@ -69,7 +74,7 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
               {winner1 && <Image src={winnerIcon} alt="" className={styles.winnerIcon} />}
               {draw && drawIcon && <Image src={drawIcon} alt="" className={styles.drawIcon}/>}
             </div>
-            <Image src={teamLogo1} alt="" className={styles.team_logo_mobile} />
+            {isValidImageSrc(teamLogo1) && <Image src={teamLogo1} alt="" className={styles.team_logo_mobile} width={60} height={60} />}
             <div>{teamName1}</div>
           </div>
 
@@ -96,7 +101,7 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
               {winner2 && <Image src={winnerIconSwapped} alt="" className={styles.winnerIconSwapped} />}
               {draw && drawIcon && <Image src={drawSwappedIcon} alt="" className={styles.drawIconSwapped} />}
             </div>
-            <Image src={teamLogo2} alt="" className={styles.team_logo_mobile} />
+            {isValidImageSrc(teamLogo2) && <Image src={teamLogo2} alt="" className={styles.team_logo_mobile} width={60} height={60} />}
             <div>{teamName2}</div>
           </div>
         </div>
@@ -125,7 +130,7 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
         </div>
 
         <div className={styles.team}>
-          <Image src={teamLogo1} alt="" />
+          {isValidImageSrc(teamLogo1) && <Image src={teamLogo1} alt="" width={40} height={40} />}
           <span className={styles.team_name} title={teamName1Tooltip}>
             {teamName1}
           </span>
@@ -155,7 +160,7 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
           <span className={styles.team_name} title={teamName2Tooltip}>
             {teamName2}
           </span>
-          <Image src={teamLogo2} alt="" />
+          {isValidImageSrc(teamLogo2) && <Image src={teamLogo2} alt="" width={40} height={40} />}
         </div>
 
         <div className={styles.winner_slot2}>

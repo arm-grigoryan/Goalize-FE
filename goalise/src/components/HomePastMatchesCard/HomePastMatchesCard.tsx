@@ -4,8 +4,8 @@ import calendarIcon from "../../assets/pngs/calendar.svg";
 import Title from "@/shared/Title";
 import PastMatchesInnerCard from "../../entities/PastMatchesInnerCard";
 import winnerIcon from "../../assets/pngs/winnerIcon.svg";
-import teamLogo from "../../assets/pngs/teamLogo.png";
 import drawIcon from "../../assets/pngs/drawIcon.svg";
+import Link from "next/link";
 import { useGetPastMatchesQuery } from "@/app/store/services/api";
 import { useEffect, useRef, useState } from "react";
 import { IMatchesPast } from "@/types/api/matchesPast";
@@ -98,20 +98,21 @@ export const HomePastMatchesCard = () => {
         <div ref={scrollContainerRef} className={styles.match_wrapper}>
           {matches.map((match) => {
             return (
-              <PastMatchesInnerCard
-                key={match.id}
-                date={formatUTCDate(match.date)}
-                winnerIcon={winnerIcon}
-                drawIcon={drawIcon}
-                teamLogo1={teamLogo}
-                teamName1={handleLongStrings(match.homeTeam.name, 9)}
-                teamName1Tooltip={match.homeTeam.name}
-                teamScore1={match.homeTeamScore}
-                teamLogo2={teamLogo}
-                teamName2={handleLongStrings(match.awayTeam.name, 9)}
-                teamName2Tooltip={match.awayTeam.name}
-                teamScore2={match.awayTeamScore}
-              />
+              <Link key={match.id} href={`/matches/${match.id}`} style={{ textDecoration: "none", color: "inherit", display: "block", cursor: "pointer" }}>
+                <PastMatchesInnerCard
+                  date={formatUTCDate(match.date)}
+                  winnerIcon={winnerIcon}
+                  drawIcon={drawIcon}
+                  teamLogo1={match.homeTeam.logoUrl}
+                  teamName1={handleLongStrings(match.homeTeam.name, 9)}
+                  teamName1Tooltip={match.homeTeam.name}
+                  teamScore1={match.homeTeamScore}
+                  teamLogo2={match.awayTeam.logoUrl}
+                  teamName2={handleLongStrings(match.awayTeam.name, 9)}
+                  teamName2Tooltip={match.awayTeam.name}
+                  teamScore2={match.awayTeamScore}
+                />
+              </Link>
             );
           })}
           {isFetching && (

@@ -199,6 +199,14 @@
   flex-shrink: 0;
 }
 
+.search_item_image_placeholder {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
 .search_item_content {
   display: flex;
   flex-direction: column;

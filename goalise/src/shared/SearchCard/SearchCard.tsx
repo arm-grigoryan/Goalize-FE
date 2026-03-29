@@ -121,7 +121,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
                   href={getRouteByType(it.type, it.id)}
                   className={styles.search_item}
                 >
-                  {it.pictureUrl && isValidUrl(it.pictureUrl) && (
+                  {it.pictureUrl && isValidUrl(it.pictureUrl) ? (
                     <Image
                       src={it.pictureUrl}
                       alt={it.mainText}
@@ -129,6 +129,8 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
                       height={32}
                       className={styles.search_item_image}
                     />
+                  ) : (
+                    <div className={styles.search_item_image_placeholder} />
                   )}
                   <div className={styles.search_item_content}>
                     <div className={styles.search_item_label}>
