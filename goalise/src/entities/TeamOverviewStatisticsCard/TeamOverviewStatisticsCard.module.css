@@ -60,6 +60,3 @@
 .nameLink {
   text-decoration: none;
 }
-.nameLink:hover .name {
-  text-decoration: underline;
-}

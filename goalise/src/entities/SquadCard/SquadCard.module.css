@@ -1,5 +1,5 @@
 .container {
-    max-width: 322px;
+    width: 100%;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background-color: #15191e66;
     border-radius: 16px;
@@ -22,7 +22,7 @@
 .nameNumberContainer {
     display: flex;
     flex-direction: row;
-    gap: 40px;
+    justify-content: space-between;
 }
 .playerNumberContainer {
   display: flex;
@@ -35,7 +35,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    background: #54a3feba;
+    object-fit: cover
 }
 .playerNumber {
   font-size: 143px;
@@ -86,6 +86,7 @@
     z-index: 100;
     min-width: 220px;
 }
+ /* ------------- mobile styles ---------------- */
 .mobile {
     width: 100%;
 }

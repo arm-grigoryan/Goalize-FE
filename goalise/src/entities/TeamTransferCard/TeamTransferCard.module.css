@@ -220,15 +220,10 @@
     display: flex;
     flex-direction: row;
 }
-
+ /* ------------- mobile styles ---------------- */
 .mobile {
   display: flex;
   flex-direction: column;
-}
-
-.mobile .contractWrapper {
-    margin: 10px;
-    align-items: center;
 }
 .mobile .playerWrapper {
   margin: 10px 0;
@@ -236,6 +231,17 @@
 .mobile .teamWrapper {
   padding: 10px 0;
 }
-.mobile .contract {
-  font-size: 14px;
+.mobile .infoWrapperBlue {
+  grid-template-columns: 66px auto;
+}
+.mobile .infoWrapperRed {
+  grid-template-columns: 66px auto;
+}
+.mobile .dateWrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

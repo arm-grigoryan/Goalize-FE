@@ -6,6 +6,8 @@ import { useParams, usePathname } from "next/navigation";
 import { useGetTeamTransfersQuery } from "@/app/store/services/api";
 import { ITeamTransfer } from "@/types/api/transfers";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 
 const PAGE_SIZE = 10;
 
@@ -15,6 +17,8 @@ export const TeamTransfer = () => {
   const { teamId } = useParams();
   const teamIdNum = Number(teamId);
   const pathname = usePathname();
+  const { width } = useWindowSize()
+  const isMobile = width <= MEDIA_TABLET_SMALL;
 
   const [activeTab, setActiveTab] = useState<Tab>("All");
   const [offset, setOffset] = useState<number>(0);
@@ -67,7 +71,7 @@ export const TeamTransfer = () => {
         );
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`}>
       <div className={styles.tabsContainer}>
         <div
           className={`${styles.tab} ${activeTab === "All" ? styles.isActive : ""}`}
