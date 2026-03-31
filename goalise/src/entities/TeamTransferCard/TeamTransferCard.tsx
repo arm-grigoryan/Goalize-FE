@@ -140,6 +140,16 @@ export const TeamTransferCard: React.FC<ITeamTransferCardProps> = ({
           )}
         </div>
       </div>
+      <div className={styles.dateWrapper}>
+        {isMobile && (
+          <div className={styles.date}>
+            <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
+              <Image src={calendarIcon} alt="" className={styles.icon} />
+            </div>
+            {date}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

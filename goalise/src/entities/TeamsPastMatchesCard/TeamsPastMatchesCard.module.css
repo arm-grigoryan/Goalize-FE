@@ -48,7 +48,7 @@
 /* ---------- SIDES ---------- */
 .side_left {
   display: grid;
-  grid-template-columns: 80px 100px;
+  grid-template-columns: 100px 140px;
   align-items: center;
   gap: 12px;
   right: 4px;
@@ -57,7 +57,7 @@
 
 .side_right {
   display: grid;
-  grid-template-columns: 100px 80px;
+  grid-template-columns: 140px 100px;
   align-items: center;
   gap: 14px;
   position: relative;
@@ -317,7 +317,7 @@
     font-size: 16px;
     font-weight: 500;
     text-transform: capitalize;
-    justify-self: flex-end;
+    justify-self: center;
     text-decoration: none
 }
 
@@ -344,7 +344,7 @@
     max-width: 100px !important;
   }
 }
-
+ /* ------------- mobile styles ---------------- */
 .mobile {
    display: flex;
   flex-direction: column;
@@ -357,8 +357,8 @@
   font-size: 12px;
 }
 .mobile .wrapper {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 80px 100px 80px;
   margin: 14px 0;
 }
 .mobile .side_left {
@@ -368,7 +368,7 @@
 .mobile .side_right {
   display: flex;
   flex-direction: column-reverse;
-  align-items: flex-end;
+  align-items: center;
 }
 .mobile .team {
   display: flex;
