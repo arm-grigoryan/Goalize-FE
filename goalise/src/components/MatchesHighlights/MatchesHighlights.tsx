@@ -68,25 +68,31 @@ export const MatchesHighlights: React.FC = () => {
       <div className={styles.highlightsWrapper}>
         {isMobile ? (
           <div className={styles.mobileList}>
-            {sortedAll.map(h => <React.Fragment key={h.id}>{renderCard(h, h.isHome)}</React.Fragment>)}
+            {sortedAll.map(h => {
+              const displayHome = h.type === 'OwnGoal' ? !h.isHome : h.isHome;
+              return <React.Fragment key={h.id}>{renderCard(h, displayHome)}</React.Fragment>;
+            })}
           </div>
         ) : (
           <>
-            {sortedAll.map(h => (
-              <div key={h.id} className={styles.eventRow}>
-                <div className={styles.sideLeft}>
-                  {h.isHome ? renderCard(h, true) : null}
-                </div>
-                <div className={styles.line}>
-                  <div className={styles.iconWrapper}>
-                    <span className={styles.dot} />
+            {sortedAll.map(h => {
+              const displayHome = h.type === 'OwnGoal' ? !h.isHome : h.isHome;
+              return (
+                <div key={h.id} className={styles.eventRow}>
+                  <div className={styles.sideLeft}>
+                    {displayHome ? renderCard(h, true) : null}
+                  </div>
+                  <div className={styles.line}>
+                    <div className={styles.iconWrapper}>
+                      <span className={styles.dot} />
+                    </div>
+                  </div>
+                  <div className={styles.sideRight}>
+                    {!displayHome ? renderCard(h, false) : null}
                   </div>
                 </div>
-                <div className={styles.sideRight}>
-                  {!h.isHome ? renderCard(h, false) : null}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </>
         )}
       </div>
