@@ -7,6 +7,7 @@ import styles from "./CreateTeamPopUp.module.css";
 import Image from "next/image";
 import editIcon from "../../assets/pngs/editIcon.svg";
 import teamLogo from "../../assets/pngs/teamLogo.png";
+import noPhoto from "../../assets/pngs/noPhoto.png";
 import leftArrow from "../../assets/pngs/leftArrow.svg";
 import teamIcon from "../../assets/pngs/teamIcon.svg";
 import searchIconGray from "../../assets/pngs/searchIconGray.svg";
@@ -28,6 +29,7 @@ type CreateTeamFormData = {
 type InvitedPlayer = {
   id: number;
   name: string;
+  pictureUrl?: string;
 };
 
 export interface ICreateTeamPopUpProps {
@@ -199,9 +201,9 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const handleAddPlayer = (id: number, name: string) => {
+  const handleAddPlayer = (id: number, name: string, pictureUrl?: string) => {
     if (!invitedPlayers.some((p) => p.id === id)) {
-      setInvitedPlayers((prev) => [...prev, { id, name }]);
+      setInvitedPlayers((prev) => [...prev, { id, name, pictureUrl }]);
     }
     setInviteQuery("");
   };
@@ -402,12 +404,19 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                         className={`${styles.searchDropdownItem} ${player.showDisabled ? styles.searchDropdownItemDisabled : ""}`}
                         onClick={() => {
                           if (!player.showDisabled) {
-                            handleAddPlayer(player.playerId, player.fullName);
+                            handleAddPlayer(player.playerId, player.fullName, player.pictureUrl);
                           }
                         }}
                       >
-                        <div className={styles.serachDropdownItemName}> 
-                          <Image src={teamLogo} alt="" className={styles.serachDropdownItemImage}/>
+                        <div className={styles.serachDropdownItemName}>
+                          <Image
+                            src={player.pictureUrl && player.pictureUrl.startsWith("http") ? player.pictureUrl : noPhoto}
+                            alt=""
+                            width={28}
+                            height={28}
+                            className={styles.serachDropdownItemImage}
+                            unoptimized
+                          />
                           <span>{player.fullName}</span>
                         </div>
                         {player.showDisabled && (
@@ -451,7 +460,14 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                 <div className={styles.chipsContainer}>
                   {invitedPlayers.map((player) => (
                     <div key={player.id} className={styles.chip}>
-                      <Image src={teamLogo} alt="" className={styles.serachDropdownItemImage}/>
+                      <Image
+                        src={player.pictureUrl && player.pictureUrl.startsWith("http") ? player.pictureUrl : noPhoto}
+                        alt=""
+                        width={28}
+                        height={28}
+                        className={styles.serachDropdownItemImage}
+                        unoptimized
+                      />
                       <span>{player.name}</span>
                       <button
                         type="button"
