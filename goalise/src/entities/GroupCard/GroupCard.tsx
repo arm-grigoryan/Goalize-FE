@@ -3,6 +3,7 @@ import { ILeaguesGroupItem } from "@/types/api/leaguesGroup";
 import styles from "./GroupCard.module.css";
 import Image from "next/image";
 import teamLogo from '../../assets/pngs/teamLogo.png'
+import Link from "next/link";
 interface GroupCardProps {
   groupCardContent: ILeaguesGroupItem[];
   groupName: string;
@@ -47,10 +48,24 @@ export const GroupCard = ({ groupCardContent, groupName }: GroupCardProps) => {
                 >
                   {card ? (
                     <>
-                      <div className={styles.position_container}> 
+                      <div className={styles.position_container}>
                         <td className={styles.index}>{index + 1}</td>
-                        <td className={styles.imageWrapper}><Image src={teamLogo} alt=""  className={styles.image}/></td>
-                        <td className={styles.team}>{card.team.name}</td>
+                        <td className={styles.imageWrapper}>
+                          <Link href={`/teams/${card.team.id}`}>
+                            <Image
+                              src={card.team.logoUrl && card.team.logoUrl.startsWith("http") ? card.team.logoUrl : teamLogo}
+                              alt={card.team.name}
+                              width={32}
+                              height={32}
+                              className={styles.image}
+                            />
+                          </Link>
+                        </td>
+                        <td className={styles.team}>
+                          <Link href={`/teams/${card.team.id}`} className={styles.team_link}>
+                            {card.team.name}
+                          </Link>
+                        </td>
                       </div>
                       <div className={styles.scores_container}> 
                         <td className={styles.scores}>{card.matchesPlayed}</td>

@@ -50,6 +50,13 @@ export const LeaguesHeader = () => {
       ? leagueData.winner.logoUrl
       : undefined;
 
+  const leagueLogo =
+    leagueData?.logoUrl &&
+    typeof leagueData.logoUrl === "string" &&
+    leagueData.logoUrl.startsWith("http")
+      ? leagueData.logoUrl
+      : championsLeagueImg;
+
   const renderPrizePool = () => (
     <div className={isMobile ? styles.fee_container : styles.fee_container}>
       {(leagueData?.firstPlacePrize || leagueData?.secondPlacePrize || leagueData?.semiFinalistPrize) &&
@@ -171,7 +178,7 @@ export const LeaguesHeader = () => {
         {isMobile ? (
           <>
             <div className={styles.league_name_container_mobile}>
-              <Image src={championsLeagueImg} alt="champions league" />
+              <Image src={leagueLogo} alt="champions league" width={80} height={80} />
               <div className={styles.league_name_and_button}>
                 <div className={styles.league_name}>{leagueData?.name}</div>
                 <div className={styles.stageButton}>
@@ -207,6 +214,7 @@ export const LeaguesHeader = () => {
                   <ChampionCard
                     teamName={leagueData?.winner?.name}
                     logoSrc={winnerLogo}
+                    teamId={leagueData?.winner?.id}
                   />
                   {renderPrizePool()}
                 </div>
@@ -216,7 +224,7 @@ export const LeaguesHeader = () => {
         ) : (
           <>
             <div className={styles.league_name_container}>
-              <Image src={championsLeagueImg} alt="champions league" />
+              <Image src={leagueLogo} alt="champions league" width={80} height={80} />
               <div className={styles.league_name_and_button}>
                 <div className={styles.league_name}>{leagueData?.name}</div>
                 {renderJoinButton()}
@@ -234,6 +242,7 @@ export const LeaguesHeader = () => {
                   <ChampionCard
                     teamName={leagueData?.winner?.name}
                     logoSrc={winnerLogo}
+                    teamId={leagueData?.winner?.id}
                   />
                   {renderPrizePool()}
                 </div>

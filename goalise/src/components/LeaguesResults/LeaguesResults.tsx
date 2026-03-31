@@ -5,6 +5,7 @@ import PastMatchesInnerCard from "@/entities/PastMatchesInnerCard";
 import winnerIcon from "../../assets/pngs/winnerIcon.svg";
 import teamLogo from "../../assets/pngs/teamLogo.png";
 import drawIcon from "../../assets/pngs/drawIcon.svg";
+import Link from "next/link";
 import { useGetLeaguesResultsQuery } from "@/app/store/services/api";
 import { ILeaguesResultsItem } from "@/types/api/leaguesResults";
 import { handleLongStrings } from "@/helper/handleLongStrings";
@@ -95,20 +96,23 @@ export const LeaguesResults = () => {
           <div key={stage} className={styles.fixtures_list}>
             <Title content={stage} />
             {matches.map((match: ILeaguesResultsItem) => {
+              const homeLogo = match.homeTeam.logoUrl?.startsWith("http") ? match.homeTeam.logoUrl : teamLogo;
+              const awayLogo = match.awayTeam.logoUrl?.startsWith("http") ? match.awayTeam.logoUrl : teamLogo;
               return (
-                <PastMatchesInnerCard
-                  key={match.id}
-                  date={formatUTCDate(match.date)}
-                  winnerIcon={winnerIcon}
-                  drawIcon={drawIcon}
-                  teamLogo1={teamLogo}
-                  teamLogo2={teamLogo}
-                  teamName1={handleLongStrings(match.homeTeam.name, 8)}
-                  teamName2={handleLongStrings(match.awayTeam.name, 8)}
-                  teamScore1={match.homeTeamScore}
-                  teamScore2={match.awayTeamScore}
-                  variant={"results"}
-                />
+                <Link key={match.id} href={`/matches/${match.id}`} className={styles.match_link}>
+                  <PastMatchesInnerCard
+                    date={formatUTCDate(match.date)}
+                    winnerIcon={winnerIcon}
+                    drawIcon={drawIcon}
+                    teamLogo1={homeLogo}
+                    teamLogo2={awayLogo}
+                    teamName1={handleLongStrings(match.homeTeam.name, 8)}
+                    teamName2={handleLongStrings(match.awayTeam.name, 8)}
+                    teamScore1={match.homeTeamScore}
+                    teamScore2={match.awayTeamScore}
+                    variant={"results"}
+                  />
+                </Link>
               );
             })}
           </div>

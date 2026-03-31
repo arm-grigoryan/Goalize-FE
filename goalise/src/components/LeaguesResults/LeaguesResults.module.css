@@ -37,6 +37,12 @@
   gap: 16px;
   width: 100%;
 }
+.match_link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
 .loader_container {
   display: flex;
   justify-content: center;

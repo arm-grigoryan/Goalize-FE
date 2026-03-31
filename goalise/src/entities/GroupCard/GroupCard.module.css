@@ -92,6 +92,15 @@
   color: #f5b03a !important;
 }
 
+.team_link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.team_link:hover {
+  text-decoration: underline;
+}
+
 /* Only body scrolls */
 .scrollable {
   max-height: 150px;

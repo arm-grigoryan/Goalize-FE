@@ -15,7 +15,7 @@ export interface DrawTeam {
   id: number;
   name: string;
   abbreviation?: string;
-  logoSrc: string;
+  logoUrl: string;
   captainId: number;
 }
 

@@ -50,6 +50,7 @@ export const Stats: React.FC = () => {
     players: ITopPlayer[] = [],
   ): IStatsCardInnerCardProps[] =>
     players.map((player) => ({
+      playerId: player.teamPlayer.playerId,
       teamPlayer: {
         firstName: player.teamPlayer.firstName,
         lastName: player.teamPlayer.lastName,
@@ -58,8 +59,8 @@ export const Stats: React.FC = () => {
       },
       team: {
         name: player.team.name || "—",
-        logoUrl: "",
-        captainId: 0,
+        logoUrl: player.team.logoUrl,
+        captainId: player.team.captainId,
       },
       value: player.value,
     }));

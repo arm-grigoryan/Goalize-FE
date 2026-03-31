@@ -38,8 +38,11 @@ export const LeguesJoinedTeams = () => {
         {data?.map((team) => (
           <LeaguesJoinedTeamCard
             key={team.id}
+            teamId={team.id}
             teamName={team.name}
+            teamLogoUrl={team.logoUrl}
             captainName={team.captain.firstName + " " + team.captain.lastName}
+            captainPic={team.captain.profilePicStatus === "Approved" ? team.captain.profilePic : undefined}
           />
         ))}
       </div>

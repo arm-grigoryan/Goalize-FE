@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { Loader } from "@/shared/Loader/Loader";
 import styles from "./DrowStandings.module.css";
 import bigVsIcon from "../../assets/pngs/bigVsIcon.svg";
@@ -94,83 +95,96 @@ export const DrowStandings = () => {
     );
     const displayData = matchData || match;
 
+    const isTbd = displayData.homeTeam.name === "TBD";
+    const homeLogo = displayData.homeTeam.logoUrl?.startsWith("http") ? displayData.homeTeam.logoUrl : null;
+    const awayLogo = displayData.awayTeam.logoUrl?.startsWith("http") ? displayData.awayTeam.logoUrl : null;
+
     if (isMobile) {
       return (
         <div key={displayData.id} className={styles.mobileContainer}>
-          <div
-            className={`${styles.matchMobile} ${
-              displayData.homeTeamScore > displayData.awayTeamScore
-                ? styles.winner
-                : displayData.homeTeamScore === displayData.awayTeamScore
-                  ? styles.noOne
-                  : styles.winner2
-            }`}
+          <Link
+            href={isTbd ? "#" : `/matches/${displayData.id}`}
+            className={styles.matchLink}
           >
             <div
-              className={`${styles.teamMobile} ${
-                displayData.homeTeamScore < displayData.awayTeamScore
-                  ? styles.loserText
-                  : ""
-              }`}
-            >
-              {!(displayData.homeTeam.name === "TBD") && (
-                <Image
-                  src={displayData.homeTeam.logoSrc}
-                  alt=""
-                  className={styles.teamLogoMobile}
-                />
-              )}
-              {displayData.homeTeam.name === "TBD" && (
-                <Image src={tbdIcon} alt="" className={styles.tbdIconMobile} />
-              )}
-              {displayData.homeTeam.abbreviation}
-              <div className={styles.scoreMobile}>
-                {displayData.homeTeam.name === "TBD"
-                  ? ""
-                  : displayData.homeTeamScore >= 0 &&
-                    ` ${displayData.homeTeamScore}`}
-              </div>
-            </div>
-
-            <div className={styles.line}>
-              {displayData.homeTeam.name === "TBD" ? (
-                <Image src={bigVsIcon} alt="" className={styles.tbdVSMobile} />
-              ) : displayData.isLive ? (
-                <span className={styles.liveDot}></span>
-              ) : (
-                "-"
-              )}
-            </div>
-            <div
-              className={`${styles.team2Mobile} ${
+              className={`${styles.matchMobile} ${
                 displayData.homeTeamScore > displayData.awayTeamScore
-                  ? styles.loserText
-                  : ""
+                  ? styles.winner
+                  : displayData.homeTeamScore === displayData.awayTeamScore
+                    ? styles.noOne
+                    : styles.winner2
               }`}
             >
-              {displayData.awayTeam.name === "TBD" && (
-                <Image
-                  src={tbdIcon}
-                  alt=""
-                  className={styles.tbdIconMobileSwapped}
-                />
-              )}
-              {!(displayData.awayTeam.name === "TBD") && (
-                <Image
-                  src={displayData.awayTeam.logoSrc}
-                  alt=""
-                  className={styles.teamLogoSwappedMobile}
-                />
-              )}
-              {displayData.awayTeam.abbreviation}
-              <div className={styles.score2Mobile}>
-                {displayData.awayTeam.name === "TBD"
-                  ? ""
-                  : displayData.awayTeamScore >= 0 &&
-                    ` ${displayData.awayTeamScore}`}
+              <div
+                className={`${styles.teamMobile} ${
+                  displayData.homeTeamScore < displayData.awayTeamScore
+                    ? styles.loserText
+                    : ""
+                }`}
+              >
+                {!isTbd && homeLogo && (
+                  <Image
+                    src={homeLogo}
+                    alt=""
+                    width={24}
+                    height={24}
+                    className={styles.teamLogoMobile}
+                  />
+                )}
+                {isTbd && (
+                  <Image src={tbdIcon} alt="" className={styles.tbdIconMobile} />
+                )}
+                {displayData.homeTeam.abbreviation}
+                <div className={styles.scoreMobile}>
+                  {isTbd
+                    ? ""
+                    : displayData.homeTeamScore >= 0 &&
+                      ` ${displayData.homeTeamScore}`}
+                </div>
+              </div>
+
+              <div className={styles.line}>
+                {isTbd ? (
+                  <Image src={bigVsIcon} alt="" className={styles.tbdVSMobile} />
+                ) : displayData.isLive ? (
+                  <span className={styles.liveDot}></span>
+                ) : (
+                  "-"
+                )}
+              </div>
+              <div
+                className={`${styles.team2Mobile} ${
+                  displayData.homeTeamScore > displayData.awayTeamScore
+                    ? styles.loserText
+                    : ""
+                }`}
+              >
+                {displayData.awayTeam.name === "TBD" && (
+                  <Image
+                    src={tbdIcon}
+                    alt=""
+                    className={styles.tbdIconMobileSwapped}
+                  />
+                )}
+                {displayData.awayTeam.name !== "TBD" && awayLogo && (
+                  <Image
+                    src={awayLogo}
+                    alt=""
+                    width={24}
+                    height={24}
+                    className={styles.teamLogoSwappedMobile}
+                  />
+                )}
+                {displayData.awayTeam.abbreviation}
+                <div className={styles.score2Mobile}>
+                  {displayData.awayTeam.name === "TBD"
+                    ? ""
+                    : displayData.awayTeamScore >= 0 &&
+                      ` ${displayData.awayTeamScore}`}
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       );
     }
@@ -187,75 +201,84 @@ export const DrowStandings = () => {
             : { marginRight: `${getMarginForRound(match.matchCount)}px` }
         }
       >
-        <div
-          className={`${styles.match} ${
-            displayData.homeTeamScore > displayData.awayTeamScore
-              ? styles.winner
-              : displayData.homeTeamScore === displayData.awayTeamScore
-                ? styles.noOne
-                : styles.winner2
-          }`}
+        <Link
+          href={isTbd ? "#" : `/matches/${displayData.id}`}
+          className={styles.matchLink}
         >
           <div
-            className={`${styles.team} ${
-              displayData.homeTeamScore < displayData.awayTeamScore
-                ? styles.loserText
-                : ""
-            }`}
-          >
-            {displayData.homeTeam.name === "TBD" && (
-              <Image src={tbdIcon} alt="" className={styles.tbdIcon} />
-            )}
-            {!(displayData.homeTeam.name === "TBD") && (
-              <Image
-                src={displayData.homeTeam.logoSrc}
-                alt=""
-                className={styles.teamLogo}
-              />
-            )}
-            {displayData.homeTeam.abbreviation}
-            <div className={styles.score}>
-              {displayData.homeTeam.name === "TBD"
-                ? ""
-                : displayData.homeTeamScore >= 0 &&
-                  ` ${displayData.homeTeamScore}`}
-            </div>
-          </div>
-
-          {displayData.homeTeam.name === "TBD" ? (
-            <Image src={bigVsIcon} alt="" className={styles.tbdVSDesktop} />
-          ) : displayData.isLive ? (
-            <span className={styles.liveDot}></span>
-          ) : (
-            <div className={styles.line}>-</div>
-          )}
-
-          <div
-            className={`${styles.team} ${
+            className={`${styles.match} ${
               displayData.homeTeamScore > displayData.awayTeamScore
-                ? styles.loserText
-                : ""
+                ? styles.winner
+                : displayData.homeTeamScore === displayData.awayTeamScore
+                  ? styles.noOne
+                  : styles.winner2
             }`}
           >
-            <div className={styles.score2}>
-              {displayData.awayTeam.name === "TBD"
-                ? ""
-                : displayData.awayTeamScore >= 0 &&
-                  ` ${displayData.awayTeamScore}`}
+            <div
+              className={`${styles.team} ${
+                displayData.homeTeamScore < displayData.awayTeamScore
+                  ? styles.loserText
+                  : ""
+              }`}
+            >
+              {isTbd && (
+                <Image src={tbdIcon} alt="" className={styles.tbdIcon} />
+              )}
+              {!isTbd && homeLogo && (
+                <Image
+                  src={homeLogo}
+                  alt=""
+                  width={24}
+                  height={24}
+                  className={styles.teamLogo}
+                />
+              )}
+              {displayData.homeTeam.abbreviation}
+              <div className={styles.score}>
+                {isTbd
+                  ? ""
+                  : displayData.homeTeamScore >= 0 &&
+                    ` ${displayData.homeTeamScore}`}
+              </div>
             </div>
-            {displayData.awayTeam.abbreviation}
-            {displayData.awayTeam.name === "TBD" && (
-              <Image src={tbdIcon} alt="" className={styles.tbdIconSwapped} />
+
+            {isTbd ? (
+              <Image src={bigVsIcon} alt="" className={styles.tbdVSDesktop} />
+            ) : displayData.isLive ? (
+              <span className={styles.liveDot}></span>
+            ) : (
+              <div className={styles.line}>-</div>
             )}
-            {!(displayData.awayTeam.name === "TBD") && (
-              <Image
-                src={displayData.awayTeam.logoSrc}
-                alt=""
-                className={styles.teamLogoSwapped}
-              />
-            )}
+
+            <div
+              className={`${styles.team} ${
+                displayData.homeTeamScore > displayData.awayTeamScore
+                  ? styles.loserText
+                  : ""
+              }`}
+            >
+              <div className={styles.score2}>
+                {displayData.awayTeam.name === "TBD"
+                  ? ""
+                  : displayData.awayTeamScore >= 0 &&
+                    ` ${displayData.awayTeamScore}`}
+              </div>
+              {displayData.awayTeam.abbreviation}
+              {displayData.awayTeam.name === "TBD" && (
+                <Image src={tbdIcon} alt="" className={styles.tbdIconSwapped} />
+              )}
+              {displayData.awayTeam.name !== "TBD" && awayLogo && (
+                <Image
+                  src={awayLogo}
+                  alt=""
+                  width={24}
+                  height={24}
+                  className={styles.teamLogoSwapped}
+                />
+              )}
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
     );
   };
@@ -290,7 +313,7 @@ export const DrowStandings = () => {
         {finalMatchData?.homeTeam?.name && (
           <ChampionCard
             teamName={finalMatchData.homeTeam.name}
-            logoSrc={finalMatchData.homeTeam.logo}
+            logoSrc={finalMatchData.homeTeam.logoUrl}
             type="draw"
           />
         )}
@@ -522,7 +545,7 @@ export const DrowStandings = () => {
         {finalMatchData?.homeTeam?.name && (
           <ChampionCard
             teamName={finalMatchData.homeTeam.name}
-            logoSrc={finalMatchData.homeTeam.logo}
+            logoSrc={finalMatchData.homeTeam.logoUrl}
             type="draw"
           />
         )}

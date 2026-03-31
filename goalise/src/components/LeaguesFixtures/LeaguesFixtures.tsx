@@ -4,6 +4,7 @@ import styles from "./LeaguesFixtures.module.css";
 import PastMatchesInnerCard from "@/entities/PastMatchesInnerCard";
 import winnerIcon from "../../assets/pngs/winnerIcon.svg";
 import teamLogo from "../../assets/pngs/teamLogo.png";
+import Link from "next/link";
 import { useGetLeaguesFixturesQuery } from "@/app/store/services/api";
 import { ILeaguesResultsItem } from "@/types/api/leaguesResults";
 import { handleLongStrings } from "@/helper/handleLongStrings";
@@ -93,19 +94,22 @@ export const LeaguesFixtures = () => {
           <div key={stage} className={styles.fixtures_list}>
             <Title content={stage} />
             {matches.map((match: ILeaguesResultsItem) => {
+              const homeLogo = match.homeTeam.logoUrl?.startsWith("http") ? match.homeTeam.logoUrl : teamLogo;
+              const awayLogo = match.awayTeam.logoUrl?.startsWith("http") ? match.awayTeam.logoUrl : teamLogo;
               return (
-                <PastMatchesInnerCard
-                  key={match.id}
-                  date={formatUTCDate(match.date)}
-                  winnerIcon={winnerIcon}
-                  teamLogo1={teamLogo}
-                  teamLogo2={teamLogo}
-                  teamName1={handleLongStrings(match.homeTeam.name, 8)}
-                  teamName2={handleLongStrings(match.awayTeam.name, 8)}
-                  teamScore1={match.homeTeamScore}
-                  teamScore2={match.awayTeamScore}
-                  variant={"fixtures"}
-                />
+                <Link key={match.id} href={`/matches/${match.id}`} className={styles.match_link}>
+                  <PastMatchesInnerCard
+                    date={formatUTCDate(match.date)}
+                    winnerIcon={winnerIcon}
+                    teamLogo1={homeLogo}
+                    teamLogo2={awayLogo}
+                    teamName1={handleLongStrings(match.homeTeam.name, 8)}
+                    teamName2={handleLongStrings(match.awayTeam.name, 8)}
+                    teamScore1={match.homeTeamScore}
+                    teamScore2={match.awayTeamScore}
+                    variant={"fixtures"}
+                  />
+                </Link>
               );
             })}
           </div>

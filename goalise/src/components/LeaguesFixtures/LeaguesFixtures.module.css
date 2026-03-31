@@ -6,6 +6,12 @@
   box-shadow: inset 40px 0 80px -40px rgba(110, 193, 228, 0.18),
     inset -40px 0 80px -40px rgba(255, 143, 163, 0.15);
 }
+.match_link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
 .title_wrapper {
   display: flex;
   align-items: center;

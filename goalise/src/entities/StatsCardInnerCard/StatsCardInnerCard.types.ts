@@ -1,4 +1,5 @@
 export interface IStatsCardInnerCardProps {
+    playerId?: number;
     teamPlayer: {
         firstName: string;
         lastName: string;
