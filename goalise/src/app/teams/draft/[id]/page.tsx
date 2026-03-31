@@ -3,6 +3,7 @@
 import { use, useEffect } from "react";
 import { useGetTeamDraftQuery } from "@/app/store/services/api";
 import { useHandle404 } from "@/hooks/useErrorHandling";
+import DraftTeam from "@/components/DraftTeam";
 
 interface TeamDraftPageProps {
   params: Promise<{
@@ -25,5 +26,7 @@ export default function TeamDraftPage({ params }: TeamDraftPageProps) {
     }
   }, [error, handle404]);
 
-  return null;
+  return <div>
+    <DraftTeam />
+  </div>;
 }

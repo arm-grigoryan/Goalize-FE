@@ -1,0 +1,22 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.imageWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+.image {
+    width: 100%;
+    height: 100%;
+}
+.imageWrapper span {
+    color: #a5a5a5;
+}
