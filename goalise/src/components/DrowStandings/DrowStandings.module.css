@@ -6,6 +6,12 @@
   width: 100%;
   margin: 20px 0;
 }
+.matchLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
 .match {
   position: relative;
   display: flex;
