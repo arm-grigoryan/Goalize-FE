@@ -3,6 +3,7 @@ import styles from "./PlayerProfileCard.module.css";
 import { IPlayerProfileProps } from "@/entities/PlayerProfileCard/PlayerProfileCard.types";
 import Button from "@/shared/Button";
 import plusButtonImg from "../../assets/pngs/plusButton.svg";
+import noPhoto from "../../assets/pngs/noPhoto.png";
 import removeUserIng from "../../assets/pngs/removeUser.svg";
 import Image from "next/image";
 import Link from "next/link";
@@ -68,9 +69,14 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
       <div className={styles.leftContainer}>
         <div className={styles.playerContainer}>
           <div className={styles.imageWrapper}>
-            {profilePic && (
-              <Image src={profilePic} className={styles.image} alt={""} width={260} height={350} />
-            )}
+            <Image
+              src={typeof profilePic === "string" && profilePic.startsWith("http") ? profilePic : noPhoto}
+              className={styles.image}
+              alt={""}
+              width={260}
+              height={350}
+              unoptimized={typeof profilePic === "string" && profilePic.startsWith("http")}
+            />
             {isMobile && showActionButtons && (
               <div className={styles.buttonsContainer}>
                 {showMakeCaptain && (

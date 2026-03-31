@@ -7,6 +7,7 @@ import Image from "next/image";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import redSearchIcon from "../../assets/pngs/redSearchIcon.svg";
+import noPhoto from "../../assets/pngs/noPhoto.png";
 
 export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
   const [query, setQuery] = useState("");
@@ -121,17 +122,14 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
                   href={getRouteByType(it.type, it.id)}
                   className={styles.search_item}
                 >
-                  {it.pictureUrl && isValidUrl(it.pictureUrl) ? (
-                    <Image
-                      src={it.pictureUrl}
-                      alt={it.mainText}
-                      width={32}
-                      height={32}
-                      className={styles.search_item_image}
-                    />
-                  ) : (
-                    <div className={styles.search_item_image_placeholder} />
-                  )}
+                  <Image
+                    src={it.pictureUrl && isValidUrl(it.pictureUrl) ? it.pictureUrl : noPhoto}
+                    alt={it.mainText}
+                    width={32}
+                    height={32}
+                    className={styles.search_item_image}
+                    unoptimized={!!(it.pictureUrl && isValidUrl(it.pictureUrl))}
+                  />
                   <div className={styles.search_item_content}>
                     <div className={styles.search_item_label}>
                       {it.mainText}
