@@ -97,8 +97,9 @@
   text-decoration: none;
 }
 
-.team_link:hover {
-  text-decoration: underline;
+.team_link:hover,
+.team_link:active {
+  text-decoration: none;
 }
 
 /* Only body scrolls */
