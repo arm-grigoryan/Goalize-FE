@@ -71,8 +71,8 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
         <div className={styles.team_info_mobile}>
           <div className={styles.home_team_info_mobile}>
               <div className={styles.winner_wrapper_mobile}>
-              {winner1 && <Image src={winnerIcon} alt="" className={styles.winnerIcon} />}
-              {draw && drawIcon && <Image src={drawIcon} alt="" className={styles.drawIcon}/>}
+              {winner1 && !(variant === "fixtures" ) && <Image src={winnerIcon} alt="" className={styles.winnerIcon} />}
+              {draw && drawIcon && !(variant === "fixtures" ) && <Image src={drawIcon} alt="" className={styles.drawIcon}/>}
             </div>
             {isValidImageSrc(teamLogo1) && <Image src={teamLogo1} alt="" className={styles.team_logo_mobile} width={60} height={60} />}
             <div>{teamName1}</div>
@@ -164,8 +164,8 @@ export const PastMatchesInnerCard: FC<PastMatchesInnerCardProps> = ({
         </div>
 
         <div className={styles.winner_slot2}>
-          {winner2 && <Image src={variant == "default" ? winnerIconSwapped : winnerIcon} alt="" />}
-          {draw && <Image src={variant == "default" ? drawSwappedIcon : drawIcon} alt="" />}
+          {winner2 && !(variant === "fixtures" ) && <Image src={variant == "default" ? winnerIconSwapped : winnerIcon} alt="" />}
+          {draw && !(variant === "fixtures" ) && <Image src={variant == "default" ? drawSwappedIcon : drawIcon} alt="" />}
         </div>
       </div>
       </div>

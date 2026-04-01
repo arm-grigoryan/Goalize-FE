@@ -266,11 +266,7 @@
   justify-content: center;
   width: 100%;
 }
-@media (min-width: 1280px) {
-  .matches_innerCard_fixtures .wrapper {
-    max-width: 1000px;
-  }
-}
+
 .matches_innerCard_fixtures .score_wrapper{
   display: flex;
   max-width: 226px;

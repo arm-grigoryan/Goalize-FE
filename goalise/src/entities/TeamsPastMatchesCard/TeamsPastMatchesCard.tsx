@@ -68,7 +68,7 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
       <div className={styles.wrapper}> 
       <div className={styles.side_left}>
         <div className={styles.winner_slot}>
-          {winner1 && <Image src={winnerIconSwapped} alt=""  className={styles.winner1}/>}
+          {winner1 && !(variant === "fixtures") && <Image src={winnerIconSwapped} alt=""  className={styles.winner1}/>}
           {draw  && !(variant === "fixtures") && <Image src={drawSwappedIcon} alt="" />}
         </div>
 
@@ -107,7 +107,7 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
         </div>
 
         <div className={styles.winner_slot2}>
-          {winner2 && <Image src={winnerIcon} alt="" />}
+          {winner2 && !(variant === "fixtures") && <Image src={winnerIcon} alt="" />}
           {draw && !(variant === "fixtures") && <Image src={drawIcon} alt="" />}
         </div>
       </div>
