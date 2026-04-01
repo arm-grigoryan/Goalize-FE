@@ -1,3 +1,16 @@
+export interface ITeamDraft {
+  id: number;
+  name: string;
+  logo: string;
+  captainId: number;
+  reviewStatus: "Pending" | "Rejected";
+  rejectionReason: string | null;
+  createDate: string;
+  updateDate: string | null;
+  reviewedAt: string | null;
+  firstApprovedAt: string | null;
+}
+
 export interface ITeamJoined {
   id: number;
   name: string;

@@ -13,7 +13,7 @@ import { ITransfers, ITeamTransfer } from "@/types/api/transfers";
 import { ILeague } from "@/types/api/leagues";
 import { ILeaguesGroup } from "@/types/api/leaguesGroup";
 import { ILeaguesResults } from "@/types/api/leaguesResults";
-import { ITeam, ITeamJoined, ITeamListItem, ITeamNextMatch, ITeamTrophy } from "@/types/api/temas";
+import { ITeam, ITeamDraft, ITeamJoined, ITeamListItem, ITeamNextMatch, ITeamTrophy } from "@/types/api/temas";
 import { IPlayerProfile } from "@/types/api/userInfo";
 import type { SearchResponse, PlayerInviteResult } from "@/types/api/search";
 import { IPlayerStats } from "@/types/api/playerStats";
@@ -333,8 +333,14 @@ export const api = createApi({
     getPlayerBasicInfo: builder.query<IPlayerProfile, number>({
       query: (playerId) => `/players/${playerId}/info`,
     }),
-    getTeamDraft: builder.query<unknown, number>({
+    getTeamDraft: builder.query<ITeamDraft, number>({
       query: (teamId) => `/Teams/${teamId}/draft`,
+    }),
+    deleteTeamDraft: builder.mutation<void, number>({
+      query: (teamId) => ({
+        url: `/Teams/${teamId}/draft`,
+        method: "DELETE",
+      }),
     }),
     getTeamInfo: builder.query<ITeam, number>({
       query: (teamId) => `/Teams/${teamId}/info`,
@@ -470,4 +476,5 @@ export const {
   useUpdateTeamMutation,
   useApplyToTeamMutation,
   useUpdateShirtNumberMutation,
+  useDeleteTeamDraftMutation,
 } = api;

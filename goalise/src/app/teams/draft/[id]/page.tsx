@@ -1,7 +1,7 @@
 "use client";
 
 import { use, useEffect } from "react";
-import { useGetTeamDraftQuery } from "@/app/store/services/api";
+import { useGetTeamDraftQuery, useGetUserInfoQuery } from "@/app/store/services/api";
 import { useHandle404 } from "@/hooks/useErrorHandling";
 import DraftTeam from "@/components/DraftTeam";
 
@@ -16,9 +16,12 @@ export default function TeamDraftPage({ params }: TeamDraftPageProps) {
   const { id } = use(params);
   const teamId = Number(id);
 
-  const { error } = useGetTeamDraftQuery(teamId, {
+  const { data, error, isLoading, isError } = useGetTeamDraftQuery(teamId, {
     skip: Number.isNaN(teamId),
   });
+
+  const { data: userInfo } = useGetUserInfoQuery();
+  const isCaptain = userInfo?.playerInfo?.id === data?.captainId;
 
   useEffect(() => {
     if (error) {
@@ -26,7 +29,15 @@ export default function TeamDraftPage({ params }: TeamDraftPageProps) {
     }
   }, [error, handle404]);
 
-  return <div>
-    <DraftTeam />
-  </div>;
+  return (
+    <div>
+      <DraftTeam
+        draftData={data}
+        teamId={teamId}
+        isLoading={isLoading}
+        isError={isError}
+        isCaptain={isCaptain}
+      />
+    </div>
+  );
 }
