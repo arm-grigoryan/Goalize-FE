@@ -55,12 +55,13 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
       Goal
     </div>
   );
- const renderSelfGoal = () => ( 
-  <div className={styles.goal}> 
+ const renderSelfGoal = () => (
+  <div className={styles.goal}>
     {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
     <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
       <Image src={selfGoalIcon} alt="" className={styles.icon} />
     </div>
+    Own Goal
   </div>
  );
   const renderRedCard = () => (
