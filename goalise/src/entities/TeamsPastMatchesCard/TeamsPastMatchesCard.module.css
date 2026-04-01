@@ -101,7 +101,6 @@
   align-self: center;
   justify-content: center;
   width: 100%;
-  max-width: 940px
 }
 .matches_innerCard .score2 {
   position: relative;
@@ -266,7 +265,6 @@
   align-self: center;
   justify-content: center;
   width: 100%;
-  max-width: 940px
 }
 @media (min-width: 1280px) {
   .matches_innerCard_fixtures .wrapper {
