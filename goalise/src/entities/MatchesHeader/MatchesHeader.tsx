@@ -101,7 +101,7 @@ export const MatchesHeader: React.FC = () => {
   const renderTopLabel = () => {
     if (match.state === "Upcoming") {
       return isTBA
-        ? <span className={styles.matchDate}>TBA</span>
+        ? <LiveDateLabel date="To-Be-Announced" time="To-Be-Announced" />
         : <LiveDateLabel date={formattedDate} time={formattedTime} />;
     }
     if (match.state === "Live") {
