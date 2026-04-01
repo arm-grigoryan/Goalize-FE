@@ -268,7 +268,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
       <div className={styles.overlay}  onClick={() => {
                                         setWarningTooltip(null);
                                         handleClose();
-                                      }} />
+                                      }} >
       <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`}>
         <div className={styles.titleWrapper}>
           <div className={styles.title}>Create Team</div>
@@ -566,6 +566,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
           </div>
         </div>
       )}
+      </div>
     </>
   );
 };
