@@ -219,8 +219,6 @@
 .matches_innerCard .score_wrapper {
     justify-self: center;
     align-self: center;
-    width: 100%;
-    max-width: 260px;
     gap: 0;
     font-size: 22px;
     font-weight: 700;
@@ -234,6 +232,7 @@
     gap: 10px;
     font-size: 22px;
     font-weight: 700;
+    padding: 7px;
 }
 
 /* .matches_innerCard_results_mobile {
@@ -251,7 +250,7 @@
 /* ------------ fixtures page ----------- */
 .matches_innerCard_fixtures {
   display: grid;
-  grid-template-columns:180px 1px auto 1px 180px;
+  grid-template-columns: 180px 1px auto 1px 180px;
   align-items: center;
   padding: 7px 10px;
 
@@ -263,13 +262,11 @@
   cursor: pointer;
 }
 .matches_innerCard_fixtures .wrapper {
-  display: grid;
-  grid-template-columns: 200px 200px 200px ;
-  align-items: center;
+  display: flex;
+  align-self: center;
   justify-content: center;
-  gap: 10px;
-  font-size: 14px;
-  max-width: 700px;
+  width: 100%;
+  max-width: 940px
 }
 @media (min-width: 1280px) {
   .matches_innerCard_fixtures .wrapper {
@@ -278,6 +275,9 @@
 }
 .matches_innerCard_fixtures .score_wrapper{
   display: flex;
+  max-width: 226px;
+  width: 100%;
+  padding: 7px;
 }
 .matches_innerCard_fixtures .side_left {
     justify-content: flex-start;

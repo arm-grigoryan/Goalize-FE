@@ -80,7 +80,7 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
         </div>
       </div>
 
-      <div className={`${variant === "fixtures" ? styles.fixturesScoreWrapper : styles.score_wrapper}`}>
+      <div className={`${styles.score_wrapper}`}>
        {!(variant === "fixtures") &&
         <span className={`${variant == "results" &&
                             winner1 && styles.score1} 
