@@ -26,6 +26,12 @@
   font-size: 15px;
   font-weight: 500;
   text-transform: capitalize;
+  margin-bottom: 6px;
+}
+.place {
+  color: #7a7a7a;
+  font-size: 12px;
+  font-weight: 400;
 }
 .season {
   color: #7a7a7a;

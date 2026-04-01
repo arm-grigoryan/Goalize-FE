@@ -66,6 +66,7 @@ export const TeamOverviewTrophiesCard: React.FC<
           style={{ textDecoration: "none" }}
         >
           <div className={styles.name}>{leagueName}</div>
+          <div className={styles.place}> {type === goldTrophie ? '1st Place' : type === bronze ? '2nd Place' : 'Semifinalist'}</div>
         </Link>
         <div className={styles.season}>{season}</div>
       </div>
