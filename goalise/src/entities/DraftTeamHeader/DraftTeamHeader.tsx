@@ -1,207 +1,280 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from './DraftTeamHeader.module.css';
 import Image from "next/image";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import Link from "next/link";
-import teamLogo from '../../assets/pngs/teamLogo.png';
 import edit from '../../assets/pngs/edit.svg';
 import Button from "@/shared/Button";
 import infoIcon from '../../assets/pngs/infoIcon.svg';
+import { ITeamDraft } from "@/types/api/temas";
+import { IPlayerProfile } from "@/types/api/userInfo";
+import { formatUTCDate } from "@/helper/formatDateAndTime";
+import { useDeleteTeamDraftMutation } from "@/app/store/services/api";
+import { useAuth } from "@/shared/auth/AuthContext";
+import { refreshTokens } from "@/shared/auth/oidcService";
+import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
+import { UpdateDraftTeamPopUp } from "@/entities/UpdateDraftTeamPopUp";
 
 export interface IDraftTeamHeaderProps {
     isLoading?: boolean;
     isCaptain?: boolean;
     isError?: boolean;
+    draftData?: ITeamDraft;
+    captainData?: IPlayerProfile;
+    teamId: number;
 }
 export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
     isCaptain,
     isLoading,
-    isError
+    isError,
+    draftData,
+    captainData,
+    teamId,
 }) => {
-      const { width } = useWindowSize();
-      const isMobile = width <= MEDIA_TABLET_SMALL;
+    const { width } = useWindowSize();
+    const isMobile = width <= MEDIA_TABLET_SMALL;
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
+    const [showUpdatePopUp, setShowUpdatePopUp] = useState(false);
+    const [deleteTeamDraft, { isLoading: isDeleting }] = useDeleteTeamDraftMutation();
+    const { tokens, updateTokens } = useAuth();
+
+    const captain = captainData?.playerInfo?.userInfo;
+    const captainId = draftData?.captainId;
+
+    const lastEditedDate = draftData?.updateDate ?? draftData?.createDate ?? null;
+    const editedDateStr = formatUTCDate(lastEditedDate, "dd.mm.yyyy");
+    const editedTimeStr = formatUTCDate(lastEditedDate, "HH:MM");
+
+    const reviewedDateStr = draftData?.reviewedAt ? formatUTCDate(draftData.reviewedAt, "dd.mm.yyyy") : null;
+    const reviewedTimeStr = draftData?.reviewedAt ? formatUTCDate(draftData.reviewedAt, "HH:MM") : null;
+
+    const handleDelete = async () => {
+        setShowDeleteModal(false);
+        try {
+            await deleteTeamDraft(teamId).unwrap();
+            if (tokens?.refreshToken) {
+                const newTokens = await refreshTokens(tokens.refreshToken);
+                updateTokens(newTokens);
+            }
+            setShowDeleteSuccessModal(true);
+        } catch {
+            // error is handled globally
+        }
+    };
+
     return <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
-      <div className={styles.inner}>
-        <div className={styles.name_container}>
-          {isLoading ? (
-            <div
-              className={styles.skeleton}
-              style={{ width: 130, height: 130, borderRadius: 8 }}
-            />
-          ) : (
-            !isMobile && <Image
-              src={teamLogo}
-              alt={"Team"}
-              className={styles.teamLogo}
-              width={130}
-              height={130}
-              unoptimized
-            />
-          )}
-          <div className={styles.name_and_button}>
-            <div className={styles.nameWrapper}>
-              {isLoading ? (
-                <div
-                  className={styles.skeleton}
-                  style={{ width: 200, height: 32, borderRadius: 6 }}
-                />
-              ) : isError ? (
-                <div className={styles.errorText}>Failed to load team info</div>
-              ) : (
-                <div className={styles.name}>
-                   {isMobile && <Image
-                                    src={teamLogo}
-                                    alt={"Team"}
-                                    className={styles.teamLogo}
-                                    width={130}
-                                    height={130}
-                                    unoptimized
-                                  />}
-                  {'Team Name'}
-                  {/* {teamInfo?.team.abbreviation && (
-                    <span className={styles.abbreviation}>
-                      {" "}
-                      ({teamInfo.team.abbreviation})
-                    </span>
-                  )} */}
-                </div>
-              )}
-              {!isMobile && isCaptain && (
-                <div
-                  className={styles.editButton}
-                  onClick={() => {}}
-                  style={{ cursor: "pointer" }}
-                >
-                  <Image src={edit} alt="" />
-                </div>
-              )}
+        {isDeleting && (
+            <div className={styles.loader_container}>
+                <div className={styles.loader}></div>
             </div>
-
-            <div className={styles.buttonsWrapper}>
-                <div className={styles.deleteButtonWrapper}> 
-                    <Button
-                        handleClick={() => {}}
-                        content="Delete"
-                        className="red_button_transparant_white_text"
+        )}
+        <UpdateDraftTeamPopUp
+            open={showUpdatePopUp}
+            onClose={() => setShowUpdatePopUp(false)}
+            teamId={teamId}
+            initialName={draftData?.name ?? ""}
+            initialLogoUrl={draftData?.logo}
+        />
+        {showDeleteModal && (
+            <PlayerInvitationCard
+                title="Delete Draft Team"
+                description="Are you sure you want to delete your draft team? This action cannot be undone."
+                confirmButtonText="Delete"
+                cancelButtonText="Cancel"
+                onConfirmButtonClick={handleDelete}
+                onCancelButtonClick={() => setShowDeleteModal(false)}
+            />
+        )}
+        {showDeleteSuccessModal && (
+            <PlayerInvitationCard
+                title="Draft Team Deleted"
+                description="Your draft team has been successfully deleted."
+                cancelButtonText="Close"
+                onCancelButtonClick={() => { window.location.href = '/'; }}
+            />
+        )}
+        <div className={styles.inner}>
+            <div className={styles.name_container}>
+                {isLoading ? (
+                    <div
+                        className={styles.skeleton}
+                        style={{ width: 130, height: 130, borderRadius: 8 }}
+                    />
+                ) : (
+                    !isMobile && draftData?.logo && (
+                        <Image
+                            src={draftData.logo}
+                            alt={"Team"}
+                            className={styles.teamLogo}
+                            width={130}
+                            height={130}
+                            unoptimized
                         />
-                    {isMobile && isCaptain && (
-                        <div
-                        className={styles.editButton}
-                        onClick={() => {}}
-                        style={{ cursor: "pointer" }}
-                        >
-                        <Image src={edit} alt="" />
-                        </div>
-                    )}
-                    <div className={styles.button}>
-                        <div> Last Edited: </div>
-                        <span>
-                            29.03.26
-                            <div> 12: 30</div>
-                        </span>
-                    </div>
-              </div>
-                <div className={styles.rejectedWrapper}> 
-                    <div className={styles.rejectedInner}> 
-                        <div className={styles.status}> Status: </div>
-                        <div className={styles.abandoned}>
-                            <Image src={infoIcon} alt=""/>
-                            <div className={styles.abandonedText}>Rejected
+                    )
+                )}
+                <div className={styles.name_and_button}>
+                    <div className={styles.nameWrapper}>
+                        {isLoading ? (
+                            <div
+                                className={styles.skeleton}
+                                style={{ width: 200, height: 32, borderRadius: 6 }}
+                            />
+                        ) : isError ? (
+                            <div className={styles.errorText}>Failed to load team info</div>
+                        ) : (
+                            <div className={styles.name}>
+                                {isMobile && draftData?.logo && (
+                                    <Image
+                                        src={draftData.logo}
+                                        alt={"Team"}
+                                        className={styles.teamLogo}
+                                        width={130}
+                                        height={130}
+                                        unoptimized
+                                    />
+                                )}
+                                {draftData?.name}
                             </div>
-                         </div>
-                      {!isMobile && <div className={styles.button}>
-                          <div> Reviewed: </div>
-                          <span> 
-                            14.08.26
-                            <div className={styles.clock}>12:56</div>
-                            </span>
-                        </div>}
+                        )}
+                        {!isMobile && isCaptain && (
+                            <div
+                                className={styles.editButton}
+                                onClick={() => setShowUpdatePopUp(true)}
+                                style={{ cursor: "pointer" }}
+                            >
+                                <Image src={edit} alt="" />
+                            </div>
+                        )}
                     </div>
-                    <div className={styles.rejectedText}>The text here why is rejected.</div>
-                    {isMobile && <div className={styles.button}>
-                          <div> Reviewed: </div>
-                          <span> 
-                            14.08.26
-                            <div className={styles.clock}>12:56</div>
-                            </span>
-                        </div>}
+
+                    <div className={styles.buttonsWrapper}>
+                        <div className={styles.deleteButtonWrapper}>
+                            <Button
+                                handleClick={() => setShowDeleteModal(true)}
+                                content="Delete"
+                                className="red_button_transparant_white_text"
+                            />
+                            {isMobile && isCaptain && (
+                                <div
+                                    className={styles.editButton}
+                                    onClick={() => setShowUpdatePopUp(true)}
+                                    style={{ cursor: "pointer" }}
+                                >
+                                    <Image src={edit} alt="" />
+                                </div>
+                            )}
+                            <div className={styles.button}>
+                                <div> Last Edited: </div>
+                                <span>
+                                    {editedDateStr}
+                                    <div>{editedTimeStr}</div>
+                                </span>
+                            </div>
+                        </div>
+                        <div className={styles.rejectedWrapper}>
+                            <div className={styles.rejectedInner}>
+                                <div className={styles.status}> Status: </div>
+                                <div className={styles.abandoned}>
+                                    <Image src={infoIcon} alt="" />
+                                    <div className={styles.abandonedText}>
+                                        {draftData?.reviewStatus ?? '—'}
+                                    </div>
+                                </div>
+                                {!isMobile && reviewedDateStr && (
+                                    <div className={styles.button}>
+                                        <div> Reviewed: </div>
+                                        <span>
+                                            {reviewedDateStr}
+                                            <div className={styles.clock}>{reviewedTimeStr}</div>
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                            {draftData?.rejectionReason && (
+                                <div className={styles.rejectedText}>{draftData.rejectionReason}</div>
+                            )}
+                            {isMobile && reviewedDateStr && (
+                                <div className={styles.button}>
+                                    <div> Reviewed: </div>
+                                    <span>
+                                        {reviewedDateStr}
+                                        <div className={styles.clock}>{reviewedTimeStr}</div>
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
-          </div>
+
+            {isLoading && (
+                <div className={styles.infoImageWrapper}>
+                    <div className={styles.nameButtonWrapper}>
+                        <div
+                            className={styles.skeleton}
+                            style={{ width: 180, height: 36, borderRadius: 6 }}
+                        />
+                        <div className={styles.buttonsWrapper}>
+                            <div className={styles.skeleton} style={{ width: 80, height: 40, borderRadius: 10 }} />
+                            <div className={styles.skeleton} style={{ width: 80, height: 40, borderRadius: 10 }} />
+                            <div className={styles.skeleton} style={{ width: 90, height: 40, borderRadius: 10 }} />
+                        </div>
+                    </div>
+                    <div className={styles.skeleton} style={{ width: 173, height: 221, borderRadius: 14 }} />
+                </div>
+            )}
+
+            {!isLoading && (
+                <div className={styles.infoImageWrapper}>
+                    <div className={styles.nameButtonWrapper}>
+                        <Link
+                            href={captainId ? `/players/${captainId}` : '#'}
+                            style={{ textDecoration: "none" }}
+                        >
+                            <div className={styles.playerName}>
+                                {captain ? `${captain.firstName} ${captain.lastName}` : '—'}
+                                {!isCaptain && (
+                                    <div className={styles.captainLabel}> (C) </div>
+                                )}
+                            </div>
+                        </Link>
+                        <div className={styles.infoButtonsWrapper}>
+                            <div className={styles.button}>
+                                <span>Age: </span>
+                                {captain?.age ?? '—'}
+                            </div>
+                            <div className={styles.button}>
+                                <span>Foot: </span>
+                                {captain?.workingFoot ?? '—'}
+                            </div>
+                        </div>
+                    </div>
+
+                    <Link
+                        href={captainId ? `/players/${captainId}` : '#'}
+                        style={{ textDecoration: "none" }}
+                        className={styles.playerImageWrapper}
+                    >
+                        {captain?.profilePic ? (
+                            <Image
+                                src={captain.profilePic}
+                                alt={''}
+                                className={styles.playerImage}
+                                width={173}
+                                height={221}
+                                unoptimized
+                            />
+                        ) : (
+                            <div
+                                className={styles.playerImage}
+                                style={{ width: 173, height: 221, background: 'rgba(255,255,255,0.05)', borderRadius: 14 }}
+                            />
+                        )}
+                    </Link>
+                </div>
+            )}
         </div>
-
-        {isLoading && (
-          <div className={styles.infoImageWrapper}>
-            <div className={styles.nameButtonWrapper}>
-              <div
-                className={styles.skeleton}
-                style={{ width: 180, height: 36, borderRadius: 6 }}
-              />
-              <div className={styles.buttonsWrapper}>
-                <div
-                  className={styles.skeleton}
-                  style={{ width: 80, height: 40, borderRadius: 10 }}
-                />
-                <div
-                  className={styles.skeleton}
-                  style={{ width: 80, height: 40, borderRadius: 10 }}
-                />
-                <div
-                  className={styles.skeleton}
-                  style={{ width: 90, height: 40, borderRadius: 10 }}
-                />
-              </div>
-            </div>
-            <div
-              className={styles.skeleton}
-              style={{ width: 173, height: 221, borderRadius: 14 }}
-            />
-          </div>
-        )}
-
-        {/* Right: captain info + photo — real data */}
-        {!isLoading  && (
-          <div className={styles.infoImageWrapper}>
-            <div className={styles.nameButtonWrapper}>
-              <Link
-                href={`#`}
-                style={{ textDecoration: "none" }}
-              >
-                <div className={styles.playerName}>{'Poghos Poghosyan'}
-                {!isCaptain &&
-                  <div className={styles.captainLabel}> (C) </div>}
-                </div>
-              </Link>
-              <div className={styles.infoButtonsWrapper}>
-                
-                  <div className={styles.button}>
-                    <span>Age: </span>
-                    {'24'}
-                  </div>
-                  <div className={styles.button}>
-                    <span>Foot: </span>
-                    {'Right'}
-                  </div>
-              </div>
-            </div>
-
-            <Link
-              href={`#`}
-              style={{ textDecoration: "none" }}
-              className={styles.playerImageWrapper}
-            >
-              <Image
-                src={teamLogo}
-                alt={''}
-                className={styles.playerImage}
-                width={173}
-                height={221}
-                unoptimized
-              />
-            </Link>
-          </div>
-        )}
-      </div>
-    </div>
-}
+    </div>;
+};
