@@ -264,7 +264,6 @@
   align-self: center;
   justify-content: center;
   width: 100%;
-  max-width: 940px
 }
 .past_matches_innerCard_results .score2 {
   position: relative;
@@ -408,21 +407,18 @@
   overflow: clip;
 }
 .past_matches_innerCard_fixtures .wrapper {
-  display: grid;
-  grid-template-columns: 200px auto 200px ;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   font-size: 14px;
-  max-width: 700px;
+  width: 100%;
 }
-@media (min-width: 1280px) {
-  .past_matches_innerCard_fixtures .wrapper {
-    max-width: 1000px;
-  }
-}
+
 .past_matches_innerCard_fixtures .score_wrapper{
   display: flex;
+  max-width: 226px;
+  width: 100%;
 }
 .past_matches_innerCard_fixtures .side_left {
     justify-content: flex-start;
