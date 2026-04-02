@@ -42,7 +42,6 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
   onRemove,
   onEditShirtNumber,
   onInvite,
-  onSquadCardClick
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
