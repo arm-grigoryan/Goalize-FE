@@ -29,7 +29,6 @@ export interface ISquadCardProps {
   onRemove?: () => void;
   onEditShirtNumber?: () => void;
   onInvite?: () => void;
-  onSquadCardClick?: () => void;
 }
 
 export const SquadCard: React.FC<ISquadCardProps> = ({
