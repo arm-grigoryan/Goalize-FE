@@ -59,6 +59,7 @@ export interface ITeam {
   team: ITeamInfo;
   captain: ITeamCaptain;
   stats: ITeamStats;
+  status: string;
 }
 
 export interface ITeamListItem {

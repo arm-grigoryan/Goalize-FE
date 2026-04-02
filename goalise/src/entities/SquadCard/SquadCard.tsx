@@ -65,35 +65,31 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
     picture && isValidUrl(picture) ? picture : profilePictureFallback;
 
   return (
-    <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`} onClick={onSquadCardClick}>
+    <Link href={`/profile/${playerId}`} className={`${styles.container} ${isMobile ? styles.mobile : ''}`} style={{ textDecoration: 'none', color: 'inherit' }}>
       <div className={styles.wrapper}>
         <div className={styles.nameNumberContainer}>
-          <Link href={`/profile/${playerId}`}>
-            <Image
-              src={resolvedPicture}
-              alt={playerName}
-              width={94}
-              height={124}
-              unoptimized
-              className={styles.image}
-            />
-          </Link>
+          <Image
+            src={resolvedPicture}
+            alt={playerName}
+            width={94}
+            height={124}
+            unoptimized
+            className={styles.image}
+          />
           <div className={styles.playerNumberContainer}>
             <div className={styles.playerNumber}>{shirtNumber}</div>
           </div>
         </div>
-        <Link href={`/profile/${playerId}`} className={styles.teamName}>
-          {playerName}
-        </Link>
+        <span className={styles.teamName}>{playerName}</span>
         {menuType !== 'none' && (
-          <div className={styles.menuWrapper} ref={menuRef}>
+          <div className={styles.menuWrapper} ref={menuRef} onClick={(e) => e.preventDefault()}>
             <Image
               src={dots}
               alt=""
               width={24}
               height={24}
               className={styles.more}
-              onClick={() => setShowMenu((prev) => !prev)}
+              onClick={(e) => { e.preventDefault(); setShowMenu((prev) => !prev); }}
             />
             {showMenu && (
               <div className={styles.menuDropdown}>
@@ -110,6 +106,6 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
           </div>
         )}
       </div>
-    </div>
+    </Link>
   );
 };

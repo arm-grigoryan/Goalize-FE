@@ -36,6 +36,15 @@ const getCroppedImg = (imageSrc: string, pixelCrop: Area): Promise<Blob> => {
         reject(new Error("No canvas context"));
         return;
       }
+      ctx.beginPath();
+      ctx.arc(
+        pixelCrop.width / 2,
+        pixelCrop.height / 2,
+        Math.min(pixelCrop.width, pixelCrop.height) / 2,
+        0,
+        Math.PI * 2,
+      );
+      ctx.clip();
       ctx.drawImage(
         image,
         pixelCrop.x,
@@ -53,7 +62,7 @@ const getCroppedImg = (imageSrc: string, pixelCrop: Area): Promise<Blob> => {
           return;
         }
         resolve(blob);
-      }, "image/jpeg");
+      }, "image/png");
     });
     image.addEventListener("error", reject);
     image.src = imageSrc;
@@ -167,7 +176,7 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
     if (!imageSrc || !croppedAreaPixels) return;
     try {
       const blob = await getCroppedImg(imageSrc, croppedAreaPixels);
-      const file = new File([blob], "logo.jpg", { type: "image/jpeg" });
+      const file = new File([blob], "logo.png", { type: "image/png" });
       setLogoFile(file);
       setLogoPreview(URL.createObjectURL(blob));
       setShowCropper(false);

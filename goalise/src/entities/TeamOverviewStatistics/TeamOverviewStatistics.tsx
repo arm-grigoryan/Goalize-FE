@@ -36,9 +36,9 @@ export const TeamOverviewStatistics: React.FC<ITeamOverviewStatisticsProps> = ()
   });
 
   const categories = topPlayers
-    ? CATEGORY_MAP.filter(({ key }) => topPlayers[key] !== null).map(({ key, title }) => ({
+    ? CATEGORY_MAP.map(({ key, title }) => ({
         title,
-        entry: topPlayers[key] as ITeamTopPlayerEntry,
+        entry: topPlayers[key],
       }))
     : [];
 
@@ -55,18 +55,16 @@ export const TeamOverviewStatistics: React.FC<ITeamOverviewStatisticsProps> = ()
         <div className={styles.loaderWrapper}>
           <Loader />
         </div>
-      ) : categories.length === 0 ? (
-        <div className={styles.noData}>No data available</div>
       ) : (
         <div className={styles.innerContainer}>
           {categories.map(({ title, entry }) => (
             <TeamOverviewStatisticsCard
               key={title}
               title={title}
-              playerName={`${entry?.teamPlayer?.firstName} ${entry?.teamPlayer?.lastName}`}
-              playerPictureUrl={entry?.teamPlayer?.picture}
-              playerId={entry?.teamPlayer?.playerId}
-              value={entry?.value}
+              playerName={entry ? `${entry.teamPlayer.firstName} ${entry.teamPlayer.lastName}` : '-'}
+              playerPictureUrl={entry?.teamPlayer?.picture ?? null}
+              playerId={entry?.teamPlayer?.playerId ?? null}
+              value={entry?.value ?? '-'}
             />
           ))}
         </div>

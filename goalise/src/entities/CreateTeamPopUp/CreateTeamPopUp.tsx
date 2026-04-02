@@ -49,6 +49,15 @@ const getCroppedImg = (imageSrc: string, pixelCrop: Area): Promise<Blob> => {
         reject(new Error("No canvas context"));
         return;
       }
+      ctx.beginPath();
+      ctx.arc(
+        pixelCrop.width / 2,
+        pixelCrop.height / 2,
+        Math.min(pixelCrop.width, pixelCrop.height) / 2,
+        0,
+        Math.PI * 2,
+      );
+      ctx.clip();
       ctx.drawImage(
         image,
         pixelCrop.x,
@@ -66,7 +75,7 @@ const getCroppedImg = (imageSrc: string, pixelCrop: Area): Promise<Blob> => {
           return;
         }
         resolve(blob);
-      }, "image/jpeg");
+      }, "image/png");
     });
     image.addEventListener("error", reject);
     image.src = imageSrc;
@@ -138,6 +147,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
     setSubmitError(null);
     setShowCropper(false);
     setImageSrc(null);
+    setShowSuccessModal(false);
     onClose();
   };
 
@@ -185,7 +195,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
     if (!imageSrc || !croppedAreaPixels) return;
     try {
       const blob = await getCroppedImg(imageSrc, croppedAreaPixels);
-      const file = new File([blob], "logo.jpg", { type: "image/jpeg" });
+      const file = new File([blob], "logo.png", { type: "image/png" });
       setLogoFile(file);
       setLogoPreview(URL.createObjectURL(blob));
       setShowCropper(false);
@@ -269,7 +279,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                                         setWarningTooltip(null);
                                         handleClose();
                                       }} >
-      <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`}>
+      <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`} onClick={(e) => e.stopPropagation()}>
         <div className={styles.titleWrapper}>
           <div className={styles.title}>Create Team</div>
           <div className={styles.subTitle}>
@@ -501,7 +511,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
       </div>
 
       {showCropper && imageSrc && (
-        <div className={styles.cropOverlay}>
+        <div className={styles.cropOverlay} onClick={(e) => e.stopPropagation()}>
           <div className={styles.cropModal}>
             <div className={styles.cropArea}>
               <Cropper

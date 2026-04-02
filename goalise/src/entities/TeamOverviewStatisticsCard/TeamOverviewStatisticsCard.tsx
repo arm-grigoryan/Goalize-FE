@@ -9,7 +9,7 @@ export interface ITeamOverviewStatisticsCardProps {
   title: string;
   playerName: string;
   playerPictureUrl: string | null;
-  playerId: number;
+  playerId: number | null;
   value: number | string;
 }
 
@@ -23,21 +23,35 @@ export const TeamOverviewStatisticsCard: React.FC<ITeamOverviewStatisticsCardPro
   return (
     <div className={styles.container}>
       <div className={styles.logoNameWrapper}>
-        <Link href={`/profile/${playerId}`} className={styles.imageLink}>
+        {playerId ? (
+          <Link href={`/profile/${playerId}`} className={styles.imageLink}>
+            <Image
+              src={playerPictureUrl || profilePictureFallback}
+              alt={playerName}
+              width={44}
+              height={44}
+              className={styles.playerImage}
+              unoptimized
+            />
+          </Link>
+        ) : (
           <Image
-            src={playerPictureUrl || profilePictureFallback}
-            alt={playerName}
+            src={profilePictureFallback}
+            alt=""
             width={44}
             height={44}
             className={styles.playerImage}
-            unoptimized
           />
-        </Link>
+        )}
         <div className={styles.texts}>
           <div className={styles.subTitle}>{title}</div>
-          <Link href={`/profile/${playerId}`} className={styles.nameLink}>
+          {playerId ? (
+            <Link href={`/profile/${playerId}`} className={styles.nameLink}>
+              <div className={styles.name}>{playerName}</div>
+            </Link>
+          ) : (
             <div className={styles.name}>{playerName}</div>
-          </Link>
+          )}
         </div>
       </div>
       <CustomDivider orientation="vertical" variant="middle" flexItem />
