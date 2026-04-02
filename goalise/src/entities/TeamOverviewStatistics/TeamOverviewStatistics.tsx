@@ -9,7 +9,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { useParams } from "next/navigation";
 import { useGetTeamTopPlayersQuery } from "@/app/store/services/api";
 import { Loader } from "@/shared/Loader/Loader";
-import type { ITeamTopPlayerEntry, ITeamTopPlayers } from "@/types/api/topPlayers";
+import type { ITeamTopPlayers } from "@/types/api/topPlayers";
 
 const CATEGORY_MAP: { key: keyof ITeamTopPlayers; title: string }[] = [
   { key: "topRating", title: "Player Rating" },
