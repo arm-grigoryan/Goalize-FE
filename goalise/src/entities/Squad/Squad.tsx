@@ -54,6 +54,9 @@ export const Squad: React.FC = () => {
 
   // Shirt Number
   const [showShirtNumberModal, setShowShirtNumberModal] = useState(false);
+  const [showShirtNumberSuccess, setShowShirtNumberSuccess] = useState(false);
+  const [showShirtNumberError, setShowShirtNumberError] = useState(false);
+  const [shirtNumberError, setShirtNumberError] = useState<string | null>(null);
 
   // Role determination
   const isLoggedIn = Boolean(userInfo);
@@ -139,12 +142,15 @@ export const Squad: React.FC = () => {
 
   const handleShirtNumberSubmit = useCallback(async (newShirtNumber: number) => {
     if (!selectedPlayer) return;
+    setShowShirtNumberModal(false);
     try {
       await updateShirtNumber({ teamId, playerId: selectedPlayer.playerId, shirtNumber: newShirtNumber }).unwrap();
-      setShowShirtNumberModal(false);
+      setShowShirtNumberSuccess(true);
       refetchSquad();
     } catch (error) {
-      console.error('Failed to update shirt number:', error);
+      const err = error as { data?: { errorMessage?: string } };
+      setShirtNumberError(err?.data?.errorMessage || 'An error occurred.');
+      setShowShirtNumberError(true);
     }
   }, [selectedPlayer, teamId, updateShirtNumber, refetchSquad]);
 
@@ -183,6 +189,24 @@ export const Squad: React.FC = () => {
           onClose={() => setShowShirtNumberModal(false)}
           onSubmit={handleShirtNumberSubmit}
           isLoading={isUpdatingShirtNumber}
+        />
+      )}
+
+      {/* Shirt Number Success / Error */}
+      {showShirtNumberSuccess && (
+        <PlayerInvitationCard
+          title="Shirt Number Updated Successfully"
+          description="The player's shirt number has been updated."
+          cancelButtonText="Close"
+          onCancelButtonClick={() => setShowShirtNumberSuccess(false)}
+        />
+      )}
+      {showShirtNumberError && (
+        <PlayerInvitationCard
+          title="Cannot Update Shirt Number"
+          description={shirtNumberError || 'An error occurred.'}
+          confirmButtonText="OK"
+          onCancelButtonClick={() => setShowShirtNumberError(false)}
         />
       )}
 
@@ -271,7 +295,7 @@ export const Squad: React.FC = () => {
       )}
 
       {/* Loading overlays */}
-      {(isSendingInvitation || isRemovingMember || isMakingCaptain) && (
+      {(isSendingInvitation || isRemovingMember || isMakingCaptain || isUpdatingShirtNumber) && (
         <div className={styles.loaderOverlay}>
           <div className={styles.loader} />
         </div>

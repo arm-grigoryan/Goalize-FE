@@ -26,6 +26,7 @@ export interface ITeamsPastMatchesCardProps {
   teamName2: string;
   teamName2Tooltip?: string;
   teamScore2: number;
+  matchResult?: string;
   leagueName?: string;
   leagueId?: number;
   onCardClick?: () => void;
@@ -41,6 +42,7 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
     teamName2,
     teamName2Tooltip,
     teamScore2,
+    matchResult,
     variant,
     leagueName,
     leagueId,
@@ -48,10 +50,10 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
 }) => {
       const { width } = useWindowSize();
       const isMobile = width <= MEDIA_TABLET_SMALL;
-    
-      const winner1 = teamScore1 > teamScore2;
-      const winner2 = teamScore2 > teamScore1;
-      const draw = teamScore1 === teamScore2;
+
+      const winner1 = matchResult === 'W';
+      const winner2 = matchResult === 'L';
+      const draw = matchResult === 'D';
       
     return <div className={`${variant === "fixtures" ? 
                                 styles.matches_innerCard_fixtures 
@@ -113,7 +115,7 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
       </div>
       </div>
         <CustomDivider orientation={isMobile ?  "horizontal" : "vertical"}flexItem />
-        <Link className={styles.leagueName} href={leagueId ? `/leagues/${leagueId}` : '#'}>
+        <Link className={styles.leagueName} href={leagueId ? `/leagues/${leagueId}` : '#'} onClick={(e) => e.stopPropagation()}>
           {leagueName ?? 'League'}
         </Link>
     </div>

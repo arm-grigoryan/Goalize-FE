@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from './TeamFixturesMatches.module.css';
 import teamLogoFallback from '../../assets/pngs/teamLogo.png';
 import TeamsPastMatchesCard from "../TeamsPastMatchesCard";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useGetTeamMatchesQuery } from "@/app/store/services/api";
 import { ITeamMatchResponse } from "@/types/api/teamMatches";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
@@ -24,6 +24,7 @@ export const TeamFixturesMatches: React.FC = () => {
   const { teamId } = useParams();
   const teamIdNum = Number(teamId);
   const pathname = usePathname();
+  const router = useRouter();
 
   const [offset, setOffset] = useState<number>(0);
   const [matches, setMatches] = useState<ITeamMatchResponse[]>([]);
@@ -95,8 +96,10 @@ export const TeamFixturesMatches: React.FC = () => {
               teamName2={handleLongStrings(item.match.awayTeam.name, 8)}
               teamName2Tooltip={item.match.awayTeam.name}
               teamScore2={item.match.awayTeamScore}
+              matchResult={item.match.result}
               leagueName={item.league.name}
               leagueId={item.league.id}
+              onCardClick={() => router.push(`/matches/${item.match.id}`)}
             />
           ))}
         </div>

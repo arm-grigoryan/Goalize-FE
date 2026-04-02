@@ -56,10 +56,17 @@
 .matchWrapper {
   display: flex;
   width: 76%;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   margin-left: 20px;
   cursor: pointer;
+  gap: 8px;
+}
+.teamsRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
 }
 .matchCenterCol {
   display: flex;
@@ -183,9 +190,14 @@
   padding-bottom: 14px;
   align-items: center;
 }
-.mobile .matchWrapper{
-      width: 100%;
-    height: 100%;
+.mobile .matchWrapper {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+
+.mobile .teamsRow {
+  flex-direction: column;
 }
 
 @media (max-width: 540px) {
@@ -195,15 +207,11 @@
   }
 }
 
-.mobile .matchWrapper{
-  flex-direction: column;
-}
-
 .mobile .match_left_block, .mobile .match_right_block {
   rotate: 90deg;
 }
 
 .mobile .match_left_block_inner_wrapper, .mobile .match_right_block_inner_wrapper {
-      rotate: 270deg;
-      top: 60px;
+  rotate: 270deg;
+  top: 60px;
 }

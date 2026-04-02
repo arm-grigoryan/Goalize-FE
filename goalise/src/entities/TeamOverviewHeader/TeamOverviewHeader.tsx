@@ -6,7 +6,7 @@ import styles from "./TeamOverviewHeader.module.css";
 import Image from "next/image";
 import Button from "@/shared/Button";
 import teamLogoFallback from "../../assets/pngs/teamLogo.png";
-import infoIcon from '../../assets/pngs/infoIcon.svg';
+import infoIcon from "../../assets/pngs/infoIcon.svg";
 import playerFallback from "../../assets/pngs/unassigned.png";
 import edit from "../../assets/pngs/edit.svg";
 import { useParams, usePathname } from "next/navigation";
@@ -86,13 +86,15 @@ export const TeamOverviewHeader: React.FC = () => {
   const [showCaptainWarningModal, setShowCaptainWarningModal] = useState(false);
 
   const [showUpdatePopUp, setShowUpdatePopUp] = useState(false);
+  const [hasQuit, setHasQuit] = useState(false);
 
   const userTeamId = userInfo?.playerInfo?.team?.id;
   const userId = userInfo?.playerInfo?.id;
 
-  const isAbandoned = true;
-  
-  const isOnThisTeam = isAuthenticated && Number(userTeamId) === Number(id);
+  const isAbandoned = teamInfo?.status === "Abandoned";
+
+  const isOnThisTeam =
+    !hasQuit && isAuthenticated && Number(userTeamId) === Number(id);
 
   const isCaptain =
     isAuthenticated &&
@@ -145,8 +147,10 @@ export const TeamOverviewHeader: React.FC = () => {
           await refreshTokens(tokens.refreshToken);
         } catch {}
       }
+      setHasQuit(true);
       setShowQuitSuccessModal(true);
       refetchUserInfo();
+      refetchTeamInfo();
     } catch (error) {
       const errorData = error as { data?: { errorMessage?: string } };
       setQuitTeamError(
@@ -161,6 +165,8 @@ export const TeamOverviewHeader: React.FC = () => {
     quitTeamMutation,
     tokens?.refreshToken,
     refetchUserInfo,
+    refetchTeamInfo,
+    setHasQuit,
   ]);
 
   const isActive = (href: string) => {
@@ -228,7 +234,7 @@ export const TeamOverviewHeader: React.FC = () => {
                   )}
                 </div>
               )}
-              {!isMobile && isCaptain && (
+              {!isMobile && !isAbandoned && isCaptain && (
                 <div
                   className={styles.editButton}
                   onClick={() => setShowUpdatePopUp(true)}
@@ -240,34 +246,37 @@ export const TeamOverviewHeader: React.FC = () => {
             </div>
 
             <div className={styles.buttonsWrapper}>
-              {showApplyButton && (
-                <Button
-                  handleClick={handleApplyClick}
-                  content="Apply"
-                  className="red_button_transparant_white_text"
-                />
-              )}
-              {isAbandoned &&
+              {isAbandoned ? (
                 <div className={styles.abandoned}>
-                  <Image src={infoIcon} alt=""/>
+                  <Image src={infoIcon} alt="" />
                   <div className={styles.abandonedText}>Abandoned</div>
                 </div>
-              }
-              {isOnThisTeam && (
-                <Button
-                  handleClick={() => setShowQuitConfirmModal(true)}
-                  content="Quit"
-                  className="red_button_transparant_white_text"
-                />
-              )}
-              {isMobile && isCaptain && (
-                <div
-                  className={styles.editButton}
-                  onClick={() => setShowUpdatePopUp(true)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <Image src={edit} alt="" />
-                </div>
+              ) : (
+                <>
+                  {showApplyButton && (
+                    <Button
+                      handleClick={handleApplyClick}
+                      content="Apply"
+                      className="red_button_transparant_white_text"
+                    />
+                  )}
+                  {isOnThisTeam && (
+                    <Button
+                      handleClick={() => setShowQuitConfirmModal(true)}
+                      content="Quit"
+                      className="red_button_transparant_white_text"
+                    />
+                  )}
+                  {isMobile && isCaptain && (
+                    <div
+                      className={styles.editButton}
+                      onClick={() => setShowUpdatePopUp(true)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <Image src={edit} alt="" />
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -311,9 +320,11 @@ export const TeamOverviewHeader: React.FC = () => {
                 href={`/profile/${teamInfo.team.captainId}`}
                 style={{ textDecoration: "none" }}
               >
-                <div className={styles.playerName}>{captainFullName}
-                {!isCaptain &&
-                  <div className={styles.captainLabel}> (C) </div>}
+                <div className={styles.playerName}>
+                  {captainFullName}
+                  {!isCaptain && (
+                    <div className={styles.captainLabel}> (C) </div>
+                  )}
                 </div>
               </Link>
               <div className={styles.buttonsWrapper}>
