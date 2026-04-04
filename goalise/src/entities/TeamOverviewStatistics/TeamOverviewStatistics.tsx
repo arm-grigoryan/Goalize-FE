@@ -17,7 +17,7 @@ const CATEGORY_MAP: { key: keyof ITeamTopPlayers; title: string }[] = [
   { key: "topAssist", title: "Most Assists" },
   { key: "topYellowCard", title: "Most Yellow Cards" },
   { key: "topRedCard", title: "Most Red Cards" },
-  { key: "topGoalKeeperRating", title: "Goalkeeper Rating"},
+  { key: "topGoalKeeperRate", title: "Goalkeeper Rating"},
   { key: "topSaves", title: "Most Saves"},
 ];
 

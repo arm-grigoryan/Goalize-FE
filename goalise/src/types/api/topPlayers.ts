@@ -46,6 +46,6 @@ export interface ITeamTopPlayers {
   topYellowCard: ITeamTopPlayerEntry | null;
   topRedCard: ITeamTopPlayerEntry | null;
   topRating: ITeamTopPlayerEntry | null;
-  topGoalKeeperRating: ITeamTopPlayerEntry | null;
+  topGoalKeeperRate: ITeamTopPlayerEntry | null;
   topSaves: ITeamTopPlayerEntry | null;
 }
