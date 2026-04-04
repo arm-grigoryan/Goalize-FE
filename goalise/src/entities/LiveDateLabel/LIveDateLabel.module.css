@@ -67,7 +67,6 @@
 @media (max-width: 768px) {
     .dateWrapper {
         padding: 6px 22px;
-        bottom: 34px;
         font-size: 12px;
     }
 }
