@@ -26,11 +26,14 @@
   background-position: right;
   align-items: center;
 }
-
+.matchDateLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .match_wrapper {
   display: flex;
   justify-content: space-between;
-  background-image: url("/pngs/nextMatchBackground.png");
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -48,36 +51,45 @@
   margin-top: 20%;
 }
 
-.match_left_block,
+.match_left_block {
+   width: 100%;
+  position: relative;
+  height: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+}
+
 .match_right_block {
   width: 100%;
-  aspect-ratio: 1 / 1;
-  background-repeat: no-repeat;
-  background-size: contain;
+  position: relative;
+  height: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
 }
+ .backgroundImageWrapper {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   z-index: 10;
 
-.match_left_block {
-  background-image: url("../../assets/pngs/upComingMatchBorderRed.png");
-  background-position: right;
+ }
+.backgroundImage {
+  display: flex;
+  width: 100%;
+  height: 100%;
 }
-
-.match_right_block {
-  background-image: url("../../assets/pngs/upComingMatchBorderBlue.png");
-  background-position: left;
-}
-
 .match_inner_wrapper {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 .leftRightWrapper {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  height: 100%;
   align-items: center;
+  margin: 0 20px;
 }
 .title {
   color: white;
@@ -196,21 +208,24 @@
 .match_left_block_inner_wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 30px;
+  position: relative;
+  gap: 10px;
+  justify-self: flex-start;
+  align-self: center;
 }
 .match_right_block_inner_wrapper {
   display: flex;
   flex-direction: column;
-  margin-bottom: 30px;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column-reverse;
+  position: relative;
+  gap: 10px;
+  justify-self: flex-end;
+  align-self: center;
 }
 .team_logo {
   width: 100%;
-  max-width: 180px;
-  height: auto;
+  max-width: 100px;
+  max-height: 100px;
+  height: 100%;
   object-fit: contain;
 }
 
@@ -295,29 +310,24 @@
     gap: 20px;
     padding: 15px;
   }
-  .match_inner_wrapper {
-    flex: 1;
-
-  }
   .leftRightWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+   display: grid;
+  grid-template-rows: 1fr 120px 1fr;
+  justify-content: center;
+  grid-template-columns: none;
   }
   .title {
     left: 0;
     right: 0;
     margin: 0 auto;
   }
+  .backgroundImageWrapper {
+    height: unset;
+    position: relative;
+  }
   .match_left_block {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url("../../assets/pngs/upComingMatchBorderRed.png");
-    background-repeat: no-repeat;
-    background-position: right;
-    background-size: contain;
+    position: relative;
     transform: rotate(90deg);
   }
   .match_left_block_inner_wrapper {
@@ -326,14 +336,13 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    margin-top: 30px;
+    position: absolute;
     transform: rotate(-90deg);
   }
   .match_right_block {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url("../../assets/pngs/upComingMatchBorderBlue.png");
     background-repeat: no-repeat;
     background-position: left;
     background-size: contain;
@@ -344,10 +353,14 @@
     flex-direction: column;
     width: 100%;
     height: 100%;
-    padding-top: 30px;
     align-items: center;
+    position: absolute;
     flex-direction: column-reverse;
     transform: rotate(-90deg);
+  }
+  .vsIconWrapper {
+    display: flex;
+    justify-self: center;
   }
   .team_logo {
       width: 100%;  

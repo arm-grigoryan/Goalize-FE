@@ -16,6 +16,8 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import matchMobileEmpty from "../../assets/pngs/matchMobileEmpty.svg";
 import { LiveDateLabel } from "@/entities/LiveDateLabel/LiveDateLabel";
+import backgroundImageLeft from '../../assets/pngs/backgroundImageLeft.svg';
+import backgroundImageRight from '../../assets/pngs/backgroundImageRight.svg';
 
 export const HomeUpcomingMatchesCard = () => {
   const t = useTranslations();
@@ -114,11 +116,18 @@ export const HomeUpcomingMatchesCard = () => {
       ) : (
         <div className={styles.Home_main_card}>
           <Link href={`/matches/${firstMatch.id}`} className={styles.match_inner_wrapper} style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}>
-            <div>
+            <div className={styles.matchDateLabel}>
               {centralMatchLabel}
             </div>
             <div className={styles.leftRightWrapper}>
               <div className={styles.match_left_block}>
+                <div className={styles.backgroundImageWrapper}>  
+                <Image 
+                  src={backgroundImageLeft}
+                  alt=""
+                  className={styles.backgroundImage}
+                /> 
+                </div>
                 <div className={styles.match_left_block_inner_wrapper}>
                   <div>
                     <span className={styles.team_name}>
@@ -136,10 +145,17 @@ export const HomeUpcomingMatchesCard = () => {
                   )}
                 </div>
               </div>
-              <div>
+              <div className={styles.vsIconWrapper}>
                 <Image src={vsIcon} alt="Upcoming Match" />
               </div>
               <div className={styles.match_right_block}>
+               <div className={styles.backgroundImageWrapper}>  
+                <Image 
+                  src={backgroundImageRight}
+                  alt=""
+                  className={styles.backgroundImage}
+                /> 
+                </div>
                 <div className={styles.match_right_block_inner_wrapper}>
                   <div>
                     <span className={styles.team_name}>
