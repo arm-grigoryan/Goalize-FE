@@ -2,7 +2,7 @@
 import styles from "./HomeUpcomingMatchesCard.module.css";
 import Title from "@/shared/Title";
 import Image from "next/image";
-import vsIcon from "../../assets/pngs/vsIcon.png";
+import vsIcon from "../../assets/pngs/bigVsIcon.svg";
 import MatchListInnerCard from "@/entities/MatchListInnerCard";
 import Link from "next/link";
 import { useGetUpComingMatchesQuery } from "@/app/store/services/api";
@@ -157,11 +157,13 @@ export const HomeUpcomingMatchesCard = () => {
                 /> 
                 </div>
                 <div className={styles.match_right_block_inner_wrapper}>
-                  <div>
+                  {isMobile &&
+                      <div>
                     <span className={styles.team_name}>
                       {firstMatch?.awayTeam?.name}
                     </span>
                   </div>
+                  }
                   {firstMatch?.awayTeam?.logoUrl && (
                     <Image
                       src={firstMatch.awayTeam.logoUrl}
@@ -171,6 +173,11 @@ export const HomeUpcomingMatchesCard = () => {
                       height={80}
                     />
                   )}
+                 { !isMobile && <div>
+                    <span className={styles.team_name}>
+                      {firstMatch?.awayTeam?.name}
+                    </span>
+                  </div>}
                 </div>
               </div>
             </div>
