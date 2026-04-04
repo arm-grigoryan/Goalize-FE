@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from './TeamOverviewStatisticsCard.module.css';
 import CustomDivider from "@/shared/Divider";
-import profilePictureFallback from '../../assets/pngs/profilePictureIcon.svg';
+import profilePictureFallback from '../../assets/pngs/noPhoto.png';
 
 export interface ITeamOverviewStatisticsCardProps {
   title: string;
