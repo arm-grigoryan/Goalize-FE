@@ -3,8 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./LeaguesJoinedTeamCard.module.css";
-import logo from "/public/images/Ellipse.png";
-import captainImage from "/public/images/captain.png";
 
 interface LeaguesJoinedTeamCardProps {
   teamId?: number;
@@ -21,8 +19,8 @@ export const LeaguesJoinedTeamCard = ({
   captainName,
   captainPic,
 }: LeaguesJoinedTeamCardProps) => {
-  const resolvedLogo = teamLogoUrl?.startsWith("http") ? teamLogoUrl : logo;
-  const resolvedCaptainPic = captainPic?.startsWith("http") ? captainPic : captainImage;
+  const resolvedLogo = teamLogoUrl!;
+  const resolvedCaptainPic = captainPic!;
 
   const card = (
     <div className={styles.leagues_joined_team_card}>

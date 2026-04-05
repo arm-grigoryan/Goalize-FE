@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import styles from "./Footer.module.css";
-import logo from "/public/pngs/logo/Logo.svg";
+import logo from "../../../../public/pngs/logo/Logo.svg";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import LanguageSelect from "@/shared/LanguageSelect";
