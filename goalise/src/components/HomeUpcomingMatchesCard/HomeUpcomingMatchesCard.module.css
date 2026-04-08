@@ -69,11 +69,11 @@
   justify-content: flex-end;
 }
 .match_left_block_inner_wrapper {
-  margin-left: clamp(10px, 5vw, 70px);
+  margin-left: clamp(10px, 2vw, 70px);
 }
 
 .match_right_block_inner_wrapper {
-  margin-right: clamp(10px, 5vw, 70px);
+  margin-right: clamp(10px, 2vw, 70px);
 }
  .backgroundImageWrapper {
    position: absolute;
