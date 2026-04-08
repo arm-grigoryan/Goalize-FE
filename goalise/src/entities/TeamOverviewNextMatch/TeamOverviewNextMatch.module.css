@@ -133,7 +133,6 @@
   background-size: contain;
 }
 .match_left_block {
-  background-image: url("../../assets/pngs/upComingMatchBorderRed.png");
   background-position: right;
   background-repeat: no-repeat;
 }
@@ -146,7 +145,6 @@
   gap: 20px;
 }
 .match_right_block {
-  background-image: url("../../assets/pngs/upComingMatchBorderBlue.png");
   background-position: left;
   background-repeat: no-repeat;
 }
