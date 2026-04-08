@@ -15,6 +15,8 @@ import { Loader } from "@/shared/Loader/Loader";
 import { LiveDateLabel } from "@/entities/LiveDateLabel/LiveDateLabel";
 import upcomingEmpty from '../../assets/pngs/upcomingEmpty.svg';
 import matchMobileEmpty from '../../assets/pngs/matchMobileEmpty.svg';
+import backgroundImageRight from '../../assets/pngs/backgroundImageRight.svg';
+import backgroundImageLeft from '../../assets/pngs/backgroundImageLeft.svg';
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -76,6 +78,13 @@ export const TeamOverviewNextMatch: React.FC = () => {
           <div className={styles.teamsRow}>
             {/* Home team */}
             <div className={styles.match_left_block}>
+               <div className={styles.backgroundImageWrapper}>  
+                <Image 
+                  src={backgroundImageLeft}
+                  alt=""
+                  className={styles.backgroundImage}
+                /> 
+                </div>
               <div className={styles.match_left_block_inner_wrapper}>
                 <span className={styles.team_name}>{homeTeam?.name ?? ""}</span>
                 <Image
@@ -118,6 +127,13 @@ export const TeamOverviewNextMatch: React.FC = () => {
 
             {/* Away Team */}
             <div className={styles.match_right_block}>
+               <div className={styles.backgroundImageWrapper}>  
+                <Image 
+                  src={backgroundImageRight}
+                  alt=""
+                  className={styles.backgroundImage}
+                /> 
+                </div>
               <div className={styles.match_right_block_inner_wrapper}>
                 <Image
                   src={
