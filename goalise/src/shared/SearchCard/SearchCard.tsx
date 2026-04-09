@@ -8,10 +8,12 @@ import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import redSearchIcon from "../../assets/pngs/redSearchIcon.svg";
 import noPhoto from "../../assets/pngs/noPhoto.png";
+import { useTranslations } from "next-intl";
 
 export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
   const [query, setQuery] = useState("");
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const t = useTranslations("search");
   const {
     results,
     isLoading: searchLoading,
@@ -60,7 +62,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
             ref={inputRef}
             className={`${styles.search_input} ${open ? styles.search_input_open : styles.search_input_closed
               }`}
-            placeholder="Search leagues, teams, players..."
+            placeholder={t("placeholder")}
             value={query}
             onChange={onSearchChange}
             onClick={(e) => e.stopPropagation()}
@@ -79,28 +81,28 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
                     }`}
                   onClick={() => setActiveTab("all")}
                 >
-                  All
+                  {t("tabs.all")}
                 </button>
                 <button
                   className={`${styles.tab} ${activeTab === "leagues" ? styles.activeTab : ""
                     }`}
                   onClick={() => setActiveTab("leagues")}
                 >
-                  Leagues
+                  {t("tabs.leagues")}
                 </button>
                 <button
                   className={`${styles.tab} ${activeTab === "teams" ? styles.activeTab : ""
                     }`}
                   onClick={() => setActiveTab("teams")}
                 >
-                  Teams
+                  {t("tabs.teams")}
                 </button>
                 <button
                   className={`${styles.tab} ${activeTab === "players" ? styles.activeTab : ""
                     }`}
                   onClick={() => setActiveTab("players")}
                 >
-                  Players
+                  {t("tabs.players")}
                 </button>
               </div>
             </div>
@@ -146,7 +148,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
             </div>
           )}
           {searchLoading && (
-            <div className={styles.search_loading}>Loading...</div>
+            <div className={styles.search_loading}>{t("loading")}</div>
           )}
 
           {!searchLoading &&
@@ -159,7 +161,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({ open, inputRef }) => {
                     ? results?.teams ?? []
                     : results?.players ?? []
             ).length === 0 && (
-              <div className={styles.search_no_results}>No results</div>
+              <div className={styles.search_no_results}>{t("noResults")}</div>
             )}
         </div>
       </div>

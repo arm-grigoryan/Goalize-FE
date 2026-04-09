@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api, publicApi } from "./services/api";
 import errorReducer from "./slices/errorSlice";
+import localeReducer from "./slices/localeSlice";
 
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     [publicApi.reducerPath]: publicApi.reducer,
     error: errorReducer,
+    locale: localeReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(api.middleware).concat(publicApi.middleware),

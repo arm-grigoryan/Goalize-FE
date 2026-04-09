@@ -22,6 +22,7 @@ import warningIcon from "../../assets/pngs/error.svg";
 import type { PlayerInviteResult } from "@/types/api/search";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { useTranslations } from "next-intl";
 
 type CreateTeamFormData = {
   Name: string;
@@ -95,6 +96,9 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
   } | null>(null);
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("createTeam");
+  const tForm = useTranslations("teamForm");
+  const tCommon = useTranslations("common");
 
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
@@ -158,7 +162,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
 
   const applyLogoFile = (file: File) => {
     if (!ALLOWED_TYPES.includes(file.type)) {
-      setLogoError("Only PNG, JPG, or JPEG files are allowed.");
+      setLogoError(tForm("logoTypeError"));
       return;
     }
     setLogoError(null);
@@ -206,7 +210,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
       setShowCropper(false);
       setImageSrc(null);
     } catch {
-      setLogoError("Failed to crop image. Please try again.");
+      setLogoError(tForm("cropError"));
     }
   };
 
@@ -228,16 +232,16 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
   };
 
   const abbrevRegister = register("Abbreviation", {
-    required: "Abbreviation is required.",
+    required: tForm("abbreviationRequired"),
     pattern: {
       value: /^[A-Z]{3}$/,
-      message: "Abbreviation must contain exactly 3 Latin letters.",
+      message: tForm("abbreviationPattern"),
     },
   });
 
   const onSubmit: SubmitHandler<CreateTeamFormData> = async (data) => {
     if (!logoFile) {
-      setLogoError("Logo is required.");
+      setLogoError(tForm("logoRequired"));
       return;
     }
     setSubmitError(null);
@@ -265,7 +269,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
     } catch (error) {
       const errorData = error as { data?: { errorMessage?: string } };
       setSubmitError(
-        errorData?.data?.errorMessage || "Failed to create team. Please try again."
+        errorData?.data?.errorMessage || t("failedToCreate")
       );
     }
   };
@@ -280,9 +284,9 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
     return (
       <PlayerInvitationCard
         onCancelButtonClick={handleClose}
-        title="Team Creation Successful"
-        description="Your team has been created successfully!"
-        cancelButtonText="Close"
+        title={t("successTitle")}
+        description={t("successDescription")}
+        cancelButtonText={tCommon("close")}
       />
     );
   }
@@ -295,10 +299,8 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                                       }} >
       <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`} onClick={(e) => { e.stopPropagation(); setWarningTooltip(null); }}>
         <div className={styles.titleWrapper}>
-          <div className={styles.title}>Create Team</div>
-          <div className={styles.subTitle}>
-            Your winning journey starts here!
-          </div>
+          <div className={styles.title}>{t("title")}</div>
+          <div className={styles.subTitle}>{t("subtitle")}</div>
         </div>
 
         <div
@@ -320,7 +322,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
             onClick={() => fileInputRef.current?.click()}
           >
             <Image src={editIcon} alt="" className={styles.editIcon} />
-            <div className={styles.editText}>Upload logo</div>
+            <div className={styles.editText}>{tCommon("uploadLogo")}</div>
           </div>
           <input
             ref={fileInputRef}
@@ -338,25 +340,25 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
           noValidate
         >
           <div className={styles.inputWrapper}>
-            <div className={styles.label}>Team Name</div>
+            <div className={styles.label}>{tForm("teamNameLabel")}</div>
             <div className={styles.inputWithIcon}>
               <Image src={teamIcon} alt="" className={styles.inputIcon} />
               <input
                 className={`${styles.input} ${errors.Name ? styles.inputError : ""}`}
-                placeholder="e.g. Barcelona"
+                placeholder={tForm("teamNamePlaceholder")}
                 {...register("Name", {
-                  required: "Team name is required.",
+                  required: tForm("teamNameRequired"),
                   minLength: {
                     value: 5,
-                    message: "Team name must be at least 5 characters.",
+                    message: tForm("teamNameMinLength"),
                   },
                   maxLength: {
                     value: 24,
-                    message: "Team name must not exceed 24 characters.",
+                    message: tForm("teamNameMaxLength"),
                   },
                   validate: (v) =>
                     /^[A-Za-z\s]+$/.test(v.trim()) ||
-                    "Team name must contain only Latin letters.",
+                    tForm("teamNameLatinOnly"),
                 })}
               />
             </div>
@@ -366,7 +368,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
           </div>
 
           <div className={styles.inputWrapper}>
-            <div className={styles.label}>Abbreviation</div>
+            <div className={styles.label}>{tForm("abbreviationLabel")}</div>
             <div className={styles.inputWithIcon}>
               <Image
                 src={abbreviationIcon}
@@ -375,7 +377,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
               />
               <input
                 className={`${styles.input} ${errors.Abbreviation ? styles.inputError : ""}`}
-                placeholder="e.g. FCB"
+                placeholder={tForm("abbreviationPlaceholder")}
                 maxLength={3}
                 {...abbrevRegister}
                 onChange={(e) => {
@@ -393,13 +395,13 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
           </div>
 
           <div className={styles.inputWrapper}>
-            <div className={styles.label}>Invite Members</div>
+            <div className={styles.label}>{t("inviteMembersLabel")}</div>
             <div className={styles.inviteSection}>
               <div className={styles.inputWithIcon}>
                 <Image src={inviteIcon} alt="" className={styles.inputIcon} />
                 <input
                   className={styles.input}
-                  placeholder="Search players..."
+                  placeholder={t("searchPlayersPlaceholder")}
                   value={inviteQuery}
                   onChange={(e) => handleInviteQueryChange(e.target.value)}
                   autoComplete="off"
@@ -414,11 +416,11 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
               {inviteQuery.trim().length > 0 && (
                 <div className={styles.searchDropdown}>
                   {isSearchLoading && (
-                    <div className={styles.searchDropdownItem}>Loading...</div>
+                    <div className={styles.searchDropdownItem}>{tCommon("loading")}</div>
                   )}
                   {!isSearchLoading && playerResults.length === 0 && (
                     <div className={styles.searchDropdownItem}>
-                      No players found.
+                      {t("noPlayersFound")}
                     </div>
                   )}
                   {!isSearchLoading &&
@@ -521,7 +523,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                   ? "gray_buttonIcon_active"
                   : "gray_buttonIcon"
               }
-              content={isSubmitting ? "Creating..." : "Create"}
+              content={isSubmitting ? t("creating") : t("create")}
               handleClick={handleSubmit(onSubmit)}
               leftIcon={leftArrow}
             />
@@ -546,7 +548,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
               />
             </div>
             <div className={styles.cropControls}>
-              <label className={styles.cropSliderLabel}>Zoom</label>
+              <label className={styles.cropSliderLabel}>{tCommon("zoom")}</label>
               <input
                 type="range"
                 min={1}
@@ -562,14 +564,14 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                   className={styles.cropCancelBtn}
                   onClick={handleCancelCrop}
                 >
-                  Cancel
+                  {tCommon("cancel")}
                 </button>
                 <button
                   type="button"
                   className={styles.cropSaveBtn}
                   onClick={handleSaveCrop}
                 >
-                  Save Crop
+                  {tCommon("saveCrop")}
                 </button>
               </div>
             </div>
@@ -586,12 +588,15 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
             transform: isMobile ? "translate(-50%, -100%)" : "none",
           }}
         >
-          <div className={styles.warningTooltipTitle}>Can&apos;t Send Invite</div>
+          <div className={styles.warningTooltipTitle}>{t("cantSendInvite")}</div>
           <div className={styles.warningTooltipDesc}>
-            This player is unable to receive an invite due to an incomplete profile.
+            {t("incompleteProfileDesc")}
           </div>
           <div className={styles.warningTooltipFooter}>
-            Required: {warningTooltip.player.requiredCompletionPercentage}% &nbsp;|&nbsp; Current: {warningTooltip.player.completionPercentage}%
+            {t("completionStats", {
+              required: warningTooltip.player.requiredCompletionPercentage,
+              current: warningTooltip.player.completionPercentage,
+            })}
           </div>
         </div>
       )}

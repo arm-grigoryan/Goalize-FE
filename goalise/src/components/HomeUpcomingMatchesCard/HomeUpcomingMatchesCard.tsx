@@ -109,7 +109,7 @@ export const HomeUpcomingMatchesCard = () => {
               className={styles.no_upcoming_image}
             />
             <span className={styles.no_upcoming_text}>
-              No upcoming matches scheduled at the moment
+              {t("home.upcomingMatches.emptyState")}
             </span>
           </div>
         </div>

@@ -12,6 +12,27 @@
         "makeCaptainButtonText": "Make Captain",
         "quitTeamButtonText": "Quit Team"
       }
+    },
+    "close": "Close",
+    "ok": "OK",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "loading": "Loading...",
+    "zoom": "Zoom",
+    "saveCrop": "Save Crop",
+    "uploadLogo": "Upload logo"
+  },
+  "auth": {
+    "signingIn": {
+      "title": "Completing sign-in...",
+      "description": "Please wait while we process your login.",
+      "failed": "Sign-in failed"
+    },
+    "signingOut": {
+      "title": "Signing you out...",
+      "description": "You will be redirected shortly."
     }
   },
   "header": {
@@ -25,13 +46,16 @@
   "home": {
     "upcomingMatches": {
       "title": "Upcoming Matches",
-      "matchList": "Upcoming Matches"
+      "matchList": "Upcoming Matches",
+      "emptyState": "No upcoming matches scheduled at the moment"
     },
     "pastMatches": {
-      "title": "Past Matches"
+      "title": "Past Matches",
+      "emptyState": "No past match to show at the moment"
     },
     "transferNews": {
-      "title": "Transfer News"
+      "title": "Transfer News",
+      "emptyState": "No transfer news is scheduled at the moment"
     },
     "notifications": {
       "title": "Notification",
@@ -87,6 +111,26 @@
     "rights": "© Copyright 2025.",
     "followUs": "Follow us"
   },
+  "search": {
+    "placeholder": "Search leagues, teams, players...",
+    "tabs": {
+      "all": "All",
+      "leagues": "Leagues",
+      "teams": "Teams",
+      "players": "Players"
+    },
+    "loading": "Loading...",
+    "noResults": "No results"
+  },
+  "teams": {
+    "title": "Teams",
+    "createTeam": "Create Team",
+    "failedToLoad": "Failed to load teams. Please try again.",
+    "empty": "No teams to show at the moment.",
+    "cannotCreateCaptain": "You are already the captain of {teamName}. Transfer the captain role and quit if you want to create a new team.",
+    "cannotCreateDraft": "You already created a team, which is under review. You will be notified once we review it.",
+    "cannotCreateInTeam": "You are already in {teamName}. Quit if you want to create a new team."
+  },
   "playerProfile": {
     "title": "PlayerProfile",
     "buttons": {
@@ -134,34 +178,131 @@
       "confirmButtonText": "Confirm",
       "cancelButtonText": "Cancel",
       "loadingText": "Sending..."
+    },
+    "modals": {
+      "cannotSendInvitation": "Cannot Send Invitation",
+      "cannotRemovePlayer": "Cannot Remove Player",
+      "cannotMakeCaptain": "Cannot Make Captain",
+      "cannotQuitTeam": "Cannot Quit Team",
+      "actionNotAllowed": "Action Not Allowed",
+      "mustBeCaptain": "You must be a captain to send invitations.",
+      "invitationSentTitle": "Invitation Sent Successfully",
+      "invitationSentDescription": "The player has been invited to your team.",
+      "makeCaptainTitle": "Make Team Captain",
+      "makeCaptainDescription": "Are you sure you want to make {firstName} {lastName} the team captain? You will lose your captain privileges.",
+      "captainChangedTitle": "Captain Changed Successfully",
+      "captainChangedDescription": "The team captain has been updated.",
+      "removeMemberTitle": "Remove Team Member",
+      "removeMemberDescription": "Are you sure you want to remove {firstName} {lastName} from the team?",
+      "memberRemovedTitle": "Member Removed Successfully",
+      "memberRemovedDescription": "The team member has been removed.",
+      "quitTeamTitle": "Quit Team",
+      "quitTeamDescription": "Are you sure you want to quit the team?",
+      "quitSuccessTitle": "Successfully Quit Team",
+      "quitSuccessDescription": "You have left the team.",
+      "errorOccurred": "An error occurred."
     }
   },
   "errors": {
     "networkError": "Something went wrong. Please try again later.",
     "backButtonText": "Back to home",
     "notFound": "Oops! This page went out of bounds! ⚽",
-    "accessDenied": "Access Denied. You don't have permission to view this content."
+    "accessDenied": "Access Denied. You don't have permission to view this content.",
+    "actionNotAllowed": "Action Not Allowed",
+    "notAllowedDescription": "You are not allowed to perform this action"
   },
   "matches": {
-      "statusCard":{
-        "playerStats": {
-          "title": "Stats as Player",
-          "rating": "Rating",
-          "goals": "Goals",
-          "assists": "Assists",
-          "tackles": "Tackles",
-          "interceptions": "Interceptions",
-          "passes": "passes",
-          "shots": "shots"
-        },
-        "goalkeeperStats": {
-          "title": "Stats as Goalkeeper",
-          "rating": "Rating",
-          "saves": "Saves",
-          "goalsConceded": "Goals Conceded",
-          "penaltiesSaved": "Penalties Saved"
-        },
-        "playerProfile": "Player Profile"
-      }
+    "statusCard": {
+      "playerStats": {
+        "title": "Stats as Player",
+        "rating": "Rating",
+        "goals": "Goals",
+        "assists": "Assists",
+        "tackles": "Tackles",
+        "interceptions": "Interceptions",
+        "passes": "passes",
+        "shots": "shots"
+      },
+      "goalkeeperStats": {
+        "title": "Stats as Goalkeeper",
+        "rating": "Rating",
+        "saves": "Saves",
+        "goalsConceded": "Goals Conceded",
+        "penaltiesSaved": "Penalties Saved"
+      },
+      "playerProfile": "Player Profile"
+    }
+  },
+  "teamForm": {
+    "logoRequired": "Logo is required.",
+    "logoTypeError": "Only PNG, JPG, or JPEG files are allowed.",
+    "cropError": "Failed to crop image. Please try again.",
+    "teamNameLabel": "Team Name",
+    "teamNamePlaceholder": "e.g. Barcelona",
+    "teamNameRequired": "Team name is required.",
+    "teamNameMinLength": "Team name must be at least 5 characters.",
+    "teamNameMaxLength": "Team name must not exceed 24 characters.",
+    "teamNameLatinOnly": "Team name must contain only Latin letters.",
+    "abbreviationLabel": "Abbreviation",
+    "abbreviationPlaceholder": "e.g. FCB",
+    "abbreviationRequired": "Abbreviation is required.",
+    "abbreviationPattern": "Abbreviation must contain exactly 3 Latin letters."
+  },
+  "createTeam": {
+    "title": "Create Team",
+    "subtitle": "Your winning journey starts here!",
+    "inviteMembersLabel": "Invite Members",
+    "searchPlayersPlaceholder": "Search players...",
+    "noPlayersFound": "No players found.",
+    "creating": "Creating...",
+    "create": "Create",
+    "failedToCreate": "Failed to create team. Please try again.",
+    "successTitle": "Team Creation Successful",
+    "successDescription": "Your team has been created successfully!",
+    "cantSendInvite": "Can't Send Invite",
+    "incompleteProfileDesc": "This player is unable to receive an invite due to an incomplete profile.",
+    "completionStats": "Required: {required}% | Current: {current}%"
+  },
+  "updateTeam": {
+    "title": "Update Team",
+    "subtitle": "Edit your team details",
+    "failedToUpdate": "Failed to update team. Please try again.",
+    "successTitle": "Team Updated",
+    "successDescription": "Your team has been updated successfully!"
+  },
+  "updateDraftTeam": {
+    "title": "Update Draft Team",
+    "subtitle": "Edit your draft team details",
+    "failedToUpdate": "Failed to update team. Please try again.",
+    "successTitle": "Draft Team Updated",
+    "successDescription": "Your draft team has been updated successfully!"
+  },
+  "draftTeam": {
+    "underReview": "No data available yet — your team is still under review.",
+    "lastEdited": "Last Edited:",
+    "status": "Status:",
+    "reviewed": "Reviewed:",
+    "delete": "Delete",
+    "deleteDraftTitle": "Delete Draft Team",
+    "deleteDraftDescription": "Are you sure you want to delete your draft team? This action cannot be undone.",
+    "deleteSuccessTitle": "Draft Team Deleted",
+    "deleteSuccessDescription": "Your draft team has been successfully deleted.",
+    "age": "Age:",
+    "foot": "Foot:",
+    "captainLabel": "(C)",
+    "statusPending": "This team is under review and will be published once approved.",
+    "statusRejected": "This team was rejected during review. Please update the information and resubmit.",
+    "failedToLoadTeamInfo": "Failed to load team info"
+  },
+  "editShirtNumber": {
+    "title": "Edit Shirt Number",
+    "subtitle": "Your winning journey starts here!",
+    "editLabel": "Edit Shirt Number",
+    "current": "Current",
+    "new": "New",
+    "outOfRange": "Shirt number must be between 1 and 26",
+    "sameAsCurrent": "Please use a different number than Current",
+    "willBeSwitched": "{firstName1} {lastName1} and {firstName2} {lastName2} will be switched",
+    "numberIsFree": "Chosen shirt number is free"
   }
 }

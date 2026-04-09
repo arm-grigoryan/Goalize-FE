@@ -12,13 +12,16 @@ import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 import { useGetTeamsQuery, useGetUserInfoQuery } from "@/app/store/services/api";
 import { ITeamListItem } from "@/types/api/temas";
 import { useAuth } from "@/shared/auth/AuthContext";
+import { useTranslations } from "next-intl";
 
 const TAKE = 20;
 
 export const TeamsPage = () => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
-  const text = isMobile ? "" : "Create Team";
+  const t = useTranslations("teams");
+  const tCommon = useTranslations("common");
+  const text = isMobile ? "" : t("createTeam");
 
   const { isAuthenticated, signIn } = useAuth();
   const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery(
@@ -88,23 +91,17 @@ export const TeamsPage = () => {
     if (isUserInfoLoading) return;
 
     if (isCaptainOfActiveTeam) {
-      setInfoMessage(
-        `You are already the captain of ${userTeam!.name}. Transfer the captain role and quit if you want to create a new team.`,
-      );
+      setInfoMessage(t("cannotCreateCaptain", { teamName: userTeam!.name }));
       return;
     }
 
     if (hasDraftTeam) {
-      setInfoMessage(
-        "You already created a team, which is under review. You will be notified once we review it.",
-      );
+      setInfoMessage(t("cannotCreateDraft"));
       return;
     }
 
     if (isPlayerInTeam) {
-      setInfoMessage(
-        `You are already in ${userTeam!.name}. Quit if you want to create a new team.`,
-      );
+      setInfoMessage(t("cannotCreateInTeam", { teamName: userTeam!.name }));
       return;
     }
 
@@ -122,7 +119,7 @@ export const TeamsPage = () => {
               </div>
             </div>
           )}
-          <div className={styles.title}>Teams</div>
+          <div className={styles.title}>{t("title")}</div>
         </div>
         <Button
           className="icon_button_red_small"
@@ -145,13 +142,11 @@ export const TeamsPage = () => {
       )}
 
       {isError && (
-        <div className={styles.errorText}>
-          Failed to load teams. Please try again.
-        </div>
+        <div className={styles.errorText}>{t("failedToLoad")}</div>
       )}
 
       {!isFetching && !isError && !teams.length && (
-        <div className={styles.emptyText}>No teams to show at the moment.</div>
+        <div className={styles.emptyText}>{t("empty")}</div>
       )}
 
       <CreateTeamPopUp open={open} onClose={() => setIsOpen(false)} />
@@ -160,7 +155,7 @@ export const TeamsPage = () => {
         <PlayerInvitationCard
           title=""
           description={infoMessage}
-          confirmButtonText="OK"
+          confirmButtonText={tCommon("ok")}
           onConfirmButtonClick={() => setInfoMessage(null)}
         />
       )}

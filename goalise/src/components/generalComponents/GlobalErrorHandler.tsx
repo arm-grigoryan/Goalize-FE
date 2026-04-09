@@ -2,9 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { PlayerInvitationCard } from "@/entities/PlayerInvitationCard/PlayerInvitationCard";
+import { useTranslations } from "next-intl";
 
 export default function GlobalErrorHandler() {
     const [show403Modal, setShow403Modal] = useState(false);
+    const t = useTranslations("errors");
+    const tCommon = useTranslations("common");
 
     useEffect(() => {
         const handle403 = () => {
@@ -22,9 +25,9 @@ export default function GlobalErrorHandler() {
     return (
         <PlayerInvitationCard
             onCancelButtonClick={() => setShow403Modal(false)}
-            title=""
-            description="You are not allowed to perform this action"
-            cancelButtonText="Close"
+            title={t("actionNotAllowed")}
+            description={t("notAllowedDescription")}
+            cancelButtonText={tCommon("close")}
         />
     );
 }

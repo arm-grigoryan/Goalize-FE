@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { handleSignInCallback } from "@/shared/auth/oidcService";
 import { useAuth } from "@/shared/auth/AuthContext";
+import { useTranslations } from "next-intl";
 
 const SignInOidcPage = () => {
   const router = useRouter();
   const { updateTokens } = useAuth();
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations("auth");
 
   useEffect(() => {
     (async () => {
@@ -29,7 +31,7 @@ const SignInOidcPage = () => {
   if (error) {
     return (
       <div style={{ padding: "24px" }}>
-        <h2>Sign-in failed</h2>
+        <h2>{t("signingIn.failed")}</h2>
         <p>{error}</p>
       </div>
     );
@@ -37,8 +39,8 @@ const SignInOidcPage = () => {
 
   return (
     <div style={{ padding: "24px" }}>
-      <h2>Completing sign-in...</h2>
-      <p>Please wait while we process your login.</p>
+      <h2>{t("signingIn.title")}</h2>
+      <p>{t("signingIn.description")}</p>
     </div>
   );
 };
