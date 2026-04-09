@@ -1,14 +1,18 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Image from "next/image";
 import styles from "./LanguageSelect.module.css";
 import arrowDown from "../../assets/pngs/arrowDown.svg";
 import selectedIcon from "../../assets/pngs/selected.svg";
-import Image from "next/image";
+import { setLocale } from "@/app/store/slices/localeSlice";
+import { setLocaleCookie, type Locale } from "@/shared/utils/localeCookie";
+import type { RootState } from "@/app/store/store";
 
 const languages = [
-  { code: "en", name: "ENG", fullName: "English" },
-  { code: "hy", name: "Հայ", fullName: "Հայերեն" },
+  { code: "en" as Locale, name: "ENG", fullName: "English" },
+  { code: "hy" as Locale, name: "Հայ", fullName: "Հայերեն" },
 ];
 
 type LanguageSelectVariant = "headerMobile" | "default";
@@ -21,26 +25,18 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = ({
   variant = "default",
 }) => {
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState("en");
   const ref = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
+  const lang = useSelector((state: RootState) => state.locale.locale);
 
   const toggle = () => setOpen((prev) => !prev);
 
-  const selectLang = (code: string) => {
-    setLang(code);
+  const selectLang = (code: Locale) => {
+    setLocaleCookie(code);
+    dispatch(setLocale(code));
     setOpen(false);
+    window.location.reload();
   };
-
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
 
   const selected = languages.find((l) => l.code === lang);
 
@@ -82,7 +78,7 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = ({
     </div>
     : <div ref={ref} className={styles.mobileWrapper}>
       <div onClick={toggle} className={styles.mobileSelect}>
-        <div> 
+        <div>
           <span className={styles.mobileSelectedText}>{selected?.name}</span>
           <Image
             src={arrowDown}

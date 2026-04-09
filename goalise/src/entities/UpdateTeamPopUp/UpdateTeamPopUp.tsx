@@ -16,6 +16,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 import { Loader } from "@/shared/Loader/Loader";
+import { useTranslations } from "next-intl";
 
 type UpdateTeamFormData = {
   Name: string;
@@ -95,6 +96,9 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
 }) => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("updateTeam");
+  const tForm = useTranslations("teamForm");
+  const tCommon = useTranslations("common");
 
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
@@ -150,7 +154,7 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
 
   const applyLogoFile = (file: File) => {
     if (!ALLOWED_TYPES.includes(file.type)) {
-      setLogoError("Only PNG, JPG, or JPEG files are allowed.");
+      setLogoError(tForm("logoTypeError"));
       return;
     }
     setLogoError(null);
@@ -198,7 +202,7 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
       setShowCropper(false);
       setImageSrc(null);
     } catch {
-      setLogoError("Failed to crop image. Please try again.");
+      setLogoError(tForm("cropError"));
     }
   };
 
@@ -209,10 +213,10 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
   };
 
   const abbrevRegister = register("Abbreviation", {
-    required: "Abbreviation is required.",
+    required: tForm("abbreviationRequired"),
     pattern: {
       value: /^[A-Z]{3}$/,
-      message: "Abbreviation must contain exactly 3 Latin letters.",
+      message: tForm("abbreviationPattern"),
     },
   });
 
@@ -234,7 +238,7 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
     } catch (error) {
       const errorData = error as { data?: { errorMessage?: string } };
       setSubmitError(
-        errorData?.data?.errorMessage || "Failed to update team. Please try again."
+        errorData?.data?.errorMessage || t("failedToUpdate")
       );
     }
   };
@@ -247,9 +251,9 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
     return (
       <PlayerInvitationCard
         onCancelButtonClick={handleClose}
-        title="Team Updated"
-        description="Your team has been updated successfully!"
-        cancelButtonText="Close"
+        title={t("successTitle")}
+        description={t("successDescription")}
+        cancelButtonText={tCommon("close")}
       />
     );
   }
@@ -259,8 +263,8 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
       <div className={styles.overlay} onClick={handleClose} />
       <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
         <div className={styles.titleWrapper}>
-          <div className={styles.title}>Update Team</div>
-          <div className={styles.subTitle}>Edit your team details</div>
+          <div className={styles.title}>{t("title")}</div>
+          <div className={styles.subTitle}>{t("subtitle")}</div>
         </div>
 
         <div
@@ -282,7 +286,7 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
             onClick={() => fileInputRef.current?.click()}
           >
             <Image src={editIcon} alt="" className={styles.editIcon} />
-            <div className={styles.editText}>Upload logo</div>
+            <div className={styles.editText}>{tCommon("uploadLogo")}</div>
           </div>
           <input
             ref={fileInputRef}
@@ -300,25 +304,25 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
           noValidate
         >
           <div className={styles.inputWrapper}>
-            <div className={styles.label}>Team Name</div>
+            <div className={styles.label}>{tForm("teamNameLabel")}</div>
             <div className={styles.inputWithIcon}>
               <Image src={teamIcon} alt="" className={styles.inputIcon} />
               <input
                 className={`${styles.input} ${errors.Name ? styles.inputError : ""}`}
-                placeholder="e.g. Barcelona"
+                placeholder={tForm("teamNamePlaceholder")}
                 {...register("Name", {
-                  required: "Team name is required.",
+                  required: tForm("teamNameRequired"),
                   minLength: {
                     value: 5,
-                    message: "Team name must be at least 5 characters.",
+                    message: tForm("teamNameMinLength"),
                   },
                   maxLength: {
                     value: 24,
-                    message: "Team name must not exceed 24 characters.",
+                    message: tForm("teamNameMaxLength"),
                   },
                   validate: (v) =>
                     /^[A-Za-z\s]+$/.test(v.trim()) ||
-                    "Team name must contain only Latin letters.",
+                    tForm("teamNameLatinOnly"),
                 })}
               />
             </div>
@@ -328,12 +332,12 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
           </div>
 
           <div className={styles.inputWrapper}>
-            <div className={styles.label}>Abbreviation</div>
+            <div className={styles.label}>{tForm("abbreviationLabel")}</div>
             <div className={styles.inputWithIcon}>
               <Image src={abbreviationIcon} alt="" className={styles.inputIcon} />
               <input
                 className={`${styles.input} ${errors.Abbreviation ? styles.inputError : ""}`}
-                placeholder="e.g. FCB"
+                placeholder={tForm("abbreviationPlaceholder")}
                 maxLength={3}
                 {...abbrevRegister}
                 onChange={(e) => {
@@ -355,7 +359,7 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
           <div className={styles.buttonWrappper}>
             <Button
               className={isValid ? "gray_buttonIcon_active" : "gray_buttonIcon"}
-              content="Save"
+              content={tCommon("save")}
               handleClick={handleSubmit(onSubmit)}
               leftIcon={leftArrow}
             />
@@ -380,7 +384,7 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
               />
             </div>
             <div className={styles.cropControls}>
-              <label className={styles.cropSliderLabel}>Zoom</label>
+              <label className={styles.cropSliderLabel}>{tCommon("zoom")}</label>
               <input
                 type="range"
                 min={1}
@@ -396,14 +400,14 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
                   className={styles.cropCancelBtn}
                   onClick={handleCancelCrop}
                 >
-                  Cancel
+                  {tCommon("cancel")}
                 </button>
                 <button
                   type="button"
                   className={styles.cropSaveBtn}
                   onClick={handleSaveCrop}
                 >
-                  Save Crop
+                  {tCommon("saveCrop")}
                 </button>
               </div>
             </div>

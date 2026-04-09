@@ -79,7 +79,7 @@ export const HomeTransferNewsCard = () => {
           <div className={styles.no_transfer_wrapper}>
             <Image src={transferEmpty} alt="" className={styles.transfer_empty_image} />
             <span className={styles.no_transfer_text}>
-              No transfer news is scheduled at the moment
+              {t("home.transferNews.emptyState")}
             </span>
           </div>
         )}

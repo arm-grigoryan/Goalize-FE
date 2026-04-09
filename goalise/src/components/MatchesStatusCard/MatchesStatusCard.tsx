@@ -143,7 +143,7 @@ export const MatchesStatusCard: React.FC<IMatchesStatusCardProps> = ({
                     />
                     <Link href={playerId ? `/profile/${playerId}` : '#'} className={styles.playerProfile}>{t("matches.statusCard.playerProfile")}</Link>
                 </div>
-                <Button className="red_text_button" content="Close" handleClick={onClose ?? (() => {})}/>
+                <Button className="red_text_button" content={t("common.close")} handleClick={onClose ?? (() => {})}/>
             </div>
         </div>
     </div>

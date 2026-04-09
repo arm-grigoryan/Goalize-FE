@@ -6,12 +6,15 @@ import { clearError } from "@/app/store/slices/errorSlice";
 import { RootState } from "@/app/store/store";
 import { ErrorBanner } from "@/components/ErrorBanner/ErrorBanner";
 import { PopupModal } from "@/entities/PopupModal/PopupModal";
+import { useTranslations } from "next-intl";
 
 export const GlobalErrorDisplay: React.FC = () => {
   const dispatch = useDispatch();
   const { errorType, message, visible } = useSelector(
     (state: RootState) => state.error,
   );
+  const t = useTranslations("errors");
+  const tCommon = useTranslations("common");
 
   const [showBanner, setShowBanner] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -50,9 +53,9 @@ export const GlobalErrorDisplay: React.FC = () => {
       <PopupModal
         open={showModal}
         onClose={handleModalClose}
-        title="Action Not Allowed"
-        description={message || "You are not allowed to perform this action"}
-        buttonContent="OK"
+        title={t("actionNotAllowed")}
+        description={message || t("notAllowedDescription")}
+        buttonContent={tCommon("ok")}
       />
     </>
   );

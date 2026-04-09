@@ -91,7 +91,7 @@ export const HomePastMatchesCard = () => {
               className={styles.no_match_image}
             />
             <span className={styles.no_match_text}>
-              No past match to show at the moment
+              {t("home.pastMatches.emptyState")}
             </span>
           </div>
         )}

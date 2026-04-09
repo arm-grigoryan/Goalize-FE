@@ -29,6 +29,12 @@ import { startLoginRedirect } from "@/shared/auth/oidcService";
 import { setError } from "../slices/errorSlice";
 import { NotificationItemDto } from "@/types/api/notifications";
 
+const getApiLocale = (): string => {
+  if (typeof document === "undefined") return "en";
+  const match = document.cookie.match(/\.AspNetCore\.Culture=c=([^|;]+)/);
+  return match ? match[1] : "en";
+};
+
 let is401HandlingInProgress = false;
 
 const handle401Error = () => {
@@ -90,6 +96,10 @@ export const publicApi = createApi({
   reducerPath: "publicApi",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
+    prepareHeaders: (headers) => {
+      headers.set("Accept-Language", getApiLocale());
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     getUpComingMatches: builder.query<
@@ -248,6 +258,8 @@ export const api = createApi({
     fetchBaseQuery({
       baseUrl: process.env.NEXT_PUBLIC_API_URL,
       prepareHeaders: (headers) => {
+        headers.set("Accept-Language", getApiLocale());
+
         if (typeof window !== "undefined") {
           const token = JSON.parse(
             localStorage.getItem("goalize_auth_tokens") || "null",
