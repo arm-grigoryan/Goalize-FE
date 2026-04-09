@@ -177,6 +177,7 @@
 .serachDropdownItemImage {
     width: 24px;
     height: 24px;
+    border-radius: 50%;
 }
 .searchDropdownItem:hover {
     background: #2a2a2a;

@@ -1,8 +1,8 @@
 "use client";
 import styles from "./Header.module.css";
 import Image from "next/image";
-import logo from "/public/pngs/logo/Logo.svg";
-import profileImg from "/public/images/headerProfileImg.png";
+import logo from "../../../../public/pngs/logo/Logo.svg";
+import noPhoto from "../../../assets/pngs/noPhoto.png";
 import Link from "next/link";
 import searchIcon from "../../../assets/pngs/searchicon.svg";
 import { CustomDivider } from "@/shared/Divider/Divider";
@@ -22,7 +22,7 @@ import SearchCard from "@/shared/SearchCard";
 import NotificationCard from "@/shared/NotificationCard";
 import PortalDropdown from "@/shared/PortalDropdown";
 import ProfileCard from "@/shared/ProfileCard";
-import mobileLogo from "/public/pngs/logo/mobileLogo.svg";
+import mobileLogo from "../../../../public/pngs/logo/mobileLogo.svg";
 import { ErrorBanner } from "@/components/ErrorBanner/ErrorBanner";
 import arrowDown from "../../../assets/pngs/arrowDown.svg";
 import { useNotifications } from "@/hooks/useNotifications";
@@ -85,7 +85,7 @@ export const Header = () => {
   useOnClickOutside([leaguesRef, leaguesButtonRef, leaguesDropdownRef], closeLeagues, activeDropdown === "leagues");
 
   const userLabel = user?.name || user?.email || "Guest";
-
+  const profileImg = user?.picture || noPhoto;
 
 
   useEffect(() => {
@@ -241,8 +241,8 @@ export const Header = () => {
                           src={playerProfilePic && playerProfilePic.startsWith("http") ? playerProfilePic : profileImg}
                           alt=""
                           className={styles.profile_img}
-                          width={50}
-                          height={50}
+                          width={40}
+                          height={40}
                           unoptimized={!!(playerProfilePic && playerProfilePic.startsWith("http"))}
                         />
                       </div>
@@ -564,8 +564,8 @@ export const Header = () => {
                     src={playerProfilePic && playerProfilePic.startsWith("http") ? playerProfilePic : profileImg}
                     alt=""
                     className={styles.profile_img}
-                    width={50}
-                    height={50}
+                    width={40}
+                    height={40}
                     unoptimized={!!(playerProfilePic && playerProfilePic.startsWith("http"))}
                   />
                 </div>

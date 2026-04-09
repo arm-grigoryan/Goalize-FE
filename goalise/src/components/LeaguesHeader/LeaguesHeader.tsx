@@ -2,7 +2,6 @@
 
 import styles from "./LeaguesHeader.module.css";
 import Image from "next/image";
-import championsLeagueImg from "../../../public/images/championsLegue.png";
 import Button from "@/shared/Button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -50,12 +49,7 @@ export const LeaguesHeader = () => {
       ? leagueData.winner.logoUrl
       : undefined;
 
-  const leagueLogo =
-    leagueData?.logoUrl &&
-    typeof leagueData.logoUrl === "string" &&
-    leagueData.logoUrl.startsWith("http")
-      ? leagueData.logoUrl
-      : championsLeagueImg;
+  const leagueLogo = leagueData?.logoUrl!;
 
   const renderPrizePool = () => (
     <div className={isMobile ? styles.fee_container : styles.fee_container}>
