@@ -8,7 +8,7 @@ import searchIcon from "../../../assets/pngs/searchicon.svg";
 import { CustomDivider } from "@/shared/Divider/Divider";
 import { useTranslations } from "next-intl";
 import LanguageSelect from "@/shared/LanguageSelect";
-import { useGetLeaguesQuery } from "@/app/store/services/api";
+import { useGetLeaguesQuery, useGetUserInfoQuery } from "@/app/store/services/api";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { usePathname } from "next/navigation";
@@ -51,6 +51,8 @@ export const Header = () => {
 
   const { data: leaguesData } = useGetLeaguesQuery();
   const { isAuthenticated, user, signIn, signOut, loading, tokens } = useAuth();
+  const { data: userInfo } = useGetUserInfoQuery(undefined, { skip: !isAuthenticated });
+  const playerProfilePic = userInfo?.playerInfo?.userInfo?.profilePic;
   const {
     notifications,
     unseenCount,
@@ -236,9 +238,12 @@ export const Header = () => {
                     >
                       <div>
                         <Image
-                          src={profileImg}
+                          src={playerProfilePic && playerProfilePic.startsWith("http") ? playerProfilePic : profileImg}
                           alt=""
                           className={styles.profile_img}
+                          width={50}
+                          height={50}
+                          unoptimized={!!(playerProfilePic && playerProfilePic.startsWith("http"))}
                         />
                       </div>
                       {activeDropdown === "profile" && (
@@ -556,9 +561,12 @@ export const Header = () => {
 
                 <div className={styles.profile_img_wrapper}>
                   <Image
-                    src={profileImg}
+                    src={playerProfilePic && playerProfilePic.startsWith("http") ? playerProfilePic : profileImg}
                     alt=""
                     className={styles.profile_img}
+                    width={50}
+                    height={50}
+                    unoptimized={!!(playerProfilePic && playerProfilePic.startsWith("http"))}
                   />
                 </div>
                 {activeDropdown === "profile" && (

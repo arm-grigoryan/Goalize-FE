@@ -213,3 +213,9 @@
 .cropSaveBtn:hover {
     opacity: 0.88;
 }
+
+/* ------------- mobile styles ---------------- */
+.mobile {
+    width: calc(100vw - 32px);
+    max-width: unset;
+}
