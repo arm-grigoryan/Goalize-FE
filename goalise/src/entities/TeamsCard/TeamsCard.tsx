@@ -26,9 +26,12 @@ export const TeamsCard: React.FC<ITeamsCardProps> = ({ item, onNextMatchClick })
       <div className={styles.logoNameWrapper}>
         <Link href={`/teams/${team.id}`} style={{ textDecoration: 'none' }}>
           <Image
-            src={teamLogoFallback}
+            src={team.logoUrl && team.logoUrl.startsWith("http") ? team.logoUrl : teamLogoFallback}
             alt={team.name}
             className={styles.logo}
+            width={106}
+            height={106}
+            unoptimized={!!(team.logoUrl && team.logoUrl.startsWith("http"))}
           />
         </Link>
         <div className={styles.nameWrapper}>

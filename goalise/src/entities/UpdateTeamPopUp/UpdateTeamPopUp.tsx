@@ -11,7 +11,11 @@ import leftArrow from "../../assets/pngs/leftArrow.svg";
 import teamIcon from "../../assets/pngs/teamIcon.svg";
 import abbreviationIcon from "../../assets/pngs/abbreviation.svg";
 import Button from "@/shared/Button";
-import { useUpdateTeamMutation } from "@/app/store/services/api";
+import { useUpdateTeamMutation, useGetTeamInfoQuery, useGetUserInfoQuery } from "@/app/store/services/api";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
+import { Loader } from "@/shared/Loader/Loader";
 
 type UpdateTeamFormData = {
   Name: string;
@@ -89,11 +93,15 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
   initialAbbreviation,
   initialLogoUrl,
 }) => {
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
+
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [logoError, setLogoError] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [showCropper, setShowCropper] = useState(false);
@@ -104,6 +112,8 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [updateTeam, { isLoading: isSubmitting }] = useUpdateTeamMutation();
+  const { refetch: refetchTeamInfo } = useGetTeamInfoQuery(teamId);
+  const { refetch: refetchUserInfo } = useGetUserInfoQuery();
 
   const resolvedLogoSrc =
     initialLogoUrl && isValidUrl(initialLogoUrl)
@@ -134,6 +144,7 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
     setSubmitError(null);
     setShowCropper(false);
     setImageSrc(null);
+    setShowSuccessModal(false);
     onClose();
   };
 
@@ -217,7 +228,9 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
 
     try {
       await updateTeam({ teamId, formData }).unwrap();
-      handleClose();
+      refetchTeamInfo();
+      refetchUserInfo();
+      setShowSuccessModal(true);
     } catch (error) {
       const errorData = error as { data?: { errorMessage?: string } };
       setSubmitError(
@@ -226,12 +239,25 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
     }
   };
 
-  if (!open) return null;
+  if (!open && !isSubmitting && !showSuccessModal) return null;
+
+  if (isSubmitting) return <Loader />;
+
+  if (showSuccessModal) {
+    return (
+      <PlayerInvitationCard
+        onCancelButtonClick={handleClose}
+        title="Team Updated"
+        description="Your team has been updated successfully!"
+        cancelButtonText="Close"
+      />
+    );
+  }
 
   return (
     <>
       <div className={styles.overlay} onClick={handleClose} />
-      <div className={styles.container}>
+      <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
         <div className={styles.titleWrapper}>
           <div className={styles.title}>Update Team</div>
           <div className={styles.subTitle}>Edit your team details</div>
@@ -329,7 +355,7 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
           <div className={styles.buttonWrappper}>
             <Button
               className={isValid ? "gray_buttonIcon_active" : "gray_buttonIcon"}
-              content={isSubmitting ? "Saving..." : "Save"}
+              content="Save"
               handleClick={handleSubmit(onSubmit)}
               leftIcon={leftArrow}
             />

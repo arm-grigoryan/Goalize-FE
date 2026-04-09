@@ -14,7 +14,9 @@ import searchIconGray from "../../assets/pngs/searchIconGray.svg";
 import abbreviationIcon from "../../assets/pngs/abbreviation.svg";
 import inviteIcon from "../../assets/pngs/inviteIcon.svg";
 import Button from "@/shared/Button";
-import { useCreateTeamMutation, useLazyGetPlayersInviteQuery } from "@/app/store/services/api";
+import { useCreateTeamMutation, useLazyGetPlayersInviteQuery, useGetUserInfoQuery } from "@/app/store/services/api";
+import { useAuth } from "@/shared/auth/AuthContext";
+import { refreshTokens } from "@/shared/auth/oidcService";
 import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 import warningIcon from "../../assets/pngs/error.svg";
 import type { PlayerInviteResult } from "@/types/api/search";
@@ -124,6 +126,9 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
       triggerPlayersInvite(q);
     }, 300);
   };
+
+  const { tokens, updateTokens } = useAuth();
+  const { refetch: refetchUserInfo } = useGetUserInfoQuery();
 
   const [createTeam, { isLoading: isSubmitting }] = useCreateTeamMutation();
 
@@ -247,6 +252,15 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
 
     try {
       await createTeam(formData).unwrap();
+      if (tokens?.refreshToken) {
+        try {
+          const newTokens = await refreshTokens(tokens.refreshToken);
+          updateTokens(newTokens);
+        } catch {
+          // ignore refresh error
+        }
+      }
+      refetchUserInfo();
       setShowSuccessModal(true);
     } catch (error) {
       const errorData = error as { data?: { errorMessage?: string } };
@@ -279,7 +293,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                                         setWarningTooltip(null);
                                         handleClose();
                                       }} >
-      <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`} onClick={(e) => e.stopPropagation()}>
+      <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`} onClick={(e) => { e.stopPropagation(); setWarningTooltip(null); }}>
         <div className={styles.titleWrapper}>
           <div className={styles.title}>Create Team</div>
           <div className={styles.subTitle}>
@@ -438,12 +452,17 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                             height={16}
                            onClick={(e) => {
                               if (isMobile) {
-                                const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-                                setWarningTooltip({
-                                  x: rect.left + rect.width / 2,
-                                  y: rect.top - 8,
-                                  player,
-                                });
+                                e.stopPropagation();
+                                if (warningTooltip?.player.playerId === player.playerId) {
+                                  setWarningTooltip(null);
+                                } else {
+                                  const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                                  setWarningTooltip({
+                                    x: rect.left + rect.width / 2,
+                                    y: rect.top - 8,
+                                    player,
+                                  });
+                                }
                               }
                             }}
                             onMouseEnter={(e) => {

@@ -29,6 +29,7 @@
     0 0 15px rgba(246, 70, 93, 0.3);
     z-index: 99;
     width: 470px;
+    margin: 20px;
 }
 .titleWrapper {
     display: flex;
@@ -69,25 +70,36 @@
     width: 100%;
 }
 .inputWrapper {
+  display: flex;
   position: relative;
   width: 100%;
 }
 
 .inputWrapper input {
-  padding: 12px 10px;
+  display: flex;
+  width: 100%;
+  padding: 22px 10px 12px 10px;
   font-size: 16px;
   background-color: transparent;
   border: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.166);
   border-radius: 5px;
-  width: 100%;
-}
+  color: white;
 
+}
+.inputWrapper input:focus {
+  outline: none; 
+}
+.inputWrapper input::-webkit-outer-spin-button,
+.inputWrapper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .inputWrapper label {
   position: absolute;
   left: 10px;
   top: 14px;
-  font-size: 16px;
+  font-size: 12px;
   color: gray;
   transition: 0.2s;
   pointer-events: none;
@@ -152,7 +164,9 @@
   gap: 12px;
   align-items: center;
 }
-
+.actions button  {
+  padding: 8px 16px;
+}
 .mobile {
   width: 100%;
 }
