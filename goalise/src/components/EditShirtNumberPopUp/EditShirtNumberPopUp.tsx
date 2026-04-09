@@ -31,7 +31,8 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
 
   const parsed = parseInt(value, 10);
   const isOutOfRange = value !== '' && !isNaN(parsed) && (parsed < 1 || parsed > 26);
-  const isValid = value !== '' && !isNaN(parsed) && parsed >= 1 && parsed <= 26;
+  const isSameAsCurrent = value !== '' && !isNaN(parsed) && parsed === player.shirtNumber;
+  const isValid = value !== '' && !isNaN(parsed) && parsed >= 1 && parsed <= 26 && !isSameAsCurrent;
 
   const conflictPlayer = isValid
     ? squad.find((p) => p.shirtNumber === parsed && p.playerId !== player.playerId)
@@ -39,6 +40,8 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
 
   const message = isOutOfRange
     ? 'Shirt number must be between 1 and 26'
+    : isSameAsCurrent
+    ? 'Please use a different number than Current'
     : isValid
     ? conflictPlayer
       ? `${player.firstName} ${player.lastName} and ${conflictPlayer.firstName} ${conflictPlayer.lastName} will be switched`
@@ -73,11 +76,14 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
             <div> <Image src={redArrowRight} alt="" /></div>
             <div className={styles.inputWrapper}>
               <input
-                type="number"
-                min={1}
-                max={26}
+                type="text"
+                inputMode="numeric"
+                maxLength={2}
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => {
+                  const v = e.target.value.replace(/\D/g, '').slice(0, 2);
+                  setValue(v);
+                }}
                 placeholder=" "
               />
               <label>New</label>
@@ -90,7 +96,7 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
             <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
               <Image src={shirt} alt="" className={styles.icon} />
             </div>
-            <div className={`${styles.describtion} ${isOutOfRange || conflictPlayer ? styles.warning : styles.success}`}>
+            <div className={`${styles.describtion} ${isOutOfRange || isSameAsCurrent || conflictPlayer ? styles.warning : styles.success}`}>
               {message}
             </div>
           </div>

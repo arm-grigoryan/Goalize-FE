@@ -37,6 +37,7 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
     const [showUpdatePopUp, setShowUpdatePopUp] = useState(false);
+    const [statusTooltip, setStatusTooltip] = useState<{ x: number; y: number } | null>(null);
     const [deleteTeamDraft, { isLoading: isDeleting }] = useDeleteTeamDraftMutation();
     const { tokens, updateTokens } = useAuth();
 
@@ -177,7 +178,28 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                             <div className={styles.rejectedInner}>
                                 <div className={styles.status}> Status: </div>
                                 <div className={styles.abandoned}>
-                                    <Image src={infoIcon} alt="" />
+                                    <Image
+                                        src={infoIcon}
+                                        alt=""
+                                        style={{ cursor: "pointer" }}
+                                        onClick={(e) => {
+                                            if (isMobile) {
+                                                const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                                                setStatusTooltip(
+                                                    statusTooltip ? null : { x: rect.left + rect.width / 2, y: rect.top - 8 }
+                                                );
+                                            }
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            if (!isMobile) {
+                                                const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                                                setStatusTooltip({ x: rect.right + 8, y: rect.top });
+                                            }
+                                        }}
+                                        onMouseLeave={() => {
+                                            if (!isMobile) setStatusTooltip(null);
+                                        }}
+                                    />
                                     <div className={styles.abandonedText}>
                                         {draftData?.reviewStatus ?? '—'}
                                     </div>
@@ -276,5 +298,22 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                 </div>
             )}
         </div>
+
+        {statusTooltip && draftData?.reviewStatus && (
+            <div
+                className={styles.statusTooltip}
+                style={{
+                    left: statusTooltip.x,
+                    top: statusTooltip.y,
+                    transform: isMobile ? "translate(-50%, -100%)" : "none",
+                }}
+            >
+                <div className={styles.statusTooltipDesc}>
+                    {draftData.reviewStatus === "Pending"
+                        ? "This team is under review and will be published once approved."
+                        : "This team was rejected during review. Please update the information and resubmit."}
+                </div>
+            </div>
+        )}
     </div>;
 };
