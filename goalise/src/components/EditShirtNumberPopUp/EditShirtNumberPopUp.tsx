@@ -68,8 +68,9 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
                 readOnly
                 className={styles.readOnly}
               />
+              <label>Current</label>
             </div>
-            <Image src={redArrowRight} alt="" />
+            <div> <Image src={redArrowRight} alt="" /></div>
             <div className={styles.inputWrapper}>
               <input
                 type="number"
