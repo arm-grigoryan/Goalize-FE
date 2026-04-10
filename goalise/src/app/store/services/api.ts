@@ -330,8 +330,6 @@ export const api = createApi({
           return { error: { status: 401, data: "No token found" } };
         }
         
-        console.log("DOING MEE REQUEST");
-
         return baseQuery({
           url: "/players/me",
           method: "GET",
