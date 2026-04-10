@@ -25,7 +25,11 @@ import { IDrowStandings } from "@/types/api/drowStandings";
 import { ITopPlayers, ITeamTopPlayers } from "@/types/api/topPlayers";
 import { ITeamMatchResponse } from "@/types/api/teamMatches";
 import { ISquadPlayer } from "@/types/api/squad";
-import { startLoginRedirect } from "@/shared/auth/oidcService";
+import {
+  startLoginRedirect,
+  getStoredTokens,
+  refreshTokens,
+} from "@/shared/auth/oidcService";
 import { setError } from "../slices/errorSlice";
 import { NotificationItemDto } from "@/types/api/notifications";
 
@@ -35,13 +39,38 @@ const getApiLocale = (): string => {
   return match ? match[1] : "en";
 };
 
-let is401HandlingInProgress = false;
+let refreshPromise: Promise<string | null> | null = null;
 
-const handle401Error = () => {
+const acquireFreshAccessToken = async (): Promise<string | null> => {
+  if (refreshPromise) return refreshPromise;
+
+  refreshPromise = (async () => {
+    try {
+      const stored = getStoredTokens();
+      if (!stored?.refreshToken) return null;
+
+      const newTokens = await refreshTokens(stored.refreshToken);
+
+      window.dispatchEvent(
+        new StorageEvent("storage", {
+          key: "goalize_auth_tokens",
+          newValue: JSON.stringify(newTokens),
+        }),
+      );
+
+      return newTokens.accessToken;
+    } catch {
+      return null;
+    } finally {
+      refreshPromise = null;
+    }
+  })();
+
+  return refreshPromise;
+};
+
+const forceLogout = () => {
   if (typeof window === "undefined") return;
-
-  if (is401HandlingInProgress) return;
-  is401HandlingInProgress = true;
 
   localStorage.removeItem("goalize_auth_tokens");
 
@@ -64,26 +93,37 @@ const createErrorHandlingBaseQuery = (
     api: Parameters<typeof baseQuery>[1],
     extraOptions: Parameters<typeof baseQuery>[2],
   ) => {
-    const response = await baseQuery(args, api, extraOptions);
+    let response = await baseQuery(args, api, extraOptions);
 
     if (response.error) {
       const status = (response.error as FetchBaseQueryError).status;
 
       if (isAuthenticatedApi && status === 401) {
-        handle401Error();
+        const newAccessToken = await acquireFreshAccessToken();
+
+        if (newAccessToken) {
+          response = await baseQuery(args, api, extraOptions);
+        } else {
+          forceLogout();
+          return response;
+        }
       }
 
-      if (status === 403 || (typeof status === "number" && status >= 500)) {
-        if (status === 403) {
-          window.dispatchEvent(new CustomEvent("app:403"));
-        }
-        if (typeof status === "number" && status >= 500) {
-          api.dispatch(
-            setError({
-              errorType: "5xx",
-              message: "Something went wrong,Please try again later.",
-            }),
-          );
+      if (response.error) {
+        const retryStatus = (response.error as FetchBaseQueryError).status;
+
+        if (retryStatus === 403 || (typeof retryStatus === "number" && retryStatus >= 500)) {
+          if (retryStatus === 403) {
+            window.dispatchEvent(new CustomEvent("app:403"));
+          }
+          if (typeof retryStatus === "number" && retryStatus >= 500) {
+            api.dispatch(
+              setError({
+                errorType: "5xx",
+                message: "Something went wrong,Please try again later.",
+              }),
+            );
+          }
         }
       }
     }
@@ -289,6 +329,8 @@ export const api = createApi({
         if (!tokens) {
           return { error: { status: 401, data: "No token found" } };
         }
+        
+        console.log("DOING MEE REQUEST");
 
         return baseQuery({
           url: "/players/me",
