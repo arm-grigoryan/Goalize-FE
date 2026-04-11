@@ -2,6 +2,7 @@ export interface ITeamDraft {
   id: number;
   name: string;
   logo: string;
+  abbreviation: string | null;
   captainId: number;
   reviewStatus: "Pending" | "Rejected";
   rejectionReason: string | null;

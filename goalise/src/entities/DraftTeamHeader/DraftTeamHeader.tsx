@@ -36,6 +36,7 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
     const isMobile = width <= MEDIA_TABLET_SMALL;
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
+    const [deleteError, setDeleteError] = useState<string | null>(null);
     const [showUpdatePopUp, setShowUpdatePopUp] = useState(false);
     const [statusTooltip, setStatusTooltip] = useState<{ x: number; y: number } | null>(null);
     const [deleteTeamDraft, { isLoading: isDeleting }] = useDeleteTeamDraftMutation();
@@ -60,8 +61,9 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                 updateTokens(newTokens);
             }
             setShowDeleteSuccessModal(true);
-        } catch {
-            // error is handled globally
+        } catch (error) {
+            const errorData = error as { data?: { errorMessage?: string } };
+            setDeleteError(errorData?.data?.errorMessage || "An unexpected error occurred. Please try again later.");
         }
     };
 
@@ -76,6 +78,7 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
             onClose={() => setShowUpdatePopUp(false)}
             teamId={teamId}
             initialName={draftData?.name ?? ""}
+            initialAbbreviation={draftData?.abbreviation ?? ""}
             initialLogoUrl={draftData?.logo}
         />
         {showDeleteModal && (
@@ -94,6 +97,14 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                 description="Your draft team has been successfully deleted."
                 cancelButtonText="Close"
                 onCancelButtonClick={() => { window.location.href = '/'; }}
+            />
+        )}
+        {deleteError && (
+            <PlayerInvitationCard
+                title="Cannot Delete Draft Team"
+                description={deleteError}
+                cancelButtonText="Close"
+                onCancelButtonClick={() => setDeleteError(null)}
             />
         )}
         <div className={styles.inner}>
@@ -137,6 +148,11 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                                     />
                                 )}
                                 {draftData?.name}
+                                {draftData?.abbreviation && (
+                                    <span className={styles.abbreviation}>
+                                        {" "}({draftData.abbreviation})
+                                    </span>
+                                )}
                             </div>
                         )}
                         {!isMobile && isCaptain && (

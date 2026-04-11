@@ -9,6 +9,7 @@ import editIcon from "../../assets/pngs/editIcon.svg";
 import teamLogoFallback from "../../assets/pngs/teamLogo.png";
 import leftArrow from "../../assets/pngs/leftArrow.svg";
 import teamIcon from "../../assets/pngs/teamIcon.svg";
+import abbreviationIcon from "../../assets/pngs/abbreviation.svg";
 import Button from "@/shared/Button";
 import { useUpdateTeamMutation, useGetTeamDraftQuery, useGetUserInfoQuery } from "@/app/store/services/api";
 import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
@@ -19,6 +20,7 @@ import { useTranslations } from "next-intl";
 
 type UpdateDraftTeamFormData = {
   Name: string;
+  Abbreviation: string;
 };
 
 export interface IUpdateDraftTeamPopUpProps {
@@ -26,6 +28,7 @@ export interface IUpdateDraftTeamPopUpProps {
   onClose: () => void;
   teamId: number;
   initialName: string;
+  initialAbbreviation: string;
   initialLogoUrl?: string | null;
 }
 
@@ -88,6 +91,7 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
   onClose,
   teamId,
   initialName,
+  initialAbbreviation,
   initialLogoUrl,
 }) => {
   const { width } = useWindowSize();
@@ -102,6 +106,7 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
   const [isDragOver, setIsDragOver] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [showCropper, setShowCropper] = useState(false);
@@ -129,13 +134,14 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
     mode: "onChange",
     defaultValues: {
       Name: initialName,
+      Abbreviation: initialAbbreviation,
     },
   });
 
   const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg"];
 
   const handleClose = () => {
-    reset({ Name: initialName });
+    reset({ Name: initialName, Abbreviation: initialAbbreviation });
     setLogoFile(null);
     setLogoPreview(null);
     setLogoError(null);
@@ -207,18 +213,28 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
+  const abbrevRegister = register("Abbreviation", {
+    required: tForm("abbreviationRequired"),
+    pattern: {
+      value: /^[A-Z]{3}$/,
+      message: tForm("abbreviationPattern"),
+    },
+  });
+
   const onSubmit: SubmitHandler<UpdateDraftTeamFormData> = async (data) => {
     setSubmitError(null);
+    setIsSaving(true);
 
     const formData = new FormData();
     formData.append("Name", data.Name.trim());
+    formData.append("Abbreviation", data.Abbreviation);
     if (logoFile) {
       formData.append("Logo", logoFile);
     }
 
     try {
       await updateTeam({ teamId, formData }).unwrap();
-      refetchDraft();
+      await refetchDraft();
       refetchUserInfo();
       setShowSuccessModal(true);
     } catch (error) {
@@ -226,12 +242,14 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
       setSubmitError(
         errorData?.data?.errorMessage || t("failedToUpdate")
       );
+    } finally {
+      setIsSaving(false);
     }
   };
 
-  if (!open && !isSubmitting && !showSuccessModal) return null;
+  if (!open && !isSaving && !showSuccessModal) return null;
 
-  if (isSubmitting) return <Loader />;
+  if (isSaving) return <Loader />;
 
   if (showSuccessModal) {
     return (
@@ -317,6 +335,29 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
             )}
           </div>
 
+          <div className={styles.inputWrapper}>
+            <div className={styles.label}>{tForm("abbreviationLabel")}</div>
+            <div className={styles.inputWithIcon}>
+              <Image src={abbreviationIcon} alt="" className={styles.inputIcon} />
+              <input
+                className={`${styles.input} ${errors.Abbreviation ? styles.inputError : ""}`}
+                placeholder={tForm("abbreviationPlaceholder")}
+                maxLength={3}
+                {...abbrevRegister}
+                onChange={(e) => {
+                  e.target.value = e.target.value
+                    .toUpperCase()
+                    .replace(/[^A-Z]/g, "")
+                    .slice(0, 3);
+                  abbrevRegister.onChange(e);
+                }}
+              />
+            </div>
+            {errors.Abbreviation && (
+              <div className={styles.error}>{errors.Abbreviation.message}</div>
+            )}
+          </div>
+
           {submitError && <div className={styles.error}>{submitError}</div>}
 
           <div className={styles.buttonWrappper}>
@@ -363,14 +404,14 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
                   className={styles.cropCancelBtn}
                   onClick={handleCancelCrop}
                 >
-                  Cancel
+                  {tCommon("cancel")}
                 </button>
                 <button
                   type="button"
                   className={styles.cropSaveBtn}
                   onClick={handleSaveCrop}
                 >
-                  Save Crop
+                  {tCommon("saveCrop")}
                 </button>
               </div>
             </div>
