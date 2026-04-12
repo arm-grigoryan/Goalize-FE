@@ -6,6 +6,9 @@
     padding-bottom: 12px;
     margin-top: 20px;
 }
+.container:last-child {
+  border-bottom: none;
+}
 .playerInfoWrapper {
     display: flex;
     flex-direction: row;
@@ -16,6 +19,7 @@
     width: 38px;
     height: 38px;
     border-radius: 50%;
+    object-fit: cover;
 }
 .playerName {
     text-decoration: none;

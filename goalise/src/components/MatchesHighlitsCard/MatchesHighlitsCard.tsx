@@ -39,48 +39,52 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
 
   const renderShirt = () => (
     <div className={styles.shirtWrapper}>
-      <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
-        <Image src={tshirt} alt="" className={styles.icon} />
+      {isMobile && !swapped && <CustomDivider orientation="vertical" flexItem />}
+      <div className={styles.shirtImageNumberWrapper}> 
+          <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
+          <Image src={tshirt} alt="" className={styles.icon} />
+        </div>
+        <div className={styles.playerNumber}>{playerNumber}</div>
       </div>
-      <div className={styles.playerNumber}>{playerNumber}</div>
+      {isMobile && swapped && <CustomDivider orientation="vertical" flexItem />}
     </div>
   );
 
   const renderGoal = () => (
     <div className={styles.goal}>
-      {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
       <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
         <Image src={ballIcon} alt="" className={styles.icon} />
       </div>
       Goal
+       {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
     </div>
   );
  const renderSelfGoal = () => (
   <div className={styles.goal}>
-    {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
     <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
       <Image src={selfGoalIcon} alt="" className={styles.icon} />
     </div>
     Own Goal
+    {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
   </div>
  );
   const renderRedCard = () => (
     <div className={styles.redCard}>
-      {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
       <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
         <Image src={card} alt="" className={styles.icon} />
       </div>
       Red Card
+      {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
     </div>
   );
 
   const renderYellowCard = () => (
     <div className={styles.yellowCard}>
-      {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
       <div className={`${styles.iconWrapper} ${styles.yellowGlow}`}>
         <Image src={card} alt="" className={styles.icon} />
       </div>
       Yellow Card
+      {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
     </div>
   );
 
@@ -121,11 +125,18 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
     {isMobile && swapped && <CustomDivider orientation="horizontal" flexItem />}
 
       <div className={styles.infoWrapper}>
+          {!isMobile && assistName && swapped && (
+          <div className={styles.assistWrapper}>
+            <CustomDivider orientation="vertical" flexItem />
+            <div className={styles.assistInfoWrapper}>
+              <span>Assist By</span>
+              <Link href={assistHref} className={styles.assistName}>{assistName}</Link>
+            </div>
+          </div>
+        )}
         <div className={styles.playerInfoWrapper}>
-          <span className={styles.playerLabel}>
-            {goal ? 'Goal By' : redGard ? 'Red Card By' : yellowCard ? 'Yellow Card By' : selfGoal ? 'Own Goal By' : ''}
-          </span>
           <div className={styles.playerNameRow}>
+            {swapped && <Link href={playerHref} className={styles.playerName}>{playerName}</Link>}
             {playerImage && (
               <Image
                 src={playerImage as string}
@@ -136,7 +147,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
                 unoptimized={typeof playerImage === 'string'}
               />
             )}
-            <Link href={playerHref} className={styles.playerName}>{playerName}</Link>
+            {!swapped && <Link href={playerHref} className={styles.playerName}>{playerName}</Link>}
           </div>
         </div>
 

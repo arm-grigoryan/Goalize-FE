@@ -69,19 +69,19 @@
   justify-content: flex-end;
 }
 .match_left_block_inner_wrapper {
-  margin-left: clamp(4px, 2vw, 70px);
+  margin-left: clamp(4px, 2vw, 30px);
 }
 
 .match_right_block_inner_wrapper {
-  margin-right: clamp(4px, 2vw, 70px);
+  margin-right: clamp(4px, 2vw, 30px);
 }
- .backgroundImageWrapper {
+.backgroundImageWrapper {
    position: absolute;
-   width: clamp(100%, 20vw, 380px);
+   width:clamp(180px, 18vw, 340px);
    height: fit-content;
    z-index: 10;
 
- }
+}
 .backgroundImage {
   display: flex;
   width: 100%;
@@ -216,7 +216,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  gap: 40px;
+  gap: 20px;
   align-self: center;
   align-items:center;
 }
@@ -224,7 +224,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  gap: 40px;
+  gap: 20px;
   align-self: center;
   align-items: center;
 }
@@ -256,6 +256,8 @@
   white-space: wrap;
   align-self: center;
   justify-self: center;
+  text-align: center;
+  padding: 0 20px;
 }
 .achievements {
   color: #a5a5a5;
@@ -319,41 +321,15 @@
   font-size: 14px;
   margin-top: 10px;
 }
-/* @media (min-width: 1860px) {
-  .match_left_block_inner_wrapper {
-    margin-left: 70px;
-  }
-  .match_right_block_inner_wrapper {
-    margin-right: 70px;
-  }
-} */
-/* @media (max-width: 1300px) {
-  .team_logo {
-    max-width: 80px;
-    width: 100%;
-    height: 80px;
-  }
-  .team_name {
-    font-size: 12px;
-  }
-  .match_right_block_inner_wrapper {
-    margin-right: 10px;
-  }
-} */
-/* @media (max-width: 1100px) {
-  .team_logo {
-    max-width: 60px;
-    width: 100%;
-    height: 80px;
-  }
-  .team_name {
-    font-size: 12px;
-  }
-  .match_right_block_inner_wrapper {
-    margin-right: 10px;
-  }
- } */
 
+@media (max-width: 1600px){
+  .match_left_block_inner_wrapper {
+    max-width: 180px;
+  }
+  .match_right_block_inner_wrapper {
+    max-width: 180px;
+  }
+}
 @media (max-width: 768px) {
   .Home_main_card {
     border: solid 1px #ffffff1a;
@@ -437,6 +413,7 @@
   }
   .team_name {
     padding: 0 20px;
+    text-align: center;
   }
   .team_logo {
     width: 100%;
@@ -444,7 +421,7 @@
   }
 }
 
-@media (max-width: 330px) {
+@media (max-width: 350px) {
   .team_logo {
     width: 60px;
   }

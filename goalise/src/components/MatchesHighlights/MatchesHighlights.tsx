@@ -3,7 +3,8 @@ import React from 'react';
 import styles from './MatchesHighlights.module.css';
 import Image from "next/image";
 import calendarIcon from '../../assets/pngs/calendar.svg'
-import matchEmptyState from '../../assets/pngs/matchEmptyState.png';
+import highlightsEmpty from '../../assets/pngs/highlightsEmpty.svg';
+import highlightsEmptyMobile from '../../assets/pngs/highlightsEmptyMobile.svg';
 import MatchesHighlitsCard from '../MatchesHighlitsCard';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { MEDIA_TABLET_SMALL } from '@/constants/windowSizes';
@@ -63,9 +64,16 @@ export const MatchesHighlights: React.FC = () => {
     </div>
 
     {allEmpty ? (
-      <Image src={matchEmptyState} alt="" />
+      <div className={styles.emptyWrapper}> 
+        <Image src={isMobile ? highlightsEmptyMobile : highlightsEmpty} alt="" />
+        <div className={styles.emptyText}> No highlights are available at the moment </div>
+      </div> 
     ) : (
-      <div className={styles.highlightsWrapper}>
+      <div className={`${isMobile ? styles.mobileWrapper : styles.highlightsWrapper}` }>
+        <div className={styles.teamNamesWrapper}> 
+          <div className={styles.teamName}> Team A </div>
+          <div className={styles.teamName}> Team B </div>
+        </div>
         {isMobile ? (
           <div className={styles.mobileList}>
             {sortedAll.map(h => {
@@ -82,11 +90,12 @@ export const MatchesHighlights: React.FC = () => {
                   <div className={styles.sideLeft}>
                     {displayHome ? renderCard(h, true) : null}
                   </div>
-                  <div className={styles.line}>
+                 {!isMobile &&  
+                 <div className={styles.line}>
                     <div className={styles.iconWrapper}>
                       <span className={styles.dot} />
                     </div>
-                  </div>
+                  </div>}
                   <div className={styles.sideRight}>
                     {!displayHome ? renderCard(h, false) : null}
                   </div>

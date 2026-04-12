@@ -5,16 +5,21 @@ import { usePathname, useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import statistics from '../../assets/pngs/statistics.svg';
-import matchEmptyState from '../../assets/pngs/matchEmptyState.png';
+import highlightsEmpty from '../../assets/pngs/highlightsEmpty.svg';
+import highlightsEmptyMobile from '../../assets/pngs/highlightsEmptyMobile.svg';
 import StatisticsCard from "@/entities/StatisticsCard";
 import { useGetMatchStatsQuery } from "@/app/store/services/api";
 import { useEffect } from "react";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 
 export const Statistics: React.FC = () => {
     const pathname = usePathname();
     const { matchId } = useParams();
     const router = useRouter();
     const base = `/matches/${matchId}`;
+    const { width } = useWindowSize();
+    const isMobile = width <= MEDIA_TABLET_SMALL;
 
     const isActive = (href: string) => {
       if (href === base) {
@@ -36,7 +41,10 @@ export const Statistics: React.FC = () => {
 
         // 204 — match exists but stats not filled yet
         if (isSuccess && !stats) {
-            return <Image src={matchEmptyState} alt="" />;
+            return <div className={styles.emptyWrapper}> 
+                        <Image src={isMobile ? highlightsEmptyMobile : highlightsEmpty} alt="" />
+                        <div className={styles.emptyText}> No stats are available at the moment </div>
+                    </div> 
         }
 
         if (!stats) return null;
@@ -52,6 +60,10 @@ export const Statistics: React.FC = () => {
 
         return (
             <div>
+                 <div className={styles.teamNamesWrapper}> 
+                    <div className={styles.teamName}> Team A </div>
+                    <div className={styles.teamName}> Team B </div>
+                </div>
                 {rows.map((row) => {
                     const total = row.home + row.away;
                     const leftWidth = total === 0 ? 0 : (row.home / total) * 100;

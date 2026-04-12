@@ -47,17 +47,16 @@
 }
 
 .highlightsWrapper::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 1px;
-    transform: translateX(-50%);
-    background: rgba(245, 58, 83, 0.8);
-    z-index: 0;
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: rgba(245, 58, 83, 0.8);
+  z-index: 0;
 }
-
 .eventRow .line {
     background: none;
 }
@@ -120,7 +119,6 @@
   align-items: center;
   z-index: 1;
   left: 50%;
-
   transform: translateX(-50%);
 }
 
@@ -142,9 +140,28 @@
 
   display: block;
 }
-
+.emptyWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.emptyWrapper img {
+  width: 90%;
+  height: 100%;
+  margin: 20px;
+}
+.emptyText {
+  color: #A5A5A5;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+}
 /* Example positions */
-.iconWrapper:nth-child(1) { top: 20px; }
+.iconWrapper:nth-child(1) { top: 36px; }
 .iconWrapper:nth-child(2) { top: 120px; }
 .iconWrapper:nth-child(3) { top: 220px; }
 .iconWrapper:nth-child(4) { top: 310px; }
@@ -157,4 +174,23 @@
   flex-direction: column;
   width: 100%;
   gap: 20px;
+}
+.mobileWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 24px;
+    position: relative;
+}
+.teamNamesWrapper  {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px;
+}
+.teamName {
+    color: #E8E8E8;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: capitalize;
 }
