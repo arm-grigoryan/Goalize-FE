@@ -70,10 +70,11 @@ export const MatchesHighlights: React.FC = () => {
       </div> 
     ) : (
       <div className={`${isMobile ? styles.mobileWrapper : styles.highlightsWrapper}` }>
+        {isMobile && 
         <div className={styles.teamNamesWrapper}> 
           <div className={styles.teamName}> Team A </div>
           <div className={styles.teamName}> Team B </div>
-        </div>
+        </div>}
         {isMobile ? (
           <div className={styles.mobileList}>
             {sortedAll.map(h => {
