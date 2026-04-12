@@ -60,10 +60,11 @@ export const Statistics: React.FC = () => {
 
         return (
             <div>
-                 <div className={styles.teamNamesWrapper}> 
+                { isMobile && 
+                <div className={styles.teamNamesWrapper}> 
                     <div className={styles.teamName}> Team A </div>
                     <div className={styles.teamName}> Team B </div>
-                </div>
+                </div>}
                 {rows.map((row) => {
                     const total = row.home + row.away;
                     const leftWidth = total === 0 ? 0 : (row.home / total) * 100;
