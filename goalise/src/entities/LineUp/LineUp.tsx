@@ -8,18 +8,23 @@ import { usePathname, useParams } from "next/navigation";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import clipboard from '../../assets/pngs/clipboard.svg';
-import matchEmptyState from '../../assets/pngs/matchEmptyState.png';
+import highlightsEmpty from '../../assets/pngs/highlightsEmpty.svg';
+import highlightsEmptyMobile from '../../assets/pngs/highlightsEmptyMobile.svg';
 import { useGetMatchLineupQuery, useGetMatchPlayerStatsQuery, useGetMatchByIdQuery } from '@/app/store/services/api';
 import MatchesStatusCard from '@/components/MatchesStatusCard';
 import type { IMatchlineUp } from '@/types/api/matchLineUps';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { useWindowSize } from '@/hooks/useWindowSize';
+import { MEDIA_TABLET_SMALL } from '@/constants/windowSizes';
 
 export const LineUp = () => {
   const pathname = usePathname();
   const { matchId } = useParams();
   const base = `/matches/${matchId}`;
   const matchIdNum = Number(matchId);
-
+  const { width } = useWindowSize();
+  const isMobile = width <= MEDIA_TABLET_SMALL;
+  
   const [selectedPlayer, setSelectedPlayer] = useState<{ player: IMatchlineUp; teamLogo?: string } | null>(null);
 
   const {
@@ -102,7 +107,10 @@ export const LineUp = () => {
       </div>
 
       {allEmpty ? (
-        <Image src={matchEmptyState} alt="" />
+        <div className={styles.emptyWrapper}> 
+            <Image src={isMobile ? highlightsEmptyMobile :highlightsEmpty} alt="" />
+            <div className={styles.emptyText}> No lineup are available at the moment </div>
+        </div> 
       ) : (
         <div className={styles.teamsWrapper}>
           <div>
