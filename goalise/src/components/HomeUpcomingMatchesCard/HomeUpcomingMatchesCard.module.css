@@ -8,7 +8,7 @@
   justify-content: space-between;
   position: relative;
   gap: 20px;
-  padding: 15px;
+  padding: 0 15px 15px 15px;
   padding-right: 0;
 }
 .Home_main_card_no_mutch {
@@ -341,7 +341,7 @@
     justify-content: space-between;
     position: relative;
     gap: 20px;
-    padding: 15px;
+    padding: 0 15px 15px 15px;
   }
   .leftRightWrapper {
     display: grid;

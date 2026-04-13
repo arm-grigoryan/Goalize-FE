@@ -64,7 +64,6 @@ export const TeamOverviewNextMatch: React.FC = () => {
           className={styles.matchWrapper}
           style={{ textDecoration: "none", color: "inherit" }}
         >
-          <div>
             {nextMatch.isLive ? (
               <LiveDateLabel isLive />
             ) : (() => {
@@ -73,7 +72,6 @@ export const TeamOverviewNextMatch: React.FC = () => {
                 ? <LiveDateLabel date={formatUTCDate(nextMatch.matchDate)} time={formatUTCDate(nextMatch.matchDate, "HH:MM")} />
                 : <LiveDateLabel date="TBD" />;
             })()}
-          </div>
 
           <div className={styles.teamsRow}>
             {/* Home team */}
