@@ -43,7 +43,7 @@
     border-left: 0.615px solid rgba(255, 255, 255, 0.10);
     background: rgba(0, 0, 0, 0.06);
     position: relative;
-    bottom: 14px;
+    /* bottom: 14px; */
 }
 .dateIcon {
     width: 14px;
