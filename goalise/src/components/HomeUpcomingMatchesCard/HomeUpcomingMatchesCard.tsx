@@ -26,6 +26,9 @@ export const HomeUpcomingMatchesCard = () => {
   const [allMatches, setAllMatches] = useState<UpcomingMatch[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const isFetchingRef = useRef(false);
+  const hasMoreRef = useRef(true);
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
 
@@ -33,6 +36,9 @@ export const HomeUpcomingMatchesCard = () => {
     { take: BATCH_SIZE, skip: offset },
     { skip: !hasMore },
   );
+
+  useEffect(() => { isFetchingRef.current = isFetching; }, [isFetching]);
+  useEffect(() => { hasMoreRef.current = hasMore; }, [hasMore]);
 
   useEffect(() => {
     if (!data) return;
@@ -49,30 +55,22 @@ export const HomeUpcomingMatchesCard = () => {
   }, [data]);
 
   useEffect(() => {
+    const sentinel = sentinelRef.current;
     const container = scrollContainerRef.current;
-    if (!container) return;
+    if (!sentinel || !container) return;
 
-    const handleScroll = () => {
-      if (isFetching || !hasMore) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !isFetchingRef.current && hasMoreRef.current) {
+          setOffset((prev) => prev + BATCH_SIZE);
+        }
+      },
+      { root: container, threshold: 0 }
+    );
 
-      const { scrollTop, scrollHeight, clientHeight } = container;
-      if (scrollTop + clientHeight >= scrollHeight - 50) {
-        setOffset((prev) => prev + BATCH_SIZE);
-      }
-    };
-
-    container.addEventListener("scroll", handleScroll);
-    return () => container.removeEventListener("scroll", handleScroll);
-  }, [isFetching, hasMore, allMatches]);
-
-  useEffect(() => {
-    if (!hasMore || isFetching || allMatches.length === 0) return;
-
-    const container = scrollContainerRef.current;
-    if (container && container.scrollHeight <= container.clientHeight) {
-      setOffset((prev) => prev + BATCH_SIZE);
-    }
-  }, [allMatches, hasMore, isFetching]);
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [allMatches]);
   const firstMatch = allMatches[0];
   const matches = allMatches.slice(1);
 
@@ -208,6 +206,7 @@ export const HomeUpcomingMatchesCard = () => {
                   </Link>
                 );
               })}
+              <div ref={sentinelRef} style={{ height: 1 }} />
             </div>
           </div>
         </div>
