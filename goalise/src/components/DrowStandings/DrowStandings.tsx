@@ -314,11 +314,12 @@ export const DrowStandings = () => {
           <ChampionCard
             teamName={finalMatchData.homeTeam.name}
             logoSrc={finalMatchData.homeTeam.logoUrl}
+            teamId={finalMatchData.homeTeam.id}
             type="draw"
           />
         )}
         <div className={styles.final}>
-          <div className={styles.circle}>
+          <Link href={`/matches/${finalMatchData.id}`} className={styles.circle}>
             <div className={styles.finalTeam}>
               {finalMatchData.homeTeam.abbreviation}
               <div>{finalMatchData.homeTeamScore}</div>
@@ -330,7 +331,7 @@ export const DrowStandings = () => {
               {finalMatchData.awayTeam.abbreviation}
               <div>{finalMatchData.awayTeamScore}</div>
             </div>
-          </div>
+          </Link>
         </div>
       </>
     ) : finalMatch?.[0] ? (
@@ -451,7 +452,7 @@ export const DrowStandings = () => {
             }`}
           >
             <div className={styles.group4}>
-              {bottom4.map((m) => renderMatch(m, side))}
+              {top4.map((m) => renderMatch(m, side))}
             </div>
 
             <div className={styles.separatorSmallWrapper}>
@@ -546,13 +547,14 @@ export const DrowStandings = () => {
           <ChampionCard
             teamName={finalMatchData.homeTeam.name}
             logoSrc={finalMatchData.homeTeam.logoUrl}
+            teamId={finalMatchData.homeTeam.id}
             type="draw"
           />
         )}
 
         <div className={styles.final}>
           {finalMatchData ? (
-            <div className={styles.circle}>
+            <Link href={`/matches/${finalMatchData.id}`} className={styles.circle}>
               <div className={styles.finalTeam}>
                 {finalMatchData.homeTeam.abbreviation}
                 <div>
@@ -570,7 +572,7 @@ export const DrowStandings = () => {
                     ` ${finalMatchData.awayTeamScore}`}
                 </div>
               </div>
-            </div>
+            </Link>
           ) : finalMatch?.[0] ? (
             <div className={styles.circle}>
               <div className={styles.finalTeam}>
