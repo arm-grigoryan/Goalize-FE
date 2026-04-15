@@ -15,6 +15,8 @@ import vsIconBig from '../../assets/pngs/vsIcon.png';
 import { useParams, useRouter } from "next/navigation";
 import { useGetMatchByIdQuery } from "@/app/store/services/api";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
+import backgroundImageLeft from '../../assets/pngs/backgroundImageLeft.svg';
+import backgroundImageRight from '../../assets/pngs/backgroundImageRight.svg';
 
 const chopsic = localFont({
    src: "../../../src/app/fonts/chopsic/Chopsic.otf",
@@ -90,7 +92,7 @@ export const MatchesHeader: React.FC = () => {
         <div className={`${styles.score} ${chopsic.className}`}>{match.homeTeamScore}</div>
         {homeIsWinner && <Image src={winnerIcon} alt="" />}
       </div>
-      {!isMobile && <div className={`${styles.score} ${chopsic.className}`}>:</div>}
+      <div className={`${styles.score} ${chopsic.className}`}>:</div>
       <div className={`${isMobile ? styles.scoreIconWRapperRight : styles.scoreIconWRapper}`}>
         <div className={`${styles.score} ${chopsic.className}`}>{match.awayTeamScore}</div>
         {awayIsWinner && <Image src={winnerIconSwappped} alt="" />}
@@ -114,7 +116,9 @@ export const MatchesHeader: React.FC = () => {
     if (match.state === "Upcoming") {
       return (
         <div className={styles.matchCenterCol}>
-          <Image src={vsIconBig} alt="vs" className={styles.vsIcon} />
+          <div className={styles.vsIconWrapper}> 
+            <Image src={vsIconBig} alt="vs" className={styles.vsIcon} />
+          </div>
         </div>
       );
     }
@@ -149,6 +153,13 @@ export const MatchesHeader: React.FC = () => {
       <div className={styles.matchWrapper} tabIndex={0}>
         {/* Home team */}
         <div className={styles.match_left_block}>
+          <div className={styles.backgroundImageWrapper}>  
+                <Image 
+                  src={backgroundImageLeft}
+                  alt=""
+                  className={styles.backgroundImage}
+                /> 
+                </div>
           <div className={styles.match_left_block_inner_wrapper}>
             <Link href={`/teams/${match.homeTeam.id}`} style={{ textDecoration: "none" }} onClick={(e) => e.stopPropagation()}>
               <span className={styles.team_name}>{match.homeTeam.name}</span>
@@ -172,6 +183,13 @@ export const MatchesHeader: React.FC = () => {
 
         {/* Away team */}
         <div className={styles.match_right_block}>
+          <div className={styles.backgroundImageWrapper}>  
+                <Image 
+                  src={backgroundImageRight}
+                  alt=""
+                  className={styles.backgroundImage}
+                /> 
+                </div>
           <div className={styles.match_right_block_inner_wrapper}>
             <Link href={`/teams/${match.awayTeam.id}`} style={{ textDecoration: "none" }} onClick={(e) => e.stopPropagation()}>
               {awayLogoUrl && (
