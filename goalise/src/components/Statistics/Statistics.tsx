@@ -8,7 +8,7 @@ import statistics from '../../assets/pngs/statistics.svg';
 import highlightsEmpty from '../../assets/pngs/highlightsEmpty.svg';
 import highlightsEmptyMobile from '../../assets/pngs/highlightsEmptyMobile.svg';
 import StatisticsCard from "@/entities/StatisticsCard";
-import { useGetMatchStatsQuery } from "@/app/store/services/api";
+import { useGetMatchStatsQuery, useGetMatchByIdQuery } from "@/app/store/services/api";
 import { useEffect } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
@@ -29,6 +29,7 @@ export const Statistics: React.FC = () => {
     };
 
     const { data: stats, isLoading, isSuccess, error } = useGetMatchStatsQuery(Number(matchId));
+    const { data: match } = useGetMatchByIdQuery(Number(matchId));
 
     useEffect(() => {
         if (error && 'status' in error && error.status === 404) {
@@ -62,8 +63,8 @@ export const Statistics: React.FC = () => {
             <div>
                 { isMobile && 
                 <div className={styles.teamNamesWrapper}> 
-                    <div className={styles.teamName}> Team A </div>
-                    <div className={styles.teamName}> Team B </div>
+                    <div className={styles.teamName}>{match?.homeTeam.name ?? 'Home'}</div>
+                    <div className={styles.teamName}>{match?.awayTeam.name ?? 'Away'}</div>
                 </div>}
                 {rows.map((row) => {
                     const total = row.home + row.away;
