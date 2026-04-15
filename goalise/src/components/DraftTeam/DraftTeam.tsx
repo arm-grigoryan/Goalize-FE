@@ -4,7 +4,6 @@ import React from "react";
 import emptyImage from '../../assets/pngs/nextMatchEmpty.svg';
 import styles from './DraftTeam.module.css';
 import { ITeamDraft } from "@/types/api/temas";
-import { useGetPlayerBasicInfoQuery } from "@/app/store/services/api";
 
 interface IDraftTeamProps {
     draftData?: ITeamDraft;
@@ -21,14 +20,9 @@ export const DraftTeam: React.FC<IDraftTeamProps> = ({
     isError,
     isCaptain,
 }) => {
-    const { data: captainData } = useGetPlayerBasicInfoQuery(draftData?.captainId as number, {
-        skip: !draftData?.captainId,
-    });
-
     return <div className={styles.container}>
         <DraftTeamHeader
             draftData={draftData}
-            captainData={captainData}
             teamId={teamId}
             isLoading={isLoading}
             isError={isError}

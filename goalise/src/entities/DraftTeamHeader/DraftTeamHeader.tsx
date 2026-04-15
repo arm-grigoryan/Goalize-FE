@@ -8,7 +8,6 @@ import edit from '../../assets/pngs/edit.svg';
 import Button from "@/shared/Button";
 import infoIcon from '../../assets/pngs/infoIcon.svg';
 import { ITeamDraft } from "@/types/api/temas";
-import { IPlayerProfile } from "@/types/api/userInfo";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
 import { useDeleteTeamDraftMutation } from "@/app/store/services/api";
 import { useAuth } from "@/shared/auth/AuthContext";
@@ -21,7 +20,6 @@ export interface IDraftTeamHeaderProps {
     isCaptain?: boolean;
     isError?: boolean;
     draftData?: ITeamDraft;
-    captainData?: IPlayerProfile;
     teamId: number;
 }
 export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
@@ -29,7 +27,6 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
     isLoading,
     isError,
     draftData,
-    captainData,
     teamId,
 }) => {
     const { width } = useWindowSize();
@@ -40,9 +37,8 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
     const [showUpdatePopUp, setShowUpdatePopUp] = useState(false);
     const [statusTooltip, setStatusTooltip] = useState<{ x: number; y: number } | null>(null);
     const [deleteTeamDraft, { isLoading: isDeleting }] = useDeleteTeamDraftMutation();
-    const { tokens, updateTokens } = useAuth();
+    const { tokens, updateTokens, user } = useAuth();
 
-    const captain = captainData?.playerInfo?.userInfo;
     const captainId = draftData?.captainId;
 
     const lastEditedDate = draftData?.updateDate ?? draftData?.createDate ?? null;
@@ -272,22 +268,12 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                             style={{ textDecoration: "none" }}
                         >
                             <div className={styles.playerName}>
-                                {captain ? `${captain.firstName} ${captain.lastName}` : '—'}
+                                {user?.name ?? '—'}
                                 {!isCaptain && (
                                     <div className={styles.captainLabel}> (C) </div>
                                 )}
                             </div>
                         </Link>
-                        <div className={styles.infoButtonsWrapper}>
-                            <div className={styles.button}>
-                                <span>Age: </span>
-                                {captain?.age ?? '—'}
-                            </div>
-                            <div className={styles.button}>
-                                <span>Foot: </span>
-                                {captain?.workingFoot ?? '—'}
-                            </div>
-                        </div>
                     </div>
 
                     <Link
@@ -295,9 +281,9 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                         style={{ textDecoration: "none" }}
                         className={styles.playerImageWrapper}
                     >
-                        {captain?.profilePic ? (
+                        {user?.picture ? (
                             <Image
-                                src={captain.profilePic}
+                                src={user.picture}
                                 alt={''}
                                 className={styles.playerImage}
                                 width={173}
