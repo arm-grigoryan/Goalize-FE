@@ -218,6 +218,20 @@
   border: none;
   font-weight: 500;
   font-size: 16px;
+  cursor: not-allowed;
+}
+.gray_buttonIcon * {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+.disabledWrapper {
+  display: block;
+  width: 100%;
+  cursor: not-allowed;
+}
+.disabledWrapper button {
+  pointer-events: none;
+  width: 100%;
 }
 .gray_buttonIcon_active {
   width: 100%;
@@ -227,11 +241,12 @@
   align-items: center;
   gap: 10px;
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.10);
-  color: white;
+  background: #ffffff;
+  color: #171717;
   border: none;
   font-weight: 500;
   font-size: 16px;
+  cursor: pointer;
 }
 .leftIconWrapper {
     display: flex;

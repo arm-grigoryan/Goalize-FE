@@ -139,6 +139,18 @@
     margin-top: 6px;
 }
 
+/* Loading overlay */
+.loadingOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(16, 16, 16, 0.85);
+    border-radius: 15px;
+    z-index: 10;
+}
+
 /* Crop modal */
 .cropOverlay {
     position: fixed;
