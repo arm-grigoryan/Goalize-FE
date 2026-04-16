@@ -387,7 +387,7 @@ export const useNotifications = (accessToken?: string) => {
           teamId,
           invitationId: flowId,
           status,
-        });
+        }).unwrap();
       }
 
       if (notification.notificationRelatedFlowType === "TeamApplication") {
@@ -395,7 +395,7 @@ export const useNotifications = (accessToken?: string) => {
           teamId,
           applicationId: flowId,
           status,
-        });
+        }).unwrap();
       }
 
       setNotifications((prev) =>
