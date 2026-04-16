@@ -28,7 +28,7 @@ export const Button: FC<ButtonProps> = ({
   disabled,
   handleClick,
 }) => {
-  return (
+  const btn = (
     <button
       onClick={(e) => {
         e.preventDefault();
@@ -44,4 +44,10 @@ export const Button: FC<ButtonProps> = ({
       {leftIcon && <div className={styles.leftIconWrapper}><Image width={iconWidth} height={iconHeight} src={leftIcon} alt=""  className={styles.leftIcon} /></div>}
     </button>
   );
+
+  if (disabled) {
+    return <div className={styles.disabledWrapper}>{btn}</div>;
+  }
+
+  return btn;
 };

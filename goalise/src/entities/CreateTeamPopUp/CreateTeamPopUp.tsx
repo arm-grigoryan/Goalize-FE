@@ -23,6 +23,7 @@ import type { PlayerInviteResult } from "@/types/api/search";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { useTranslations } from "next-intl";
+import { Loader } from "@/shared/Loader/Loader";
 
 type CreateTeamFormData = {
   Name: string;
@@ -298,6 +299,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                                         handleClose();
                                       }} >
       <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`} onClick={(e) => { e.stopPropagation(); setWarningTooltip(null); }}>
+        {isSubmitting && <div className={styles.loadingOverlay}><Loader /></div>}
         <div className={styles.titleWrapper}>
           <div className={styles.title}>{t("title")}</div>
           <div className={styles.subTitle}>{t("subtitle")}</div>
@@ -523,9 +525,10 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                   ? "gray_buttonIcon_active"
                   : "gray_buttonIcon"
               }
-              content={isSubmitting ? t("creating") : t("create")}
+              content={t("create")}
               handleClick={handleSubmit(onSubmit)}
               leftIcon={leftArrow}
+              disabled={!(isValid && !!logoFile)}
             />
           </div>
         </form>

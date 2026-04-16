@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -116,20 +116,16 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [updateTeam, { isLoading: isSubmitting }] = useUpdateTeamMutation();
+  const [updateTeam] = useUpdateTeamMutation();
   const { refetch: refetchDraft } = useGetTeamDraftQuery(teamId);
   const { refetch: refetchUserInfo } = useGetUserInfoQuery();
-
-  const resolvedLogoSrc =
-    initialLogoUrl && isValidUrl(initialLogoUrl)
-      ? initialLogoUrl
-      : teamLogoFallback;
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     reset,
+    watch,
   } = useForm<UpdateDraftTeamFormData>({
     mode: "onChange",
     defaultValues: {
@@ -137,6 +133,34 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
       Abbreviation: initialAbbreviation,
     },
   });
+
+  const nameVal = watch("Name") ?? "";
+  const abbrevVal = watch("Abbreviation") ?? "";
+  const isFormValid =
+    nameVal.trim().length >= 5 &&
+    nameVal.trim().length <= 24 &&
+    /^[A-Za-z\s]+$/.test(nameVal.trim()) &&
+    /^[A-Z]{3}$/.test(abbrevVal);
+  const hasChanges =
+    nameVal.trim() !== initialName.trim() ||
+    abbrevVal !== initialAbbreviation ||
+    logoFile !== null;
+  const isButtonEnabled = isFormValid && hasChanges;
+
+  useEffect(() => {
+    if (open) {
+      reset({ Name: initialName, Abbreviation: initialAbbreviation });
+      setLogoFile(null);
+      setLogoPreview(null);
+      setLogoError(null);
+      setSubmitError(null);
+    }
+  }, [open, initialName, initialAbbreviation, reset]);
+
+  const resolvedLogoSrc =
+    initialLogoUrl && isValidUrl(initialLogoUrl)
+      ? initialLogoUrl
+      : teamLogoFallback;
 
   const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg"];
 
@@ -249,8 +273,6 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
 
   if (!open && !isSaving && !showSuccessModal) return null;
 
-  if (isSaving) return <Loader />;
-
   if (showSuccessModal) {
     return (
       <PlayerInvitationCard
@@ -266,6 +288,7 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
     <>
       <div className={styles.overlay} onClick={handleClose} />
       <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
+        {isSaving && <div className={styles.loadingOverlay}><Loader /></div>}
         <div className={styles.titleWrapper}>
           <div className={styles.title}>{t("title")}</div>
           <div className={styles.subTitle}>{t("subtitle")}</div>
@@ -362,10 +385,11 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
 
           <div className={styles.buttonWrappper}>
             <Button
-              className={isValid ? "gray_buttonIcon_active" : "gray_buttonIcon"}
+              className={isButtonEnabled ? "gray_buttonIcon_active" : "gray_buttonIcon"}
               content={tCommon("save")}
               handleClick={handleSubmit(onSubmit)}
               leftIcon={leftArrow}
+              disabled={!isButtonEnabled}
             />
           </div>
         </form>

@@ -127,8 +127,9 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     reset,
+    watch,
   } = useForm<UpdateTeamFormData>({
     mode: "onChange",
     defaultValues: {
@@ -136,6 +137,19 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
       Abbreviation: initialAbbreviation,
     },
   });
+
+  const nameVal = watch("Name") ?? "";
+  const abbrevVal = watch("Abbreviation") ?? "";
+  const isFormValid =
+    nameVal.trim().length >= 5 &&
+    nameVal.trim().length <= 24 &&
+    /^[A-Za-z\s]+$/.test(nameVal.trim()) &&
+    /^[A-Z]{3}$/.test(abbrevVal);
+  const hasChanges =
+    nameVal.trim() !== initialName.trim() ||
+    abbrevVal !== initialAbbreviation ||
+    logoFile !== null;
+  const isButtonEnabled = isFormValid && hasChanges;
 
   const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg"];
 
@@ -245,8 +259,6 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
 
   if (!open && !isSubmitting && !showSuccessModal) return null;
 
-  if (isSubmitting) return <Loader />;
-
   if (showSuccessModal) {
     return (
       <PlayerInvitationCard
@@ -262,6 +274,7 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
     <>
       <div className={styles.overlay} onClick={handleClose} />
       <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
+        {isSubmitting && <div className={styles.loadingOverlay}><Loader /></div>}
         <div className={styles.titleWrapper}>
           <div className={styles.title}>{t("title")}</div>
           <div className={styles.subTitle}>{t("subtitle")}</div>
@@ -358,10 +371,11 @@ export const UpdateTeamPopUp: React.FC<IUpdateTeamPopUpProps> = ({
 
           <div className={styles.buttonWrappper}>
             <Button
-              className={isValid ? "gray_buttonIcon_active" : "gray_buttonIcon"}
+              className={isButtonEnabled ? "gray_buttonIcon_active" : "gray_buttonIcon"}
               content={tCommon("save")}
               handleClick={handleSubmit(onSubmit)}
               leftIcon={leftArrow}
+              disabled={!isButtonEnabled}
             />
           </div>
         </form>
