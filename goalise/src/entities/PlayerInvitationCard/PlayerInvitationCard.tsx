@@ -10,6 +10,7 @@ interface IPlayerInvitationCardProps {
   description?: string;
   confirmButtonText?: string;
   cancelButtonText?: string;
+  loading?: boolean;
 }
 export const PlayerInvitationCard: React.FC<IPlayerInvitationCardProps> = ({
   onConfirmButtonClick,
@@ -18,13 +19,19 @@ export const PlayerInvitationCard: React.FC<IPlayerInvitationCardProps> = ({
   title,
   description,
   confirmButtonText,
-  cancelButtonText
+  cancelButtonText,
+  loading,
 }) => {
   const t = useTranslations("playerProfile.playerInvitationCard");
 
   return (
     <div className={styles.cardOverlay}>
       <div className={styles.cardContainer}>
+        {loading && (
+          <div className={styles.loader_container}>
+            <div className={styles.loader}></div>
+          </div>
+        )}
         <div className={styles.titleWrapper}>
           {title !== "" && (
             <div className={styles.title}>

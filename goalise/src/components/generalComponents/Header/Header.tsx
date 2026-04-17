@@ -28,6 +28,8 @@ import arrowDown from "../../../assets/pngs/arrowDown.svg";
 import { useNotifications } from "@/hooks/useNotifications";
 import { NotificationPopUp } from "@/entities/NotificationPopUp/NotificationPopUp";
 import CreateTeamPopUp from "@/entities/CreateTeamPopUp";
+import { NotificationItemDto } from "@/types/api/notifications";
+import { PlayerInvitationCard } from "@/entities/PlayerInvitationCard/PlayerInvitationCard";
 
 type ActiveDropdown = "search" | "notifications" | "profile" | "leagues" | null;
 
@@ -51,7 +53,7 @@ export const Header = () => {
 
   const { data: leaguesData } = useGetLeaguesQuery();
   const { isAuthenticated, user, signIn, signOut, loading, tokens } = useAuth();
-  const { data: userInfo } = useGetUserInfoQuery(undefined, { skip: !isAuthenticated });
+  const { data: userInfo, refetch: refetchUserInfo } = useGetUserInfoQuery(undefined, { skip: !isAuthenticated });
   const playerProfilePic = userInfo?.playerInfo?.userInfo?.profilePic;
   const {
     notifications,
@@ -78,6 +80,102 @@ export const Header = () => {
     setActiveDropdown(null);
     setCreateTeamOpen(true);
   }, []);
+
+  const [flowConfirmation, setFlowConfirmation] = useState<{
+    notification: NotificationItemDto;
+    status: "Accepted" | "Rejected";
+  } | null>(null);
+  const [flowLoading, setFlowLoading] = useState(false);
+  const [flowResult, setFlowResult] = useState<{
+    type: "success" | "error";
+    title: string;
+    description: string;
+  } | null>(null);
+
+  const getFlowConfirmContent = useCallback(
+    (notification: NotificationItemDto, status: "Accepted" | "Rejected") => {
+      const data = JSON.parse(notification.data || "{}");
+      const isInvitation = notification.notificationRelatedFlowType === "TeamInvitation";
+
+      if (status === "Accepted") {
+        return {
+          title: isInvitation ? t("home.notifications.flow.acceptInvitationTitle") : t("home.notifications.flow.acceptApplicationTitle"),
+          description: isInvitation
+            ? t("home.notifications.flow.acceptInvitationDescription", { teamName: data?.team?.name ?? "" })
+            : t("home.notifications.flow.acceptApplicationDescription", {
+                firstName: data?.userInfo?.firstName ?? "",
+                lastName: data?.userInfo?.lastName ?? "",
+              }),
+        };
+      }
+      return {
+        title: isInvitation ? t("home.notifications.flow.declineInvitationTitle") : t("home.notifications.flow.declineApplicationTitle"),
+        description: isInvitation
+          ? t("home.notifications.flow.declineInvitationDescription")
+          : t("home.notifications.flow.declineApplicationDescription"),
+      };
+    },
+    [t],
+  );
+
+  const getFlowSuccessContent = useCallback(
+    (notification: NotificationItemDto, status: "Accepted" | "Rejected") => {
+      const isInvitation = notification.notificationRelatedFlowType === "TeamInvitation";
+      if (status === "Accepted") {
+        return {
+          title: isInvitation
+            ? t("home.notifications.flow.invitationAcceptedSuccess")
+            : t("home.notifications.flow.applicationAcceptedSuccess"),
+          description: isInvitation
+            ? t("home.notifications.flow.invitationAcceptedDescription")
+            : t("home.notifications.flow.applicationAcceptedDescription"),
+        };
+      }
+      return {
+        title: isInvitation
+          ? t("home.notifications.flow.invitationDeclinedSuccess")
+          : t("home.notifications.flow.applicationDeclinedSuccess"),
+        description: isInvitation
+          ? t("home.notifications.flow.invitationDeclinedDescription")
+          : t("home.notifications.flow.applicationDeclinedDescription"),
+      };
+    },
+    [t],
+  );
+
+  const handleFlowConfirm = useCallback(async () => {
+    if (!flowConfirmation) return;
+    setFlowLoading(true);
+    try {
+      await decideFlow(flowConfirmation.notification, flowConfirmation.status);
+      const success = getFlowSuccessContent(flowConfirmation.notification, flowConfirmation.status);
+      const shouldRefetchUser =
+        flowConfirmation.notification.notificationRelatedFlowType === "TeamInvitation" &&
+        flowConfirmation.status === "Accepted";
+      setFlowConfirmation(null);
+      setFlowLoading(false);
+      setFlowResult({ type: "success", ...success });
+      if (shouldRefetchUser) {
+        refetchUserInfo();
+      }
+    } catch (error) {
+      const errorData = error as { data?: { errorMessage?: string } };
+      setFlowConfirmation(null);
+      setFlowLoading(false);
+      setFlowResult({
+        type: "error",
+        title: t("home.notifications.flow.errorTitle"),
+        description: errorData?.data?.errorMessage || t("home.notifications.flow.errorDescription"),
+      });
+    }
+  }, [flowConfirmation, decideFlow, getFlowSuccessContent, refetchUserInfo, t]);
+
+  const openFlowConfirmation = useCallback(
+    (notification: NotificationItemDto, status: "Accepted" | "Rejected") => {
+      setFlowConfirmation({ notification, status });
+    },
+    [],
+  );
 
   useOnClickOutside([searchContainerRef, mobileSearchCardRef], closeSearch, activeDropdown === "search");
   useOnClickOutside([notificationRef, notificationDropdownRef], closeNotifications, activeDropdown === "notifications");
@@ -209,10 +307,10 @@ export const Header = () => {
                                   ? t("home.notifications.deny")
                                   : undefined,
                                 onAcceptButtonClick: canRespond
-                                  ? () => void decideFlow(item, "Accepted")
+                                  ? () => openFlowConfirmation(item, "Accepted")
                                   : undefined,
                                 onDenyButtonClick: canRespond
-                                  ? () => void decideFlow(item, "Rejected")
+                                  ? () => openFlowConfirmation(item, "Rejected")
                                   : undefined,
                               };
                             })}
@@ -518,10 +616,10 @@ export const Header = () => {
                               ? t("home.notifications.deny")
                               : undefined,
                             onAcceptButtonClick: canRespond
-                              ? () => void decideFlow(item, "Accepted")
+                              ? () => openFlowConfirmation(item, "Accepted")
                               : undefined,
                             onDenyButtonClick: canRespond
-                              ? () => void decideFlow(item, "Rejected")
+                              ? () => openFlowConfirmation(item, "Rejected")
                               : undefined,
                           };
                         })}
@@ -595,6 +693,30 @@ export const Header = () => {
         open={createTeamOpen}
         onClose={() => setCreateTeamOpen(false)}
       />
+
+      {flowConfirmation && (() => {
+        const content = getFlowConfirmContent(flowConfirmation.notification, flowConfirmation.status);
+        return (
+          <PlayerInvitationCard
+            title={content.title}
+            description={content.description}
+            confirmButtonText={t("home.notifications.flow.confirm")}
+            cancelButtonText={t("home.notifications.flow.cancel")}
+            onConfirmButtonClick={handleFlowConfirm}
+            onCancelButtonClick={() => setFlowConfirmation(null)}
+            loading={flowLoading}
+          />
+        );
+      })()}
+
+      {flowResult && (
+        <PlayerInvitationCard
+          title={flowResult.title}
+          description={flowResult.description}
+          cancelButtonText={t("home.notifications.flow.close")}
+          onCancelButtonClick={() => setFlowResult(null)}
+        />
+      )}
     </>
   );
 };

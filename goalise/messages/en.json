@@ -83,6 +83,29 @@
         "captainRespondedToApplication": "{firstName} {response} your application to join to {teamName}.",
         "eventCancelled": "{eventName} event is cancelled.",
         "eventUpdated": "{eventName}'s details are updated."
+      },
+      "flow": {
+        "acceptInvitationTitle": "Accepting Invitation",
+        "acceptInvitationDescription": "Are you sure you want to accept this invitation? You will be transferred to {teamName} immediately.",
+        "acceptApplicationTitle": "Accepting Application",
+        "acceptApplicationDescription": "Are you sure you want to accept this application? {firstName} {lastName} will be transferred to your team immediately.",
+        "declineInvitationTitle": "Decline Invitation",
+        "declineInvitationDescription": "Are you sure you want to decline this invitation? This action cannot be undone.",
+        "declineApplicationTitle": "Decline Application",
+        "declineApplicationDescription": "Are you sure you want to decline this application? This action cannot be undone.",
+        "invitationAcceptedSuccess": "Invitation accepted successfully",
+        "invitationAcceptedDescription": "You successfully accepted the invitation.",
+        "applicationAcceptedSuccess": "Application accepted successfully",
+        "applicationAcceptedDescription": "You successfully accepted the application.",
+        "invitationDeclinedSuccess": "Invitation declined successfully",
+        "invitationDeclinedDescription": "You successfully declined the invitation.",
+        "applicationDeclinedSuccess": "Application declined successfully",
+        "applicationDeclinedDescription": "You successfully declined the application.",
+        "errorTitle": "Something went wrong",
+        "errorDescription": "An unexpected error occurred. Please try again later.",
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "close": "Close"
       }
     },
     "profileCard": {

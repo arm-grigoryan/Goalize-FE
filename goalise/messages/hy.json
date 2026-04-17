@@ -83,6 +83,29 @@
         "captainRespondedToApplication": "{firstName}-ը {response} ձեր հայտը {teamName} թիմին անդամագրվելու համար։",
         "eventCancelled": "{eventName} իրադարձությունը չեղարկվել է։",
         "eventUpdated": "{eventName}-ի մանրամասները թարմացվել են։"
+      },
+      "flow": {
+        "acceptInvitationTitle": "Հրավերի ընդունում",
+        "acceptInvitationDescription": "Վստավահառ եք ընդունել այս հրավերը։ Դուք անմիջապես կօրանցվեք {teamName} թիմին։",
+        "acceptApplicationTitle": "Հայտի ընդունում",
+        "acceptApplicationDescription": "Վստավահառ եք ընդունել այս հայտը։ {firstName} {lastName}-ը անմիջապես կօրանցվեք ձեր թիմին։",
+        "declineInvitationTitle": "Հրավերի մերժում",
+        "declineInvitationDescription": "Վստավահառ եք մերժել այս հրավերը։ Այս գործողությունը հետ վերածել հնարավոր չէ։",
+        "declineApplicationTitle": "Հայտի մերժում",
+        "declineApplicationDescription": "Վստավահառ եք մերժել այս հայտը։ Այս գործողությունը հետ վերածել հնարավոր չէ։",
+        "invitationAcceptedSuccess": "Հրավերը հաջողությամբ ընդունվել է",
+        "applicationAcceptedSuccess": "Հայտը հաջողությամբ ընդունվել է",
+        "invitationDeclinedSuccess": "Հրավերը հաջողությամբ մերժվել է",
+        "applicationDeclinedSuccess": "Հայտը հաջողությամբ մերժվել է",
+        "errorTitle": "Ինչ-որ սխալ տեղի ունեցավ",
+        "errorDescription": "Անսպասելի սխալ տեղի ունեցավ։ Խնդրելով փորձեք նորից։",
+        "confirm": "Հաստատել",
+        "cancel": "Չեղարկել",
+        "close": "Փակել",
+        "invitationAcceptedDescription": "Դուք հաջողությամբ ընդունեցիք հրավերը։",
+        "applicationAcceptedDescription": "Դուք հաջողությամբ ընդունեցիք հայտը։",
+        "invitationDeclinedDescription": "Դուք հաջողությամբ մերժեցիք հրավերը։",
+        "applicationDeclinedDescription": "Դուք հաջողությամբ մերժեցիք հայտը։"
       }
     },
     "profileCard": {
