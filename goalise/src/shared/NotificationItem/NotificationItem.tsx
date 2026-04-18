@@ -15,9 +15,11 @@ export const NotificationItem: React.FC<INotificationItemProps> = ({
   denyButtonText,
   onAcceptButtonClick,
   onDenyButtonClick,
+  highlighted,
 }) => {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${highlighted ? styles.highlighted : ""}`}>
+      {highlighted && <span className={styles.unseenDot} />}
       <div className={styles.info}>
         {icon && (
           <div className={styles.icon}>

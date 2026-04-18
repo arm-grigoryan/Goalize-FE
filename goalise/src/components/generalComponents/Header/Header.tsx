@@ -61,6 +61,7 @@ export const Header = () => {
     hasMore,
     isFetching,
     toastNotification,
+    justSeenIds,
     loadMore,
     onBellOpen,
     closeToast,
@@ -312,6 +313,7 @@ export const Header = () => {
                                 onDenyButtonClick: canRespond
                                   ? () => openFlowConfirmation(item, "Rejected")
                                   : undefined,
+                                highlighted: justSeenIds.includes(item.id),
                               };
                             })}
                             loading={isFetching}
@@ -621,6 +623,7 @@ export const Header = () => {
                             onDenyButtonClick: canRespond
                               ? () => openFlowConfirmation(item, "Rejected")
                               : undefined,
+                            highlighted: justSeenIds.includes(item.id),
                           };
                         })}
                         loading={isFetching}

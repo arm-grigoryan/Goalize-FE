@@ -9,4 +9,5 @@ export interface INotificationItemProps {
   denyButtonText?: string;
   onAcceptButtonClick?: () => void;
   onDenyButtonClick?: () => void;
+  highlighted?: boolean;
 }
