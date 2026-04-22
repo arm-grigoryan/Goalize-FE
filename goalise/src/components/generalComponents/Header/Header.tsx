@@ -61,6 +61,7 @@ export const Header = () => {
     hasMore,
     isFetching,
     toastNotification,
+    justSeenIds,
     loadMore,
     onBellOpen,
     closeToast,
@@ -175,6 +176,28 @@ export const Header = () => {
       setFlowConfirmation({ notification, status });
     },
     [],
+  );
+
+  const getFlowOutcome = useCallback(
+    (item: NotificationItemDto) => {
+      if (!item.flowCompleted || !item.flowOutcome) return undefined;
+      const isInvitation = item.notificationRelatedFlowType === "TeamInvitation";
+      if (item.flowOutcome === "Accepted") {
+        return {
+          type: "accepted" as const,
+          text: isInvitation
+            ? t("home.notifications.flow.youAcceptedInvitation")
+            : t("home.notifications.flow.youAcceptedApplication"),
+        };
+      }
+      return {
+        type: "declined" as const,
+        text: isInvitation
+          ? t("home.notifications.flow.youDeclinedInvitation")
+          : t("home.notifications.flow.youDeclinedApplication"),
+      };
+    },
+    [t],
   );
 
   useOnClickOutside([searchContainerRef, mobileSearchCardRef], closeSearch, activeDropdown === "search");
@@ -312,6 +335,8 @@ export const Header = () => {
                                 onDenyButtonClick: canRespond
                                   ? () => openFlowConfirmation(item, "Rejected")
                                   : undefined,
+                                highlighted: justSeenIds.includes(item.id),
+                                outcome: getFlowOutcome(item),
                               };
                             })}
                             loading={isFetching}
@@ -621,6 +646,8 @@ export const Header = () => {
                             onDenyButtonClick: canRespond
                               ? () => openFlowConfirmation(item, "Rejected")
                               : undefined,
+                            highlighted: justSeenIds.includes(item.id),
+                            outcome: getFlowOutcome(item),
                           };
                         })}
                         loading={isFetching}

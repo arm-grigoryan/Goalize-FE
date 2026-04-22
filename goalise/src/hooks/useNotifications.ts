@@ -235,8 +235,11 @@ const toNotificationItemDto = (live: LiveNotificationDto): NotificationItemDto =
     notificationRelatedFlowType: live.notificationRelatedFlowType,
     notificationRelatedFlowId: live.notificationRelatedFlowId,
     flowCompleted: false,
+    flowOutcome: null,
   };
 };
+
+const JUST_SEEN_HIGHLIGHT_MS = 5000;
 
 export const useNotifications = (accessToken?: string) => {
   const [notifications, setNotifications] = useState<NotificationItemDto[]>([]);
@@ -244,8 +247,15 @@ export const useNotifications = (accessToken?: string) => {
     useState<NotificationItemDto | null>(null);
   const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [justSeenIds, setJustSeenIds] = useState<string[]>([]);
   const connectionRef = useRef<SignalRHubConnection | null>(null);
   const toastTimeoutRef = useRef<number | null>(null);
+  const highlightTimeoutRef = useRef<number | null>(null);
+  const notificationsRef = useRef<NotificationItemDto[]>([]);
+
+  useEffect(() => {
+    notificationsRef.current = notifications;
+  }, [notifications]);
 
   const [fetchNotifications, { isFetching }] = useLazyGetInAppNotificationsQuery();
   const [markAllSeen] = useMarkAllNotificationsSeenMutation();
@@ -290,13 +300,26 @@ export const useNotifications = (accessToken?: string) => {
   const onBellOpen = useCallback(async () => {
     if (!hasLoadedOnce) {
       await loadNotifications({ skip: 0, reset: true });
+      await new Promise<void>((resolve) => setTimeout(resolve, 0));
     }
 
-    if (unseenCount > 0) {
-      markSeenOptimistically();
-      void markAllSeen();
+    const unseenIds = notificationsRef.current
+      .filter((item) => item.status === "Unseen")
+      .map((item) => item.id);
+
+    if (unseenIds.length === 0) return;
+
+    setJustSeenIds(unseenIds);
+    markSeenOptimistically();
+    void markAllSeen();
+
+    if (highlightTimeoutRef.current) {
+      window.clearTimeout(highlightTimeoutRef.current);
     }
-  }, [hasLoadedOnce, loadNotifications, markAllSeen, markSeenOptimistically, unseenCount]);
+    highlightTimeoutRef.current = window.setTimeout(() => {
+      setJustSeenIds([]);
+    }, JUST_SEEN_HIGHLIGHT_MS);
+  }, [hasLoadedOnce, loadNotifications, markAllSeen, markSeenOptimistically]);
 
   const addLiveNotification = useCallback((notif: NotificationItemDto) => {
       setNotifications((prev) => mergeById([notif, ...prev]));
@@ -371,6 +394,9 @@ export const useNotifications = (accessToken?: string) => {
       if (toastTimeoutRef.current) {
         window.clearTimeout(toastTimeoutRef.current);
       }
+      if (highlightTimeoutRef.current) {
+        window.clearTimeout(highlightTimeoutRef.current);
+      }
     };
   }, []);
 
@@ -398,9 +424,12 @@ export const useNotifications = (accessToken?: string) => {
         }).unwrap();
       }
 
+      const outcome = status === "Accepted" ? "Accepted" : "Declined";
       setNotifications((prev) =>
         prev.map((item) =>
-          item.id === notification.id ? { ...item, flowCompleted: true } : item,
+          item.id === notification.id
+            ? { ...item, flowCompleted: true, flowOutcome: outcome }
+            : item,
         ),
       );
     },
@@ -413,6 +442,7 @@ export const useNotifications = (accessToken?: string) => {
     hasMore,
     isFetching,
     toastNotification,
+    justSeenIds,
     loadMore,
     onBellOpen,
     closeToast: () => setToastNotification(null),

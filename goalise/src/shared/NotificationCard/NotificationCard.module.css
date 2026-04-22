@@ -1,7 +1,7 @@
 .container {
   width: 360px;
   max-height: 380px;
-  padding: 25px 0 0 36px;
+  padding: 25px 0 0 0;
   border-radius: 15px;
   margin-top: 10px;
   border: 1px solid transparent;
@@ -25,13 +25,13 @@
   color: #E8E8E8;
   text-transform: capitalize;
   margin-bottom: 25px;
+  padding: 0 36px;
   background:transparent;
 }
 
 .itemsContainer {
   max-height: 230px;
   overflow-y: auto;
-  padding-right: 36px; 
 }
 
 .itemsContainer::-webkit-scrollbar {
@@ -49,13 +49,13 @@
 
 
 .mobile {
-  display: flex; 
+  display: flex;
   flex-direction: column;
   justify-self: center;
   width: 100%;
   border-radius: 15px;
   margin-top: 10px;
-  padding: 25px 0 0 36px;
+  padding: 25px 0 0 0;
   border: 1px solid transparent;
   background-origin: border-box;
   background-clip: padding-box, border-box;
@@ -72,5 +72,5 @@
 .loading {
   color: #A5A5A5;
   font-size: 14px;
-  padding: 8px 0 18px;
+  padding: 8px 36px 18px;
 }
