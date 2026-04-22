@@ -10,4 +10,8 @@ export interface INotificationItemProps {
   onAcceptButtonClick?: () => void;
   onDenyButtonClick?: () => void;
   highlighted?: boolean;
+  outcome?: {
+    type: "accepted" | "declined";
+    text: string;
+  };
 }

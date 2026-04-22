@@ -16,6 +16,7 @@ export const NotificationItem: React.FC<INotificationItemProps> = ({
   onAcceptButtonClick,
   onDenyButtonClick,
   highlighted,
+  outcome,
 }) => {
   return (
     <div className={`${styles.container} ${highlighted ? styles.highlighted : ""}`}>
@@ -51,6 +52,51 @@ export const NotificationItem: React.FC<INotificationItemProps> = ({
               content={denyButtonText}
             />
           )}
+        </div>
+      )}
+      {!onAcceptButtonClick && !onDenyButtonClick && outcome && (
+        <div
+          className={`${styles.outcome} ${
+            outcome.type === "accepted" ? styles.outcomeAccepted : styles.outcomeDeclined
+          }`}
+        >
+          {outcome.type === "accepted" ? (
+            <svg
+              className={styles.outcomeIcon}
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden
+            >
+              <path
+                d="M1.5 7.5L5.5 11.5L12.5 2.5"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          ) : (
+            <svg
+              className={styles.outcomeIcon}
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden
+            >
+              <path
+                d="M2 2L12 12M12 2L2 12"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
+            </svg>
+          )}
+          <span>{outcome.text}</span>
         </div>
       )}
     </div>

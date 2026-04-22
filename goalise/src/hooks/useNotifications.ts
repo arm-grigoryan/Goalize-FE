@@ -235,6 +235,7 @@ const toNotificationItemDto = (live: LiveNotificationDto): NotificationItemDto =
     notificationRelatedFlowType: live.notificationRelatedFlowType,
     notificationRelatedFlowId: live.notificationRelatedFlowId,
     flowCompleted: false,
+    flowOutcome: null,
   };
 };
 
@@ -423,9 +424,12 @@ export const useNotifications = (accessToken?: string) => {
         }).unwrap();
       }
 
+      const outcome = status === "Accepted" ? "Accepted" : "Declined";
       setNotifications((prev) =>
         prev.map((item) =>
-          item.id === notification.id ? { ...item, flowCompleted: true } : item,
+          item.id === notification.id
+            ? { ...item, flowCompleted: true, flowOutcome: outcome }
+            : item,
         ),
       );
     },

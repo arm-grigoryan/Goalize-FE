@@ -69,3 +69,21 @@
     border-radius: 50%;
     object-fit: cover;
 }
+.outcome {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    margin-top: 15px;
+    margin-bottom: 14px;
+    font-size: 14px;
+}
+.outcomeAccepted {
+    color: #4CAF7D;
+}
+.outcomeDeclined {
+    color: #F6465D;
+}
+.outcomeIcon {
+    flex-shrink: 0;
+}

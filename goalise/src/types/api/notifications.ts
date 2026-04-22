@@ -2,6 +2,8 @@ export type NotificationStatus = "Unseen" | "Seen";
 
 export type NotificationFlowType = "TeamInvitation" | "TeamApplication" | string;
 
+export type NotificationFlowOutcome = "Accepted" | "Declined";
+
 export interface LiveNotificationDto {
   templateKey: string;
   payload: unknown;
@@ -19,6 +21,7 @@ export interface NotificationItemDto {
   notificationRelatedFlowType?: NotificationFlowType | null;
   notificationRelatedFlowId?: number | null;
   flowCompleted?: boolean;
+  flowOutcome?: NotificationFlowOutcome | null;
 }
 
 export interface TeamInfoPayload {
