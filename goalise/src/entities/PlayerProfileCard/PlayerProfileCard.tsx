@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PlayerStatistics from "../PlayerStatistics";
 import UnassignedPlayerCard from "../UnassignedPlayerCard";
+import PendingActionLabel from "../PendingActionLabel";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { useTranslations } from "next-intl";
@@ -37,6 +38,9 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
   playerHasTeam,
   isLoggedIn,
   teamId,
+  isAlreadyInvited,
+  invitedLabelText,
+  invitedTooltipText,
 }) => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
@@ -104,15 +108,22 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
                 {!isMobile &&
                   (!isSameTeam || !playerHasTeam) &&
                   !isViewingSelf &&
-                  onInviteButtonClick &&
-                  inviteButtonText && (
-                    <Button
-                      className="blue_button_transparant"
-                      content={inviteButtonText}
-                      handleClick={onInviteButtonClick}
-                      icon={plusButtonImg}
-                    />
-                  )}
+                  (isAlreadyInvited
+                    ? invitedLabelText && (
+                        <PendingActionLabel
+                          text={invitedLabelText}
+                          tooltipText={invitedTooltipText ?? ""}
+                        />
+                      )
+                    : onInviteButtonClick &&
+                      inviteButtonText && (
+                        <Button
+                          className="blue_button_transparant"
+                          content={inviteButtonText}
+                          handleClick={onInviteButtonClick}
+                          icon={plusButtonImg}
+                        />
+                      ))}
                 <div className={isMobile ? styles.nameWrapper : ""}>
                   <div className={isMobile ? styles.numberNameWrapper : ""}>
                     {" "}
@@ -144,15 +155,22 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
                     {isMobile &&
                       (!isSameTeam || !playerHasTeam) &&
                       !isViewingSelf &&
-                      onInviteButtonClick &&
-                      inviteButtonText && (
-                        <Button
-                          className="blue_button_transparant"
-                          content={inviteButtonText}
-                          handleClick={onInviteButtonClick}
-                          icon={plusButtonImg}
-                        />
-                      )}
+                      (isAlreadyInvited
+                        ? invitedLabelText && (
+                            <PendingActionLabel
+                              text={invitedLabelText}
+                              tooltipText={invitedTooltipText ?? ""}
+                            />
+                          )
+                        : onInviteButtonClick &&
+                          inviteButtonText && (
+                            <Button
+                              className="blue_button_transparant"
+                              content={inviteButtonText}
+                              handleClick={onInviteButtonClick}
+                              icon={plusButtonImg}
+                            />
+                          ))}
                   </div>
                 </div>
               </div>
@@ -191,7 +209,13 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
             )}
             {!playerHasTeam && (
               <div className={styles.unassignedContainer}>
-                <UnassignedPlayerCard onClick={isViewingSelf ? undefined : onInviteButtonClick} />
+                <UnassignedPlayerCard
+                  onClick={
+                    isViewingSelf || isAlreadyInvited
+                      ? undefined
+                      : onInviteButtonClick
+                  }
+                />
               </div>
             )}
           </div>

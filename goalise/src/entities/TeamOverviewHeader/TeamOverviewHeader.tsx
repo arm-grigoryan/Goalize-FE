@@ -21,7 +21,9 @@ import {
 import { useAuth } from "@/shared/auth/AuthContext";
 import { refreshTokens } from "@/shared/auth/oidcService";
 import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
+import PendingActionLabel from "@/entities/PendingActionLabel";
 import { UpdateTeamPopUp } from "@/entities/UpdateTeamPopUp/UpdateTeamPopUp";
+import { useTranslations } from "next-intl";
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -52,6 +54,7 @@ export const TeamOverviewHeader: React.FC = () => {
   const pathname = usePathname();
   const id = Number(teamId);
   const base = `/teams/${teamId}`;
+  const tTeams = useTranslations("teams");
 
   const {
     data: teamInfo,
@@ -112,6 +115,11 @@ export const TeamOverviewHeader: React.FC = () => {
     !isAuthenticated ||
     (isAuthenticated && !isUserInfoLoading && !isOnThisTeam);
 
+  const isAlreadyApplied = Boolean(
+    isAuthenticated &&
+      userInfo?.relationshipState?.pendingAppliedTeamIds?.includes(id),
+  );
+
   const handleApplyClick = () => {
     if (!isAuthenticated) {
       signIn();
@@ -128,6 +136,8 @@ export const TeamOverviewHeader: React.FC = () => {
     try {
       await applyToTeamMutation({ teamId: id }).unwrap();
       setShowApplySuccessModal(true);
+      refetchUserInfo();
+      refetchTeamInfo();
     } catch (error) {
       const errorData = error as { data?: { errorMessage?: string } };
       setApplyError(
@@ -136,7 +146,7 @@ export const TeamOverviewHeader: React.FC = () => {
       );
       setShowApplyErrorModal(true);
     }
-  }, [id, applyToTeamMutation]);
+  }, [id, applyToTeamMutation, refetchUserInfo, refetchTeamInfo]);
 
   const quitTeam = useCallback(async () => {
     if (!userTeamId) return;
@@ -253,13 +263,19 @@ export const TeamOverviewHeader: React.FC = () => {
                 </div>
               ) : (
                 <>
-                  {showApplyButton && (
-                    <Button
-                      handleClick={handleApplyClick}
-                      content="Apply"
-                      className="red_button_transparant_white_text"
-                    />
-                  )}
+                  {showApplyButton &&
+                    (isAlreadyApplied ? (
+                      <PendingActionLabel
+                        text={tTeams("appliedLabelText")}
+                        tooltipText={tTeams("appliedTooltip")}
+                      />
+                    ) : (
+                      <Button
+                        handleClick={handleApplyClick}
+                        content="Apply"
+                        className="red_button_transparant_white_text"
+                      />
+                    ))}
                   {isOnThisTeam && (
                     <Button
                       handleClick={() => setShowQuitConfirmModal(true)}

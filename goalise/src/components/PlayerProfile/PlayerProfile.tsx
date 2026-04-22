@@ -87,6 +87,15 @@ export const PlayerProfile = () => {
     : undefined;
   const isLoggedIn = Boolean(userInfo);
 
+  const viewedPlayerId = playerBasicInfo?.playerInfo.id;
+  const isAlreadyInvited = Boolean(
+    isUserCaptain &&
+      viewedPlayerId !== undefined &&
+      userInfo?.relationshipState?.pendingInvitedPlayerIds?.includes(
+        viewedPlayerId,
+      ),
+  );
+
   const viewerTeamId = userInfo?.playerInfo.team?.id;
   const viewedTeamId = playerBasicInfo?.playerInfo.team?.id;
   const isSameTeam =
@@ -162,6 +171,9 @@ export const PlayerProfile = () => {
             teamId={playerBasicInfo?.playerInfo.team?.id}
             isLoggedIn={isLoggedIn}
             playerHasTeam={Boolean(playerBasicInfo?.playerInfo.team)}
+            isAlreadyInvited={isAlreadyInvited}
+            invitedLabelText={t("invitedLabelText")}
+            invitedTooltipText={t("invitedTooltip")}
           />
         </div>
         {isLoadingPlayerInfo && (

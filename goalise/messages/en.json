@@ -9,6 +9,8 @@
       "playerBasicInfo": {
         "age": "age",
         "inviteButtonText": "Invite",
+        "invitedLabelText": "Invited",
+        "invitedTooltip": "The player is already invited to your team.",
         "makeCaptainButtonText": "Make Captain",
         "quitTeamButtonText": "Quit Team"
       }
@@ -156,7 +158,9 @@
     "empty": "No teams to show at the moment.",
     "cannotCreateCaptain": "You are already the captain of {teamName}. Transfer the captain role and quit if you want to create a new team.",
     "cannotCreateDraft": "You already created a team, which is under review. You will be notified once we review it.",
-    "cannotCreateInTeam": "You are already in {teamName}. Quit if you want to create a new team."
+    "cannotCreateInTeam": "You are already in {teamName}. Quit if you want to create a new team.",
+    "appliedLabelText": "Applied",
+    "appliedTooltip": "You already applied to this team."
   },
   "playerProfile": {
     "title": "PlayerProfile",

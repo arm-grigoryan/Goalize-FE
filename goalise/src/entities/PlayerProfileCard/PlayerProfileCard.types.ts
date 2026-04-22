@@ -51,4 +51,7 @@ export interface IPlayerProfileProps {
   onQuitTeamButtonClick?: () => void;
   playerHasTeam?: boolean;
   teamId?: number;
+  isAlreadyInvited?: boolean;
+  invitedLabelText?: string;
+  invitedTooltipText?: string;
 }

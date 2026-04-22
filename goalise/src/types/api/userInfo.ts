@@ -1,6 +1,12 @@
 export interface IPlayerProfile {
   playerInfo: IPlayerInfo;
   profileCompletionInfo: IProfileCompletionInfo;
+  relationshipState: IRelationshipState;
+}
+
+export interface IRelationshipState {
+  pendingAppliedTeamIds: number[];
+  pendingInvitedPlayerIds: number[];
 }
 
 export interface IPlayerInfo {

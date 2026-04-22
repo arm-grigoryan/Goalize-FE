@@ -9,6 +9,8 @@
       "playerBasicInfo": {
         "age": "տարիք",
         "inviteButtonText": "Հրավիրել",
+        "invitedLabelText": "Հրավիրված է",
+        "invitedTooltip": "Խաղացողն արդեն հրավիրված է ձեր թիմ։",
         "makeCaptainButtonText": "Նշանակել կապիտան",
         "quitTeamButtonText": "Լքել թիմը"
       }
@@ -156,7 +158,9 @@
     "empty": "Ներկայումս ցուցադրելու թիմ չկա։",
     "cannotCreateCaptain": "Դուք արդեն {teamName} թիմի կապիտանն եք։ Կապիտանի դերը փոխանցեք և լքեք, եթե ցանկանում եք ստեղծել նոր թիմ։",
     "cannotCreateDraft": "Դուք արդեն ստեղծել եք թիմ, որն ստուգման փուլում է։ Կկտեղեկացվեք ստուգումից հետո։",
-    "cannotCreateInTeam": "Դուք արդեն {teamName} թիմի անդամ եք։ Լքեք, եթե ցանկանում եք ստեղծել նոր թիմ։"
+    "cannotCreateInTeam": "Դուք արդեն {teamName} թիմի անդամ եք։ Լքեք, եթե ցանկանում եք ստեղծել նոր թիմ։",
+    "appliedLabelText": "Հայտը ներկայացված է",
+    "appliedTooltip": "Դուք արդեն հայտ եք ներկայացրել այս թիմին։"
   },
   "playerProfile": {
     "title": "Խաղացողի պրոֆիլ",
