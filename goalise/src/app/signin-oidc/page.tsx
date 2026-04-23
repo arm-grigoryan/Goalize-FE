@@ -2,15 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { handleSignInCallback } from "@/shared/auth/oidcService";
 import { useAuth } from "@/shared/auth/AuthContext";
-import { useTranslations } from "next-intl";
+import { AuthTransition } from "@/components/generalComponents/AuthTransition";
 
 const SignInOidcPage = () => {
   const router = useRouter();
   const { updateTokens } = useAuth();
   const [error, setError] = useState<string | null>(null);
-  const t = useTranslations("auth");
+  const t = useTranslations("auth.signingIn");
+  const tErrors = useTranslations("errors");
 
   useEffect(() => {
     (async () => {
@@ -22,26 +24,29 @@ const SignInOidcPage = () => {
         router.replace(returnPath || "/");
       } catch (err) {
         console.error("Sign-in callback failed", err);
-        setError(err instanceof Error ? err.message : "Unexpected error");
+        setError(err instanceof Error ? err.message : t("unexpectedError"));
         updateTokens(null);
       }
     })();
-  }, [router, updateTokens]);
+  }, [router, updateTokens, t]);
 
   if (error) {
     return (
-      <div style={{ padding: "24px" }}>
-        <h2>{t("signingIn.failed")}</h2>
-        <p>{error}</p>
-      </div>
+      <AuthTransition
+        variant="error"
+        title={t("failed")}
+        description={error}
+        backHref="/"
+        backText={tErrors("backButtonText")}
+      />
     );
   }
 
   return (
-    <div style={{ padding: "24px" }}>
-      <h2>{t("signingIn.title")}</h2>
-      <p>{t("signingIn.description")}</p>
-    </div>
+    <AuthTransition
+      title={t("title")}
+      description={t("description")}
+    />
   );
 };
 

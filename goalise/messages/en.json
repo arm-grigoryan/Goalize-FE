@@ -28,13 +28,16 @@
   },
   "auth": {
     "signingIn": {
-      "title": "Completing sign-in...",
-      "description": "Please wait while we process your login.",
-      "failed": "Sign-in failed"
+      "title": "Signing you in",
+      "description": "Please wait while we securely complete your sign-in.",
+      "failed": "We couldn't sign you in",
+      "unexpectedError": "An unexpected error occurred. Please try again."
     },
     "signingOut": {
-      "title": "Signing you out...",
-      "description": "You will be redirected shortly."
+      "title": "Signing you out",
+      "description": "Hang tight — we'll redirect you in a moment.",
+      "failed": "We couldn't sign you out",
+      "unexpectedError": "An unexpected error occurred. Please try again."
     }
   },
   "header": {

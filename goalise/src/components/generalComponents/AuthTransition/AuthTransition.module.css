@@ -1,0 +1,121 @@
+.container {
+  width: 100%;
+  min-height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 32px;
+  text-align: center;
+  border-radius: 24px;
+  background: rgba(21, 25, 30, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.logo {
+  width: 160px;
+  height: auto;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.12);
+  border-top-color: #f53a53;
+  animation: auth_transition_spin 1s linear infinite;
+}
+
+.iconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245, 58, 83, 0.12);
+  color: #f53a53;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.description {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #a5a5a5;
+  word-break: break-word;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+  width: 100%;
+}
+
+.primaryLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 28px;
+  border-radius: 20px;
+  background: #f53a53;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 0.15s ease;
+}
+
+.primaryLink:hover {
+  background: #d92a43;
+}
+
+@keyframes auth_transition_spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 28px 20px;
+    gap: 20px;
+  }
+
+  .logo {
+    width: 128px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+}

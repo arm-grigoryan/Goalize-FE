@@ -1,27 +1,48 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { handleSignOutCallback } from "@/shared/auth/oidcService";
 import { useAuth } from "@/shared/auth/AuthContext";
-import { useTranslations } from "next-intl";
+import { AuthTransition } from "@/components/generalComponents/AuthTransition";
 
 const SignOutCallbackPage = () => {
   const router = useRouter();
   const { updateTokens } = useAuth();
-  const t = useTranslations("auth");
+  const [error, setError] = useState<string | null>(null);
+  const t = useTranslations("auth.signingOut");
+  const tErrors = useTranslations("errors");
 
   useEffect(() => {
-    const next = handleSignOutCallback(window.location.href);
-    updateTokens(null);
-    router.replace(next || "/");
-  }, [router, updateTokens]);
+    try {
+      const next = handleSignOutCallback(window.location.href);
+      updateTokens(null);
+      router.replace(next || "/");
+    } catch (err) {
+      console.error("Sign-out callback failed", err);
+      setError(err instanceof Error ? err.message : t("unexpectedError"));
+      updateTokens(null);
+    }
+  }, [router, updateTokens, t]);
+
+  if (error) {
+    return (
+      <AuthTransition
+        variant="error"
+        title={t("failed")}
+        description={error}
+        backHref="/"
+        backText={tErrors("backButtonText")}
+      />
+    );
+  }
 
   return (
-    <div style={{ padding: "24px" }}>
-      <h2>{t("signingOut.title")}</h2>
-      <p>{t("signingOut.description")}</p>
-    </div>
+    <AuthTransition
+      title={t("title")}
+      description={t("description")}
+    />
   );
 };
 

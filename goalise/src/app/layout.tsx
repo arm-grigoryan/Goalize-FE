@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import Header from "@/components/generalComponents/Header";
 import { Providers } from "./provider";
 import { NextIntlClientProvider } from "next-intl";
-import Footer from "@/components/generalComponents/Footer";
 import localFont from "next/font/local";
-import GlobalErrorHandler from "@/components/generalComponents/GlobalErrorHandler";
+import { AppShell } from "@/components/generalComponents/AppShell";
 import { cookies } from "next/headers";
 import { SUPPORTED_LOCALES, type Locale } from "@/shared/utils/localeCookie";
 import "./globals.css";
@@ -59,12 +57,7 @@ export default async function RootLayout({
       <body>
         <NextIntlClientProvider>
           <Providers>
-            <Header />
-            <GlobalErrorHandler />
-
-            <main className="container">{children}</main>
-
-            <Footer />
+            <AppShell>{children}</AppShell>
           </Providers>
         </NextIntlClientProvider>
       </body>
