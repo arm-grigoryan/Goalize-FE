@@ -9,7 +9,7 @@ interface ButtonProps {
   className: string;
   content?: string;
   icon?: StaticImageData;
-  leftIcon?:StaticImageData;
+  rightIcon?:StaticImageData;
   iconHeight?: number;
   iconWidth?: number;
   isActive?: boolean;
@@ -24,7 +24,7 @@ export const Button: FC<ButtonProps> = ({
   className,
   isActive,
   icon,
-  leftIcon,
+  rightIcon,
   disabled,
   handleClick,
 }) => {
@@ -41,7 +41,7 @@ export const Button: FC<ButtonProps> = ({
     >
       {icon && <div className={styles.icon}> <Image width={iconWidth} height={iconHeight} src={icon} alt=""  className={styles.icon}/></div> }
       {<div className={styles.content}> {content} </div>}
-      {leftIcon && <div className={styles.leftIconWrapper}><Image width={iconWidth} height={iconHeight} src={leftIcon} alt=""  className={styles.leftIcon} /></div>}
+      {rightIcon && <div className={styles.rightIconWrapper}><Image width={iconWidth} height={iconHeight} src={rightIcon} alt=""  className={styles.rightIcon} /></div>}
     </button>
   );
 

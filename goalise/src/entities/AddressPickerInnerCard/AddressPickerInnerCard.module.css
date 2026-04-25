@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    border-bottom: 1px solid #4b4b4ba8;
+    padding: 6px;
+}
+.address {
+    color: #7A7A7A;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-weight: 300;
+    text-transform: capitalize;
+}
+.selected {
+    color: #FFF;
+}

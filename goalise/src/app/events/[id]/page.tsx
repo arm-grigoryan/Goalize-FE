@@ -1,7 +1,7 @@
-interface EventDetailPageProps {
-  params: { id: string };
-}
+import EventsDetails from "@/components/EventsDetails";
 
-export default function EventDetailPage({ params }: EventDetailPageProps) {
-  return <div>Event Detail Page</div>;
+export default function EventDetailPage() {
+  return <div>
+      <EventsDetails />
+  </div>;
 }

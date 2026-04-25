@@ -248,12 +248,12 @@
   font-size: 16px;
   cursor: pointer;
 }
-.leftIconWrapper {
+.rightIconWrapper {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.leftIcon {
+.rightIcon {
   width: 14px;
   height: 12px;
 }

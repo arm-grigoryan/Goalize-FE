@@ -7,7 +7,7 @@ import styles from "./UpdateDraftTeamPopUp.module.css";
 import Image from "next/image";
 import editIcon from "../../assets/pngs/editIcon.svg";
 import teamLogoFallback from "../../assets/pngs/teamLogo.png";
-import leftArrow from "../../assets/pngs/leftArrow.svg";
+import rightArrow from "../../assets/pngs/rightArrow.svg";
 import teamIcon from "../../assets/pngs/teamIcon.svg";
 import abbreviationIcon from "../../assets/pngs/abbreviation.svg";
 import Button from "@/shared/Button";
@@ -388,7 +388,7 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
               className={isButtonEnabled ? "gray_buttonIcon_active" : "gray_buttonIcon"}
               content={tCommon("save")}
               handleClick={handleSubmit(onSubmit)}
-              leftIcon={leftArrow}
+              rightIcon={rightArrow}
               disabled={!isButtonEnabled}
             />
           </div>

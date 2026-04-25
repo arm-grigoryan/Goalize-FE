@@ -1,0 +1,175 @@
+.overlay {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9998;
+    align-items: center;
+    justify-content: center;
+}
+.container {
+    display: flex;
+    max-width: 618px;
+    width: 100%;
+    padding: 27px 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 23px;
+    position: absolute;
+    background-color: #101010;
+    border-radius: 15px;
+    border: 1px solid transparent;
+    background-clip: padding-box, border-box;
+    background-origin: border-box;
+    background-image:  linear-gradient(
+        rgba(15, 16, 17, 0.96),
+        rgba(15, 16, 17, 0.95)
+    ), linear-gradient(to right, #54A2FE, #F6465D);
+    box-shadow:
+        0 0 10px rgba(84, 162, 254, 0.4),
+        0 0 15px rgba(246, 70, 93, 0.3);  
+    z-index: 9999;
+    max-width: 520px;
+    margin: 20px;
+}
+.title {
+    color: #E8E8E8;
+    font-size: 30px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.inputsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    min-width: 120px;
+}
+.inputTitle {
+    color: #7A7A7A;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.timeInputsWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    white-space: wrap;
+    gap: 10px;
+}
+.input {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: none;
+    border-bottom: 1px solid #4B4B4B;
+    background: #1717176d;
+    padding: 16px 10px;
+    padding-left: 40px;
+    color: white;
+    flex: 1;
+    cursor: pointer;
+    outline: none;
+    min-width: 120px;
+}
+.input:focus {
+    border: none;
+    border-bottom: 1px solid #54A2FE;
+    border-radius: 5px;
+}
+.inputNoIcon {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    border: none;
+    border-bottom: 1px solid #4B4B4B;
+    background: #1717176d;
+    padding: 16px 10px;
+    color: white;
+    flex: 1;
+    outline: none;
+}
+.inputNoIcon:focus {
+    border: none;
+    border-bottom: 1px solid #54A2FE;
+    border-radius: 5px;
+}
+.paymentInputsWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    flex-wrap: wrap;
+    white-space: wrap;
+}
+.inputWithIcon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.inputIcon {
+    position: absolute;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+.inputText {
+    position: absolute;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    color: #7A7A7A;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.addressWrapper {
+    position: relative;
+    width: 100%;
+    z-index: 20;
+}
+.dateWrapper {
+    position: relative;
+    flex: 1;
+    z-index: 20;
+}
+.buttonsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+}
+.buttonsWrapper button {
+    width: 100%;
+}
+.textButtonWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-self: center;
+    cursor: pointer;
+}
+.textButton {
+    display: flex;
+    color: #858585;
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+.mobileContainer {
+    width: unset;
+}

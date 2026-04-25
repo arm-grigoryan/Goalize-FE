@@ -1,0 +1,43 @@
+.progressBarInfoWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.textsWrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+.participantsCount {
+    color: #FFF;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: capitalize;
+    gap: 10px;
+}
+.participantsCount span {
+    color: rgba(255, 255, 255, 0.3);
+    margin-left: 10px;
+}
+.registrationDate {
+    color: rgba(255, 255, 255, 0.80);
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.registrationDate span {
+    color: #F53A53;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-left: 10px;
+}
+.playersCards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+}

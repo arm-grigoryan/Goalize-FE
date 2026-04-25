@@ -1,0 +1,124 @@
+.container {
+  display: flex;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 10px;
+  z-index: 999;
+  border: 1px solid transparent;
+  background-clip: padding-box, border-box;
+  background-origin: border-box;
+
+  background-image:
+    linear-gradient(rgba(15, 16, 17, 0.96), rgba(15, 16, 17, 0.95)),
+    linear-gradient(to right, #54A2FE, #F6465D);
+  border-radius: 15px;
+}
+
+.picker {
+  display: flex;
+  gap: 25px;
+  overflow: hidden;
+  height: 300px;
+}
+.picker::before,.picker::after { 
+    content: " "; 
+    position: absolute; 
+    top: 0; 
+    background: linear-gradient( 
+        hsl(210, 25%, 2%), 65%,
+         hsl(200 20% 10% / 0%) ); 
+    width: 100%; 
+    height: calc(50% - 25px); 
+    pointer-events: none; 
+    border-radius: 15px;
+    z-index: 10;
+}
+.picker::after { 
+    top: auto; 
+    bottom: 0; 
+    background: linear-gradient(
+         hsla(180, 14%, 1%, 0), 35%,
+          hsl(200, 27%, 2%) ); 
+    border-radius: 15px;
+    z-index: 10;
+}
+
+.scroll {
+  height: 200px;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scrollbar-width: none;
+  gap: 20px;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(122, 122, 122, 1);
+  z-index: 0;
+  scroll-snap-align: center;
+  position: relative;
+
+}
+.column {
+  position: relative;
+  width: 70px;
+  display: flex;
+  justify-content: center;
+}
+
+.scroll {
+  height: 200px;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scrollbar-width: none;
+  padding: 80px 0;
+}
+
+.circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+    width: 40px;
+   height: 40px;
+  border-radius: 50%;
+  background: rgba(245, 58, 83, 1);
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+  z-index: 10;
+  margin-bottom: 20px;
+}
+
+.scroll::before,
+.scroll::after {
+  content: "";
+  position: sticky;
+  display: block;
+  width: 100%;
+  height: 60px;
+  pointer-events: none;
+  z-index: 2;
+}

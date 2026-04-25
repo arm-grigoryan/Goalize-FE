@@ -1,0 +1,317 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    background-color: #101010;
+    border-radius: 15px;
+    border: 1px solid rgba(32, 35, 42, 0.7);
+    background-origin: border-box;
+    background: rgba(17, 19, 23, 0.70);
+    z-index: 99;
+    overflow: hidden;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 20px;
+}
+.titleWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    background-origin: border-box;
+   background-image: 
+  linear-gradient(to right, 
+  #f6465e23 0%, 
+  #54a3fe2d 50%, 
+  rgba(84, 163, 254, 0.039) 80%, 
+  transparent 100%
+);
+    padding: 40px;
+}
+.title {
+    color: #FFF;
+    font-size: 44px;
+    font-style: normal;
+    font-weight: 600;
+}
+.description {
+    color: rgba(255, 255, 255, 0.80);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: capitalize;
+    max-width: 500px;
+}
+.imageButtonWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    gap: 40px;
+    align-items: center;
+}
+.image {
+    display: flex;
+    justify-self: flex-end;
+    align-self: flex-end;
+    height: 100px;
+    position: relative;
+    top: 20px;
+}
+.imageButtonWrapper button {
+    height: fit-content;
+    width: fit-content;
+    margin-right: 20px;
+}
+
+/* -----------DETAILED-------------- */
+.imageDetailsWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 28px;
+    align-items: center;
+}
+.imageWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+    position: relative;
+    width: 166px;
+    height: 200px;
+}
+.hostImage {
+    display: flex;
+    width: 166px;
+    height: 166px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid red;
+}
+.hostIcon {
+    position: absolute;
+    bottom: 0;
+    width: 180px;
+    height: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.eventNameWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+.contactNameWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.eventName {
+    color: #FFF;
+    font-size: 44px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.eventDetails {
+    color: rgba(255, 255, 255, 0.80);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: capitalize;
+    max-width: 500px;
+}
+.redGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle,
+      rgba(245, 58, 83, 1),
+      rgba(255, 0, 80, 0.1),
+      transparent 90%);
+  filter: blur(6px);
+  z-index: 0;
+}
+.iconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon {
+    z-index: 1;
+}
+.detailsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 20px;
+}
+.detailsIconText {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.detailsText {
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.joinedPaymentWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.detailsPay {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    color: #FFF;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.maximumText {
+    color: #F53A53;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: capitalize;
+    max-width: 200px;
+}
+.button {
+  display: flex;
+  padding: 10px 15px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  background: rgba(21, 25, 30, 0.4);
+  backdrop-filter: blur(10px);
+  color: #a5a5a5;
+  text-transform: capitalize;
+  font-size: 14px;
+  height: fit-content;
+  align-self: center;
+  width: fit-content;
+}
+
+.button>span {
+  color: #ffffff;
+}
+.mobileContainer {
+    position: relative;
+}
+.mobileContainer .imageButtonWrapper {
+    justify-content: flex-end;
+    align-items: center;
+}
+.mobileContainer .imageButtonWrapper button {
+    position: absolute;
+}
+.mobileContainer .titleWrapper {
+    height: 100%;
+    align-items: flex-start;
+    justify-content: center;
+    position: absolute;
+    padding: 20px;
+}
+.mobileContainer .title {
+    font-size: 30px;
+}
+.mobileContainer .image {
+    width: 180px;
+}
+
+
+.mobileContainer .content {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.mobileContainer .imageDetailsWrapper {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+.mobileContainer .contactNameWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.mobileContainer .eventName {
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    justify-self: center;
+}
+.mobileContainer .button {
+    justify-self: center;
+}
+.mobileContainer .eventDetails {
+    text-align: center;
+    justify-self: center;
+    margin-bottom: 10px;
+}
+.mobileContainer .detailsWrapper {
+    flex-direction: column-reverse;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.mobileDetailsWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+.mobileContainer .detailsIconText {
+    padding: 20px 0;
+    white-space: wrap;
+    flex-wrap: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.mobileContainer .joinedPaymentWrapper {
+        margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+.registrationDate {
+    color: rgba(255, 255, 255, 0.80);
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.registrationDate span {
+    color: #F53A53;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-left: 10px;
+}

@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+    background: rgba(17, 19, 23, 0.50);
+    max-height: 478px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background-color: #54a2fe;
+    border-radius: 5px 0 0 5px;
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: transparent;
+}

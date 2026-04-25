@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid transparent;
+    background-clip: padding-box, border-box;
+    background-origin: border-box;
+    background-image:  linear-gradient(
+        rgba(15, 16, 17, 0.96),
+        rgba(15, 16, 17, 0.95)
+    ), linear-gradient(to right, #54A2FE, #F6465D);
+    max-height: 240px;
+    overflow: hidden;
+    overflow-y: scroll;
+    position: absolute;
+    margin-top: 10px;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 999;
+}
+.container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background-color: #54a2fe;
+    border-radius: 5px 0 0 5px;
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: transparent;
+}
