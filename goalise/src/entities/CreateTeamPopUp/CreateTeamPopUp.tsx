@@ -8,7 +8,7 @@ import Image from "next/image";
 import editIcon from "../../assets/pngs/editIcon.svg";
 import teamLogo from "../../assets/pngs/teamLogo.png";
 import noPhoto from "../../assets/pngs/noPhoto.png";
-import leftArrow from "../../assets/pngs/leftArrow.svg";
+import rightArrow from "../../assets/pngs/rightArrow.svg";
 import teamIcon from "../../assets/pngs/teamIcon.svg";
 import searchIconGray from "../../assets/pngs/searchIconGray.svg";
 import abbreviationIcon from "../../assets/pngs/abbreviation.svg";
@@ -527,7 +527,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
               }
               content={t("create")}
               handleClick={handleSubmit(onSubmit)}
-              leftIcon={leftArrow}
+              rightIcon={rightArrow}
               disabled={!(isValid && !!logoFile)}
             />
           </div>

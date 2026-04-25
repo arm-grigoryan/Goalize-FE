@@ -1,0 +1,278 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(55px);
+    box-sizing: border-box;
+    background-origin: border-box;
+    background-image: linear-gradient(rgba(15, 16, 17, 0.91),
+        rgba(15, 16, 17, 0.928)), linear-gradient(to right,#F6465D, #54A2FE );
+    position: relative;
+    overflow: hidden;
+}
+.canceledRibbon {
+  position: absolute;
+  top: 20px;
+  right: -40px;
+
+  background: #F6465D;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+
+  padding: 8px 50px;
+
+  transform: rotate(45deg);
+  text-align: center;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.imageWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+    position: relative;
+    margin-left: 20px;
+    width: 166px;
+    height: 200px;
+}
+.image {
+    display: flex;
+    width: 166px;
+    height: 166px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.hostIcon {
+    position: absolute;
+    bottom: 0;
+    width: 180px;
+    height: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.infoWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-right: 20px;
+}
+.row {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    border-bottom: 1px solid #a5a5a548;
+}
+.row:last-child {
+  border-bottom: none;
+}
+.namePriceContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.eventName {
+    color: #E8E8E8;
+    font-size: 30px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+.price {
+    color: #FFF;
+    font-size: 24px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.participants {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: right;
+}
+.participantsText {
+    color: rgba(232, 232, 232, 0.60);
+    text-align: right;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.participantsCount {
+    color: #E8E8E8;
+    text-align: right;
+    font-size: 30px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+.registerDateWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+}
+.registerText {
+    color: #A5A5A5;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.registerDateWrapper span {
+    color: #FFF;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin-left: 6px;
+}
+.adressWrapper  {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.adress {
+    color: #A5A5A5;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.addressIconWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+.dateWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.date {
+      color: #A5A5A5;
+    font-size: 16px;
+    font-weight: 500;
+}
+.buttonsWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.circleButton {
+     display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    border: 1px solid #f53a53;
+    background: rgba(21, 25, 30, 0.40);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+}
+.iconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.redGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle,
+      rgba(245, 58, 83, 1),
+      rgba(255, 0, 80, 0.1),
+      transparent 90%);
+  filter: blur(6px);
+  z-index: 0;
+}
+.icon {
+    z-index: 11;
+}
+.mobileContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+}
+.mobile .adressWrapper {
+    flex-direction: column;
+    gap: 10px;
+}
+.mobile .registerDateWrapper {
+    font-size: 14px;
+}
+.mobileImageContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.mobileNamePriceContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+.mobileImageWrapper {
+    width: 100px;
+    height: 100px;
+      display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+    position: relative;
+    margin-left: 10px;
+}
+.mobileImage {
+    width: 100px;
+    height: 100px;
+}
+.hostIconMobile {
+    position: absolute;
+    bottom: 0;
+    top: 70%;
+}
+.eventNameMobile {
+    color: #E8E8E8;
+    text-align: left;
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.mobileAddressWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px 0;
+}
+.mobileParticipantsWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.participantsTextMobile {
+    color: rgba(232, 232, 232, 0.60);
+    text-align: left;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: capitalize;
+
+}
+.participantsCountMobile{
+    color: #E8E8E8;
+        text-align: left;
+        font-size: 30px;
+        font-weight: 700;
+        text-transform: capitalize;
+}
