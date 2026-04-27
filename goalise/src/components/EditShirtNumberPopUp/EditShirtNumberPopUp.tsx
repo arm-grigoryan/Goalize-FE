@@ -104,7 +104,7 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
 
         <div className={styles.actions}>
           <Button
-            className="gray_buttonIcon"
+            className={isValid && !isLoading ? "gray_buttonIcon_active" : "gray_buttonIcon"}
             handleClick={handleSubmit}
             content="Save"
             icon={arrowRightIcon}
