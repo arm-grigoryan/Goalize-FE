@@ -21,8 +21,8 @@ export const MatchList = () => {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   const { data, isFetching } = useGetPlayerProfileMatchesQuery(
-    { playerId: Number(playerId), skip: offset, take: 5 },
-    { skip: !hasMore }
+    { playerId: Number(playerId), skip: offset, take: 10 },
+    { skip: !hasMore },
   );
 
   useEffect(() => {
@@ -31,12 +31,12 @@ export const MatchList = () => {
         const merged = [...prev, ...data];
         const unique = merged.filter(
           (match, index, self) =>
-            index === self.findIndex((m) => m.id === match.id)
+            index === self.findIndex((m) => m.id === match.id),
         );
         return unique;
       });
 
-      if (data.length < 5) {
+      if (data.length < 10) {
         setHasMore(false);
       }
     }
@@ -49,8 +49,8 @@ export const MatchList = () => {
 
       const { scrollTop, scrollHeight, clientHeight } = container;
 
-      if (scrollTop + clientHeight >= scrollHeight) {
-        setOffset((prev) => prev + 5);
+      if (scrollTop + clientHeight >= scrollHeight - 1) {
+        setOffset((prev) => prev + 10);
       }
     };
 
@@ -84,7 +84,16 @@ export const MatchList = () => {
         {matches.map((match, i) => {
           const key = `${match.matchDate}-${match.homeTeam.id}-${match.awayTeam.id}-${i}`;
           return (
-            <Link key={key} href={`/matches/${match.id}`} style={{ textDecoration: "none", color: "inherit", display: "block", cursor: "pointer" }}>
+            <Link
+              key={key}
+              href={`/matches/${match.id}`}
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+                display: "block",
+                cursor: "pointer",
+              }}
+            >
               <MatchCard
                 homeTeamName={match.homeTeam.name}
                 homeTeamScore={match.homeTeamScore}

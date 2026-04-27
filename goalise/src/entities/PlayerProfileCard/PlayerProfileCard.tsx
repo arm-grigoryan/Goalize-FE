@@ -144,7 +144,7 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
                         {t("age")}: <span> {age} </span>
                       </div>
                       <div className={styles.button}>
-                        {t("foot")}: <span> {foot} </span>{" "}
+                        {t("foot")}: <span> {foot || "-"} </span>{" "}
                       </div>
                       {phoneNumber && (
                         <div className={styles.button}>
