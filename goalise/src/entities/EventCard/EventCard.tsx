@@ -66,15 +66,14 @@ export const EventCard: React.FC<IEventCardProps> = ({
                             </div>
                             <div className={styles.adress}>742 Evergreen Terrace, Springfield</div>
                         </div>
-                        {variant==='past' &&
                             <div className={styles.circleButton} onClick={() => {}}>
                                 <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
                                     <Image src={arrowRight} alt='' className={styles.icon}/> 
                                 </div>
-                            </div>}
+                            </div>
                     </div>
                 </div>
-                {variant === 'upcoming' && 
+                {/* {variant === 'upcoming' && 
                     <div className={styles.row}>
                     <div className={styles.buttonsWrapper}> 
                             <Button className='red_button_transparant_white_text' content='Join' handleClick={() => {}}/>
@@ -84,7 +83,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
                                 </div>
                             </div>
                         </div> 
-                    </div>}
+                    </div>} */}
             </div>
             </>:
             <div className={styles.mobileContainer}> 
@@ -99,9 +98,16 @@ export const EventCard: React.FC<IEventCardProps> = ({
                                 <div className={styles.date}>10/04/2026</div>
                         </div>
                         {variant === 'upcoming' ? 
-                                <div className={styles.price}>
+                               <div className={styles.mobileParticipantsWrapper}>
+                                 <div className={styles.price}>
                                     ֏ 10.000
-                                </div> : 
+                                </div>
+                                <div className={styles.circleButton} onClick={() => {}}>
+                                            <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
+                                                <Image src={arrowRight} alt='' className={styles.icon}/> 
+                                            </div>
+                                        </div>
+                            </div> : 
                                <div className={styles.mobileParticipantsWrapper}>
                                     <div className={styles.participants}>
                                         <div className={styles.participantsTextMobile}>Participants</div>
@@ -129,7 +135,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
                             <div className={styles.adress}>742 Evergreen Terrace, Springfield</div>
                         </div>
                 </div>
-                {variant === 'upcoming' &&  
+                {/* {variant === 'upcoming' &&  
                 <CustomDivider orientation='horizontal' flexItem />}
                 
                   {variant === 'upcoming' && 
@@ -142,7 +148,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
                                         </div>
                                     </div>
                                 </div> 
-                            </div>}
+                            </div>} */}
             </div>}
    </div>
 }

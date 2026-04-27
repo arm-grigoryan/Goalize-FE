@@ -41,3 +41,11 @@
     gap: 20px;
     margin: 20px 0;
 }
+@media (max-width: 960px) {
+    .playersCards {
+        grid-template-columns: 1fr;
+    }
+}
+.mobilePlayersCards {
+    grid-template-columns: 1fr;
+}
