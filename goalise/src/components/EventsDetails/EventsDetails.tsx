@@ -22,7 +22,7 @@ export const EventsDetails: React.FC = () => {
                {!isMobile &&
                 <div className={styles.registrationDate}>
                     Registrations will be closed on 
-                    <span>19/04/2025 </span>
+                    <span>19/04/2025 14:55 </span>
                 </div>}
             </div>
             <LeaguesJoinedTeamsProgressBar
@@ -30,7 +30,7 @@ export const EventsDetails: React.FC = () => {
                     registeredTeamsCount={10}
                 />
         </div>
-        <div className={styles.playersCards}>
+        <div className={`${styles.playersCards} ${isMobile && styles.mobilePlayersCards}`}>
             <EventsPlayersCard />
             <EventsPlayersCard />
         </div>
