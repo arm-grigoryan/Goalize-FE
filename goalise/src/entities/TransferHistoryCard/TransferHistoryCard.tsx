@@ -25,7 +25,7 @@ export const TransferHistoryCard = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const { data, isFetching } = useGetPlayerTransferHistoryQuery(
-    { playerId: Number(playerId), skip: offset, take: 4 },
+    { playerId: Number(playerId), skip: offset, take: 15 },
     { skip: !hasMore }
   );
 
@@ -40,7 +40,7 @@ export const TransferHistoryCard = () => {
         return unique;
       });
 
-      if (data.length < 4) {
+      if (data.length < 15) {
         setHasMore(false);
       }
     }
@@ -53,8 +53,8 @@ export const TransferHistoryCard = () => {
 
       const { scrollTop, scrollHeight, clientHeight } = container;
 
-      if (scrollTop + clientHeight >= scrollHeight) {
-        setOffset((prev) => prev + 4);
+      if (scrollTop + clientHeight >= scrollHeight - 1) {
+        setOffset((prev) => prev + 15);
       }
     };
 

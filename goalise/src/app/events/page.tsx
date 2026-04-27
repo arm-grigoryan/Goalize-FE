@@ -6,19 +6,19 @@ import PastEvents from "@/components/PastEvents";
 type Tab = "upcoming" | "past";
 
 interface EventsPageProps {
-  searchParams: { tab?: string };
+  searchParams: Promise<{ tab?: string }>;
 }
 
-export default function EventsPage({ searchParams }: EventsPageProps) {
-  const tab: Tab =
-    searchParams.tab === "past" ? "past" : "upcoming";
+export default async function EventsPage({ searchParams }: EventsPageProps) {
+  const { tab } = await searchParams;
+  const activeTab: Tab = tab === "past" ? "past" : "upcoming";
 
   return <div>
             <EventsHeader type="default"/>
             <div className={styles.tabs}>
-                <Link className={`${styles.tab} ${tab === "upcoming" && styles.isActive}`} href="?tab=upcoming">Upcoming Events</Link>
-                <Link className={`${styles.tab} ${tab === "past" && styles.isActive}`} href="?tab=past">Past Events</Link>
+                <Link className={`${styles.tab} ${activeTab === "upcoming" ? styles.isActive : ''}`} href="?tab=upcoming">Upcoming Events</Link>
+                <Link className={`${styles.tab} ${activeTab === "past" ? styles.isActive : ''}`} href="?tab=past">Past Events</Link>
             </div>
-            {tab === "upcoming" ? <UpcomingEvents /> : <PastEvents /> };
-    </div>
+            {activeTab === "upcoming" ? <UpcomingEvents /> : <PastEvents />}
+    </div>;
 }
