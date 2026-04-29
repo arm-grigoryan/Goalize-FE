@@ -13,6 +13,7 @@ import dateIcon from '../../assets/pngs/calendar.svg';
 import clockWhite from '../../assets/pngs/clockWhite.svg';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { MEDIA_TABLET_SMALL } from '@/constants/windowSizes';
+import { useAuth } from '@/shared/auth/AuthContext';
 
 export interface IEventsHeaderProps {
     type?: 'default' | 'detailed';
@@ -23,6 +24,15 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({
     const [isOpen, setIsOpen] = useState(false);
     const { width } = useWindowSize();
     const isMobile = width <= MEDIA_TABLET_SMALL;
+    const { isAuthenticated, signIn } = useAuth();
+
+    const handleCreateEventClick = () => {
+        if (!isAuthenticated) {
+            signIn();
+            return;
+        }
+        setIsOpen(true);
+    };
 
     return <div className={`${styles.container} ${isMobile && styles.mobileContainer}`}>
                 {type === 'default' ?
@@ -36,9 +46,9 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({
                     </div>
                     <div className={styles.imageButtonWrapper}> 
                         <Image src={event} alt='' className={styles.image}/>
-                        <Button 
+                        <Button
                             className='red_button'
-                            handleClick={() => setIsOpen(true)}
+                            handleClick={handleCreateEventClick}
                             content='Create Event'
                         />
                     </div>

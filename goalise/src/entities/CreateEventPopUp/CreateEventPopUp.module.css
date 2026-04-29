@@ -17,7 +17,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 23px;
-    position: absolute;
+    position: relative;
     background-color: #101010;
     border-radius: 15px;
     border: 1px solid transparent;
@@ -172,4 +172,57 @@
 
 .mobileContainer {
     width: unset;
+}
+
+.inputError {
+    border-bottom: 1px solid #F6465D !important;
+}
+
+.dateTimeInputWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: stretch;
+}
+
+
+.error {
+    color: #F6465D;
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: -4px;
+}
+
+.datetimeInput {
+    color-scheme: dark;
+}
+
+.datetimeInput::-webkit-calendar-picker-indicator {
+    filter: invert(0.6);
+    cursor: pointer;
+}
+
+.input::-webkit-inner-spin-button,
+.input::-webkit-outer-spin-button,
+.inputNoIcon::-webkit-inner-spin-button,
+.inputNoIcon::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input[type="number"],
+.inputNoIcon[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.loadingOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    z-index: 10;
 }
