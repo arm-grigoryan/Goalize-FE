@@ -3,7 +3,11 @@ import styles from "./TimePicker.module.css";
 
 const repeat = <T,>(arr: T[]) => [...arr, ...arr, ...arr];
 
-export const TimePicker: React.FC = () => {
+export interface ITimePickerProps {
+  onChange?: (hour: number, minute: number, period?: string) => void;
+}
+
+export const TimePicker: React.FC<ITimePickerProps> = ({ onChange }) => {
   const hours = Array.from({ length: 24 }, (_, i) => i);
   const minutes = Array.from({ length: 60 }, (_, i) => i);
   const period = ["AM", "PM"];
@@ -17,6 +21,10 @@ export const TimePicker: React.FC = () => {
   const [selectedHour, setSelectedHour] = useState(0);
   const [selectedMinute, setSelectedMinute] = useState(0);
   const [selectedPeriod, setSelectedPeriod] = useState("AM");
+
+  useEffect(() => {
+    onChange?.(selectedHour, selectedMinute, selectedPeriod);
+  }, [selectedHour, selectedMinute, selectedPeriod]);
 
   const centerScroll = (el: HTMLDivElement | null, baseLength: number) => {
     if (!el) return;

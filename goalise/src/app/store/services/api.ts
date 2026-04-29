@@ -32,6 +32,7 @@ import {
 } from "@/shared/auth/oidcService";
 import { setError } from "../slices/errorSlice";
 import { NotificationItemDto } from "@/types/api/notifications";
+import { ICreateEventRequest } from "@/types/api/events";
 
 const getApiLocale = (): string => {
   if (typeof document === "undefined") return "en";
@@ -474,6 +475,13 @@ export const api = createApi({
         body: { number: shirtNumber },
       }),
     }),
+    createEvent: builder.mutation<number, ICreateEventRequest>({
+      query: (body) => ({
+        url: "/Events",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -529,4 +537,5 @@ export const {
   useApplyToTeamMutation,
   useUpdateShirtNumberMutation,
   useDeleteTeamDraftMutation,
+  useCreateEventMutation,
 } = api;
