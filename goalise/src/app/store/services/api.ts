@@ -32,7 +32,7 @@ import {
 } from "@/shared/auth/oidcService";
 import { setError } from "../slices/errorSlice";
 import { NotificationItemDto } from "@/types/api/notifications";
-import { ICreateEventRequest } from "@/types/api/events";
+import { ICreateEventRequest, IEvent, IEventsResponse } from "@/types/api/events";
 
 const getApiLocale = (): string => {
   if (typeof document === "undefined") return "en";
@@ -135,6 +135,7 @@ const createErrorHandlingBaseQuery = (
 
 export const publicApi = createApi({
   reducerPath: "publicApi",
+  tagTypes: ["Events"],
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
     prepareHeaders: (headers) => {
@@ -233,7 +234,14 @@ export const publicApi = createApi({
     getLeaguesTopPlayers: builder.query<ITopPlayers[], number>({
       query: (leagueId) => `/leagues/${leagueId}/top-players`,
     }),
-    getEventById: builder.query<unknown, number>({
+    getEvents: builder.query<IEventsResponse, { skip: number; take: number; isUpcoming: boolean }>({
+      query: ({ skip, take, isUpcoming }) => ({
+        url: "/Events",
+        params: { skip, take, isUpcoming },
+      }),
+      providesTags: ["Events"],
+    }),
+    getEventById: builder.query<IEvent, number>({
       query: (eventId) => `/Events/${eventId}`,
     }),
     getMatchById: builder.query<IMatches, number>({
@@ -475,12 +483,16 @@ export const api = createApi({
         body: { number: shirtNumber },
       }),
     }),
-    createEvent: builder.mutation<number, ICreateEventRequest>({
+    createEvent: builder.mutation<void, ICreateEventRequest>({
       query: (body) => ({
         url: "/Events",
         method: "POST",
         body,
       }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        await queryFulfilled;
+        dispatch(publicApi.util.invalidateTags(["Events"]));
+      },
     }),
   }),
 });
@@ -502,6 +514,7 @@ export const {
   useGetSearchAutoCompleteQuery,
   useLazyGetSearchAutoCompleteQuery,
   useGetLeaguesTopPlayersQuery,
+  useGetEventsQuery,
   useGetEventByIdQuery,
   useGetMatchByIdQuery,
   useGetMatchStatsQuery,

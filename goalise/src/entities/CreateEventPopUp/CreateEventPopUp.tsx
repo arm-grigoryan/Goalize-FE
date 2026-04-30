@@ -14,7 +14,10 @@ import Button from "@/shared/Button";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useCreateEventMutation } from "@/app/store/services/api";
+import { useDispatch } from "react-redux";
+import { invalidateEventsList } from "@/app/store/slices/eventsSlice";
 import { Loader } from "@/shared/Loader/Loader";
+import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 
 type CreateEventFormData = {
   title: string;
@@ -40,8 +43,10 @@ const getLocalDatetimeMin = () => {
 export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose }) => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const dispatch = useDispatch();
   const [createEvent, { isLoading }] = useCreateEventMutation();
-  const [submitError, setSubmitError] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const startInputRef = useRef<HTMLInputElement>(null);
   const regInputRef = useRef<HTMLInputElement>(null);
 
@@ -77,24 +82,36 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose }) 
   }, [register, getValues]);
 
   const onSubmit = async (data: CreateEventFormData) => {
-    setSubmitError('');
+    setSubmitError(null);
     try {
       await createEvent({
         title: data.title,
         address: data.address,
-        startTime: data.startTime + ':00',
-        registrationCloseTime: data.registrationClosingTime + ':00',
+        startTime: new Date(data.startTime).toISOString(),
+        registrationCloseTime: new Date(data.registrationClosingTime).toISOString(),
         durationMinutes: data.duration,
         paymentAmount: data.paymentAmount,
         participantCount: data.participantsCount,
         additionalInfo: data.additionalInfo || undefined,
       }).unwrap();
-      onClose();
+      dispatch(invalidateEventsList());
+      setShowSuccess(true);
     } catch (err) {
-      const error = err as { data?: { detail?: string; title?: string } };
-      setSubmitError(error?.data?.detail || error?.data?.title || 'Failed to create event');
+      const error = err as { data?: { detail?: string; title?: string; errorMessage?: string } };
+      setSubmitError(error?.data?.detail || error?.data?.title || error?.data?.errorMessage || 'Failed to create event.');
     }
   };
+
+  if (showSuccess) {
+    return (
+      <PlayerInvitationCard
+        onCancelButtonClick={onClose}
+        title="Event Created!"
+        description="Your event has been successfully created and is now visible in the events list."
+        cancelButtonText="Close"
+      />
+    );
+  }
 
   return (
     <div className={styles.overlay} onClick={onClose}>
