@@ -9,3 +9,30 @@
         grid-template-columns: 1fr;
     }
 }
+
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    padding: 24px 0;
+}
+
+.loader {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    border-top-color: #F6465D;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.errorText,
+.emptyText {
+    text-align: center;
+    color: #A5A5A5;
+    padding: 40px 0;
+    font-size: 16px;
+}
