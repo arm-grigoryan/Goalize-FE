@@ -24,6 +24,8 @@ import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 import PendingActionLabel from "@/entities/PendingActionLabel";
 import { UpdateTeamPopUp } from "@/entities/UpdateTeamPopUp/UpdateTeamPopUp";
 import { useTranslations } from "next-intl";
+import ProgressBar from "@/shared/ProgressBar";
+import CustomDivider from "@/shared/Divider";
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -297,7 +299,8 @@ export const TeamOverviewHeader: React.FC = () => {
             </div>
           </div>
         </div>
-
+        <ProgressBar />
+        <CustomDivider orientation="horizontal" flexItem/>
         {/* Right: captain info + photo — skeleton */}
         {isLoading && (
           <div className={styles.infoImageWrapper}>
@@ -327,7 +330,6 @@ export const TeamOverviewHeader: React.FC = () => {
             />
           </div>
         )}
-
         {/* Right: captain info + photo — real data */}
         {!isLoading && teamInfo && (
           <div className={styles.infoImageWrapper}>
