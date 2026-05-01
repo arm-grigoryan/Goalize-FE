@@ -11,6 +11,8 @@
 .matches_list {
   overflow-y: auto;
   max-height: 310px;
+  box-sizing: border-box;
+  padding-right: 10px;
 }
 
 .matches_list::-webkit-scrollbar {
