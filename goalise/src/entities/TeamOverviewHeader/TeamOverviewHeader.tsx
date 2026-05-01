@@ -299,7 +299,11 @@ export const TeamOverviewHeader: React.FC = () => {
             </div>
           </div>
         </div>
-        <ProgressBar />
+        <ProgressBar
+          wins={teamInfo?.stats.win ?? 0}
+          draws={teamInfo?.stats.draw ?? 0}
+          losses={teamInfo?.stats.lose ?? 0}
+        />
         <CustomDivider orientation="horizontal" flexItem/>
         {/* Right: captain info + photo — skeleton */}
         {isLoading && (
