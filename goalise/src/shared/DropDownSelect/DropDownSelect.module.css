@@ -34,6 +34,8 @@
   text-transform: capitalize;
   text-decoration: none;
   padding: 10px 20px;
+  border: 0.5px solid transparent;
+  border-radius: 10px;
 }
 
 .links:hover {
