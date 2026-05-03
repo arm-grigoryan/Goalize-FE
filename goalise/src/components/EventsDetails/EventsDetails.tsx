@@ -6,6 +6,7 @@ import styles from './EventsDetails.module.css';
 import EventsPlayersCard from "@/entities/EventsPlayersCard";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import SquadCard from "@/entities/SquadCard";
 
 export const EventsDetails: React.FC = () => {
     const { width } = useWindowSize();
@@ -31,8 +32,7 @@ export const EventsDetails: React.FC = () => {
                 />
         </div>
         <div className={`${styles.playersCards} ${isMobile && styles.mobilePlayersCards}`}>
-            <EventsPlayersCard />
-            <EventsPlayersCard />
+           {isMobile ?  <EventsPlayersCard /> : <SquadCard variant="events" playerId={1} playerName="John Doe" shirtNumber={10} picture={null} menuType="captain"/>}
         </div>
     </>
 }

@@ -5,21 +5,18 @@ import userLogo from '../../assets/pngs/userLogo.svg';
 import phoneLogo from '../../assets/pngs/phoneLogo.svg';
 
 export interface IEventsPlayersInnerCardProps {
-    count?: number;
     playerLogo?: StaticImageData;
     playerName?: string;
     phoneNumber?: string;
     isHost?: boolean;
 }
 export const EventsPlayersInnerCard: React.FC<IEventsPlayersInnerCardProps>= ({
-    count,
     playerLogo,
     playerName,
     phoneNumber,
     isHost
 }) => {
     return <div className={styles.container}>
-        <div className={styles.count}>{count}</div>
         <div className={styles.playerInfoWrapper}>
             {playerLogo && <Image alt="" src={playerLogo} className={styles.playerLogo}/>}
             <div className={styles.playerName}>{playerName}</div>
