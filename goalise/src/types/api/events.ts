@@ -9,8 +9,18 @@ export interface ICreateEventRequest {
   additionalInfo?: string;
 }
 
+export interface IEventHostUser {
+  id: string;
+  firstName: string;
+  lastName: string;
+  profilePic: string | null;
+  profilePicStatus: string | null;
+}
+
 export interface IEvent {
   id: number;
+  hostId: number;
+  hostUser: IEventHostUser;
   name: string;
   address: string;
   startTime: string;

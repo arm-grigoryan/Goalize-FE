@@ -1,11 +1,11 @@
 'use client'
 import Image from 'next/image';
 import styles from './EventCard.module.css';
-import teamLogo from '../../assets/pngs/teamLogo.png';
+import noPhoto from '../../assets/pngs/noPhoto.png';
+import hostIcon from '../../assets/pngs/hostIcon.svg';
 import locationIcon from '../../assets/pngs/location.svg';
 import calendarIcon from '../../assets/pngs/calendarIcon.svg';
 import arrowRight from '../../assets/pngs/arrowRight.svg';
-import hostIcon from '../../assets/pngs/hostIcon.svg';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { MEDIA_TABLET_SMALL } from '@/constants/windowSizes';
 import CustomDivider from '@/shared/Divider';
@@ -33,7 +33,8 @@ export const EventCard: React.FC<IEventCardProps> = ({
         ? `֏ ${event.registrationAmount.toLocaleString('en-US').replace(/,/g, '.')}`
         : null;
 
-    const imageSrc = event.imageUrl ?? teamLogo;
+    const hostPic = event.hostUser?.profilePic?.startsWith('http') ? event.hostUser.profilePic : noPhoto;
+    const isExternalHostPic = !!event.hostUser?.profilePic?.startsWith('http');
 
     const handleNavigate = () => router.push(`/events/${event.id}`);
 
@@ -46,7 +47,14 @@ export const EventCard: React.FC<IEventCardProps> = ({
         {!isMobile ?
             <>
                 <div className={styles.imageWrapper}>
-                    <Image src={imageSrc} width={166} height={166} className={styles.image} alt='' />
+                    <Image
+                        src={hostPic}
+                        width={166}
+                        height={166}
+                        className={styles.image}
+                        alt=''
+                        unoptimized={isExternalHostPic}
+                    />
                     <Image src={hostIcon} alt='' className={styles.hostIcon} />
                 </div>
                 <div className={styles.infoWrapper}>
@@ -97,7 +105,14 @@ export const EventCard: React.FC<IEventCardProps> = ({
             <div className={styles.mobileContainer}>
                 <div className={styles.mobileImageContainer}>
                     <div className={styles.mobileImageWrapper}>
-                        <Image src={imageSrc} width={100} height={100} className={styles.mobileImage} alt='' />
+                        <Image
+                            src={hostPic}
+                            width={100}
+                            height={100}
+                            className={styles.mobileImage}
+                            alt=''
+                            unoptimized={isExternalHostPic}
+                        />
                         <Image src={hostIcon} alt='' className={styles.hostIconMobile} />
                     </div>
                     <div className={styles.mobileNamePriceContainer}>
