@@ -276,3 +276,6 @@
         font-weight: 700;
         text-transform: capitalize;
 }
+.mobileParticipantsWrapper:has(.circleButton:only-child) {
+    justify-content: flex-end;
+}

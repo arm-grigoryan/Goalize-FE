@@ -24,6 +24,27 @@
     flex-direction: row;
     justify-content: space-between;
 }
+.youButton {
+    display: flex;
+    flex-direction: row;
+    padding: 6px 9px;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    border-radius: 100px;
+    border: 1px solid #F53A53;
+    color: #FFF;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 12px;
+}
+.eventsNameContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
 .playerNumberContainer {
   display: flex;
   align-items: flex-end;
@@ -66,6 +87,20 @@
     font-weight: 700;
     text-transform: capitalize; 
     cursor: pointer;
+}
+.eventsName {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.phoneNumber {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(122, 121, 121, 0.687);
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 4px;
 }
 .menuWrapper {
     position: absolute;

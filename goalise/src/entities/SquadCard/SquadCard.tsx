@@ -8,6 +8,7 @@ import profilePictureFallback from '../../assets/pngs/profilePictureIcon.svg';
 import ShowMoreCard from "../ShowMoreCard";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import userLogo from '../../assets/pngs/userLogo.svg';
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -29,6 +30,7 @@ export interface ISquadCardProps {
   onRemove?: () => void;
   onEditShirtNumber?: () => void;
   onInvite?: () => void;
+  variant?: 'default' | 'events';
 }
 
 export const SquadCard: React.FC<ISquadCardProps> = ({
@@ -42,6 +44,7 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
   onRemove,
   onEditShirtNumber,
   onInvite,
+  variant = 'default',
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -65,7 +68,7 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
   return (
     <Link href={`/profile/${playerId}`} className={`${styles.container} ${isMobile ? styles.mobile : ''}`} style={{ textDecoration: 'none', color: 'inherit' }}>
       <div className={styles.wrapper}>
-        <div className={styles.nameNumberContainer}>
+        <div className={`${styles.nameNumberContainer} ${variant === 'events' ? styles.eventsNameContainer : ''}`}>
           <Image
             src={resolvedPicture}
             alt={playerName}
@@ -74,12 +77,23 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
             unoptimized
             className={styles.image}
           />
-          <div className={styles.playerNumberContainer}>
-            <div className={styles.playerNumber}>{shirtNumber}</div>
-          </div>
+          {variant === 'default' && (
+            <div className={styles.playerNumberContainer}>
+              <div className={styles.playerNumber}>{shirtNumber}</div>
+            </div>
+          )}
         </div>
-        <span className={styles.teamName}>{playerName}</span>
-        {menuType !== 'none' && (
+        {
+          variant === 'events' && (
+              <div className={styles.youButton}>
+                    <Image src={userLogo} alt="" />
+                    <div>You</div>
+                </div>
+            )
+        }
+        <span className={`${styles.teamName} ${variant === 'events' ? styles.eventsName : ''}`}>{playerName}</span>
+        {variant === 'events' && ( <div className={styles.phoneNumber}> 0928823737 </div>) }
+        {menuType !== 'none' && variant === 'default' && (
           <div className={styles.menuWrapper} ref={menuRef} onClick={(e) => e.preventDefault()}>
             <Image
               src={dots}
@@ -89,7 +103,7 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
               className={styles.more}
               onClick={(e) => { e.preventDefault(); setShowMenu((prev) => !prev); }}
             />
-            {showMenu && (
+            {showMenu && variant === 'default' && (
               <div className={styles.menuDropdown}>
                 <ShowMoreCard
                   isCaptain={menuType === 'captain'}
