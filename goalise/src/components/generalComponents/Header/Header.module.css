@@ -142,6 +142,9 @@
   margin-left: 16px;
   align-items: center;
   cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid transparent;
 }
 
 .profile_details {
@@ -320,6 +323,7 @@
   height: 52px;
   justify-content: center;
   background-color: #232323d7;
+  border: 1px solid transparent;
 }
 
 .search_icon_wrapper_open {
