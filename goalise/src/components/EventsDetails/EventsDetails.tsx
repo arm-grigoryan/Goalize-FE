@@ -7,32 +7,74 @@ import EventsPlayersCard from "@/entities/EventsPlayersCard";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import SquadCard from "@/entities/SquadCard";
+import { useParams } from "next/navigation";
+import { useGetEventByIdQuery, useGetUserInfoQuery } from "@/app/store/services/api";
+import { useAuth } from "@/shared/auth/AuthContext";
+import { formatUTCDate } from "@/helper/formatDateAndTime";
 
 export const EventsDetails: React.FC = () => {
     const { width } = useWindowSize();
     const isMobile = width <= MEDIA_TABLET_SMALL;
-    
+    const params = useParams();
+    const eventId = Number(params.id);
+    const { isAuthenticated } = useAuth();
+
+    const { data: event, isLoading } = useGetEventByIdQuery(eventId, { skip: !eventId });
+    const { data: userInfo } = useGetUserInfoQuery(undefined, { skip: !isAuthenticated });
+    const myPlayerId = userInfo?.playerInfo?.id;
+
+    if (isLoading) return null;
+    if (!event) return null;
+
+    const participants = event.participants ?? [];
+    const participantsCount = participants.length;
+    const isFull = event.requiredPlayersAmount > 0 && participantsCount >= event.requiredPlayersAmount;
+    const isRegClosed = event.registrationCloseDate
+        ? new Date(event.registrationCloseDate) <= new Date()
+        : false;
+    const showRegistrationDate = event.state === 'Upcoming' && !isFull && !isRegClosed;
+
+    const formattedRegClose = event.registrationCloseDate
+        ? formatUTCDate(event.registrationCloseDate, 'dd/mm/yyyy HH:MM')
+        : null;
+
     return <>
-        <EventsHeader type="detailed" />
-        <div className={styles.progressBarInfoWrapper}> 
-            <div className={styles.textsWrapper}> 
+        <EventsHeader type="detailed" event={event} myPlayerId={myPlayerId} />
+        <div className={styles.progressBarInfoWrapper}>
+            <div className={styles.textsWrapper}>
                 <div className={styles.participantsCount}>
-                    Participants 
-                    <span>(10/30)</span>
+                    Participants
+                    <span>({participantsCount}/{event.requiredPlayersAmount})</span>
                 </div>
-               {!isMobile &&
-                <div className={styles.registrationDate}>
-                    Registrations will be closed on 
-                    <span>19/04/2025 14:55 </span>
-                </div>}
+                {!isMobile && showRegistrationDate && formattedRegClose && (
+                    <div className={styles.registrationDate}>
+                        Registrations will be closed on
+                        <span>{formattedRegClose}</span>
+                    </div>
+                )}
             </div>
             <LeaguesJoinedTeamsProgressBar
-                    maxTeamsCount={30}
-                    registeredTeamsCount={10}
-                />
+                maxTeamsCount={event.requiredPlayersAmount}
+                registeredTeamsCount={participantsCount}
+            />
         </div>
         <div className={`${styles.playersCards} ${isMobile && styles.mobilePlayersCards}`}>
-           {isMobile ?  <EventsPlayersCard /> : <SquadCard variant="events" playerId={1} playerName="John Doe" shirtNumber={10} picture={null} menuType="captain"/>}
+            {isMobile
+                ? <EventsPlayersCard participants={participants} myPlayerId={myPlayerId} />
+                : participants.map((p) => (
+                    <SquadCard
+                        key={p.id}
+                        variant="events"
+                        playerId={p.playerId}
+                        playerName={`${p.userInfo.firstName} ${p.userInfo.lastName}`}
+                        shirtNumber={0}
+                        picture={p.userInfo.profilePic}
+                        menuType="none"
+                        isOwnCard={myPlayerId !== undefined && myPlayerId === p.playerId}
+                        phoneNumber={p.userInfo.phoneNumber}
+                    />
+                ))
+            }
         </div>
-    </>
-}
+    </>;
+};

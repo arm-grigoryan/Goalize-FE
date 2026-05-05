@@ -315,3 +315,13 @@
     text-transform: capitalize;
     margin-left: 10px;
 }
+.cancelledLabel {
+    color: #F53A53;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 20px;
+    border: 1.5px solid #F53A53;
+    border-radius: 8px;
+}

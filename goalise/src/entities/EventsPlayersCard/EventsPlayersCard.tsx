@@ -1,16 +1,24 @@
 import React from "react";
 import styles from './EventsPlayersCard.module.css';
 import EventsPlayersInnerCard from "../EventsPlayersInnerCard";
-import teamLogo from '../../assets/pngs/teamLogo.png';
+import { IEventParticipant } from "@/types/api/events";
 
-export const EventsPlayersCard: React.FC = () => {
-    return <div className={styles.container}>
-            <EventsPlayersInnerCard   playerLogo={teamLogo} playerName="Player Name 1" phoneNumber="0986725168"/>
-            <EventsPlayersInnerCard  playerLogo={teamLogo} playerName="Player Name 2" phoneNumber="0986247682168"/>
-            <EventsPlayersInnerCard  playerLogo={teamLogo} playerName="Player Name 3" phoneNumber="0986725168"/>
-            <EventsPlayersInnerCard  playerLogo={teamLogo} playerName="Player Name 4" phoneNumber="0986768" isHost/>
-            <EventsPlayersInnerCard  playerLogo={teamLogo} playerName="Player Name 5" phoneNumber="09168"/>
-            <EventsPlayersInnerCard  playerLogo={teamLogo} playerName="Player Name 6" phoneNumber="0986725168"/>
-            <EventsPlayersInnerCard  playerLogo={teamLogo} playerName="Player Name 7" phoneNumber="68"/>
-    </div>
+export interface IEventsPlayersCardProps {
+    participants: IEventParticipant[];
+    myPlayerId?: number;
 }
+
+export const EventsPlayersCard: React.FC<IEventsPlayersCardProps> = ({ participants, myPlayerId }) => {
+    return <div className={styles.container}>
+        {participants.map((p) => (
+            <EventsPlayersInnerCard
+                key={p.id}
+                profilePic={p.userInfo.profilePic}
+                playerName={`${p.userInfo.firstName} ${p.userInfo.lastName}`}
+                phoneNumber={p.userInfo.phoneNumber}
+                isYou={myPlayerId !== undefined && myPlayerId === p.playerId}
+                playerId={p.playerId}
+            />
+        ))}
+    </div>;
+};
