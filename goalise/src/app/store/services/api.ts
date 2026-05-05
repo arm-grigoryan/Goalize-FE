@@ -499,6 +499,21 @@ export const api = createApi({
       }),
       invalidatesTags: ["EventDetail"],
     }),
+    updateEvent: builder.mutation<void, { eventId: number; body: ICreateEventRequest }>({
+      query: ({ eventId, body }) => ({
+        url: `/Events/${eventId}`,
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: ["EventDetail"],
+    }),
+    cancelEvent: builder.mutation<void, number>({
+      query: (eventId) => ({
+        url: `/Events/${eventId}/cancel`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["EventDetail"],
+    }),
     createEvent: builder.mutation<void, ICreateEventRequest>({
       query: (body) => ({
         url: "/Events",
@@ -569,4 +584,6 @@ export const {
   useGetEventByIdQuery,
   useJoinEventMutation,
   useUnjoinEventMutation,
+  useUpdateEventMutation,
+  useCancelEventMutation,
 } = api;

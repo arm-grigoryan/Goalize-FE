@@ -13,11 +13,12 @@ import rightArrow from '../../assets/pngs/rightArrow.svg';
 import Button from "@/shared/Button";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
-import { useCreateEventMutation } from "@/app/store/services/api";
+import { useCreateEventMutation, useUpdateEventMutation, useCancelEventMutation } from "@/app/store/services/api";
 import { useDispatch } from "react-redux";
 import { invalidateEventsList } from "@/app/store/slices/eventsSlice";
 import { Loader } from "@/shared/Loader/Loader";
 import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
+import { IEventDetail } from "@/types/api/events";
 
 type CreateEventFormData = {
   title: string;
@@ -32,6 +33,7 @@ type CreateEventFormData = {
 
 export interface ICreateEventPopUpProps {
   onClose: () => void;
+  event?: IEventDetail;
 }
 
 const getLocalDatetimeMin = () => {
@@ -40,12 +42,31 @@ const getLocalDatetimeMin = () => {
   return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
 };
 
-export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose }) => {
+const isoToDatetimeLocal = (iso: string): string => {
+  const date = new Date(iso);
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+};
+
+export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, event }) => {
+  const isEditMode = !!event;
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
   const dispatch = useDispatch();
-  const [createEvent, { isLoading }] = useCreateEventMutation();
-  const [showSuccess, setShowSuccess] = useState(false);
+
+  const [createEvent, { isLoading: isCreating }] = useCreateEventMutation();
+  const [updateEvent, { isLoading: isUpdating }] = useUpdateEventMutation();
+  const [cancelEvent, { isLoading: isCancelling }] = useCancelEventMutation();
+
+  const isLoading = isCreating || isUpdating;
+
+  const [modalState, setModalState] = useState<{
+    open: boolean;
+    type: 'cancelConfirm' | 'success' | 'cancelSuccess' | 'error';
+    title: string;
+    description: string;
+  } | null>(null);
+
   const [submitError, setSubmitError] = useState<string | null>(null);
   const startInputRef = useRef<HTMLInputElement>(null);
   const regInputRef = useRef<HTMLInputElement>(null);
@@ -57,7 +78,17 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose }) 
     trigger,
     getValues,
     formState: { errors, isValid },
-  } = useForm<CreateEventFormData>({ mode: 'onChange' });
+  } = useForm<CreateEventFormData>({
+    mode: 'onChange',
+    defaultValues: isEditMode && event ? {
+      title: event.name,
+      address: event.address,
+      duration: event.duration,
+      paymentAmount: event.registrationAmount ?? 0,
+      participantsCount: event.requiredPlayersAmount,
+      additionalInfo: event.additionalInfo ?? '',
+    } : undefined,
+  });
 
   const todayDatetime = getLocalDatetimeMin();
 
@@ -66,49 +97,95 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose }) 
       required: 'Start time is required',
       validate: (v) => {
         if (!v) return 'Start time is required';
-        return new Date(v) > new Date() || 'Must be in the future';
+        if (!isEditMode && new Date(v) <= new Date()) return 'Must be in the future';
+        return true;
       },
     });
     register('registrationClosingTime', {
       required: 'Registration closing time is required',
       validate: (v) => {
         if (!v) return 'Registration closing time is required';
-        if (new Date(v) <= new Date()) return 'Must be in the future';
+        if (!isEditMode && new Date(v) <= new Date()) return 'Must be in the future';
         const startVal = getValues('startTime');
         if (startVal && new Date(v) >= new Date(startVal)) return 'Must be before start time';
         return true;
       },
     });
-  }, [register, getValues]);
+  }, [register, getValues, isEditMode]);
+
+  // Pre-fill datetime inputs in edit mode
+  useEffect(() => {
+    if (!isEditMode || !event) return;
+    const startLocal = isoToDatetimeLocal(event.startTime);
+    setValue('startTime', startLocal, { shouldValidate: false });
+    if (startInputRef.current) startInputRef.current.value = startLocal;
+
+    if (event.registrationCloseDate) {
+      const regLocal = isoToDatetimeLocal(event.registrationCloseDate);
+      setValue('registrationClosingTime', regLocal, { shouldValidate: false });
+      if (regInputRef.current) regInputRef.current.value = regLocal;
+    }
+    trigger();
+  }, [isEditMode, event, setValue, trigger]);
 
   const onSubmit = async (data: CreateEventFormData) => {
     setSubmitError(null);
+    const body = {
+      title: data.title,
+      address: data.address,
+      startTime: new Date(data.startTime).toISOString(),
+      registrationCloseTime: new Date(data.registrationClosingTime).toISOString(),
+      durationMinutes: data.duration,
+      paymentAmount: data.paymentAmount,
+      participantCount: data.participantsCount,
+      additionalInfo: data.additionalInfo || undefined,
+    };
     try {
-      await createEvent({
-        title: data.title,
-        address: data.address,
-        startTime: new Date(data.startTime).toISOString(),
-        registrationCloseTime: new Date(data.registrationClosingTime).toISOString(),
-        durationMinutes: data.duration,
-        paymentAmount: data.paymentAmount,
-        participantCount: data.participantsCount,
-        additionalInfo: data.additionalInfo || undefined,
-      }).unwrap();
-      dispatch(invalidateEventsList());
-      setShowSuccess(true);
+      if (isEditMode && event) {
+        await updateEvent({ eventId: event.id, body }).unwrap();
+        setModalState({ open: true, type: 'success', title: 'Event Updated!', description: 'Your event has been successfully updated.' });
+      } else {
+        await createEvent(body).unwrap();
+        dispatch(invalidateEventsList());
+        setModalState({ open: true, type: 'success', title: 'Event Created!', description: 'Your event has been successfully created and is now visible in the events list.' });
+      }
     } catch (err) {
       const error = err as { data?: { detail?: string; title?: string; errorMessage?: string } };
-      setSubmitError(error?.data?.detail || error?.data?.title || error?.data?.errorMessage || 'Failed to create event.');
+      setSubmitError(error?.data?.detail || error?.data?.title || error?.data?.errorMessage || (isEditMode ? 'Failed to update event.' : 'Failed to create event.'));
     }
   };
 
-  if (showSuccess) {
+  const handleCancelEventConfirm = async () => {
+    if (!event) return;
+    try {
+      await cancelEvent(event.id).unwrap();
+      setModalState({ open: true, type: 'cancelSuccess', title: 'Event Cancelled', description: 'The event has been successfully cancelled.' });
+    } catch (err) {
+      const error = err as { data?: { errorMessage?: string } };
+      setModalState({ open: true, type: 'error', title: 'Error', description: error?.data?.errorMessage || 'Failed to cancel the event. Please try again.' });
+    }
+  };
+
+  if (modalState?.open) {
+    if (modalState.type === 'cancelConfirm') {
+      return (
+        <PlayerInvitationCard
+          title={modalState.title}
+          description={modalState.description}
+          confirmButtonText='Confirm'
+          cancelButtonText='Back'
+          onConfirmButtonClick={handleCancelEventConfirm}
+          onCancelButtonClick={() => setModalState(null)}
+          loading={isCancelling}
+        />
+      );
+    }
     return (
       <PlayerInvitationCard
+        title={modalState.title}
+        description={modalState.description}
+        cancelButtonText='Close'
         onCancelButtonClick={onClose}
-        title="Event Created!"
-        description="Your event has been successfully created and is now visible in the events list."
-        cancelButtonText="Close"
       />
     );
   }
@@ -120,7 +197,7 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose }) 
         onClick={(e) => e.stopPropagation()}
       >
         {isLoading && <div className={styles.loadingOverlay}><Loader /></div>}
-        <div className={styles.title}>Create Event</div>
+        <div className={styles.title}>{isEditMode ? 'Edit Event' : 'Create Event'}</div>
         <div className={styles.inputsWrapper}>
 
           <div className={styles.inputContainer}>
@@ -163,7 +240,7 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose }) 
                 <input
                   ref={startInputRef}
                   type="datetime-local"
-                  min={todayDatetime}
+                  min={isEditMode ? undefined : todayDatetime}
                   className={`${styles.input} ${styles.datetimeInput} ${errors.startTime ? styles.inputError : ''}`}
                   onClick={() => startInputRef.current?.showPicker?.()}
                   onChange={(e) => {
@@ -182,7 +259,7 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose }) 
                 <input
                   ref={regInputRef}
                   type="datetime-local"
-                  min={todayDatetime}
+                  min={isEditMode ? undefined : todayDatetime}
                   className={`${styles.input} ${styles.datetimeInput} ${errors.registrationClosingTime ? styles.inputError : ''}`}
                   onClick={() => regInputRef.current?.showPicker?.()}
                   onChange={(e) => {
@@ -276,10 +353,18 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose }) 
           <Button
             className={isValid && !isLoading ? 'gray_buttonIcon_active' : 'gray_buttonIcon'}
             handleClick={handleSubmit(onSubmit)}
-            content="Create"
+            content={isEditMode ? 'Save Changes' : 'Create'}
             rightIcon={rightArrow}
             disabled={!isValid || isLoading}
           />
+          {isEditMode && (
+            <Button
+              className='red_button_transparant_white_text'
+              handleClick={() => setModalState({ open: true, type: 'cancelConfirm', title: 'Cancel Event', description: 'Are you sure you want to cancel this event? This action cannot be undone.' })}
+              content='Cancel Event'
+              disabled={isLoading || isCancelling}
+            />
+          )}
         </div>
       </div>
     </div>

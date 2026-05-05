@@ -304,7 +304,7 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
                 <CustomDivider orientation='vertical' flexItem />
                 {renderRightSection()}
             </div>
-            {isOpen && <CreateEventPopUp onClose={() => setIsOpen(false)} />}
+            {isOpen && <CreateEventPopUp onClose={() => setIsOpen(false)} event={event} />}
 
             {modalState.open && modalState.type !== 'error' && modalState.type !== 'success' && (
                 <PlayerInvitationCard
