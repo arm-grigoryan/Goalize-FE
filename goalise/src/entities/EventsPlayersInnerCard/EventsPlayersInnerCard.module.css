@@ -56,8 +56,9 @@
     font-weight: 500;
     text-transform: capitalize;
 }
-.host {
+.blurred {
     filter: blur(7px);
+    user-select: none;
 }
 .iconWrapper {
   position: relative;

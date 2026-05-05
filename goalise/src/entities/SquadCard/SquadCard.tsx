@@ -31,6 +31,7 @@ export interface ISquadCardProps {
   onEditShirtNumber?: () => void;
   onInvite?: () => void;
   variant?: 'default' | 'events';
+  phoneNumber?: string | null;
 }
 
 export const SquadCard: React.FC<ISquadCardProps> = ({
@@ -45,6 +46,7 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
   onEditShirtNumber,
   onInvite,
   variant = 'default',
+  phoneNumber,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -83,16 +85,18 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
             </div>
           )}
         </div>
-        {
-          variant === 'events' && (
-              <div className={styles.youButton}>
-                    <Image src={userLogo} alt="" />
-                    <div>You</div>
-                </div>
-            )
-        }
+        {variant === 'events' && isOwnCard && (
+          <div className={styles.youButton}>
+            <Image src={userLogo} alt="" />
+            <div>You</div>
+          </div>
+        )}
         <span className={`${styles.teamName} ${variant === 'events' ? styles.eventsName : ''}`}>{playerName}</span>
-        {variant === 'events' && ( <div className={styles.phoneNumber}> 0928823737 </div>) }
+        {variant === 'events' && (
+          <div className={`${styles.phoneNumber} ${phoneNumber === null || phoneNumber === undefined ? styles.blurredPhone : ''}`}>
+            {phoneNumber ?? '+37400000000'}
+          </div>
+        )}
         {menuType !== 'none' && variant === 'default' && (
           <div className={styles.menuWrapper} ref={menuRef} onClick={(e) => e.preventDefault()}>
             <Image

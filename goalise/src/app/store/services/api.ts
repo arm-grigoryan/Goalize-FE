@@ -32,7 +32,7 @@ import {
 } from "@/shared/auth/oidcService";
 import { setError } from "../slices/errorSlice";
 import { NotificationItemDto } from "@/types/api/notifications";
-import { ICreateEventRequest, IEvent, IEventsResponse } from "@/types/api/events";
+import { ICreateEventRequest, IEvent, IEventsResponse, IEventDetail } from "@/types/api/events";
 
 const getApiLocale = (): string => {
   if (typeof document === "undefined") return "en";
@@ -241,9 +241,6 @@ export const publicApi = createApi({
       }),
       providesTags: ["Events"],
     }),
-    getEventById: builder.query<IEvent, number>({
-      query: (eventId) => `/Events/${eventId}`,
-    }),
     getMatchById: builder.query<IMatches, number>({
       query: (matchId) => `/Matches/${matchId}`,
     }),
@@ -303,6 +300,7 @@ export const publicApi = createApi({
 
 export const api = createApi({
   reducerPath: "api",
+  tagTypes: ["EventDetail"],
   baseQuery: createErrorHandlingBaseQuery(
     fetchBaseQuery({
       baseUrl: process.env.NEXT_PUBLIC_API_URL,
@@ -483,6 +481,24 @@ export const api = createApi({
         body: { number: shirtNumber },
       }),
     }),
+    getEventById: builder.query<IEventDetail, number>({
+      query: (eventId) => `/Events/${eventId}`,
+      providesTags: ["EventDetail"],
+    }),
+    joinEvent: builder.mutation<void, number>({
+      query: (eventId) => ({
+        url: `/Events/${eventId}/participants`,
+        method: "POST",
+      }),
+      invalidatesTags: ["EventDetail"],
+    }),
+    unjoinEvent: builder.mutation<void, number>({
+      query: (eventId) => ({
+        url: `/Events/${eventId}/participants`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["EventDetail"],
+    }),
     createEvent: builder.mutation<void, ICreateEventRequest>({
       query: (body) => ({
         url: "/Events",
@@ -515,7 +531,6 @@ export const {
   useLazyGetSearchAutoCompleteQuery,
   useGetLeaguesTopPlayersQuery,
   useGetEventsQuery,
-  useGetEventByIdQuery,
   useGetMatchByIdQuery,
   useGetMatchStatsQuery,
   useGetMatchLineupQuery,
@@ -551,4 +566,7 @@ export const {
   useUpdateShirtNumberMutation,
   useDeleteTeamDraftMutation,
   useCreateEventMutation,
+  useGetEventByIdQuery,
+  useJoinEventMutation,
+  useUnjoinEventMutation,
 } = api;
