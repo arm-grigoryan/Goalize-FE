@@ -132,7 +132,6 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
     const isRegClosed = event.registrationCloseDate
         ? new Date(event.registrationCloseDate) <= now
         : false;
-    const showRegistrationOpen = event.state === 'Upcoming' && !isFull && !isRegClosed;
 
     const isHost = myPlayerId !== undefined && myPlayerId === event.hostId;
     const isParticipant = participants.some((p) => p.playerId === myPlayerId);
@@ -142,15 +141,14 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
         : noPhoto;
 
     const formattedStartTime = formatUTCDate(event.startTime, 'dd/mm/yyyy HH:MM');
-    const formattedRegClose = event.registrationCloseDate
-        ? formatUTCDate(event.registrationCloseDate, 'dd/mm/yyyy HH:MM')
-        : null;
 
     const handleJoin = () => {
         if (!isAuthenticated) {
             signIn();
         }
     };
+
+    const payAmount = event.registrationAmount?.toLocaleString('en-US').replace(/,/g, '.') ?? 0;
 
     const renderRightSection = () => {
         if (event.state === 'Cancelled') {
@@ -165,18 +163,57 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
             return (
                 <div className={styles.joinedPaymentWrapper}>
                     <div className={styles.detailsPay}>
-                        <div>Pay ֏ {event.registrationAmount?.toLocaleString('en-US').replace(/,/g, '.') ?? 0}</div>
+                        <div>Pay ֏ {payAmount}</div>
+                    </div>
+                    <div className={styles.finishedLabel}>Finished</div>
+                </div>
+            );
+        }
+
+        // Upcoming — host always sees Manage + Pay, nothing else
+        if (isHost) {
+            return (
+                <div className={styles.joinedPaymentWrapper}>
+                    <Button
+                        className='red_button_transparant_white_text'
+                        handleClick={() => setIsOpen(true)}
+                        content='Manage'
+                    />
+                    <div className={styles.detailsPay}>
+                        <div>Pay ֏ {payAmount}</div>
                     </div>
                 </div>
             );
         }
 
-        // Upcoming
+        // Upcoming — participant (not host): only registrationCloseDate matters
+        if (isAuthenticated && isParticipant) {
+            return (
+                <div className={styles.joinedPaymentWrapper}>
+                    <Button
+                        className='red_button_transparant_white_text'
+                        handleClick={handleOpenUnjoinModal}
+                        content='Unjoin'
+                        disabled={isRegClosed || isActionLoading}
+                    />
+                    <div className={styles.detailsPay}>
+                        <div>Pay ֏ {payAmount}</div>
+                    </div>
+                    {isRegClosed && (
+                        <div className={styles.maximumText}>
+                            You can no longer leave the event. The registration period is over.
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        // Upcoming — not logged in or logged in but not a participant
         if (isFull) {
             return (
                 <div className={styles.joinedPaymentWrapper}>
                     <div className={styles.detailsPay}>
-                        <div>Pay ֏ {event.registrationAmount?.toLocaleString('en-US').replace(/,/g, '.') ?? 0}</div>
+                        <div>Pay ֏ {payAmount}</div>
                     </div>
                     <div className={styles.maximumText}>
                         Maximum number of participants are already registered
@@ -189,7 +226,7 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
             return (
                 <div className={styles.joinedPaymentWrapper}>
                     <div className={styles.detailsPay}>
-                        <div>Pay ֏ {event.registrationAmount?.toLocaleString('en-US').replace(/,/g, '.') ?? 0}</div>
+                        <div>Pay ֏ {payAmount}</div>
                     </div>
                     <div className={styles.maximumText}>
                         You can no longer register. The registration period is over.
@@ -199,40 +236,16 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
         }
 
         // Registration is open
-        let actionButton;
-        if (isHost) {
-            actionButton = (
-                <Button
-                    className='red_button_transparant_white_text'
-                    handleClick={() => setIsOpen(true)}
-                    content='Manage'
-                />
-            );
-        } else if (isAuthenticated && isParticipant) {
-            actionButton = (
-                <Button
-                    className='red_button_transparant_white_text'
-                    handleClick={handleOpenUnjoinModal}
-                    content='Unjoin'
-                    disabled={isActionLoading}
-                />
-            );
-        } else {
-            actionButton = (
+        return (
+            <div className={styles.joinedPaymentWrapper}>
                 <Button
                     className='red_button_transparant_white_text'
                     handleClick={isAuthenticated ? handleOpenJoinModal : handleJoin}
                     content='Join'
                     disabled={isActionLoading}
                 />
-            );
-        }
-
-        return (
-            <div className={styles.joinedPaymentWrapper}>
-                {actionButton}
                 <div className={styles.detailsPay}>
-                    <div>Pay ֏ {event.registrationAmount?.toLocaleString('en-US').replace(/,/g, '.') ?? 0}</div>
+                    <div>Pay ֏ {payAmount}</div>
                 </div>
             </div>
         );
@@ -272,12 +285,6 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
                 <CustomDivider orientation={isMobile ? 'horizontal' : 'vertical'} flexItem />
                 <div className={styles.detailsWrapper}>
                     {isMobile && <CustomDivider orientation='horizontal' flexItem />}
-                    {isMobile && showRegistrationOpen && formattedRegClose && (
-                        <div className={styles.registrationDate}>
-                            Registrations will be closed on
-                            <span>{formattedRegClose}</span>
-                        </div>
-                    )}
                     <div className={styles.detailsIconText}>
                         <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
                             <Image src={addressIcon} alt='' className={styles.icon} />
