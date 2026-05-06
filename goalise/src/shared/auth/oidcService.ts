@@ -147,9 +147,12 @@ export const persistTokens = (tokens: AuthTokens | null) => {
   if (typeof window === "undefined") return;
   if (!tokens) {
     localStorage.removeItem(AUTH_STORAGE_KEY);
-    return;
+  } else {
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(tokens));
   }
-  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(tokens));
+  window.dispatchEvent(
+    new StorageEvent("storage", { key: AUTH_STORAGE_KEY, newValue: tokens ? JSON.stringify(tokens) : null }),
+  );
 };
 
 const buildAuthorizeUrl = async (returnPath?: string) => {
