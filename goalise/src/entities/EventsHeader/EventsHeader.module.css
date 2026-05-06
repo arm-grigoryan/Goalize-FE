@@ -325,3 +325,13 @@
     border: 1.5px solid #F53A53;
     border-radius: 8px;
 }
+.finishedLabel {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 20px;
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+}

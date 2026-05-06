@@ -10,6 +10,7 @@ import dateGray from '../../assets/pngs/dateGray.svg';
 import dramSymbolGray from '../../assets/pngs/dramSymbolGray.svg';
 import infoGray from '../../assets/pngs/infoGray.svg';
 import rightArrow from '../../assets/pngs/rightArrow.svg';
+import trashIcon from '../../assets/pngs/trash.svg';
 import Button from "@/shared/Button";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
@@ -71,18 +72,23 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
   const startInputRef = useRef<HTMLInputElement>(null);
   const regInputRef = useRef<HTMLInputElement>(null);
 
+  const defaultStartTime = isEditMode && event?.startTime ? isoToDatetimeLocal(event.startTime) : '';
+  const defaultRegCloseTime = isEditMode && event?.registrationCloseDate ? isoToDatetimeLocal(event.registrationCloseDate) : '';
+
   const {
     register,
     handleSubmit,
     setValue,
     trigger,
     getValues,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
   } = useForm<CreateEventFormData>({
     mode: 'onChange',
     defaultValues: isEditMode && event ? {
       title: event.name,
       address: event.address,
+      startTime: defaultStartTime,
+      registrationClosingTime: defaultRegCloseTime,
       duration: event.duration,
       paymentAmount: event.registrationAmount ?? 0,
       participantsCount: event.requiredPlayersAmount,
@@ -351,19 +357,21 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
         <div className={styles.buttonsWrapper}>
           {submitError && <div className={styles.error}>{submitError}</div>}
           <Button
-            className={isValid && !isLoading ? 'gray_buttonIcon_active' : 'gray_buttonIcon'}
+            className={isValid && !isLoading && (!isEditMode || isDirty) ? 'gray_buttonIcon_active' : 'gray_buttonIcon'}
             handleClick={handleSubmit(onSubmit)}
             content={isEditMode ? 'Save Changes' : 'Create'}
             rightIcon={rightArrow}
-            disabled={!isValid || isLoading}
+            disabled={!isValid || isLoading || (isEditMode && !isDirty)}
           />
           {isEditMode && (
-            <Button
-              className='red_button_transparant_white_text'
-              handleClick={() => setModalState({ open: true, type: 'cancelConfirm', title: 'Cancel Event', description: 'Are you sure you want to cancel this event? This action cannot be undone.' })}
-              content='Cancel Event'
-              disabled={isLoading || isCancelling}
-            />
+            <div
+              className={styles.textButtonWrapper}
+              onClick={() => !isLoading && !isCancelling && setModalState({ open: true, type: 'cancelConfirm', title: 'Cancel Event', description: 'Are you sure you want to cancel this event? This action cannot be undone.' })}
+              style={{ opacity: isLoading || isCancelling ? 0.4 : 1, pointerEvents: isLoading || isCancelling ? 'none' : 'auto' }}
+            >
+              <span className={styles.textButton}>Cancel Event</span>
+              <Image src={trashIcon} alt="" width={20} height={20} />
+            </div>
           )}
         </div>
       </div>
