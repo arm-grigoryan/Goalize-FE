@@ -28,7 +28,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
 
     const isCancelled = event.state === 'Cancelled';
     const formattedDate = formatUTCDate(event.startTime, 'dd/mm/yyyy');
-    const formattedCloseDate = formatUTCDate(event.registrationCloseDate ?? null, 'dd/mm/yyyy');
+    const formattedCloseDate = formatUTCDate(event.registrationCloseDate ?? null, 'dd/mm/yyyy HH:MM');
     const formattedAmount = event.registrationAmount !== null && event.registrationAmount !== undefined
         ? `֏ ${event.registrationAmount.toLocaleString('en-US').replace(/,/g, '.')}`
         : null;

@@ -32,6 +32,7 @@ export interface ISquadCardProps {
   onInvite?: () => void;
   variant?: 'default' | 'events';
   phoneNumber?: string | null;
+  isHost?: boolean;
 }
 
 export const SquadCard: React.FC<ISquadCardProps> = ({
@@ -47,6 +48,7 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
   onInvite,
   variant = 'default',
   phoneNumber,
+  isHost,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -71,14 +73,17 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
     <Link href={`/profile/${playerId}`} className={`${styles.container} ${isMobile ? styles.mobile : ''}`} style={{ textDecoration: 'none', color: 'inherit' }}>
       <div className={styles.wrapper}>
         <div className={`${styles.nameNumberContainer} ${variant === 'events' ? styles.eventsNameContainer : ''}`}>
-          <Image
-            src={resolvedPicture}
-            alt={playerName}
-            width={94}
-            height={124}
-            unoptimized
-            className={styles.image}
-          />
+          <div className={styles.imageContainer}>
+            <Image
+              src={resolvedPicture}
+              alt={playerName}
+              width={94}
+              height={124}
+              unoptimized
+              className={styles.image}
+            />
+            {isHost && <div className={styles.hostLabel}>Host</div>}
+          </div>
           {variant === 'default' && (
             <div className={styles.playerNumberContainer}>
               <div className={styles.playerNumber}>{shirtNumber}</div>
