@@ -60,7 +60,7 @@ export const EventsDetails: React.FC = () => {
         </div>
         <div className={`${styles.playersCards} ${isMobile && styles.mobilePlayersCards}`}>
             {isMobile
-                ? <EventsPlayersCard participants={participants} myPlayerId={myPlayerId} />
+                ? <EventsPlayersCard participants={participants} myPlayerId={myPlayerId} hostId={event.hostId} />
                 : participants.map((p) => (
                     <SquadCard
                         key={p.id}
@@ -71,6 +71,7 @@ export const EventsDetails: React.FC = () => {
                         picture={p.userInfo.profilePic}
                         menuType="none"
                         isOwnCard={myPlayerId !== undefined && myPlayerId === p.playerId}
+                        isHost={p.playerId === event.hostId}
                         phoneNumber={p.userInfo.phoneNumber}
                     />
                 ))

@@ -80,6 +80,11 @@
   &&:hover {
     cursor: pointer;
   }
+  &:disabled {
+    border-color: #858585;
+    color: #858585;
+    cursor: not-allowed;
+  }
 }
 .red_button {
   width: 100%;

@@ -18,6 +18,7 @@ export interface IEventsPlayersInnerCardProps {
   playerName?: string;
   phoneNumber?: string | null;
   isYou?: boolean;
+  isHost?: boolean;
   playerId?: number;
 }
 
@@ -26,6 +27,7 @@ export const EventsPlayersInnerCard: React.FC<IEventsPlayersInnerCardProps> = ({
   playerName,
   phoneNumber,
   isYou,
+  isHost,
   playerId,
 }) => {
   const resolvedPic = profilePic && isValidUrl(profilePic) ? profilePic : profilePictureFallback;
@@ -34,14 +36,17 @@ export const EventsPlayersInnerCard: React.FC<IEventsPlayersInnerCardProps> = ({
   const card = (
     <div className={styles.container}>
       <div className={styles.playerInfoWrapper}>
-        <Image
-          alt=""
-          src={resolvedPic}
-          className={styles.playerLogo}
-          width={40}
-          height={40}
-          unoptimized={typeof resolvedPic === 'string'}
-        />
+        <div className={styles.imageContainer}>
+          <Image
+            alt=""
+            src={resolvedPic}
+            className={styles.playerLogo}
+            width={40}
+            height={40}
+            unoptimized={typeof resolvedPic === 'string'}
+          />
+          {isHost && <div className={styles.hostLabel}>Host</div>}
+        </div>
         <div className={styles.playerName}>{playerName}</div>
         {isYou && (
           <div className={styles.youButton}>

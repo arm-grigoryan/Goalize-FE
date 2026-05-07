@@ -6,9 +6,10 @@ import { IEventParticipant } from "@/types/api/events";
 export interface IEventsPlayersCardProps {
     participants: IEventParticipant[];
     myPlayerId?: number;
+    hostId?: number;
 }
 
-export const EventsPlayersCard: React.FC<IEventsPlayersCardProps> = ({ participants, myPlayerId }) => {
+export const EventsPlayersCard: React.FC<IEventsPlayersCardProps> = ({ participants, myPlayerId, hostId }) => {
     return <div className={styles.container}>
         {participants.map((p) => (
             <EventsPlayersInnerCard
@@ -17,6 +18,7 @@ export const EventsPlayersCard: React.FC<IEventsPlayersCardProps> = ({ participa
                 playerName={`${p.userInfo.firstName} ${p.userInfo.lastName}`}
                 phoneNumber={p.userInfo.phoneNumber}
                 isYou={myPlayerId !== undefined && myPlayerId === p.playerId}
+                isHost={hostId !== undefined && hostId === p.playerId}
                 playerId={p.playerId}
             />
         ))}
