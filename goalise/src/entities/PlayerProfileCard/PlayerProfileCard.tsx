@@ -72,7 +72,7 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
     >
       <div className={styles.leftContainer}>
         <div className={styles.playerContainer}>
-          <div className={styles.imageWrapper}>
+          <div className={`${styles.imageWrapper} ${isMobile && !playerHasTeam ? styles.imageWrapperNoTeam : ""}`}>
             <Image
               src={typeof profilePic === "string" && profilePic.startsWith("http") ? profilePic : noPhoto}
               className={styles.image}
@@ -219,17 +219,6 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
               </div>
             )}
           </div>
-          {!isMobile && teamLogo && (
-            teamId ? (
-              <Link href={`/teams/${teamId}`} className={styles.teamLogoWrapper}>
-                <Image src={teamLogo} alt="" className={styles.teamLogo} width={66} height={66} />
-              </Link>
-            ) : (
-              <div className={styles.teamLogoWrapper}>
-                <Image src={teamLogo} alt="" className={styles.teamLogo} width={66} height={66} />
-              </div>
-            )
-          )}
           {!isMobile && teamName && (
             <div className={styles.playerNumberContainer}>
               {playerNumber && (

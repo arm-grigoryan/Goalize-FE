@@ -3,22 +3,24 @@
 }
 .wrapper {
   display: flex;
-  justify-content: start;
-  align-items: center;
+  align-items: stretch;
   height: 69px;
   flex-shrink: 0;
   border-radius: 10px;
   border: 0.5px solid rgba(255, 255, 255, 0.1);
   background: rgba(21, 25, 30, 0.4);
   margin-bottom: 13px;
+  overflow: hidden;
 }
 .dateWrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
-  margin-right: 8px;
-  padding: 24px 15px 24px 17px;
+  padding: 0 17px;
+  flex-shrink: 0;
+  height: 100%;
 }
 .dateIcon {
   width: 20px;
@@ -35,7 +37,10 @@
 .teamLogoWrapper {
   display: flex;
   flex-direction: row;
-  padding: 15px 12px 15px 0;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
 }
 .fromTeamLogo {
   width: 36px;
@@ -67,7 +72,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 227px;
+  flex: 1;
   height: 100%;
   border-radius: 10px;
   background: linear-gradient(
@@ -152,12 +157,12 @@
 .teamContainer {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  flex: 1;
   height: 100%;
 }
 
 /* ----------- mobile styles -------------*/
-.mobile .container {
+.mobile {
   padding: 0;
 }
 .mobile .wrapper {

@@ -76,7 +76,7 @@ export const MatchList = () => {
       <div ref={scrollContainerRef} className={styles.matches_list}>
         {!matches?.length && (
           <div className={styles.emptyState}>
-            <Image src={matchEmptyState} alt="" />
+            <Image src={matchEmptyState} alt="" width={297} height={222} className={styles.emptyImage} />
             <div className={styles.emptyText}>{t("emptyStateText")}</div>
           </div>
         )}
