@@ -2,7 +2,7 @@ import styles from "./TransferHistory.module.css";
 import Image from "next/image";
 import TransferItemCard from "../TransferItemCard";
 import transferHistoryIcon from "../../assets/pngs/TransferIcon.svg";
-import transferEmptyState from "../../assets/pngs/transferEmptyState.png";
+import transferEmptyState from "../../assets/pngs/transferEmpty.svg";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useTranslations } from "next-intl";
@@ -77,7 +77,7 @@ export const TransferHistoryCard = () => {
       <div ref={containerRef} className={styles.content}>
         {!transfers?.length && (
           <div className={styles.emptyState}>
-            <Image src={transferEmptyState} alt="" />
+            <Image src={transferEmptyState} alt="" width={558} height={236} className={styles.emptyImage} />
             <div className={styles.emptyStateText}> {t("emptyStateText")}</div>
           </div>
         )}

@@ -163,8 +163,7 @@
 .mobile {
     display: flex;
     flex-direction: column;
-    padding: 0;
-    margin-right: 18px;
+    margin-right: 0;
     padding: 19px 15px;
 }
 

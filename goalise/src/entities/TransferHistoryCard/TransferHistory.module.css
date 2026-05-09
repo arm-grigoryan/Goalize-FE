@@ -48,6 +48,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+}
+
+.emptyImage {
+  max-width: 100%;
+  height: auto;
 }
 
 .emptyStateText {
@@ -63,6 +69,7 @@
   width: 100%;
   box-sizing: border-box;
   overflow-y: auto;
+  overflow-x: hidden;
   max-height: 270px;
   padding-right: 10px;
 }
@@ -84,14 +91,16 @@
 .mobile {
   display: flex;
   flex-direction: column;
-  padding: 20px 0 0 17px;
+  padding: 20px 17px 20px 17px;
   overflow: hidden;
+  height: fit-content;
   max-height: 600px;
 }
 
 .mobile .content {
   padding-right: 10px;
   overflow-y: auto;
+  overflow-x: hidden;
   max-height: 450px;
 }
 
