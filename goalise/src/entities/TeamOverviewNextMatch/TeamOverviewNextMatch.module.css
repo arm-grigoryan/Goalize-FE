@@ -392,10 +392,12 @@
 
 @media (max-width: 1600px){
   .match_left_block_inner_wrapper {
-    max-width: 180px;
+    max-width: 160px;
+    width: 100%;
   }
   .match_right_block_inner_wrapper {
-    max-width: 180px;
+    max-width: 160px;
+    width: 100%;
   }
 
 }
