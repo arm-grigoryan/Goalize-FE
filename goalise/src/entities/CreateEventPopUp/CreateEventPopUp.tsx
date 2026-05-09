@@ -103,7 +103,8 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
       required: 'Start time is required',
       validate: (v) => {
         if (!v) return 'Start time is required';
-        if (!isEditMode && new Date(v) <= new Date()) return 'Must be in the future';
+        const unchanged = isEditMode && v === defaultStartTime;
+        if (!unchanged && new Date(v) <= new Date()) return 'Must be in the future';
         return true;
       },
     });
@@ -111,13 +112,17 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
       required: 'Registration closing time is required',
       validate: (v) => {
         if (!v) return 'Registration closing time is required';
-        if (!isEditMode && new Date(v) <= new Date()) return 'Must be in the future';
-        const startVal = getValues('startTime');
-        if (startVal && new Date(v) >= new Date(startVal)) return 'Must be before start time';
+        const unchanged = isEditMode && v === defaultRegCloseTime;
+        const startUnchanged = isEditMode && getValues('startTime') === defaultStartTime;
+        if (!unchanged && new Date(v) <= new Date()) return 'Must be in the future';
+        if (!(unchanged && startUnchanged)) {
+          const startVal = getValues('startTime');
+          if (startVal && new Date(v) >= new Date(startVal)) return 'Must be before start time';
+        }
         return true;
       },
     });
-  }, [register, getValues, isEditMode]);
+  }, [register, getValues, isEditMode, defaultStartTime, defaultRegCloseTime]);
 
   // Pre-fill datetime inputs in edit mode
   useEffect(() => {
