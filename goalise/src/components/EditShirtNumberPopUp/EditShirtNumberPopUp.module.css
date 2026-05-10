@@ -18,6 +18,7 @@
     justify-content: center;
     align-items: flex-start;
     gap: 50px;
+    position: relative;
     border-radius: 20px;
     border: 1px solid transparent;
     background-clip: padding-box, border-box;
@@ -169,4 +170,25 @@
 }
 .mobile {
   width: 100%;
+}
+
+.closeButton {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: none;
+    border: none;
+    color: #7A7A7A;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: color 0.15s;
+}
+.closeButton:hover {
+    color: #E8E8E8;
 }
