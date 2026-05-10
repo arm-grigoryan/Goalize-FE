@@ -208,6 +208,7 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
         onClick={(e) => e.stopPropagation()}
       >
         {isLoading && <div className={styles.loadingOverlay}><Loader /></div>}
+        <button className={styles.closeButton} onClick={onClose} type="button" aria-label="Close">×</button>
         <div className={styles.title}>{isEditMode ? 'Edit Event' : 'Create Event'}</div>
         <div className={styles.inputsWrapper}>
 

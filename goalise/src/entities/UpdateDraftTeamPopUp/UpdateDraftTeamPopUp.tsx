@@ -289,6 +289,7 @@ export const UpdateDraftTeamPopUp: React.FC<IUpdateDraftTeamPopUpProps> = ({
       <div className={styles.overlay} onClick={handleClose} />
       <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
         {isSaving && <div className={styles.loadingOverlay}><Loader /></div>}
+        <button className={styles.closeButton} onClick={handleClose} type="button" aria-label="Close">×</button>
         <div className={styles.titleWrapper}>
           <div className={styles.title}>{t("title")}</div>
           <div className={styles.subTitle}>{t("subtitle")}</div>

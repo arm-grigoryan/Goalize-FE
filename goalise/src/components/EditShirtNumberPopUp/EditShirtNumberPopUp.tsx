@@ -56,6 +56,7 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
   return (
     <div className={`${styles.overlay} ${isMobile ? styles.mobile : ''}`} onClick={onClose}>
       <div className={styles.container} onClick={(e) => e.stopPropagation()}>
+        <button className={styles.closeButton} onClick={onClose} type="button" aria-label="Close">×</button>
         <div className={styles.titleWrapper}>
           <div className={styles.title}>Edit Shirt Number</div>
           <div className={styles.subTitle}>Your winning journey starts here!</div>

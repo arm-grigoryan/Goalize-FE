@@ -236,3 +236,24 @@
     padding: 16px 0;
     height: 40px;
 }
+
+.closeButton {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: none;
+    border: none;
+    color: #7A7A7A;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: color 0.15s;
+}
+.closeButton:hover {
+    color: #E8E8E8;
+}
