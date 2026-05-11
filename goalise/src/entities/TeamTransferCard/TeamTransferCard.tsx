@@ -11,6 +11,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import profilePictureFallback from '../../assets/pngs/profilePictureIcon.svg';
 import teamLogoFallback from '../../assets/pngs/teamLogo.png';
+import { useTranslations } from "next-intl";
 
 export interface ITeamTransferCardProps {
   date: string;
@@ -46,6 +47,7 @@ export const TeamTransferCard: React.FC<ITeamTransferCardProps> = ({
 }) => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("teamTransfer.card");
 
   const resolvedPlayerLogo =
     playerLogo && typeof playerLogo === 'string' && isValidUrl(playerLogo)
@@ -90,7 +92,7 @@ export const TeamTransferCard: React.FC<ITeamTransferCardProps> = ({
           />
         </Link>
         <div className={styles.playerNameWrapper}>
-          <span>Player Name</span>
+          <span>{t("playerName")}</span>
           <Link className={styles.playerName} href={playerHref}>
             {playerName}
           </Link>
@@ -101,12 +103,12 @@ export const TeamTransferCard: React.FC<ITeamTransferCardProps> = ({
           <Image src={playerIn ? left : out} alt="" className={styles.inOutIcon} />
           <div>
             {playerIn && !isMobile
-              ? 'Player In'
+              ? t("playerIn")
               : !playerIn && !isMobile
-              ? 'Player Out'
+              ? t("playerOut")
               : playerIn
-              ? 'In'
-              : 'Out'}
+              ? t("in")
+              : t("out")}
           </div>
         </div>
         <div className={styles.teamWrapper}>

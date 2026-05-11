@@ -57,6 +57,10 @@ export const TeamOverviewHeader: React.FC = () => {
   const id = Number(teamId);
   const base = `/teams/${teamId}`;
   const tTeams = useTranslations("teams");
+  const t = useTranslations("teamOverview.header");
+  const tModals = useTranslations("playerProfile.modals");
+  const tCommon = useTranslations("common");
+  const tDraft = useTranslations("draftTeam");
 
   const {
     data: teamInfo,
@@ -144,11 +148,11 @@ export const TeamOverviewHeader: React.FC = () => {
       const errorData = error as { data?: { errorMessage?: string } };
       setApplyError(
         errorData?.data?.errorMessage ||
-          "An unexpected error occurred. Please try again later.",
+          t("unexpectedError"),
       );
       setShowApplyErrorModal(true);
     }
-  }, [id, applyToTeamMutation, refetchUserInfo, refetchTeamInfo]);
+  }, [id, applyToTeamMutation, refetchUserInfo, refetchTeamInfo, t]);
 
   const quitTeam = useCallback(async () => {
     if (!userTeamId) return;
@@ -167,7 +171,7 @@ export const TeamOverviewHeader: React.FC = () => {
       const errorData = error as { data?: { errorMessage?: string } };
       setQuitTeamError(
         errorData?.data?.errorMessage ||
-          "An unexpected error occurred. Please try again later.",
+          t("unexpectedError"),
       );
       setShowQuitErrorModal(true);
     }
@@ -179,6 +183,7 @@ export const TeamOverviewHeader: React.FC = () => {
     refetchUserInfo,
     refetchTeamInfo,
     setHasQuit,
+    t,
   ]);
 
   const isActive = (href: string) => {
@@ -218,7 +223,7 @@ export const TeamOverviewHeader: React.FC = () => {
           ) : (
             <Image
               src={teamLogoSrc}
-              alt={teamInfo?.team.name ?? "Team"}
+              alt={teamInfo?.team.name ?? ""}
               className={styles.teamLogo}
               width={130}
               height={130}
@@ -234,7 +239,7 @@ export const TeamOverviewHeader: React.FC = () => {
                   style={{ width: 200, height: 32, borderRadius: 6 }}
                 />
               ) : isError ? (
-                <div className={styles.errorText}>Failed to load team info</div>
+                <div className={styles.errorText}>{tTeams("failedToLoad")}</div>
               ) : (
                 <div className={styles.name}>
                   {teamInfo?.team.name}
@@ -261,7 +266,7 @@ export const TeamOverviewHeader: React.FC = () => {
               {isAbandoned ? (
                 <div className={styles.abandoned}>
                   <Image src={infoIcon} alt="" />
-                  <div className={styles.abandonedText}>Abandoned</div>
+                  <div className={styles.abandonedText}>{t("abandoned")}</div>
                 </div>
               ) : (
                 <>
@@ -274,14 +279,14 @@ export const TeamOverviewHeader: React.FC = () => {
                     ) : (
                       <Button
                         handleClick={handleApplyClick}
-                        content="Apply"
+                        content={t("applyButton")}
                         className="red_button_transparant_white_text"
                       />
                     ))}
                   {isOnThisTeam && (
                     <Button
                       handleClick={() => setShowQuitConfirmModal(true)}
-                      content="Quit"
+                      content={t("quitButton")}
                       className="red_button_transparant_white_text"
                     />
                   )}
@@ -345,20 +350,20 @@ export const TeamOverviewHeader: React.FC = () => {
                 <div className={styles.playerName}>
                   {captainFullName}
                   {!isCaptain && (
-                    <div className={styles.captainLabel}> (C) </div>
+                    <div className={styles.captainLabel}> {tDraft("captainLabel")} </div>
                   )}
                 </div>
               </Link>
               <div className={styles.buttonsWrapper}>
                 {captainAge !== null && (
                   <div className={styles.button}>
-                    <span>Age: </span>
+                    <span>{t("ageLabel")} </span>
                     {captainAge}
                   </div>
                 )}
                 {teamInfo.captain.workingFoot && (
                   <div className={styles.button}>
-                    <span>Foot: </span>
+                    <span>{t("footLabel")} </span>
                     {teamInfo.captain.workingFoot}
                   </div>
                 )}
@@ -388,31 +393,31 @@ export const TeamOverviewHeader: React.FC = () => {
           href={base}
           className={`${styles.link} ${isActive(base) ? styles.selected : ""}`}
         >
-          Overview
+          {t("tabs.overview")}
         </Link>
         <Link
           href={`${base}/results`}
           className={`${styles.link} ${isActive(`${base}/results`) ? styles.selected : ""}`}
         >
-          Results
+          {t("tabs.results")}
         </Link>
         <Link
           href={`${base}/fixtures`}
           className={`${styles.link} ${isActive(`${base}/fixtures`) ? styles.selected : ""}`}
         >
-          Fixtures
+          {t("tabs.fixtures")}
         </Link>
         <Link
           href={`${base}/transfers`}
           className={`${styles.link} ${isActive(`${base}/transfers`) ? styles.selected : ""}`}
         >
-          Transfers
+          {t("tabs.transfers")}
         </Link>
         <Link
           href={`${base}/squad`}
           className={`${styles.link} ${isActive(`${base}/squad`) ? styles.selected : ""}`}
         >
-          Squad
+          {t("tabs.squad")}
         </Link>
       </div>
 
@@ -420,38 +425,40 @@ export const TeamOverviewHeader: React.FC = () => {
       {showApplyConfirmModal && (
         <PlayerInvitationCard
           onCancelButtonClick={() => setShowApplyConfirmModal(false)}
-          title="Team Application"
-          description={`Apply to ${teamInfo?.team.name ?? "this team"}? Your phone number will be visible to the captain for contact.`}
-          confirmButtonText="Confirm"
+          title={t("teamApplicationTitle")}
+          description={t("teamApplicationDescription", {
+            teamName: teamInfo?.team.name ?? t("thisTeamFallback"),
+          })}
+          confirmButtonText={tCommon("confirm")}
           onConfirmButtonClick={() => {
             setShowApplyConfirmModal(false);
             applyToTeam();
           }}
-          cancelButtonText="Cancel"
+          cancelButtonText={tCommon("cancel")}
         />
       )}
       {showApplySuccessModal && (
         <PlayerInvitationCard
           onCancelButtonClick={() => setShowApplySuccessModal(false)}
-          title="Application Sent Successfully"
-          description="Your application was sent successfully to the team."
-          cancelButtonText="Close"
+          title={t("applicationSentTitle")}
+          description={t("applicationSentDescription")}
+          cancelButtonText={tCommon("close")}
         />
       )}
       {showApplyErrorModal && (
         <PlayerInvitationCard
           onCancelButtonClick={() => setShowApplyErrorModal(false)}
-          title="Cannot Apply"
-          description={applyError || "An error occurred."}
-          confirmButtonText="OK"
+          title={t("cannotApplyTitle")}
+          description={applyError || tModals("errorOccurred")}
+          confirmButtonText={tCommon("ok")}
         />
       )}
       {showCaptainWarningModal && (
         <PlayerInvitationCard
           onCancelButtonClick={() => setShowCaptainWarningModal(false)}
-          title="Action Not Allowed"
-          description="You are the captain of the team. Pass the captain role to another player or Quit the team if you want to apply to another team."
-          cancelButtonText="Close"
+          title={tModals("actionNotAllowed")}
+          description={t("captainWarningDescription")}
+          cancelButtonText={tCommon("close")}
         />
       )}
 
@@ -459,34 +466,34 @@ export const TeamOverviewHeader: React.FC = () => {
       {showQuitConfirmModal && (
         <PlayerInvitationCard
           onCancelButtonClick={() => setShowQuitConfirmModal(false)}
-          title="Quit Team"
-          description="Are you sure you want to quit the team?"
-          confirmButtonText="Confirm"
+          title={tModals("quitTeamTitle")}
+          description={tModals("quitTeamDescription")}
+          confirmButtonText={tCommon("confirm")}
           onConfirmButtonClick={() => {
             setShowQuitConfirmModal(false);
             quitTeam();
           }}
-          cancelButtonText="Cancel"
+          cancelButtonText={tCommon("cancel")}
         />
       )}
       {showQuitSuccessModal && (
         <PlayerInvitationCard
           onCancelButtonClick={() => setShowQuitSuccessModal(false)}
-          title="Successfully Quit Team"
+          title={tModals("quitSuccessTitle")}
           description={
             isCaptain
-              ? "You have left the team. The team is now abandoned."
-              : "You have left the team."
+              ? t("quitTeamAbandonedDescription")
+              : tModals("quitSuccessDescription")
           }
-          cancelButtonText="Close"
+          cancelButtonText={tCommon("close")}
         />
       )}
       {showQuitErrorModal && (
         <PlayerInvitationCard
           onCancelButtonClick={() => setShowQuitErrorModal(false)}
-          title="Cannot Quit Team"
-          description={quitTeamError || "An error occurred."}
-          confirmButtonText="OK"
+          title={tModals("cannotQuitTeam")}
+          description={quitTeamError || tModals("errorOccurred")}
+          confirmButtonText={tCommon("ok")}
         />
       )}
 

@@ -19,6 +19,7 @@ import noPhoto from '../../assets/pngs/noPhoto.png';
 import { useJoinEventMutation, useUnjoinEventMutation } from '@/app/store/services/api';
 import PlayerInvitationCard from '../PlayerInvitationCard';
 import { NotificationPopUp } from '../NotificationPopUp/NotificationPopUp';
+import { useTranslations } from 'next-intl';
 
 const isValidUrl = (url: string): boolean => {
     try { new URL(url); return true; } catch { return false; }
@@ -47,6 +48,8 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
     const { isAuthenticated, signIn } = useAuth();
     const [joinEvent] = useJoinEventMutation();
     const [unjoinEvent] = useUnjoinEventMutation();
+    const t = useTranslations("events.header");
+    const tCommon = useTranslations("common");
 
     const showServerErrorToast = (message: string) => {
         setServerError(message);
@@ -64,11 +67,11 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
 
     const handleOpenJoinModal = () => {
         if (!isAuthenticated) { signIn(); return; }
-        setModalState({ open: true, type: 'join', title: 'Join Event', description: 'Are you sure you want to join this event?' });
+        setModalState({ open: true, type: 'join', title: t('joinEventTitle'), description: t('joinEventDescription') });
     };
 
     const handleOpenUnjoinModal = () => {
-        setModalState({ open: true, type: 'unjoin', title: 'Unjoin Event', description: 'Are you sure you want to leave this event?' });
+        setModalState({ open: true, type: 'unjoin', title: t('unjoinEventTitle'), description: t('unjoinEventDescription') });
     };
 
     const handleCloseModal = () => setModalState((prev) => ({ ...prev, open: false }));
@@ -80,10 +83,10 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
         try {
             if (actionType === 'join') {
                 await joinEvent(event.id).unwrap();
-                setModalState({ open: true, type: 'success', title: 'Success', description: 'You have successfully joined the event!' });
+                setModalState({ open: true, type: 'success', title: t('successTitle'), description: t('joinSuccess') });
             } else if (actionType === 'unjoin') {
                 await unjoinEvent(event.id).unwrap();
-                setModalState({ open: true, type: 'success', title: 'Success', description: 'You have successfully left the event.' });
+                setModalState({ open: true, type: 'success', title: t('successTitle'), description: t('leaveSuccess') });
             }
         } catch (error) {
             const apiError = error as { status?: number; data?: { errorMessage?: string } };
@@ -91,9 +94,9 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
             const isServerError = typeof status !== 'number' || status >= 500;
             if (isServerError) {
                 setModalState((prev) => ({ ...prev, open: false }));
-                showServerErrorToast(apiError?.data?.errorMessage || 'Something went wrong. Please try again later.');
+                showServerErrorToast(apiError?.data?.errorMessage || t('genericError'));
             } else {
-                setModalState({ open: true, type: 'error', title: 'Error', description: apiError?.data?.errorMessage || 'An error occurred. Please try again.' });
+                setModalState({ open: true, type: 'error', title: t('errorTitle'), description: apiError?.data?.errorMessage || t('errorOccurred') });
             }
         } finally {
             setIsActionLoading(false);
@@ -104,10 +107,10 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
         return (
             <div className={`${styles.container} ${isMobile && styles.mobileContainer}`}>
                 <div className={styles.titleWrapper}>
-                    <div className={styles.title}>Events</div>
+                    <div className={styles.title}>{t("title")}</div>
                     {!isMobile &&
                         <div className={styles.description}>
-                            Stay in the game. Catch all the latest matches, tournaments, and live action happening near you or around the world.
+                            {t("description")}
                         </div>}
                 </div>
                 <div className={styles.imageButtonWrapper}>
@@ -115,7 +118,7 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
                     <Button
                         className='red_button'
                         handleClick={handleCreateEventClick}
-                        content='Create Event'
+                        content={t("createEvent")}
                     />
                 </div>
                 {isOpen && <CreateEventPopUp onClose={() => setIsOpen(false)} />}
@@ -155,7 +158,7 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
         if (event.state === 'Cancelled') {
             return (
                 <div className={styles.joinedPaymentWrapper}>
-                    <div className={styles.cancelledLabel}>Canceled</div>
+                    <div className={styles.cancelledLabel}>{t("canceledLabel")}</div>
                 </div>
             );
         }
@@ -164,9 +167,9 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
             return (
                 <div className={styles.joinedPaymentWrapper}>
                     <div className={styles.detailsPay}>
-                        <div>Pay ֏ {payAmount}</div>
+                        <div>{t("payLabel")} ֏ {payAmount}</div>
                     </div>
-                    <div className={styles.finishedLabel}>Finished</div>
+                    <div className={styles.finishedLabel}>{t("finishedLabel")}</div>
                 </div>
             );
         }
@@ -178,10 +181,10 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
                     <Button
                         className='red_button_transparant_white_text'
                         handleClick={() => setIsOpen(true)}
-                        content='Manage'
+                        content={t("manageButton")}
                     />
                     <div className={styles.detailsPay}>
-                        <div>Pay ֏ {payAmount}</div>
+                        <div>{t("payLabel")} ֏ {payAmount}</div>
                     </div>
                 </div>
             );
@@ -194,15 +197,15 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
                     <Button
                         className='red_button_transparant_white_text'
                         handleClick={handleOpenUnjoinModal}
-                        content='Unjoin'
+                        content={t("unjoinButton")}
                         disabled={isRegClosed || isActionLoading}
                     />
                     <div className={styles.detailsPay}>
-                        <div>Pay ֏ {payAmount}</div>
+                        <div>{t("payLabel")} ֏ {payAmount}</div>
                     </div>
                     {isRegClosed && (
                         <div className={styles.maximumText}>
-                            You can no longer leave the event. The registration period is over.
+                            {t("canNoLongerLeave")}
                         </div>
                     )}
                 </div>
@@ -214,10 +217,10 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
             return (
                 <div className={styles.joinedPaymentWrapper}>
                     <div className={styles.detailsPay}>
-                        <div>Pay ֏ {payAmount}</div>
+                        <div>{t("payLabel")} ֏ {payAmount}</div>
                     </div>
                     <div className={styles.maximumText}>
-                        Maximum number of participants are already registered
+                        {t("maxParticipants")}
                     </div>
                 </div>
             );
@@ -227,10 +230,10 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
             return (
                 <div className={styles.joinedPaymentWrapper}>
                     <div className={styles.detailsPay}>
-                        <div>Pay ֏ {payAmount}</div>
+                        <div>{t("payLabel")} ֏ {payAmount}</div>
                     </div>
                     <div className={styles.maximumText}>
-                        You can no longer register. The registration period is over.
+                        {t("canNoLongerRegister")}
                     </div>
                 </div>
             );
@@ -242,11 +245,11 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
                 <Button
                     className='red_button_transparant_white_text'
                     handleClick={isAuthenticated ? handleOpenJoinModal : handleJoin}
-                    content='Join'
+                    content={t("joinButton")}
                     disabled={isActionLoading}
                 />
                 <div className={styles.detailsPay}>
-                    <div>Pay ֏ {payAmount}</div>
+                    <div>{t("payLabel")} ֏ {payAmount}</div>
                 </div>
             </div>
         );
@@ -273,7 +276,7 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
                                 {event.name}
                                 {event.hostUser.phoneNumber && (
                                     <div className={styles.button}>
-                                        Contact: <span>{event.hostUser.phoneNumber}</span>
+                                        {t("contactLabel")} <span>{event.hostUser.phoneNumber}</span>
                                     </div>
                                 )}
                             </div>
@@ -305,7 +308,7 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
                             <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
                                 <Image src={clockWhite} alt='' className={styles.icon} />
                             </div>
-                            <div className={styles.detailsText}>{event.duration}min session</div>
+                            <div className={styles.detailsText}>{t("minSession", { duration: event.duration })}</div>
                         </div>
                     </div>
                 </div>
@@ -318,8 +321,8 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
                 <PlayerInvitationCard
                     title={modalState.title}
                     description={modalState.description}
-                    confirmButtonText='Confirm'
-                    cancelButtonText='Cancel'
+                    confirmButtonText={tCommon("confirm")}
+                    cancelButtonText={tCommon("cancel")}
                     onConfirmButtonClick={handleConfirmAction}
                     onCancelButtonClick={handleCloseModal}
                     loading={isActionLoading}
@@ -330,14 +333,14 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
                 <PlayerInvitationCard
                     title={modalState.title}
                     description={modalState.description}
-                    cancelButtonText='Close'
+                    cancelButtonText={tCommon("close")}
                     onCancelButtonClick={handleCloseModal}
                 />
             )}
 
             {serverError && (
                 <NotificationPopUp
-                    title='Server Error'
+                    title={t("serverError")}
                     description={serverError}
                 />
             )}

@@ -9,6 +9,7 @@ import ShowMoreCard from "../ShowMoreCard";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import userLogo from '../../assets/pngs/userLogo.svg';
+import { useTranslations } from "next-intl";
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -55,6 +56,7 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
 
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("squad");
   useEffect(() => {
     if (!showMenu) return;
     const handleOutsideClick = (e: MouseEvent) => {
@@ -82,7 +84,7 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
               unoptimized
               className={styles.image}
             />
-            {isHost && <div className={styles.hostLabel}>Host</div>}
+            {isHost && <div className={styles.hostLabel}>{t("host")}</div>}
           </div>
           {variant === 'default' && (
             <div className={styles.playerNumberContainer}>
@@ -93,7 +95,7 @@ export const SquadCard: React.FC<ISquadCardProps> = ({
         {variant === 'events' && isOwnCard && (
           <div className={styles.youButton}>
             <Image src={userLogo} alt="" />
-            <div>You</div>
+            <div>{t("you")}</div>
           </div>
         )}
         <span className={`${styles.teamName} ${variant === 'events' ? styles.eventsName : ''}`}>{playerName}</span>

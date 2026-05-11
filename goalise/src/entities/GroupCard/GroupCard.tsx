@@ -4,6 +4,7 @@ import styles from "./GroupCard.module.css";
 import Image from "next/image";
 import teamLogo from '../../assets/pngs/teamLogo.png'
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 interface GroupCardProps {
   groupCardContent: ILeaguesGroupItem[];
   groupName: string;
@@ -12,6 +13,7 @@ interface GroupCardProps {
 export const GroupCard = ({ groupCardContent, groupName }: GroupCardProps) => {
   const rows = groupCardContent.length;
   const minRows = 4;
+  const t = useTranslations("groupCard");
 
   const filledRows = [
     ...groupCardContent,
@@ -25,14 +27,14 @@ export const GroupCard = ({ groupCardContent, groupName }: GroupCardProps) => {
         <table className={styles.group_card_table}>
           <thead className={styles.group_card_header}>
             <tr className={styles.header_content}>
-              <div className={styles.titleWrapper}> 
+              <div className={styles.titleWrapper}>
                 <th>#</th>
-                <th className={styles.team}>Team</th>
+                <th className={styles.team}>{t("team")}</th>
               </div>
-              <div className={styles.names_wrapper}> 
-                <th>MP</th>
-                <th>GD</th>
-                <th className={styles.pts}>PTS</th>
+              <div className={styles.names_wrapper}>
+                <th>{t("mp")}</th>
+                <th>{t("gd")}</th>
+                <th className={styles.pts}>{t("pts")}</th>
               </div>
             </tr>
           </thead>

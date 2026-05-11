@@ -11,6 +11,7 @@ import { useParams } from "next/navigation";
 import { useGetEventByIdQuery, useGetUserInfoQuery } from "@/app/store/services/api";
 import { useAuth } from "@/shared/auth/AuthContext";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
+import { useTranslations } from "next-intl";
 
 export const EventsDetails: React.FC = () => {
     const { width } = useWindowSize();
@@ -18,6 +19,7 @@ export const EventsDetails: React.FC = () => {
     const params = useParams();
     const eventId = Number(params.id);
     const { isAuthenticated } = useAuth();
+    const t = useTranslations("events");
 
     const { data: event, isLoading } = useGetEventByIdQuery(eventId, { skip: !eventId });
     const { data: userInfo } = useGetUserInfoQuery(undefined, { skip: !isAuthenticated });
@@ -43,12 +45,12 @@ export const EventsDetails: React.FC = () => {
         <div className={styles.progressBarInfoWrapper}>
             <div className={styles.textsWrapper}>
                 <div className={styles.participantsCount}>
-                    Participants
+                    {t("participants")}
                     <span>({participantsCount}/{event.requiredPlayersAmount})</span>
                 </div>
                 {!isMobile && showRegistrationDate && formattedRegClose && (
                     <div className={styles.registrationDate}>
-                        Registrations will be closed on
+                        {t("registrationsWillBeClosedOn")}
                         <span>{formattedRegClose}</span>
                     </div>
                 )}

@@ -14,12 +14,14 @@ import { useParams, usePathname } from "next/navigation";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import { useTranslations } from "next-intl";
 
 const PAGE_SIZE = 5;
 
 export const LeaguesResults = () => {
   const { leagueId } = useParams();
   const leagueIdNum = Number(leagueId);
+  const t = useTranslations("leagues.results");
   const [offset, setOffset] = useState<number>(0);
   const [results, setResults] = useState<Record<string, ILeaguesResultsItem[]>>(
     {}
@@ -86,7 +88,7 @@ export const LeaguesResults = () => {
   return (
     <div className={`${isMobile ? styles.mobile : styles.leagues_results}`}>
       <div className={styles.title_wrapper}>
-        <Title content="Results" />
+        <Title content={t("title")} />
       </div>
       <div
         ref={scrollContainerRef}

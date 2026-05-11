@@ -24,7 +24,9 @@
     "loading": "Loading...",
     "zoom": "Zoom",
     "saveCrop": "Save Crop",
-    "uploadLogo": "Upload logo"
+    "uploadLogo": "Upload logo",
+    "guest": "Guest",
+    "back": "Back"
   },
   "auth": {
     "signingIn": {
@@ -141,7 +143,9 @@
       "phone": "Phone: +1 (555) 123-4567"
     },
     "rights": "© Copyright 2025.",
-    "followUs": "Follow us"
+    "followUs": "Follow us",
+    "siteMap": "Site Map",
+    "legal": "Legal"
   },
   "search": {
     "placeholder": "Search leagues, teams, players...",
@@ -246,6 +250,47 @@
     "notAllowedDescription": "You are not allowed to perform this action"
   },
   "matches": {
+    "tabs": {
+      "highlight": "Highlight",
+      "stats": "Stats",
+      "lineup": "Lineup"
+    },
+    "highlights": {
+      "title": "Highlight",
+      "empty": "No highlights are available at the moment",
+      "goal": "Goal",
+      "ownGoal": "Own Goal",
+      "redCard": "Red Card",
+      "yellowCard": "Yellow Card",
+      "assistBy": "Assist By"
+    },
+    "statistics": {
+      "title": "Statistics",
+      "empty": "No stats are available at the moment",
+      "home": "Home",
+      "away": "Away",
+      "totalShots": "Total Shots",
+      "shotsOnTarget": "Shots On Target",
+      "totalPasses": "Total Passes",
+      "passesCompleted": "Passes Completed",
+      "fouls": "Fouls",
+      "corners": "Corners"
+    },
+    "header": {
+      "playoff": "Playoff",
+      "groupStage": "Group Stage",
+      "tba": "To-Be-Announced"
+    },
+    "lineup": {
+      "title": "Lineup",
+      "empty": "No lineup are available at the moment",
+      "homeTeamFallback": "Team A",
+      "awayTeamFallback": "Team B"
+    },
+    "matchListInnerCard": {
+      "ptsUnit": "pts"
+    },
+    "liveLabel": "Live",
     "statusCard": {
       "playerStats": {
         "title": "Stats as Player",
@@ -266,6 +311,255 @@
       },
       "playerProfile": "Player Profile"
     }
+  },
+  "events": {
+    "tabs": {
+      "upcoming": "Upcoming Events",
+      "past": "Past Events"
+    },
+    "failedToLoad": "Failed to load events.",
+    "emptyUpcoming": "No upcoming events.",
+    "emptyPast": "No past events.",
+    "participants": "Participants",
+    "registrationsWillBeClosedOn": "Registrations will be closed on",
+    "create": {
+      "createTitle": "Create Event",
+      "editTitle": "Edit Event",
+      "eventTitleLabel": "Event Title",
+      "eventTitleRequired": "Event title is required",
+      "max32Characters": "Max 32 characters",
+      "addressLabel": "Address",
+      "addressRequired": "Address is required",
+      "max100Characters": "Max 100 characters",
+      "startTimeLabel": "Start Time",
+      "startTimeRequired": "Start time is required",
+      "mustBeInFuture": "Must be in the future",
+      "registrationClosingTimeLabel": "Registration Closing Time",
+      "registrationClosingTimeRequired": "Registration closing time is required",
+      "mustBeBeforeStartTime": "Must be before start time",
+      "durationLabel": "Duration",
+      "durationRequired": "Duration is required",
+      "mustBePositiveInteger": "Must be a positive integer",
+      "minLabel": "Min",
+      "paymentAmountLabel": "Payment Amount",
+      "paymentAmountRequired": "Payment amount is required",
+      "mustBePositiveNumber": "Must be a positive number",
+      "amountPlaceholder": "Amount",
+      "participantCountLabel": "Participant Count",
+      "participantCountRequired": "Participant count is required",
+      "additionalInfoLabel": "Additional Info",
+      "createButton": "Create",
+      "saveChangesButton": "Save Changes",
+      "cancelEventButton": "Cancel Event",
+      "cancelEventTitle": "Cancel Event",
+      "cancelEventDescription": "Are you sure you want to cancel this event? This action cannot be undone.",
+      "eventCreatedTitle": "Event Created!",
+      "eventCreatedDescription": "Your event has been successfully created and is now visible in the events list.",
+      "eventUpdatedTitle": "Event Updated!",
+      "eventUpdatedDescription": "Your event has been successfully updated.",
+      "eventCancelledTitle": "Event Cancelled",
+      "eventCancelledDescription": "The event has been successfully cancelled.",
+      "errorTitle": "Error",
+      "failedToCreate": "Failed to create event.",
+      "failedToUpdate": "Failed to update event.",
+      "failedToCancel": "Failed to cancel the event. Please try again."
+    },
+    "header": {
+      "title": "Events",
+      "description": "Stay in the game. Catch all the latest matches, tournaments, and live action happening near you or around the world.",
+      "createEvent": "Create Event",
+      "manageButton": "Manage",
+      "joinButton": "Join",
+      "unjoinButton": "Unjoin",
+      "payLabel": "Pay",
+      "canceledLabel": "Canceled",
+      "finishedLabel": "Finished",
+      "contactLabel": "Contact:",
+      "minSession": "{duration}min session",
+      "joinEventTitle": "Join Event",
+      "joinEventDescription": "Are you sure you want to join this event?",
+      "unjoinEventTitle": "Unjoin Event",
+      "unjoinEventDescription": "Are you sure you want to leave this event?",
+      "successTitle": "Success",
+      "joinSuccess": "You have successfully joined the event!",
+      "leaveSuccess": "You have successfully left the event.",
+      "errorTitle": "Error",
+      "genericError": "Something went wrong. Please try again later.",
+      "errorOccurred": "An error occurred. Please try again.",
+      "serverError": "Server Error",
+      "canNoLongerLeave": "You can no longer leave the event. The registration period is over.",
+      "maxParticipants": "Maximum number of participants are already registered",
+      "canNoLongerRegister": "You can no longer register. The registration period is over."
+    },
+    "card": {
+      "canceledRibbon": "Canceled",
+      "participants": "Participants",
+      "registrationWillBeClosedOn": "Registration will be closed on"
+    }
+  },
+  "champion": {
+    "badge": "CHAMPION"
+  },
+  "leagues": {
+    "header": {
+      "prizePool": "Prize Pool",
+      "firstPlace": "1st place",
+      "secondPlace": "2nd place",
+      "semiFinalist": "Semi-finalist",
+      "perGamePerTeam": "/per game /per team",
+      "canNoLongerRegister": "You can no longer register",
+      "joined": "Joined",
+      "joinLeague": "Join League",
+      "registrationClosed": "Registration Closed",
+      "state": "State:",
+      "registrationsWillBeClosedOn": "Registrations will be closed on",
+      "joinedTeams": "Joined Teams",
+      "tabs": {
+        "groups": "Groups",
+        "drawStandings": "Draw Standings",
+        "results": "Results",
+        "fixtures": "Fixtures",
+        "stats": "Stats"
+      },
+      "serverError": "Server Error",
+      "modal": {
+        "maxTeamsCountReached": "Max teams count is reached",
+        "registrationDateExpired": "Registration date is expired",
+        "errorTitle": "Error",
+        "needTeamFirst": "You need to be in a team first, to join a league",
+        "onlyCaptainCanRegister": "Only Captain can register the team to the league",
+        "infoTitle": "Info",
+        "teamAlreadyRegistered": "Your team is already registered",
+        "joinLeagueTitle": "Join League",
+        "joinLeagueDescription": "Are you sure you want to join this league?",
+        "contactSupport": "If you want to unregister from league contact support",
+        "onlyCaptainCanUnregister": "Only Captain can unregister the team from the league",
+        "unjoinLeagueTitle": "Unjoin League",
+        "unjoinLeagueDescription": "Are you sure you want to leave this league?",
+        "successTitle": "Success",
+        "joinSuccess": "You have successfully joined the league!",
+        "leaveSuccess": "You have successfully left the league.",
+        "genericError": "Something went wrong. Please try again later.",
+        "errorOccurred": "An error occurred. Please try again."
+      }
+    },
+    "fixtures": {
+      "title": "Fixtures"
+    },
+    "results": {
+      "title": "Results"
+    },
+    "groupsUnavailable": "Groups data unavailable."
+  },
+  "leaguesStats": {
+    "empty": "No Stats Available Yet",
+    "goals": "Goals",
+    "assists": "Assists",
+    "ratings": "Ratings",
+    "yellowCards": "Yellow Cards",
+    "redCards": "Red Cards"
+  },
+  "squad": {
+    "modals": {
+      "shirtNumberUpdatedTitle": "Shirt Number Updated Successfully",
+      "shirtNumberUpdatedDescription": "The player's shirt number has been updated.",
+      "cannotUpdateShirtNumber": "Cannot Update Shirt Number",
+      "invitePlayerTitle": "Invite Player",
+      "inviteButton": "Invite"
+    },
+    "host": "Host",
+    "you": "You"
+  },
+  "teamOverview": {
+    "header": {
+      "abandoned": "Abandoned",
+      "applyButton": "Apply",
+      "quitButton": "Quit",
+      "ageLabel": "Age:",
+      "footLabel": "Foot:",
+      "teamApplicationTitle": "Team Application",
+      "teamApplicationDescription": "Apply to {teamName}? Your phone number will be visible to the captain for contact.",
+      "applicationSentTitle": "Application Sent Successfully",
+      "applicationSentDescription": "Your application was sent successfully to the team.",
+      "cannotApplyTitle": "Cannot Apply",
+      "captainWarningDescription": "You are the captain of the team. Pass the captain role to another player or Quit the team if you want to apply to another team.",
+      "quitTeamAbandonedDescription": "You have left the team. The team is now abandoned.",
+      "unexpectedError": "An unexpected error occurred. Please try again later.",
+      "tabs": {
+        "overview": "Overview",
+        "results": "Results",
+        "fixtures": "Fixtures",
+        "transfers": "Transfers",
+        "squad": "Squad"
+      },
+      "thisTeamFallback": "this team"
+    },
+    "nextMatch": {
+      "title": "Next Match",
+      "empty": "No match is scheduled at the moment",
+      "tbd": "TBD"
+    },
+    "trophies": {
+      "title": "Trophies",
+      "firstPlace": "1st Place",
+      "secondPlace": "2nd Place",
+      "semifinalist": "Semifinalist"
+    },
+    "statistics": {
+      "title": "Top Players",
+      "playerRating": "Player Rating",
+      "mostGoals": "Most Goals",
+      "mostAssists": "Most Assists",
+      "mostYellowCards": "Most Yellow Cards",
+      "mostRedCards": "Most Red Cards",
+      "goalkeeperRating": "Goalkeeper Rating",
+      "mostSaves": "Most Saves"
+    }
+  },
+  "teamPage": {
+    "fixtures": "Fixtures",
+    "results": "Results"
+  },
+  "teamTransfer": {
+    "tabs": {
+      "all": "All",
+      "playerIn": "Player In",
+      "playerOut": "Player Out"
+    },
+    "card": {
+      "playerName": "Player Name",
+      "playerIn": "Player In",
+      "playerOut": "Player Out",
+      "in": "In",
+      "out": "Out"
+    }
+  },
+  "teamsCard": {
+    "captain": "Captain:",
+    "nextMatch": "Next Match:",
+    "opponent": "Opponent:"
+  },
+  "teamsPastMatchesCard": {
+    "leagueFallback": "League"
+  },
+  "groupCard": {
+    "team": "Team",
+    "mp": "MP",
+    "gd": "GD",
+    "pts": "PTS"
+  },
+  "showMoreCard": {
+    "makeCaptain": "Make Captain",
+    "remove": "Remove",
+    "editShirtNumber": "Edit Shirt Number",
+    "invite": "Invite"
+  },
+  "leaguesJoinedTeamCard": {
+    "captain": "captain"
+  },
+  "draftTeamHeader": {
+    "cannotDeleteTitle": "Cannot Delete Draft Team",
+    "errorFallback": "An unexpected error occurred. Please try again later."
   },
   "teamForm": {
     "logoRequired": "Logo is required.",

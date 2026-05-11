@@ -205,7 +205,7 @@ export const Header = () => {
   useOnClickOutside([profileRef], closeProfile, activeDropdown === "profile");
   useOnClickOutside([leaguesRef, leaguesButtonRef, leaguesDropdownRef], closeLeagues, activeDropdown === "leagues");
 
-  const userLabel = user?.name || user?.email || "Guest";
+  const userLabel = user?.name || user?.email || t("common.guest");
   const profileImg = user?.picture || noPhoto;
 
 
@@ -385,7 +385,7 @@ export const Header = () => {
                       onClick={onAuthClick}
                       disabled={loading}
                     >
-                      {loading ? "Loading..." : t("home.profileCard.logIn")}
+                      {loading ? t("common.loading") : t("home.profileCard.logIn")}
                     </button>
                   )}
                 </div>
@@ -710,7 +710,7 @@ export const Header = () => {
                 onClick={onAuthClick}
                 disabled={loading}
               >
-                {loading ? "Loading..." : t("home.profileCard.logIn")}
+                {loading ? t("common.loading") : t("home.profileCard.logIn")}
               </button>
             )}
           </div>

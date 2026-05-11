@@ -12,6 +12,7 @@ import CustomDivider from '@/shared/Divider';
 import { IEvent } from '@/types/api/events';
 import { formatUTCDate } from '@/helper/formatDateAndTime';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export interface IEventCardProps {
     variant?: 'upcoming' | 'past';
@@ -25,6 +26,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
     const { width } = useWindowSize();
     const isMobile = width <= MEDIA_TABLET_SMALL;
     const router = useRouter();
+    const t = useTranslations("events.card");
 
     const isCancelled = event.state === 'Cancelled';
     const formattedDate = formatUTCDate(event.startTime, 'dd/mm/yyyy');
@@ -41,7 +43,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
     return <div className={styles.container}>
         {isCancelled && (
             <div className={styles.canceledRibbon}>
-                Canceled
+                {t("canceledRibbon")}
             </div>
         )}
         {!isMobile ?
@@ -66,14 +68,14 @@ export const EventCard: React.FC<IEventCardProps> = ({
                             }
                             {variant === 'past' && !isCancelled &&
                                 <div className={styles.participants}>
-                                    <div className={styles.participantsText}>Participants</div>
+                                    <div className={styles.participantsText}>{t("participants")}</div>
                                     <div className={styles.participantsCount}>{event.participatedPlayersCount}</div>
                                 </div>
                             }
                         </div>
                         {variant === 'upcoming' &&
                             <div className={styles.registerDateWrapper}>
-                                <div className={styles.registerText}>Registration will be closed on
+                                <div className={styles.registerText}>{t("registrationWillBeClosedOn")}
                                     <span>{formattedCloseDate}</span>
                                 </div>
                             </div>
@@ -134,7 +136,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
                             <div className={styles.mobileParticipantsWrapper}>
                                 {!isCancelled &&
                                     <div className={styles.participants}>
-                                        <div className={styles.participantsTextMobile}>Participants</div>
+                                        <div className={styles.participantsTextMobile}>{t("participants")}</div>
                                         <div className={styles.participantsCountMobile}>{event.participatedPlayersCount}</div>
                                     </div>
                                 }
@@ -151,7 +153,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
                 <div className={styles.mobileAddressWrapper}>
                     {variant === 'upcoming' &&
                         <div className={styles.registerDateWrapper}>
-                            <div className={styles.registerText}>Registration will be closed on
+                            <div className={styles.registerText}>{t("registrationWillBeClosedOn")}
                                 <span>{formattedCloseDate}</span>
                             </div>
                         </div>

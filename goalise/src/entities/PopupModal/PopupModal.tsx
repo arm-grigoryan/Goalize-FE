@@ -5,6 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import styles from "./PopupModal.module.css";
 import Button from "@/shared/Button";
 import Title from "@/shared/Title";
+import { useTranslations } from "next-intl";
 
 interface PopupModalProps {
   open: boolean;
@@ -27,8 +28,9 @@ export const PopupModal: FC<PopupModalProps> = ({
   hasCloseButton = false,
   onButtonClick,
   showCancelButton = false,
-  cancelButtonContent = "Cancel",
+  cancelButtonContent,
 }) => {
+  const tCommon = useTranslations("common");
   const handleButtonClick = () => {
     if (onButtonClick) {
       onButtonClick();
@@ -52,7 +54,7 @@ export const PopupModal: FC<PopupModalProps> = ({
         {(hasCloseButton || showCancelButton) && (
           <Button
             className="red_button_transparant_white_text"
-            content={cancelButtonContent}
+            content={cancelButtonContent ?? tCommon("cancel")}
             handleClick={() => onClose()}
           />
         )}

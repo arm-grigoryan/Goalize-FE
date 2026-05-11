@@ -8,6 +8,7 @@ import { ITeamTransfer } from "@/types/api/transfers";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import { useTranslations } from "next-intl";
 
 const PAGE_SIZE = 10;
 
@@ -19,6 +20,7 @@ export const TeamTransfer = () => {
   const pathname = usePathname();
   const { width } = useWindowSize()
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("teamTransfer.tabs");
 
   const [activeTab, setActiveTab] = useState<Tab>("All");
   const [offset, setOffset] = useState<number>(0);
@@ -77,19 +79,19 @@ export const TeamTransfer = () => {
           className={`${styles.tab} ${activeTab === "All" ? styles.isActive : ""}`}
           onClick={() => setActiveTab("All")}
         >
-          All
+          {t("all")}
         </div>
         <div
           className={`${styles.tab} ${activeTab === "In" ? styles.isActive : ""}`}
           onClick={() => setActiveTab("In")}
         >
-          Player In
+          {t("playerIn")}
         </div>
         <div
           className={`${styles.tab} ${activeTab === "Out" ? styles.isActive : ""}`}
           onClick={() => setActiveTab("Out")}
         >
-          Player Out
+          {t("playerOut")}
         </div>
       </div>
 

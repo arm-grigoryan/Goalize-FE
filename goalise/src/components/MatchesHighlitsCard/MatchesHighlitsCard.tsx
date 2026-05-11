@@ -1,3 +1,4 @@
+"use client";
 import Image, { StaticImageData } from "next/image";
 import styles from './MatchesHighlitsCard.module.css';
 import tshirt from '../../assets/pngs/tshirt.svg'
@@ -8,6 +9,7 @@ import Link from "next/link";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import selfGoalIcon from '../../assets/pngs/selfGoal.svg';
+import { useTranslations } from "next-intl";
 export interface IMatchesHighlitsCardProps {
     swapped?: boolean;
     playerNumber?: number;
@@ -36,6 +38,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
 }) => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("matches.highlights");
 
   const renderShirt = () => (
     <div className={styles.shirtWrapper}>
@@ -55,7 +58,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
       <div className={`${styles.iconWrapper} ${styles.blueGlow}`}>
         <Image src={ballIcon} alt="" className={styles.icon} />
       </div>
-      Goal
+      {t("goal")}
        {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
     </div>
   );
@@ -64,7 +67,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
     <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
       <Image src={selfGoalIcon} alt="" className={styles.icon} />
     </div>
-    Own Goal
+    {t("ownGoal")}
     {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
   </div>
  );
@@ -73,7 +76,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
       <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
         <Image src={card} alt="" className={styles.icon} />
       </div>
-      Red Card
+      {t("redCard")}
       {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
     </div>
   );
@@ -83,7 +86,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
       <div className={`${styles.iconWrapper} ${styles.yellowGlow}`}>
         <Image src={card} alt="" className={styles.icon} />
       </div>
-      Yellow Card
+      {t("yellowCard")}
       {isMobile && assistName && <CustomDivider orientation="vertical" flexItem />}
     </div>
   );
@@ -115,7 +118,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
           {isMobile && assistName && swapped && (
             <div className={styles.assistWrapper}>
               <div className={`${styles.assistInfoWrapper} ${styles.assistRight}`}>
-                <span>Assist By</span>
+                <span>{t("assistBy")}</span>
                 <Link href={assistHref} className={styles.assistName}>{assistName}</Link>
               </div>
             </div>
@@ -129,7 +132,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
           <div className={styles.assistWrapper}>
             <CustomDivider orientation="vertical" flexItem />
             <div className={styles.assistInfoWrapper}>
-              <span>Assist By</span>
+              <span>{t("assistBy")}</span>
               <Link href={assistHref} className={styles.assistName}>{assistName}</Link>
             </div>
           </div>
@@ -156,7 +159,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
         {!isMobile && assistName && !swapped && (
           <div className={styles.assistWrapper}>
             <div className={styles.assistInfoWrapper}>
-              <span>Assist By</span>
+              <span>{t("assistBy")}</span>
               <Link href={assistHref} className={styles.assistName}>{assistName}</Link>
             </div>
             <CustomDivider orientation="vertical" flexItem />
@@ -170,7 +173,7 @@ export const MatchesHighlitsCard: React.FC<IMatchesHighlitsCardProps> = ({
         {isMobile && assistName && !swapped && (
           <div className={styles.assistWrapper}>
             <div className={styles.assistInfoWrapper}>
-              <span>Assist By</span>
+              <span>{t("assistBy")}</span>
               <Link href={assistHref} className={styles.assistName}>{assistName}</Link>
             </div>
           </div>

@@ -1,8 +1,10 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import championIcon from '../../assets/pngs/championIcon.svg';
 import styles from "./ChampionCard.module.css";
+import { useTranslations } from "next-intl";
 
 interface ChampionCardProps {
   type?: "default" | "draw";
@@ -17,9 +19,10 @@ export const ChampionCard: React.FC<ChampionCardProps> = ({
   logoSrc,
   teamId,
 }) => {
+  const t = useTranslations("champion");
   const card = (
     <div className={`${styles.card} ${type === "draw" ? styles.drawType : ""}`}>
-      <div className={styles.badge}><span>CHAMPION </span></div>
+      <div className={styles.badge}><span>{t("badge")} </span></div>
       <div className={styles.content}>
         {logoSrc &&
           <div className={styles.logo}>

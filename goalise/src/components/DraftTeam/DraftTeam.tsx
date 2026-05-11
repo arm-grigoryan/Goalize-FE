@@ -1,9 +1,11 @@
+"use client";
 import DraftTeamHeader from "@/entities/DraftTeamHeader";
 import Image from "next/image";
 import React from "react";
 import emptyImage from '../../assets/pngs/nextMatchEmpty.svg';
 import styles from './DraftTeam.module.css';
 import { ITeamDraft } from "@/types/api/temas";
+import { useTranslations } from "next-intl";
 
 interface IDraftTeamProps {
     draftData?: ITeamDraft;
@@ -20,6 +22,7 @@ export const DraftTeam: React.FC<IDraftTeamProps> = ({
     isError,
     isCaptain,
 }) => {
+    const t = useTranslations("draftTeam");
     return <div className={styles.container}>
         <DraftTeamHeader
             draftData={draftData}
@@ -34,7 +37,7 @@ export const DraftTeam: React.FC<IDraftTeamProps> = ({
                 alt=""
                 className={styles.image}
             />
-            <span>No data available yet — your team is still under review.</span>
+            <span>{t("underReview")}</span>
         </div>
     </div>;
 };

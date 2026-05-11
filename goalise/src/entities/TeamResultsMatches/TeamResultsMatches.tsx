@@ -8,6 +8,7 @@ import { useGetTeamMatchesQuery } from '@/app/store/services/api';
 import { ITeamMatchResponse } from '@/types/api/teamMatches';
 import { formatUTCDate } from '@/helper/formatDateAndTime';
 import { handleLongStrings } from '@/helper/handleLongStrings';
+import { useTranslations } from "next-intl";
 
 const PAGE_SIZE = 10;
 
@@ -25,6 +26,7 @@ export const TeamResultsMatches: React.FC = () => {
   const teamIdNum = Number(teamId);
   const pathname = usePathname();
   const router = useRouter();
+  const t = useTranslations("teamPage");
 
   const [offset, setOffset] = useState<number>(0);
   const [matches, setMatches] = useState<ITeamMatchResponse[]>([]);
@@ -71,7 +73,7 @@ export const TeamResultsMatches: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.titleWrapper}>
-        <div className={styles.title}>Results</div>
+        <div className={styles.title}>{t("results")}</div>
       </div>
       <div ref={scrollContainerRef} className={styles.scrollContainer}>
         <div className={styles.matchesList}>

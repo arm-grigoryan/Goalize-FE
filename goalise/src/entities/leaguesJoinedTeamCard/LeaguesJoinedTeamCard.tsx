@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./LeaguesJoinedTeamCard.module.css";
+import { useTranslations } from "next-intl";
 
 interface LeaguesJoinedTeamCardProps {
   teamId?: number;
@@ -21,6 +22,7 @@ export const LeaguesJoinedTeamCard = ({
 }: LeaguesJoinedTeamCardProps) => {
   const resolvedLogo = teamLogoUrl!;
   const resolvedCaptainPic = captainPic!;
+  const t = useTranslations("leaguesJoinedTeamCard");
 
   const card = (
     <div className={styles.leagues_joined_team_card}>
@@ -31,7 +33,7 @@ export const LeaguesJoinedTeamCard = ({
           <Image src={resolvedCaptainPic} alt="Captain" width={40} height={40} className={styles.captain} unoptimized />
           <div>
             <div className={styles.captain_name}>{captainName}</div>
-            <div className={styles.captain_role}>captain</div>
+            <div className={styles.captain_role}>{t("captain")}</div>
           </div>
         </div>
       </div>

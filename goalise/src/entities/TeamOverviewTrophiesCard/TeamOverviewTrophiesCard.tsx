@@ -9,6 +9,7 @@ import silverTrophie from "../../assets/pngs/silverTrophie.svg";
 import bronze from "../../assets/pngs/bronzeTrophie.svg";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { useTranslations } from "next-intl";
 
 export interface ITeamOverviewTrophiesCardProps {
   leagueId: number;
@@ -38,6 +39,7 @@ export const TeamOverviewTrophiesCard: React.FC<
 > = ({ leagueId, leagueName, leagueLogoUrl, season, type }) => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("teamOverview.trophies");
 
   return (
     <div
@@ -66,7 +68,7 @@ export const TeamOverviewTrophiesCard: React.FC<
           style={{ textDecoration: "none" }}
         >
           <div className={styles.name}>{leagueName}</div>
-          <div className={styles.place}> {type === "gold" ? '1st Place' : type === "silver" ? '2nd Place' : 'Semifinalist'}</div>
+          <div className={styles.place}> {type === "gold" ? t("firstPlace") : type === "silver" ? t("secondPlace") : t("semifinalist")}</div>
         </Link>
         <div className={styles.season}>{season}</div>
       </div>

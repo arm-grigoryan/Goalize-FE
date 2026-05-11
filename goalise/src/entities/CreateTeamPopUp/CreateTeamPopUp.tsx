@@ -300,7 +300,7 @@ export const CreateTeamPopUp: React.FC<ICreateTeamPopUpProps> = ({
                                       }} >
       <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`} onClick={(e) => { e.stopPropagation(); setWarningTooltip(null); }}>
         {isSubmitting && <div className={styles.loadingOverlay}><Loader /></div>}
-        <button className={styles.closeButton} onClick={handleClose} type="button" aria-label="Close">×</button>
+        <button className={styles.closeButton} onClick={handleClose} type="button" aria-label={tCommon("close")}>×</button>
         <div className={styles.titleWrapper}>
           <div className={styles.title}>{t("title")}</div>
           <div className={styles.subTitle}>{t("subtitle")}</div>

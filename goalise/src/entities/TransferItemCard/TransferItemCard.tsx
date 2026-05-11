@@ -1,3 +1,4 @@
+"use client";
 import { ITransferItemCardProps } from "./TransferItemCard.types";
 import styles from "./TransferItemCard.module.css";
 import Image from "next/image";
@@ -6,6 +7,7 @@ import toArrowIcon from "../../assets/pngs/arrow.svg";
 import dateIcon from "../../assets/pngs/dateIcon.svg";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { useTranslations } from "next-intl";
 
 export const TransferItemCard: React.FC<ITransferItemCardProps> = ({
   date,
@@ -20,6 +22,7 @@ export const TransferItemCard: React.FC<ITransferItemCardProps> = ({
 }) => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("playerProfile.transferHistory");
   return (
     <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
       <div className={styles.wrapper}>
@@ -36,7 +39,7 @@ export const TransferItemCard: React.FC<ITransferItemCardProps> = ({
                 <Image src={fromTeamLogo} alt="" className={styles.teamLogo} width={36} height={36} />
               )}
               <div className={styles.teamNameWrapper}>
-                {!isMobile && <div className={styles.from}> From </div>}
+                {!isMobile && <div className={styles.from}> {t("from")} </div>}
                 <div className={styles.teamName} title={fromTeamNameToolTip}>
                   {fromTeamName}{" "}
                 </div>
@@ -48,7 +51,7 @@ export const TransferItemCard: React.FC<ITransferItemCardProps> = ({
                 <Image src={fromTeamLogo} alt="" className={styles.teamLogo} width={36} height={36} />
               )}
               <div className={styles.teamNameWrapper}>
-                {!isMobile && <div className={styles.from}> From </div>}
+                {!isMobile && <div className={styles.from}> {t("from")} </div>}
                 <div className={styles.teamName} title={fromTeamNameToolTip}>
                   {fromTeamName}{" "}
                 </div>
@@ -66,7 +69,7 @@ export const TransferItemCard: React.FC<ITransferItemCardProps> = ({
                 <Image src={toTeamLogo} alt="" className={styles.teamLogo} width={36} height={36} />
               )}
               <div className={styles.teamNameWrapper}>
-                {!isMobile && <div className={styles.from}> To </div>}
+                {!isMobile && <div className={styles.from}> {t("to")} </div>}
                 <div className={styles.teamName} title={toTeamNameToolTip}>
                   {toTeamName}
                 </div>
@@ -78,7 +81,7 @@ export const TransferItemCard: React.FC<ITransferItemCardProps> = ({
                 <Image src={toTeamLogo} alt="" className={styles.teamLogo} width={36} height={36} />
               )}
               <div className={styles.teamNameWrapper}>
-                {!isMobile && <div className={styles.from}> To </div>}
+                {!isMobile && <div className={styles.from}> {t("to")} </div>}
                 <div className={styles.teamName} title={toTeamNameToolTip}>
                   {toTeamName}
                 </div>

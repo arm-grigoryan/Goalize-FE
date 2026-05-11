@@ -8,6 +8,7 @@ import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { ITeamListItem } from "@/types/api/temas";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
 import teamLogoFallback from "../../assets/pngs/teamLogo.png";
+import { useTranslations } from "next-intl";
 
 export interface ITeamsCardProps {
   item: ITeamListItem;
@@ -18,6 +19,7 @@ export const TeamsCard: React.FC<ITeamsCardProps> = ({ item, onNextMatchClick })
   const { team, captain, matchDate, matchId, opponent } = item;
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("teamsCard");
 
   const formattedDate = matchId !== null ? formatUTCDate(matchDate) : "-";
 
@@ -35,7 +37,7 @@ export const TeamsCard: React.FC<ITeamsCardProps> = ({ item, onNextMatchClick })
           />
         </Link>
         <div className={styles.nameWrapper}>
-          Captain:
+          {t("captain")}
           <Link href={`/profile/${team.captainId}`} style={{ textDecoration: 'none' }}>
             <span>{captain.firstName} {captain.lastName}</span>
           </Link>
@@ -47,7 +49,7 @@ export const TeamsCard: React.FC<ITeamsCardProps> = ({ item, onNextMatchClick })
         </Link>
         <div className={styles.boxesContainer}>
           <div className={`${styles.box} ${styles.nextMatch}`} onClick={onNextMatchClick}>
-            <Link href={'#'}> Next Match: </Link>
+            <Link href={'#'}> {t("nextMatch")} </Link>
             {matchId !== null ? (
               <Link href={`/matches/${matchId}`} style={{ textDecoration: 'none' }}>
                 <span>{formattedDate}</span>
@@ -57,7 +59,7 @@ export const TeamsCard: React.FC<ITeamsCardProps> = ({ item, onNextMatchClick })
             )}
           </div>
           <div className={styles.box}>
-            Opponent:
+            {t("opponent")}
             {opponent !== null ? (
               <Link href={`/teams/${opponent.id}`} style={{ textDecoration: 'none' }}>
                 <span>{opponent.name}</span>

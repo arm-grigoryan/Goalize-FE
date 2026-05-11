@@ -10,9 +10,11 @@ import {
 import { useAuth } from "@/shared/auth/AuthContext";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { useTranslations } from "next-intl";
 
 export const useLeagueHeader = () => {
   const { leagueId } = useParams();
+  const t = useTranslations("leagues.header.modal");
 
   const { isAuthenticated, signIn } = useAuth();
   const { width } = useWindowSize();
@@ -72,8 +74,8 @@ export const useLeagueHeader = () => {
     ? joinedTeams &&
       leagueData?.maxTeamsCount &&
       joinedTeams.length >= leagueData.maxTeamsCount
-      ? "Max teams count is reached"
-      : "Registration date is expired"
+      ? t("maxTeamsCountReached")
+      : t("registrationDateExpired")
     : null;
 
   const userTeam = userInfo?.playerInfo?.team;
@@ -92,8 +94,8 @@ export const useLeagueHeader = () => {
       setModalState({
         open: true,
         type: "error",
-        title: "Error",
-        description: "You need to be in a team first, to join a league",
+        title: t("errorTitle"),
+        description: t("needTeamFirst"),
       });
       return;
     }
@@ -102,8 +104,8 @@ export const useLeagueHeader = () => {
       setModalState({
         open: true,
         type: "error",
-        title: "Error",
-        description: "Only Captain can register the team to the league",
+        title: t("errorTitle"),
+        description: t("onlyCaptainCanRegister"),
       });
       return;
     }
@@ -112,8 +114,8 @@ export const useLeagueHeader = () => {
       setModalState({
         open: true,
         type: "error",
-        title: "Info",
-        description: "Your team is already registered",
+        title: t("infoTitle"),
+        description: t("teamAlreadyRegistered"),
       });
       return;
     }
@@ -121,18 +123,18 @@ export const useLeagueHeader = () => {
     setModalState({
       open: true,
       type: "join",
-      title: "Join League",
-      description: "Are you sure you want to join this league?",
+      title: t("joinLeagueTitle"),
+      description: t("joinLeagueDescription"),
     });
   };
 
   const handleOpenUnjoinModal = () => {
-    if (isRegistrationClosed && registrationClosedReason === "Registration date is expired") {
+    if (isRegistrationClosed && registrationClosedReason === t("registrationDateExpired")) {
       setModalState({
         open: true,
         type: "error",
         title: "",
-        description: "If you want to unregister from league contact support",
+        description: t("contactSupport"),
       });
       return;
     }
@@ -141,8 +143,8 @@ export const useLeagueHeader = () => {
       setModalState({
         open: true,
         type: "error",
-        title: "Error",
-        description: "Only Captain can unregister the team from the league",
+        title: t("errorTitle"),
+        description: t("onlyCaptainCanUnregister"),
       });
       return;
     }
@@ -150,8 +152,8 @@ export const useLeagueHeader = () => {
     setModalState({
       open: true,
       type: "unjoin",
-      title: "Unjoin League",
-      description: "Are you sure you want to leave this league?",
+      title: t("unjoinLeagueTitle"),
+      description: t("unjoinLeagueDescription"),
     });
   };
 
@@ -167,16 +169,16 @@ export const useLeagueHeader = () => {
         setModalState({
           open: true,
           type: "success",
-          title: "Success",
-          description: "You have successfully joined the league!",
+          title: t("successTitle"),
+          description: t("joinSuccess"),
         });
       } else if (actionType === "unjoin") {
         await unjoinLeague({ leagueId: id, teamId: userTeam.id }).unwrap();
         setModalState({
           open: true,
           type: "success",
-          title: "Success",
-          description: "You have successfully left the league.",
+          title: t("successTitle"),
+          description: t("leaveSuccess"),
         });
       }
       refetchLeague();
@@ -188,15 +190,15 @@ export const useLeagueHeader = () => {
 
       if (isServerError) {
         showServerErrorToast(
-          apiError?.data?.errorMessage || "Something went wrong. Please try again later."
+          apiError?.data?.errorMessage || t("genericError")
         );
       } else {
         setModalState({
           open: true,
           type: "error",
-          title: "Error",
+          title: t("errorTitle"),
           description:
-            apiError?.data?.errorMessage || "An error occurred. Please try again.",
+            apiError?.data?.errorMessage || t("errorOccurred"),
         });
       }
     } finally {

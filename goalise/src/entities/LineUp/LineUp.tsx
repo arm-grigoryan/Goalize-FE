@@ -16,6 +16,7 @@ import type { IMatchlineUp } from '@/types/api/matchLineUps';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { MEDIA_TABLET_SMALL } from '@/constants/windowSizes';
+import { useTranslations } from 'next-intl';
 
 export const LineUp = () => {
   const pathname = usePathname();
@@ -24,6 +25,8 @@ export const LineUp = () => {
   const matchIdNum = Number(matchId);
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("matches.lineup");
+  const tTabs = useTranslations("matches.tabs");
   
   const [selectedPlayer, setSelectedPlayer] = useState<{ player: IMatchlineUp; teamLogo?: string } | null>(null);
 
@@ -90,35 +93,35 @@ export const LineUp = () => {
       <MatchesHeader />
       <div className={styles.tabs}>
         <Link className={`${styles.tab} ${isActive(`${base}`) ? styles.isActive : ""}`} href={base}>
-          Highlight
+          {tTabs("highlight")}
         </Link>
         <Link className={`${styles.tab} ${isActive(`${base}/stats`) ? styles.isActive : ""}`} href={`${base}/stats`}>
-          Stats
+          {tTabs("stats")}
         </Link>
         <Link className={`${styles.tab} ${isActive(`${base}/lineup`) ? styles.isActive : ""}`} href={`${base}/lineup`}>
-          Lineup
+          {tTabs("lineup")}
         </Link>
       </div>
       <div className={styles.titleWrapper}>
         <div className={`${styles.button} ${styles.redGlow}`}>
           <Image src={clipboard} alt="" className={styles.icon} />
         </div>
-        <div className={styles.title}> Lineup</div>
+        <div className={styles.title}> {t("title")}</div>
       </div>
 
       {allEmpty ? (
-        <div className={styles.emptyWrapper}> 
+        <div className={styles.emptyWrapper}>
             <Image src={isMobile ? highlightsEmptyMobile :highlightsEmpty} alt="" />
-            <div className={styles.emptyText}> No lineup are available at the moment </div>
-        </div> 
+            <div className={styles.emptyText}> {t("empty")} </div>
+        </div>
       ) : (
         <div className={styles.teamsWrapper}>
           <div>
-            <div className={styles.title}>{match?.homeTeam.name ?? 'Team A'}</div>
+            <div className={styles.title}>{match?.homeTeam.name ?? t("homeTeamFallback")}</div>
             <LineUpCard players={homePlayers} onPlayerClick={(p) => setSelectedPlayer({ player: p, teamLogo: getTeamLogo(match?.homeTeam.logoUrl) })} />
           </div>
           <div>
-            <div className={styles.title}>{match?.awayTeam.name ?? 'Team B'}</div>
+            <div className={styles.title}>{match?.awayTeam.name ?? t("awayTeamFallback")}</div>
             <LineUpCard players={awayPlayers} onPlayerClick={(p) => setSelectedPlayer({ player: p, teamLogo: getTeamLogo(match?.awayTeam.logoUrl) })} />
           </div>
         </div>
