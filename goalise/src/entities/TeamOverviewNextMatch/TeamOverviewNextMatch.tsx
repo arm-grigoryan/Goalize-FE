@@ -17,6 +17,7 @@ import upcomingEmpty from '../../assets/pngs/upcomingEmpty.svg';
 import matchMobileEmpty from '../../assets/pngs/matchMobileEmpty.svg';
 import backgroundImageRight from '../../assets/pngs/backgroundImageRight.svg';
 import backgroundImageLeft from '../../assets/pngs/backgroundImageLeft.svg';
+import { useTranslations } from "next-intl";
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -32,6 +33,7 @@ export const TeamOverviewNextMatch: React.FC = () => {
   const id = Number(teamId);
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("teamOverview.nextMatch");
 
   const { data: nextMatch, isLoading } = useGetTeamNextMatchQuery(id, {
     skip: !id,
@@ -46,7 +48,7 @@ export const TeamOverviewNextMatch: React.FC = () => {
         <div className={`${styles.redButton} ${styles.redGlow}`}>
           <Image src={calendarIcon} alt="" className={styles.calendarIcon} />
         </div>
-        <div className={styles.title}>Next Match</div>
+        <div className={styles.title}>{t("title")}</div>
       </div>
 
       {isLoading ? (
@@ -56,7 +58,7 @@ export const TeamOverviewNextMatch: React.FC = () => {
       ) : !nextMatch ? (
         <div className={styles.noMatch}>
           {!isMobile ? <Image src={upcomingEmpty} alt="" /> : <Image src={matchMobileEmpty} alt=" " />}
-          <div>No match is scheduled at the moment</div>
+          <div>{t("empty")}</div>
         </div>
       ) : (
         <Link
@@ -70,7 +72,7 @@ export const TeamOverviewNextMatch: React.FC = () => {
               const isValidDate = nextMatch.matchDate && !isNaN(new Date(nextMatch.matchDate).getTime());
               return isValidDate
                 ? <LiveDateLabel date={formatUTCDate(nextMatch.matchDate)} time={formatUTCDate(nextMatch.matchDate, "HH:MM")} />
-                : <LiveDateLabel date="TBD" />;
+                : <LiveDateLabel date={t("tbd")} />;
             })()}
 
           <div className={styles.teamsRow}>

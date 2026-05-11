@@ -10,15 +10,16 @@ import { useParams } from "next/navigation";
 import { useGetTeamTopPlayersQuery } from "@/app/store/services/api";
 import { Loader } from "@/shared/Loader/Loader";
 import type { ITeamTopPlayers } from "@/types/api/topPlayers";
+import { useTranslations } from "next-intl";
 
-const CATEGORY_MAP: { key: keyof ITeamTopPlayers; title: string }[] = [
-  { key: "topRating", title: "Player Rating" },
-  { key: "topGoal", title: "Most Goals" },
-  { key: "topAssist", title: "Most Assists" },
-  { key: "topYellowCard", title: "Most Yellow Cards" },
-  { key: "topRedCard", title: "Most Red Cards" },
-  { key: "topGoalKeeperRate", title: "Goalkeeper Rating"},
-  { key: "topSaves", title: "Most Saves"},
+const CATEGORY_KEYS: { key: keyof ITeamTopPlayers; titleKey: string }[] = [
+  { key: "topRating", titleKey: "playerRating" },
+  { key: "topGoal", titleKey: "mostGoals" },
+  { key: "topAssist", titleKey: "mostAssists" },
+  { key: "topYellowCard", titleKey: "mostYellowCards" },
+  { key: "topRedCard", titleKey: "mostRedCards" },
+  { key: "topGoalKeeperRate", titleKey: "goalkeeperRating" },
+  { key: "topSaves", titleKey: "mostSaves" },
 ];
 
 export interface ITeamOverviewStatisticsProps {
@@ -30,14 +31,15 @@ export const TeamOverviewStatistics: React.FC<ITeamOverviewStatisticsProps> = ()
   const id = Number(teamId);
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("teamOverview.statistics");
 
   const { data: topPlayers, isLoading } = useGetTeamTopPlayersQuery(id, {
     skip: !id,
   });
 
   const categories = topPlayers
-    ? CATEGORY_MAP.map(({ key, title }) => ({
-        title,
+    ? CATEGORY_KEYS.map(({ key, titleKey }) => ({
+        title: t(titleKey),
         entry: topPlayers[key],
       }))
     : [];
@@ -48,7 +50,7 @@ export const TeamOverviewStatistics: React.FC<ITeamOverviewStatisticsProps> = ()
         <div className={`${styles.redButton} ${styles.redGlow}`}>
           <Image src={statisticsIcon} alt='' className={styles.trophieIcon} />
         </div>
-        <div className={styles.title}>Top Players</div>
+        <div className={styles.title}>{t("title")}</div>
       </div>
 
       {isLoading ? (

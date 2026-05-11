@@ -39,7 +39,7 @@ export const Footer = () => {
 
         <div className={styles.info_sections}>
           <div className={styles.links}>
-            <div> Site Map</div>
+            <div> {t("footer.siteMap")}</div>
             <Link href="/" className={styles.link}>
               {t("header.menu.home")}
             </Link>
@@ -92,7 +92,7 @@ export const Footer = () => {
             </Link>
           </div>
           <div className={styles.privacy_terms}>
-            <div> Legal </div>
+            <div> {t("footer.legal")} </div>
             <span className={styles.text}>{t("footer.privacy")}</span>
             <span className={styles.text}>{t("footer.terms")}</span>
           </div>

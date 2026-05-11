@@ -8,6 +8,7 @@ import redCalendar from '../../assets/pngs/redCalendar.svg';
 import redClock from '../../assets/pngs/redClock.svg';
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import { useTranslations } from "next-intl";
 interface MatchListInnerCardProps {
   teamNameHome: string;
   homeTeamPoints: number;
@@ -27,14 +28,15 @@ export const MatchListInnerCard: FC<MatchListInnerCardProps> = ({
 }) => {
    const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("matches.matchListInnerCard");
   return (
     <div className={` ${styles.match_list_innerCard} ${isMobile ? styles.mobile : ""} `}>
       <div className={styles.teams_info}>
         <div className={styles.team_inner_info}>
           <div className={styles.team_name}>{teamNameHome}</div>
-          <div className={styles.team_points}> 
-            {homeTeamPoints !== null && 
-           `${homeTeamPoints} pts`}
+          <div className={styles.team_points}>
+            {homeTeamPoints !== null &&
+           `${homeTeamPoints} ${t("ptsUnit")}`}
           </div>
         </div>
         <div className={styles.vs_icon}>
@@ -44,8 +46,8 @@ export const MatchListInnerCard: FC<MatchListInnerCardProps> = ({
         <div className={styles.team_inner_info}>
           <div className={styles.team_name}>{teamNameAway}</div>
           <div className={styles.team_points}>
-            {awayTeamPoints !== null && 
-            `${awayTeamPoints} pts`
+            {awayTeamPoints !== null &&
+            `${awayTeamPoints} ${t("ptsUnit")}`
           }</div>
         </div>
       </div>

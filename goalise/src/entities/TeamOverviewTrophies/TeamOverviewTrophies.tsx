@@ -11,6 +11,7 @@ import { useGetTeamTrophiesQuery } from "@/app/store/services/api";
 import { Loader } from "@/shared/Loader/Loader";
 import type { ITeamTrophy } from "@/types/api/temas";
 import trophiesEmpty from '../../assets/pngs/trophiesEpmty.svg';
+import { useTranslations } from "next-intl";
 
 const typeMap: Record<ITeamTrophy["type"], "gold" | "silver" | "bronze"> = {
   Winner: "gold",
@@ -23,6 +24,7 @@ export const TeamOverviewTrophies: React.FC = () => {
   const id = Number(teamId);
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("teamOverview.trophies");
 
   const { data: trophies, isLoading } = useGetTeamTrophiesQuery(id, {
     skip: !id,
@@ -34,7 +36,7 @@ export const TeamOverviewTrophies: React.FC = () => {
         <div className={`${styles.redButton} ${styles.redGlow}`}>
           <Image src={trophieIcon} alt="" className={styles.trophieIcon} />
         </div>
-        <div className={styles.title}>Trophies</div>
+        <div className={styles.title}>{t("title")}</div>
       </div>
 
       {isLoading ? (

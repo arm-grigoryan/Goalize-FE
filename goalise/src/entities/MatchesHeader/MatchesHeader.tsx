@@ -17,6 +17,7 @@ import { useGetMatchByIdQuery } from "@/app/store/services/api";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
 import backgroundImageLeft from '../../assets/pngs/backgroundImageLeft.svg';
 import backgroundImageRight from '../../assets/pngs/backgroundImageRight.svg';
+import { useTranslations } from "next-intl";
 
 const chopsic = localFont({
    src: "../../../src/app/fonts/chopsic/Chopsic.otf",
@@ -27,6 +28,7 @@ export const MatchesHeader: React.FC = () => {
   const isMobile = width <= MEDIA_TABLET_SMALL;
   const { matchId } = useParams();
   const router = useRouter();
+  const t = useTranslations("matches.header");
 
   const { data: match, isLoading, error } = useGetMatchByIdQuery(Number(matchId));
 
@@ -55,12 +57,12 @@ export const MatchesHeader: React.FC = () => {
     const items: { label: string; href: string }[] = [{ label: leagueName, href: leagueHref }];
     if (match.matchPhase.playoff) {
       items.push(
-        { label: "Playoff", href: leagueHref },
+        { label: t("playoff"), href: leagueHref },
         { label: match.matchPhase.playoff.name, href: leagueHref }
       );
     } else if (match.matchPhase.groupRound) {
       items.push(
-        { label: "Group Stage", href: leagueHref },
+        { label: t("groupStage"), href: leagueHref },
         { label: match.matchPhase.groupRound.round.name, href: leagueHref }
       );
     }
@@ -103,7 +105,7 @@ export const MatchesHeader: React.FC = () => {
   const renderTopLabel = () => {
     if (match.state === "Upcoming") {
       return isTBA
-        ? <LiveDateLabel date="To-Be-Announced" time="To-Be-Announced" />
+        ? <LiveDateLabel date={t("tba")} time={t("tba")} />
         : <LiveDateLabel date={formattedDate} time={formattedTime} />;
     }
     if (match.state === "Live") {

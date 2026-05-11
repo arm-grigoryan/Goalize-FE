@@ -11,12 +11,14 @@ import { handleLongStrings } from "@/helper/handleLongStrings";
 import { useEffect, useRef, useState } from "react";
 import { useParams, usePathname } from "next/navigation";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
+import { useTranslations } from "next-intl";
 
 const PAGE_SIZE = 5;
 
 export const LeaguesFixtures = () => {
   const { leagueId } = useParams();
   const leagueIdNum = Number(leagueId);
+  const t = useTranslations("leagues.fixtures");
 
   const [offset, setOffset] = useState<number>(0);
   const [results, setResults] = useState<Record<string, ILeaguesResultsItem[]>>(
@@ -84,7 +86,7 @@ export const LeaguesFixtures = () => {
   return (
     <div className={styles.leagues_fixtures}>
       <div className={styles.title_wrapper}>
-        <Title content="Fixtures" />
+        <Title content={t("title")} />
       </div>
       <div
         ref={scrollContainerRef}

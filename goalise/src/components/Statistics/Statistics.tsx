@@ -12,6 +12,7 @@ import { useGetMatchStatsQuery, useGetMatchByIdQuery } from "@/app/store/service
 import { useEffect } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import { useTranslations } from "next-intl";
 
 export const Statistics: React.FC = () => {
     const pathname = usePathname();
@@ -20,6 +21,8 @@ export const Statistics: React.FC = () => {
     const base = `/matches/${matchId}`;
     const { width } = useWindowSize();
     const isMobile = width <= MEDIA_TABLET_SMALL;
+    const t = useTranslations("matches.statistics");
+    const tTabs = useTranslations("matches.tabs");
 
     const isActive = (href: string) => {
       if (href === base) {
@@ -42,29 +45,29 @@ export const Statistics: React.FC = () => {
 
         // 204 — match exists but stats not filled yet
         if (isSuccess && !stats) {
-            return <div className={styles.emptyWrapper}> 
+            return <div className={styles.emptyWrapper}>
                         <Image src={isMobile ? highlightsEmptyMobile : highlightsEmpty} alt="" />
-                        <div className={styles.emptyText}> No stats are available at the moment </div>
-                    </div> 
+                        <div className={styles.emptyText}> {t("empty")} </div>
+                    </div>
         }
 
         if (!stats) return null;
 
         const rows: { title: string; home: number; away: number }[] = [
-            { title: "Total Shots",            home: stats.homeTeamShots,         away: stats.awayTeamShots },
-            { title: "Shots On Target",        home: stats.homeTeamShotsComplete, away: stats.awayTeamShotsComplete },
-            { title: "Total Passes",           home: stats.homeTeamPass,          away: stats.awayTeamPass },
-            { title: "Passes Completed",       home: stats.homeTeamPassComplete,  away: stats.awayTeamPassComplete },
-            { title: "Fouls",                  home: stats.homeTeamFouls,         away: stats.awayTeamFouls },
-            { title: "Corners",                home: stats.homeTeamCorners,       away: stats.awayTeamCorners },
+            { title: t("totalShots"),       home: stats.homeTeamShots,         away: stats.awayTeamShots },
+            { title: t("shotsOnTarget"),    home: stats.homeTeamShotsComplete, away: stats.awayTeamShotsComplete },
+            { title: t("totalPasses"),      home: stats.homeTeamPass,          away: stats.awayTeamPass },
+            { title: t("passesCompleted"),  home: stats.homeTeamPassComplete,  away: stats.awayTeamPassComplete },
+            { title: t("fouls"),            home: stats.homeTeamFouls,         away: stats.awayTeamFouls },
+            { title: t("corners"),          home: stats.homeTeamCorners,       away: stats.awayTeamCorners },
         ];
 
         return (
             <div>
-                { isMobile && 
-                <div className={styles.teamNamesWrapper}> 
-                    <div className={styles.teamName}>{match?.homeTeam.name ?? 'Home'}</div>
-                    <div className={styles.teamName}>{match?.awayTeam.name ?? 'Away'}</div>
+                { isMobile &&
+                <div className={styles.teamNamesWrapper}>
+                    <div className={styles.teamName}>{match?.homeTeam.name ?? t("home")}</div>
+                    <div className={styles.teamName}>{match?.awayTeam.name ?? t("away")}</div>
                 </div>}
                 {rows.map((row) => {
                     const total = row.home + row.away;
@@ -95,20 +98,20 @@ export const Statistics: React.FC = () => {
             <MatchesHeader />
                 <div className={styles.tabs}>
                     <Link className={`${styles.tab} ${isActive(`${base}`) ? styles.isActive : ""}`} href={base}>
-                         Highlight
+                         {tTabs("highlight")}
                     </Link>
                     <Link className={`${styles.tab} ${isActive(`${base}/stats`) ? styles.isActive : ""}`} href={`${base}/stats`}>
-                        Stats
+                        {tTabs("stats")}
                     </Link>
                     <Link className={`${styles.tab} ${isActive(`${base}/lineUp`) ? styles.isActive : ""}`} href={`${base}/lineup`}>
-                        Lineup
+                        {tTabs("lineup")}
                     </Link>
                 </div>
             <div className={styles.titleWrapper}>
                     <div className={`${styles.button} ${styles.redGlow}`}>
                         <Image src={statistics} alt="" className={styles.icon} />
                     </div>
-                <div className={styles.title}> Statistics </div>
+                <div className={styles.title}> {t("title")} </div>
             </div>
             {renderContent()}
         </div>

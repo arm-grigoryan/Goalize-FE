@@ -11,11 +11,13 @@ import { MEDIA_TABLET_SMALL } from '@/constants/windowSizes';
 import { useParams } from 'next/navigation';
 import { useGetMatchByIdQuery } from '@/app/store/services/api';
 import type { MatchHighlight } from '@/types/api/matches';
+import { useTranslations } from 'next-intl';
 
 export const MatchesHighlights: React.FC = () => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
   const { matchId } = useParams();
+  const t = useTranslations("matches.highlights");
 
   const { data: match, isLoading } = useGetMatchByIdQuery(Number(matchId));
 
@@ -60,14 +62,14 @@ export const MatchesHighlights: React.FC = () => {
       <div className={`${styles.button} ${styles.redGlow}`}>
         <Image src={calendarIcon} alt="" className={styles.icon} />
       </div>
-      <div className={styles.title}> Highlight</div>
+      <div className={styles.title}> {t("title")}</div>
     </div>
 
     {allEmpty ? (
-      <div className={styles.emptyWrapper}> 
+      <div className={styles.emptyWrapper}>
         <Image src={isMobile ? highlightsEmptyMobile : highlightsEmpty} alt="" />
-        <div className={styles.emptyText}> No highlights are available at the moment </div>
-      </div> 
+        <div className={styles.emptyText}> {t("empty")} </div>
+      </div>
     ) : (
       <div className={`${isMobile ? styles.mobileWrapper : styles.highlightsWrapper}` }>
         {isMobile && 

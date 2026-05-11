@@ -10,11 +10,13 @@ import {
 import LeaguesJoinedTeamCard from "@/entities/leaguesJoinedTeamCard";
 import LeaguesJoinedTeamsProgressBar from "@/entities/LeguesJoinedTemasProgressBar";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export const LeguesJoinedTeams = () => {
   const { leagueId } = useParams();
   const { data: leagueInfo } = useGetLeaguesInfoQuery(Number(leagueId));
   const { data } = useGetLeaguesJoinedTeamsQuery(Number(leagueId));
+  const t = useTranslations("leagues.header");
 
   if (!leagueInfo || !data) {
     return (
@@ -27,7 +29,7 @@ export const LeguesJoinedTeams = () => {
   return (
     <div className={styles.leagues_joined_teams}>
       <div className={styles.titleWrapper}>
-        Joined Teams
+        {t("joinedTeams")}
         <div className={styles.titleCount}>{'(' + data?.length + '/' + leagueInfo?.maxTeamsCount + ')'}</div>
       </div>
       <LeaguesJoinedTeamsProgressBar

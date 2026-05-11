@@ -24,7 +24,9 @@
     "loading": "Բեռնում...",
     "zoom": "Մեծացնել",
     "saveCrop": "Պահել կտրվածքը",
-    "uploadLogo": "Բեռնել լոգո"
+    "uploadLogo": "Բեռնել լոգո",
+    "guest": "Հյուր",
+    "back": "Հետ"
   },
   "auth": {
     "signingIn": {
@@ -141,7 +143,9 @@
       "phone": "Հեռ.՝ +1 (555) 123-4567"
     },
     "rights": "© Հեղինակային իրավունք 2025 թ.",
-    "followUs": "Հետևեք մեզ"
+    "followUs": "Հետևեք մեզ",
+    "siteMap": "Կայքի քարտեզ",
+    "legal": "Իրավական"
   },
   "search": {
     "placeholder": "Որոնել լիգաներ, թիմեր, խաղացողներ...",
@@ -246,6 +250,47 @@
     "notAllowedDescription": "Ձեզ թույլ չի տրված կատարել այս գործողությունը"
   },
   "matches": {
+    "tabs": {
+      "highlight": "Հիմնականներ",
+      "stats": "Վիճակագրություն",
+      "lineup": "Կազմ"
+    },
+    "highlights": {
+      "title": "Հիմնական պահեր",
+      "empty": "Հիմնական պահեր այս պահին հասանելի չեն",
+      "goal": "Գոլ",
+      "ownGoal": "Ինքնագոլ",
+      "redCard": "Կարմիր քարտ",
+      "yellowCard": "Դեղին քարտ",
+      "assistBy": "Փոխանցումը՝"
+    },
+    "statistics": {
+      "title": "Վիճակագրություն",
+      "empty": "Վիճակագրությունն այս պահին հասանելի չէ",
+      "home": "Տանտեր",
+      "away": "Հյուր",
+      "totalShots": "Ընդհանուր հարվածներ",
+      "shotsOnTarget": "Հարվածներ թիրախի վրա",
+      "totalPasses": "Ընդհանուր փոխանցումներ",
+      "passesCompleted": "Կատարված փոխանցումներ",
+      "fouls": "Խախտումներ",
+      "corners": "Անկյունային հարվածներ"
+    },
+    "header": {
+      "playoff": "Փլեյ-օֆ",
+      "groupStage": "Խմբային փուլ",
+      "tba": "Կհայտնվի"
+    },
+    "lineup": {
+      "title": "Կազմ",
+      "empty": "Կազմերն այս պահին հասանելի չեն",
+      "homeTeamFallback": "Տանտեր թիմ",
+      "awayTeamFallback": "Հյուր թիմ"
+    },
+    "matchListInnerCard": {
+      "ptsUnit": "միավոր"
+    },
+    "liveLabel": "Ուղիղ",
     "statusCard": {
       "playerStats": {
         "title": "Վիճակագրություն որպես խաղացող",
@@ -266,6 +311,255 @@
       },
       "playerProfile": "Խաղացողի պրոֆիլ"
     }
+  },
+  "events": {
+    "tabs": {
+      "upcoming": "Առաջիկա միջոցառումներ",
+      "past": "Անցած միջոցառումներ"
+    },
+    "failedToLoad": "Չհաջողվեց բեռնել միջոցառումները։",
+    "emptyUpcoming": "Առաջիկա միջոցառումներ չկան։",
+    "emptyPast": "Անցած միջոցառումներ չկան։",
+    "participants": "Մասնակիցներ",
+    "registrationsWillBeClosedOn": "Գրանցումները կփակվեն",
+    "create": {
+      "createTitle": "Ստեղծել միջոցառում",
+      "editTitle": "Խմբագրել միջոցառումը",
+      "eventTitleLabel": "Միջոցառման անվանում",
+      "eventTitleRequired": "Միջոցառման անվանումը պարտադիր է",
+      "max32Characters": "Առավելագույնը 32 նիշ",
+      "addressLabel": "Հասցե",
+      "addressRequired": "Հասցեն պարտադիր է",
+      "max100Characters": "Առավելագույնը 100 նիշ",
+      "startTimeLabel": "Սկսելու ժամանակ",
+      "startTimeRequired": "Սկսելու ժամանակը պարտադիր է",
+      "mustBeInFuture": "Պետք է լինի ապագայում",
+      "registrationClosingTimeLabel": "Գրանցման փակման ժամանակ",
+      "registrationClosingTimeRequired": "Գրանցման փակման ժամանակը պարտադիր է",
+      "mustBeBeforeStartTime": "Պետք է լինի սկսելու ժամանակից առաջ",
+      "durationLabel": "Տևողություն",
+      "durationRequired": "Տևողությունը պարտադիր է",
+      "mustBePositiveInteger": "Պետք է լինի դրական ամբողջ թիվ",
+      "minLabel": "ր.",
+      "paymentAmountLabel": "Վճարի գումար",
+      "paymentAmountRequired": "Վճարի գումարը պարտադիր է",
+      "mustBePositiveNumber": "Պետք է լինի դրական թիվ",
+      "amountPlaceholder": "Գումար",
+      "participantCountLabel": "Մասնակիցների քանակ",
+      "participantCountRequired": "Մասնակիցների քանակը պարտադիր է",
+      "additionalInfoLabel": "Լրացուցիչ տեղեկություն",
+      "createButton": "Ստեղծել",
+      "saveChangesButton": "Պահպանել փոփոխությունները",
+      "cancelEventButton": "Չեղարկել միջոցառումը",
+      "cancelEventTitle": "Չեղարկել միջոցառումը",
+      "cancelEventDescription": "Վստա՞հ եք, որ ցանկանում եք չեղարկել այս միջոցառումը։ Այս գործողությունը հնարավոր չէ հետ կանչել։",
+      "eventCreatedTitle": "Միջոցառումը ստեղծվել է։",
+      "eventCreatedDescription": "Ձեր միջոցառումը հաջողությամբ ստեղծվել է և այժմ տեսանելի է միջոցառումների ցանկում։",
+      "eventUpdatedTitle": "Միջոցառումը թարմացվել է։",
+      "eventUpdatedDescription": "Ձեր միջոցառումը հաջողությամբ թարմացվել է։",
+      "eventCancelledTitle": "Միջոցառումը չեղարկվել է",
+      "eventCancelledDescription": "Միջոցառումը հաջողությամբ չեղարկվել է։",
+      "errorTitle": "Սխալ",
+      "failedToCreate": "Չհաջողվեց ստեղծել միջոցառումը։",
+      "failedToUpdate": "Չհաջողվեց թարմացնել միջոցառումը։",
+      "failedToCancel": "Չհաջողվեց չեղարկել միջոցառումը։ Խնդրում ենք փորձել նորից։"
+    },
+    "header": {
+      "title": "Միջոցառումներ",
+      "description": "Մնացեք խաղի մեջ։ Բռնեք բոլոր վերջին հանդիպումները, մրցաշարերը և ուղիղ եթերի գործողությունները, որոնք տեղի են ունենում ձեր մոտակայքում կամ աշխարհի շուրջ։",
+      "createEvent": "Ստեղծել միջոցառում",
+      "manageButton": "Կառավարել",
+      "joinButton": "Միանալ",
+      "unjoinButton": "Հեռանալ",
+      "payLabel": "Վճարել",
+      "canceledLabel": "Չեղարկված",
+      "finishedLabel": "Ավարտված",
+      "contactLabel": "Կապ՝",
+      "minSession": "{duration} ր. տևողություն",
+      "joinEventTitle": "Միանալ միջոցառմանը",
+      "joinEventDescription": "Վստա՞հ եք, որ ցանկանում եք միանալ այս միջոցառմանը։",
+      "unjoinEventTitle": "Հեռանալ միջոցառումից",
+      "unjoinEventDescription": "Վստա՞հ եք, որ ցանկանում եք լքել այս միջոցառումը։",
+      "successTitle": "Հաջողություն",
+      "joinSuccess": "Դուք հաջողությամբ միացել եք միջոցառմանը։",
+      "leaveSuccess": "Դուք հաջողությամբ լքել եք միջոցառումը։",
+      "errorTitle": "Սխալ",
+      "genericError": "Ինչ-որ բան սխալ ընթացավ։ Խնդրում ենք փորձել ավելի ուշ։",
+      "errorOccurred": "Տեղի ունեցավ սխալ։ Խնդրում ենք փորձել նորից։",
+      "serverError": "Սերվերի սխալ",
+      "canNoLongerLeave": "Այլևս չեք կարող լքել միջոցառումը։ Գրանցման ժամկետը լրացել է։",
+      "maxParticipants": "Մասնակիցների առավելագույն քանակն արդեն գրանցված է",
+      "canNoLongerRegister": "Այլևս չեք կարող գրանցվել։ Գրանցման ժամկետը լրացել է։"
+    },
+    "card": {
+      "canceledRibbon": "Չեղարկված",
+      "participants": "Մասնակիցներ",
+      "registrationWillBeClosedOn": "Գրանցումը կփակվի"
+    }
+  },
+  "champion": {
+    "badge": "ՉԵՄՊԻՈՆ"
+  },
+  "leagues": {
+    "header": {
+      "prizePool": "Մրցանակային ֆոնդ",
+      "firstPlace": "1-ին տեղ",
+      "secondPlace": "2-րդ տեղ",
+      "semiFinalist": "Կիսաեզրափակիչ",
+      "perGamePerTeam": "/մեկ խաղի /մեկ թիմի համար",
+      "canNoLongerRegister": "Այլևս չեք կարող գրանցվել",
+      "joined": "Միացած",
+      "joinLeague": "Միանալ լիգային",
+      "registrationClosed": "Գրանցումը փակ է",
+      "state": "Կարգավիճակ՝",
+      "registrationsWillBeClosedOn": "Գրանցումները կփակվեն",
+      "joinedTeams": "Միացած թիմեր",
+      "tabs": {
+        "groups": "Խմբեր",
+        "drawStandings": "Վիճակահանության աղյուսակ",
+        "results": "Արդյունքներ",
+        "fixtures": "Խաղացանկ",
+        "stats": "Վիճակագրություն"
+      },
+      "serverError": "Սերվերի սխալ",
+      "modal": {
+        "maxTeamsCountReached": "Թիմերի առավելագույն քանակը լրացված է",
+        "registrationDateExpired": "Գրանցման ժամկետը լրացել է",
+        "errorTitle": "Սխալ",
+        "needTeamFirst": "Լիգային միանալու համար նախ պետք է լինել թիմում",
+        "onlyCaptainCanRegister": "Միայն կապիտանը կարող է թիմը գրանցել լիգայում",
+        "infoTitle": "Տեղեկություն",
+        "teamAlreadyRegistered": "Ձեր թիմն արդեն գրանցված է",
+        "joinLeagueTitle": "Միանալ լիգային",
+        "joinLeagueDescription": "Վստա՞հ եք, որ ցանկանում եք միանալ այս լիգային։",
+        "contactSupport": "Լիգայից ապագրանցվելու համար դիմեք օգնության կենտրոն",
+        "onlyCaptainCanUnregister": "Միայն կապիտանը կարող է թիմը ապագրանցել լիգայից",
+        "unjoinLeagueTitle": "Հեռանալ լիգայից",
+        "unjoinLeagueDescription": "Վստա՞հ եք, որ ցանկանում եք լքել այս լիգան։",
+        "successTitle": "Հաջողություն",
+        "joinSuccess": "Դուք հաջողությամբ միացել եք լիգային։",
+        "leaveSuccess": "Դուք հաջողությամբ լքել եք լիգան։",
+        "genericError": "Ինչ-որ բան սխալ ընթացավ։ Խնդրում ենք փորձել ավելի ուշ։",
+        "errorOccurred": "Տեղի ունեցավ սխալ։ Խնդրում ենք փորձել նորից։"
+      }
+    },
+    "fixtures": {
+      "title": "Խաղացանկ"
+    },
+    "results": {
+      "title": "Արդյունքներ"
+    },
+    "groupsUnavailable": "Խմբերի տվյալներն անհասանելի են։"
+  },
+  "leaguesStats": {
+    "empty": "Վիճակագրությունը դեռ հասանելի չէ",
+    "goals": "Գոլեր",
+    "assists": "Փոխանցումներ",
+    "ratings": "Գնահատականներ",
+    "yellowCards": "Դեղին քարտեր",
+    "redCards": "Կարմիր քարտեր"
+  },
+  "squad": {
+    "modals": {
+      "shirtNumberUpdatedTitle": "Վերնաշապիկի համարը հաջողությամբ թարմացվել է",
+      "shirtNumberUpdatedDescription": "Խաղացողի վերնաշապիկի համարը թարմացվել է։",
+      "cannotUpdateShirtNumber": "Հնարավոր չէ թարմացնել վերնաշապիկի համարը",
+      "invitePlayerTitle": "Հրավիրել խաղացողին",
+      "inviteButton": "Հրավիրել"
+    },
+    "host": "Կազմակերպիչ",
+    "you": "Դուք"
+  },
+  "teamOverview": {
+    "header": {
+      "abandoned": "Լքված",
+      "applyButton": "Դիմել",
+      "quitButton": "Լքել",
+      "ageLabel": "Տարիք՝",
+      "footLabel": "Ոտք՝",
+      "teamApplicationTitle": "Թիմի դիմում",
+      "teamApplicationDescription": "Դիմե՞լ {teamName}-ին։ Ձեր հեռախոսահամարը տեսանելի կլինի կապիտանին կապի համար։",
+      "applicationSentTitle": "Դիմումը հաջողությամբ ուղարկվել է",
+      "applicationSentDescription": "Ձեր դիմումը հաջողությամբ ուղարկվել է թիմին։",
+      "cannotApplyTitle": "Հնարավոր չէ դիմել",
+      "captainWarningDescription": "Դուք թիմի կապիտանն եք։ Փոխանցեք կապիտանի դերն այլ խաղացողի կամ լքեք թիմը, եթե ցանկանում եք դիմել այլ թիմի։",
+      "quitTeamAbandonedDescription": "Դուք լքել եք թիմը։ Թիմն այժմ լքված է։",
+      "unexpectedError": "Տեղի ունեցավ անսպասելի սխալ։ Խնդրում ենք փորձել ավելի ուշ։",
+      "tabs": {
+        "overview": "Ակնարկ",
+        "results": "Արդյունքներ",
+        "fixtures": "Խաղացանկ",
+        "transfers": "Տրանսֆերներ",
+        "squad": "Կազմ"
+      },
+      "thisTeamFallback": "այս թիմը"
+    },
+    "nextMatch": {
+      "title": "Հաջորդ խաղ",
+      "empty": "Ներկայումս խաղ նախատեսված չէ",
+      "tbd": "Կհայտնվի"
+    },
+    "trophies": {
+      "title": "Գավաթներ",
+      "firstPlace": "1-ին տեղ",
+      "secondPlace": "2-րդ տեղ",
+      "semifinalist": "Կիսաեզրափակիչ"
+    },
+    "statistics": {
+      "title": "Լավագույն խաղացողներ",
+      "playerRating": "Խաղացողի գնահատական",
+      "mostGoals": "Ամենաշատ գոլեր",
+      "mostAssists": "Ամենաշատ փոխանցումներ",
+      "mostYellowCards": "Ամենաշատ դեղին քարտեր",
+      "mostRedCards": "Ամենաշատ կարմիր քարտեր",
+      "goalkeeperRating": "Դարպասապահի գնահատական",
+      "mostSaves": "Ամենաշատ փրկություններ"
+    }
+  },
+  "teamPage": {
+    "fixtures": "Խաղացանկ",
+    "results": "Արդյունքներ"
+  },
+  "teamTransfer": {
+    "tabs": {
+      "all": "Բոլորը",
+      "playerIn": "Մուտքի խաղացողներ",
+      "playerOut": "Ելքի խաղացողներ"
+    },
+    "card": {
+      "playerName": "Խաղացողի անուն",
+      "playerIn": "Ներս",
+      "playerOut": "Դուրս",
+      "in": "Ներս",
+      "out": "Դուրս"
+    }
+  },
+  "teamsCard": {
+    "captain": "Կապիտան՝",
+    "nextMatch": "Հաջորդ խաղ՝",
+    "opponent": "Հակառակորդ՝"
+  },
+  "teamsPastMatchesCard": {
+    "leagueFallback": "Լիգա"
+  },
+  "groupCard": {
+    "team": "Թիմ",
+    "mp": "Խ",
+    "gd": "ԳՏ",
+    "pts": "Մ"
+  },
+  "showMoreCard": {
+    "makeCaptain": "Նշանակել կապիտան",
+    "remove": "Հեռացնել",
+    "editShirtNumber": "Փոփոխել վերնաշապիկի համարը",
+    "invite": "Հրավիրել"
+  },
+  "leaguesJoinedTeamCard": {
+    "captain": "կապիտան"
+  },
+  "draftTeamHeader": {
+    "cannotDeleteTitle": "Հնարավոր չէ ջնջել նախագիծ թիմը",
+    "errorFallback": "Տեղի ունեցավ անսպասելի սխալ։ Խնդրում ենք փորձել ավելի ուշ։"
   },
   "teamForm": {
     "logoRequired": "Լոգոն պարտադիր է։",

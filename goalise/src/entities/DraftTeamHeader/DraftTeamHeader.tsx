@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import styles from './DraftTeamHeader.module.css';
 import Image from "next/image";
@@ -14,6 +15,7 @@ import { useAuth } from "@/shared/auth/AuthContext";
 import { refreshTokens } from "@/shared/auth/oidcService";
 import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 import { UpdateDraftTeamPopUp } from "@/entities/UpdateDraftTeamPopUp";
+import { useTranslations } from "next-intl";
 
 export interface IDraftTeamHeaderProps {
     isLoading?: boolean;
@@ -31,6 +33,9 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
 }) => {
     const { width } = useWindowSize();
     const isMobile = width <= MEDIA_TABLET_SMALL;
+    const t = useTranslations("draftTeam");
+    const tHeader = useTranslations("draftTeamHeader");
+    const tCommon = useTranslations("common");
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
     const [deleteError, setDeleteError] = useState<string | null>(null);
@@ -59,7 +64,7 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
             setShowDeleteSuccessModal(true);
         } catch (error) {
             const errorData = error as { data?: { errorMessage?: string } };
-            setDeleteError(errorData?.data?.errorMessage || "An unexpected error occurred. Please try again later.");
+            setDeleteError(errorData?.data?.errorMessage || tHeader("errorFallback"));
         }
     };
 
@@ -79,27 +84,27 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
         />
         {showDeleteModal && (
             <PlayerInvitationCard
-                title="Delete Draft Team"
-                description="Are you sure you want to delete your draft team? This action cannot be undone."
-                confirmButtonText="Delete"
-                cancelButtonText="Cancel"
+                title={t("deleteDraftTitle")}
+                description={t("deleteDraftDescription")}
+                confirmButtonText={tCommon("delete")}
+                cancelButtonText={tCommon("cancel")}
                 onConfirmButtonClick={handleDelete}
                 onCancelButtonClick={() => setShowDeleteModal(false)}
             />
         )}
         {showDeleteSuccessModal && (
             <PlayerInvitationCard
-                title="Draft Team Deleted"
-                description="Your draft team has been successfully deleted."
-                cancelButtonText="Close"
+                title={t("deleteSuccessTitle")}
+                description={t("deleteSuccessDescription")}
+                cancelButtonText={tCommon("close")}
                 onCancelButtonClick={() => { window.location.href = '/'; }}
             />
         )}
         {deleteError && (
             <PlayerInvitationCard
-                title="Cannot Delete Draft Team"
+                title={tHeader("cannotDeleteTitle")}
                 description={deleteError}
-                cancelButtonText="Close"
+                cancelButtonText={tCommon("close")}
                 onCancelButtonClick={() => setDeleteError(null)}
             />
         )}
@@ -130,7 +135,7 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                                 style={{ width: 200, height: 32, borderRadius: 6 }}
                             />
                         ) : isError ? (
-                            <div className={styles.errorText}>Failed to load team info</div>
+                            <div className={styles.errorText}>{t("failedToLoadTeamInfo")}</div>
                         ) : (
                             <div className={styles.name}>
                                 {isMobile && draftData?.logo && (
@@ -166,7 +171,7 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                         <div className={styles.deleteButtonWrapper}>
                             <Button
                                 handleClick={() => setShowDeleteModal(true)}
-                                content="Delete"
+                                content={t("delete")}
                                 className="red_button_transparant_white_text"
                             />
                             {isMobile && isCaptain && (
@@ -179,7 +184,7 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                                 </div>
                             )}
                             <div className={styles.button}>
-                                <div> Last Edited: </div>
+                                <div> {t("lastEdited")} </div>
                                 <span>
                                     {editedDateStr}
                                     <div>{editedTimeStr}</div>
@@ -188,7 +193,7 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                         </div>
                         <div className={styles.rejectedWrapper}>
                             <div className={styles.rejectedInner}>
-                                <div className={styles.status}> Status: </div>
+                                <div className={styles.status}> {t("status")} </div>
                                 <div className={styles.abandoned}>
                                     <Image
                                         src={infoIcon}
@@ -218,7 +223,7 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                                 </div>
                                 {!isMobile && reviewedDateStr && (
                                     <div className={styles.button}>
-                                        <div> Reviewed: </div>
+                                        <div> {t("reviewed")} </div>
                                         <span>
                                             {reviewedDateStr}
                                             <div className={styles.clock}>{reviewedTimeStr}</div>
@@ -231,7 +236,7 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                             )}
                             {isMobile && reviewedDateStr && (
                                 <div className={styles.button}>
-                                    <div> Reviewed: </div>
+                                    <div> {t("reviewed")} </div>
                                     <span>
                                         {reviewedDateStr}
                                         <div className={styles.clock}>{reviewedTimeStr}</div>
@@ -270,7 +275,7 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                             <div className={styles.playerName}>
                                 {user?.name ?? '—'}
                                 {!isCaptain && (
-                                    <div className={styles.captainLabel}> (C) </div>
+                                    <div className={styles.captainLabel}> {t("captainLabel")} </div>
                                 )}
                             </div>
                         </Link>
@@ -312,8 +317,8 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
             >
                 <div className={styles.statusTooltipDesc}>
                     {draftData.reviewStatus === "Pending"
-                        ? "This team is under review and will be published once approved."
-                        : "This team was rejected during review. Please update the information and resubmit."}
+                        ? t("statusPending")
+                        : t("statusRejected")}
                 </div>
             </div>
         )}

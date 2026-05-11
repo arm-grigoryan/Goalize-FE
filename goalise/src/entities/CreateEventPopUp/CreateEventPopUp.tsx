@@ -20,6 +20,7 @@ import { invalidateEventsList } from "@/app/store/slices/eventsSlice";
 import { Loader } from "@/shared/Loader/Loader";
 import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 import { IEventDetail } from "@/types/api/events";
+import { useTranslations } from "next-intl";
 
 type CreateEventFormData = {
   title: string;
@@ -54,6 +55,8 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
   const dispatch = useDispatch();
+  const t = useTranslations("events.create");
+  const tCommon = useTranslations("common");
 
   const [createEvent, { isLoading: isCreating }] = useCreateEventMutation();
   const [updateEvent, { isLoading: isUpdating }] = useUpdateEventMutation();
@@ -100,29 +103,29 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
 
   useEffect(() => {
     register('startTime', {
-      required: 'Start time is required',
+      required: t('startTimeRequired'),
       validate: (v) => {
-        if (!v) return 'Start time is required';
+        if (!v) return t('startTimeRequired');
         const unchanged = isEditMode && v === defaultStartTime;
-        if (!unchanged && new Date(v) <= new Date()) return 'Must be in the future';
+        if (!unchanged && new Date(v) <= new Date()) return t('mustBeInFuture');
         return true;
       },
     });
     register('registrationClosingTime', {
-      required: 'Registration closing time is required',
+      required: t('registrationClosingTimeRequired'),
       validate: (v) => {
-        if (!v) return 'Registration closing time is required';
+        if (!v) return t('registrationClosingTimeRequired');
         const unchanged = isEditMode && v === defaultRegCloseTime;
         const startUnchanged = isEditMode && getValues('startTime') === defaultStartTime;
-        if (!unchanged && new Date(v) <= new Date()) return 'Must be in the future';
+        if (!unchanged && new Date(v) <= new Date()) return t('mustBeInFuture');
         if (!(unchanged && startUnchanged)) {
           const startVal = getValues('startTime');
-          if (startVal && new Date(v) >= new Date(startVal)) return 'Must be before start time';
+          if (startVal && new Date(v) >= new Date(startVal)) return t('mustBeBeforeStartTime');
         }
         return true;
       },
     });
-  }, [register, getValues, isEditMode, defaultStartTime, defaultRegCloseTime]);
+  }, [register, getValues, isEditMode, defaultStartTime, defaultRegCloseTime, t]);
 
   // Pre-fill datetime inputs in edit mode
   useEffect(() => {
@@ -154,15 +157,15 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
     try {
       if (isEditMode && event) {
         await updateEvent({ eventId: event.id, body }).unwrap();
-        setModalState({ open: true, type: 'success', title: 'Event Updated!', description: 'Your event has been successfully updated.' });
+        setModalState({ open: true, type: 'success', title: t('eventUpdatedTitle'), description: t('eventUpdatedDescription') });
       } else {
         await createEvent(body).unwrap();
         dispatch(invalidateEventsList());
-        setModalState({ open: true, type: 'success', title: 'Event Created!', description: 'Your event has been successfully created and is now visible in the events list.' });
+        setModalState({ open: true, type: 'success', title: t('eventCreatedTitle'), description: t('eventCreatedDescription') });
       }
     } catch (err) {
       const error = err as { data?: { detail?: string; title?: string; errorMessage?: string } };
-      setSubmitError(error?.data?.detail || error?.data?.title || error?.data?.errorMessage || (isEditMode ? 'Failed to update event.' : 'Failed to create event.'));
+      setSubmitError(error?.data?.detail || error?.data?.title || error?.data?.errorMessage || (isEditMode ? t('failedToUpdate') : t('failedToCreate')));
     }
   };
 
@@ -170,10 +173,10 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
     if (!event) return;
     try {
       await cancelEvent(event.id).unwrap();
-      setModalState({ open: true, type: 'cancelSuccess', title: 'Event Cancelled', description: 'The event has been successfully cancelled.' });
+      setModalState({ open: true, type: 'cancelSuccess', title: t('eventCancelledTitle'), description: t('eventCancelledDescription') });
     } catch (err) {
       const error = err as { data?: { errorMessage?: string } };
-      setModalState({ open: true, type: 'error', title: 'Error', description: error?.data?.errorMessage || 'Failed to cancel the event. Please try again.' });
+      setModalState({ open: true, type: 'error', title: t('errorTitle'), description: error?.data?.errorMessage || t('failedToCancel') });
     }
   };
 
@@ -183,8 +186,8 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
         <PlayerInvitationCard
           title={modalState.title}
           description={modalState.description}
-          confirmButtonText='Confirm'
-          cancelButtonText='Back'
+          confirmButtonText={tCommon('confirm')}
+          cancelButtonText={tCommon('back')}
           onConfirmButtonClick={handleCancelEventConfirm}
           onCancelButtonClick={() => setModalState(null)}
           loading={isCancelling}
@@ -195,7 +198,7 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
       <PlayerInvitationCard
         title={modalState.title}
         description={modalState.description}
-        cancelButtonText='Close'
+        cancelButtonText={tCommon('close')}
         onCancelButtonClick={onClose}
       />
     );
@@ -208,20 +211,20 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
         onClick={(e) => e.stopPropagation()}
       >
         {isLoading && <div className={styles.loadingOverlay}><Loader /></div>}
-        <button className={styles.closeButton} onClick={onClose} type="button" aria-label="Close">×</button>
-        <div className={styles.title}>{isEditMode ? 'Edit Event' : 'Create Event'}</div>
+        <button className={styles.closeButton} onClick={onClose} type="button" aria-label={tCommon("close")}>×</button>
+        <div className={styles.title}>{isEditMode ? t('editTitle') : t('createTitle')}</div>
         <div className={styles.inputsWrapper}>
 
           <div className={styles.inputContainer}>
-            <div className={styles.inputTitle}>Event Title</div>
+            <div className={styles.inputTitle}>{t("eventTitleLabel")}</div>
             <div className={styles.inputWithIcon}>
               <Image src={redClipboard} alt="" className={styles.inputIcon} />
               <input
                 className={`${styles.input} ${errors.title ? styles.inputError : ''}`}
-                placeholder="Event Title"
+                placeholder={t("eventTitleLabel")}
                 {...register('title', {
-                  required: 'Event title is required',
-                  maxLength: { value: 32, message: 'Max 32 characters' },
+                  required: t('eventTitleRequired'),
+                  maxLength: { value: 32, message: t('max32Characters') },
                 })}
               />
             </div>
@@ -229,15 +232,15 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
           </div>
 
           <div className={styles.inputContainer}>
-            <div className={styles.inputTitle}>Address</div>
+            <div className={styles.inputTitle}>{t("addressLabel")}</div>
             <div className={styles.inputWithIcon}>
               <Image src={addressGray} alt="" className={styles.inputIcon} />
               <input
                 className={`${styles.input} ${errors.address ? styles.inputError : ''}`}
-                placeholder="Address"
+                placeholder={t("addressLabel")}
                 {...register('address', {
-                  required: 'Address is required',
-                  maxLength: { value: 100, message: 'Max 100 characters' },
+                  required: t('addressRequired'),
+                  maxLength: { value: 100, message: t('max100Characters') },
                 })}
               />
             </div>
@@ -246,7 +249,7 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
 
           <div className={styles.timeInputsWrapper}>
             <div className={styles.inputContainer}>
-              <div className={styles.inputTitle}>Start Time</div>
+              <div className={styles.inputTitle}>{t("startTimeLabel")}</div>
               <div className={styles.inputWithIcon}>
                 <Image src={startTimeIcon} alt="" className={styles.inputIcon} />
                 <input
@@ -265,7 +268,7 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
             </div>
 
             <div className={styles.inputContainer}>
-              <div className={styles.inputTitle}>Registration Closing Time</div>
+              <div className={styles.inputTitle}>{t("registrationClosingTimeLabel")}</div>
               <div className={styles.inputWithIcon}>
                 <Image src={dateGray} alt="" className={styles.inputIcon} />
                 <input
@@ -287,9 +290,9 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
 
           <div className={styles.paymentInputsWrapper}>
             <div className={styles.inputContainer}>
-              <div className={styles.inputTitle}>Duration</div>
+              <div className={styles.inputTitle}>{t("durationLabel")}</div>
               <div className={styles.inputWithIcon}>
-                <div className={styles.inputText}>Min</div>
+                <div className={styles.inputText}>{t("minLabel")}</div>
                 <input
                   type="number"
                   min={1}
@@ -297,9 +300,9 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
                   className={`${styles.input} ${errors.duration ? styles.inputError : ''}`}
                   placeholder="0"
                   {...register('duration', {
-                    required: 'Duration is required',
+                    required: t('durationRequired'),
                     valueAsNumber: true,
-                    validate: (v) => (Number.isInteger(v) && v > 0) || 'Must be a positive integer',
+                    validate: (v) => (Number.isInteger(v) && v > 0) || t('mustBePositiveInteger'),
                   })}
                 />
               </div>
@@ -307,7 +310,7 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
             </div>
 
             <div className={styles.inputContainer}>
-              <div className={styles.inputTitle}>Payment Amount</div>
+              <div className={styles.inputTitle}>{t("paymentAmountLabel")}</div>
               <div className={styles.inputWithIcon}>
                 <Image src={dramSymbolGray} alt="" className={styles.inputIcon} />
                 <input
@@ -315,11 +318,11 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
                   min={0.01}
                   step="any"
                   className={`${styles.input} ${errors.paymentAmount ? styles.inputError : ''}`}
-                  placeholder="Amount"
+                  placeholder={t("amountPlaceholder")}
                   {...register('paymentAmount', {
-                    required: 'Payment amount is required',
+                    required: t('paymentAmountRequired'),
                     valueAsNumber: true,
-                    validate: (v) => (isFinite(v) && v > 0) || 'Must be a positive number',
+                    validate: (v) => (isFinite(v) && v > 0) || t('mustBePositiveNumber'),
                   })}
                 />
               </div>
@@ -327,7 +330,7 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
             </div>
 
             <div className={styles.inputContainer}>
-              <div className={styles.inputTitle}>Participant Count</div>
+              <div className={styles.inputTitle}>{t("participantCountLabel")}</div>
               <input
                 type="number"
                 min={1}
@@ -335,9 +338,9 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
                 className={`${styles.inputNoIcon} ${errors.participantsCount ? styles.inputError : ''}`}
                 placeholder="00"
                 {...register('participantsCount', {
-                  required: 'Participant count is required',
+                  required: t('participantCountRequired'),
                   valueAsNumber: true,
-                  validate: (v) => (Number.isInteger(v) && v > 0) || 'Must be a positive integer',
+                  validate: (v) => (Number.isInteger(v) && v > 0) || t('mustBePositiveInteger'),
                 })}
               />
               {errors.participantsCount && (
@@ -347,12 +350,12 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
           </div>
 
           <div className={styles.inputContainer}>
-            <div className={styles.inputTitle}>Additional Info</div>
+            <div className={styles.inputTitle}>{t("additionalInfoLabel")}</div>
             <div className={styles.inputWithIcon}>
               <Image src={infoGray} alt="" className={styles.inputIcon} />
               <input
                 className={styles.input}
-                placeholder="Additional Info"
+                placeholder={t("additionalInfoLabel")}
                 {...register('additionalInfo')}
               />
             </div>
@@ -365,17 +368,17 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
           <Button
             className={isValid && !isLoading && (!isEditMode || isDirty) ? 'gray_buttonIcon_active' : 'gray_buttonIcon'}
             handleClick={handleSubmit(onSubmit)}
-            content={isEditMode ? 'Save Changes' : 'Create'}
+            content={isEditMode ? t('saveChangesButton') : t('createButton')}
             rightIcon={rightArrow}
             disabled={!isValid || isLoading || (isEditMode && !isDirty)}
           />
           {isEditMode && (
             <div
               className={styles.textButtonWrapper}
-              onClick={() => !isLoading && !isCancelling && setModalState({ open: true, type: 'cancelConfirm', title: 'Cancel Event', description: 'Are you sure you want to cancel this event? This action cannot be undone.' })}
+              onClick={() => !isLoading && !isCancelling && setModalState({ open: true, type: 'cancelConfirm', title: t('cancelEventTitle'), description: t('cancelEventDescription') })}
               style={{ opacity: isLoading || isCancelling ? 0.4 : 1, pointerEvents: isLoading || isCancelling ? 'none' : 'auto' }}
             >
-              <span className={styles.textButton}>Cancel Event</span>
+              <span className={styles.textButton}>{t("cancelEventButton")}</span>
               <Image src={trashIcon} alt="" width={20} height={20} />
             </div>
           )}

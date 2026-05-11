@@ -10,8 +10,11 @@ import joinedIcon from "../../assets/pngs/joinedIcon.svg";
 import { useLeagueHeader } from "./useLeagueHeader";
 import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 import { NotificationPopUp } from "@/entities/NotificationPopUp/NotificationPopUp";
+import { useTranslations } from "next-intl";
 
 export const LeaguesHeader = () => {
+  const t = useTranslations("leagues.header");
+  const tCommon = useTranslations("common");
   const {
     leagueData,
     isMobile,
@@ -57,13 +60,13 @@ export const LeaguesHeader = () => {
         <div
           className={isMobile ? styles.total_value_mobile : styles.total_value}
         >
-          {!isMobile && <div className={styles.fee_Title}>Prize Pool</div>}
-          {isMobile && <div className={styles.fee_Title}>Prize Pool</div>}
+          {!isMobile && <div className={styles.fee_Title}>{t("prizePool")}</div>}
+          {isMobile && <div className={styles.fee_Title}>{t("prizePool")}</div>}
 
           <div className={styles.placePrize_container}>
             {leagueData?.firstPlacePrize && (
               <div className={styles.prizeContainer}>
-                <div className={styles.placePrize_text}>1st place</div>
+                <div className={styles.placePrize_text}>{t("firstPlace")}</div>
                 <div className={styles.placePrize}>
                   ֏ {formatPrize(leagueData.firstPlacePrize)}
                 </div>
@@ -71,7 +74,7 @@ export const LeaguesHeader = () => {
             )}
             {leagueData?.secondPlacePrize && (
               <div className={styles.prizeContainer}>
-                <div className={styles.placePrize_text}>2nd place</div>
+                <div className={styles.placePrize_text}>{t("secondPlace")}</div>
                 <div className={styles.placePrize}>
                   ֏ {formatPrize(leagueData.secondPlacePrize)}
                 </div>
@@ -80,7 +83,7 @@ export const LeaguesHeader = () => {
 
             {leagueData?.semiFinalistPrize && (
               <div className={styles.prizeContainer}>
-                <div className={styles.placePrize_text}>Semi-finalist</div>
+                <div className={styles.placePrize_text}>{t("semiFinalist")}</div>
                 <div className={styles.placePrize}>
                   ֏ {formatPrize(leagueData.semiFinalistPrize)}
                 </div>
@@ -102,10 +105,10 @@ export const LeaguesHeader = () => {
             <div className={styles.per_value}>
               ֏ {formatPrize(leagueData.paymentPerGame)}
             </div>
-            <div className={styles.valu_text}>/per game /per team</div>
+            <div className={styles.valu_text}>{t("perGamePerTeam")}</div>
             {isRegistrationClosed && (
               <div className={styles.registration_closed_reason}>
-                You can no longer register <br />
+                {t("canNoLongerRegister")} <br />
                 {registrationClosedReason}
               </div>
             )}
@@ -138,7 +141,7 @@ export const LeaguesHeader = () => {
                 alt=""
               />
               <div className={styles.stageButtonName}>
-                {leagueData?.state === "Playing" ? "Joined" : "Joined"}
+                {t("joined")}
               </div>
             </div>
           </div>
@@ -149,7 +152,7 @@ export const LeaguesHeader = () => {
     if (leagueData?.state === "Registration" && !isRegistrationClosed) {
       return (
         <Button
-          content="Join League"
+          content={t("joinLeague")}
           className="red_button_transparant_white_text"
           handleClick={handleOpenJoinModal}
         />
@@ -163,7 +166,7 @@ export const LeaguesHeader = () => {
     <div className={styles.leagues_header}>
       {isRegistrationClosed && (
         <div className={styles.badge}>
-          Registration Closed
+          {t("registrationClosed")}
         </div>
       )}
 
@@ -177,7 +180,7 @@ export const LeaguesHeader = () => {
                 <div className={styles.league_name}>{leagueData?.name}</div>
                 <div className={styles.stageButton}>
                   <div className={styles.stageButtonWrapper}>
-                    <div className={styles.stageButtonName}> State: </div>
+                    <div className={styles.stageButtonName}> {t("state")} </div>
                     <div className={styles.stage}>{leagueData?.state}</div>
                   </div>
                 </div>
@@ -193,7 +196,7 @@ export const LeaguesHeader = () => {
                     {!isRegistrationClosed &&
                       leagueData?.state === "Registration" && (
                         <p className={styles.registration_closed_text_mobile}>
-                          Registrations will be closed on{" "}
+                          {t("registrationsWillBeClosedOn")}{" "}
                           {leagueData && (
                             <span>
                               {formatDate(leagueData.registrationDate)}
@@ -224,7 +227,7 @@ export const LeaguesHeader = () => {
                 {renderJoinButton()}
                 <div className={styles.stageButton}>
                   <div className={styles.stageButtonWrapper}>
-                    <div className={styles.stageButtonName}> State: </div>
+                    <div className={styles.stageButtonName}> {t("state")} </div>
                     <div className={styles.stage}>{leagueData?.state}</div>
                   </div>
                 </div>
@@ -246,7 +249,7 @@ export const LeaguesHeader = () => {
                   {!isRegistrationClosed &&
                     leagueData?.state === "Registration" && (
                       <p className={styles.registration_closed_text}>
-                        Registrations will be closed on{" "}
+                        {t("registrationsWillBeClosedOn")}{" "}
                         {leagueData && (
                           <span>{formatDate(leagueData.registrationDate)}</span>
                         )}
@@ -267,7 +270,7 @@ export const LeaguesHeader = () => {
             className={`${styles.link} ${isActive(`${base}`) ? styles.selected : ""
               }`}
           >
-            Joined Teams
+            {t("joinedTeams")}
           </Link>
         </div>
       ) : (
@@ -277,35 +280,35 @@ export const LeaguesHeader = () => {
             className={`${styles.link} ${isActive(base) ? styles.selected : ""
               }`}
           >
-            Groups
+            {t("tabs.groups")}
           </Link>
           <Link
             href={`${base}/drawStandings`}
             className={`${styles.link} ${isActive(`${base}/drawStandings`) ? styles.selected : ""
               }`}
           >
-            Draw Standings
+            {t("tabs.drawStandings")}
           </Link>
           <Link
             href={`${base}/results`}
             className={`${styles.link} ${isActive(`${base}/results`) ? styles.selected : ""
               }`}
           >
-            Results
+            {t("tabs.results")}
           </Link>
           <Link
             href={`${base}/fixtures`}
             className={`${styles.link} ${isActive(`${base}/fixtures`) ? styles.selected : ""
               }`}
           >
-            Fixtures
+            {t("tabs.fixtures")}
           </Link>
           <Link
             href={`${base}/stats`}
             className={`${styles.link} ${isActive(`${base}/stats`) ? styles.selected : ""
               }`}
           >
-            Stats
+            {t("tabs.stats")}
           </Link>
         </div>
       )}
@@ -325,8 +328,8 @@ export const LeaguesHeader = () => {
           title={modalState.title}
           onCancelButtonClick={handleCloseModal}
           onConfirmButtonClick={handleConfirmAction}
-          confirmButtonText="Confirm"
-          cancelButtonText="Cancel"
+          confirmButtonText={tCommon("confirm")}
+          cancelButtonText={tCommon("cancel")}
         />
       ) : null}
 
@@ -336,14 +339,14 @@ export const LeaguesHeader = () => {
           onCancelButtonClick={handleCloseModal}
           description={modalState.description}
           title={modalState.title}
-          cancelButtonText='Close'
+          cancelButtonText={tCommon("close")}
         />
       ) : null}
 
       {serverError && (
         <div className={styles.toastWrapper} onClick={clearServerError}>
           <NotificationPopUp
-            title="Server Error"
+            title={t("serverError")}
             description={serverError}
           />
         </div>

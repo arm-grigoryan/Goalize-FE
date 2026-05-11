@@ -6,6 +6,7 @@ import userLogo from '../../assets/pngs/userLogo.svg';
 import phoneLogo from '../../assets/pngs/phoneLogo.svg';
 import profilePictureFallback from '../../assets/pngs/profilePictureIcon.svg';
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 const DUMMY_PHONE = '+37400000000';
 
@@ -32,6 +33,7 @@ export const EventsPlayersInnerCard: React.FC<IEventsPlayersInnerCardProps> = ({
 }) => {
   const resolvedPic = profilePic && isValidUrl(profilePic) ? profilePic : profilePictureFallback;
   const isBlurred = phoneNumber === null || phoneNumber === undefined;
+  const t = useTranslations("squad");
 
   const card = (
     <div className={styles.container}>
@@ -45,13 +47,13 @@ export const EventsPlayersInnerCard: React.FC<IEventsPlayersInnerCardProps> = ({
             height={40}
             unoptimized={typeof resolvedPic === 'string'}
           />
-          {isHost && <div className={styles.hostLabel}>Host</div>}
+          {isHost && <div className={styles.hostLabel}>{t("host")}</div>}
         </div>
         <div className={styles.playerName}>{playerName}</div>
         {isYou && (
           <div className={styles.youButton}>
             <Image src={userLogo} alt="" />
-            <div>You</div>
+            <div>{t("you")}</div>
           </div>
         )}
       </div>

@@ -10,19 +10,21 @@ import { useParams } from "next/navigation";
 import { useGetLeaguesTopPlayersQuery } from "@/app/store/services/api";
 import { ITopPlayer } from "@/types/api/topPlayers";
 import nextMatchEmpty from "../../assets/pngs/nextMatchEmpty.svg";
-
-const renderEmptyState = () => (
-  <div className={styles.emptyWrapper}>
-    <Image src={nextMatchEmpty} alt="" className={styles.img} />
-    <p className={styles.emptyTxt}>No Stats Available Yet</p>
-  </div>
-);
+import { useTranslations } from "next-intl";
 
 export const Stats: React.FC = () => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
   const params = useParams();
   const leagueId = Number(params?.leagueId);
+  const t = useTranslations("leaguesStats");
+
+  const renderEmptyState = () => (
+    <div className={styles.emptyWrapper}>
+      <Image src={nextMatchEmpty} alt="" className={styles.img} />
+      <p className={styles.emptyTxt}>{t("empty")}</p>
+    </div>
+  );
 
   const { data, isLoading, isError } = useGetLeaguesTopPlayersQuery(leagueId, {
     skip: !leagueId,
@@ -66,11 +68,11 @@ export const Stats: React.FC = () => {
     }));
 
   const sections = [
-    { title: "Goals", data: statsData.topGoals },
-    { title: "Assists", data: statsData.topAssists },
-    { title: "Ratings", data: statsData.topRatings },
-    { title: "Yellow Cards", data: statsData.topYellowCards },
-    { title: "Red Cards", data: statsData.topRedCards },
+    { title: t("goals"), data: statsData.topGoals },
+    { title: t("assists"), data: statsData.topAssists },
+    { title: t("ratings"), data: statsData.topRatings },
+    { title: t("yellowCards"), data: statsData.topYellowCards },
+    { title: t("redCards"), data: statsData.topRedCards },
   ];
 
   const nonEmptySections = sections.filter(

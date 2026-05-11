@@ -16,11 +16,15 @@ import PlayerInvitationCard from "../PlayerInvitationCard";
 import EditShirtNumberPopUp from "@/components/EditShirtNumberPopUp";
 import { useAuth } from "@/shared/auth/AuthContext";
 import { refreshTokens } from "@/shared/auth/oidcService";
+import { useTranslations } from "next-intl";
 
 export const Squad: React.FC = () => {
   const params = useParams();
   const teamId = Number(params?.teamId);
   const { tokens } = useAuth();
+  const tModals = useTranslations("playerProfile.modals");
+  const tSquadModals = useTranslations("squad.modals");
+  const tCommon = useTranslations("common");
 
   const { data: squad, isLoading, refetch: refetchSquad } = useGetTeamSquadQuery(teamId, {
     skip: !teamId,
@@ -103,10 +107,10 @@ export const Squad: React.FC = () => {
       refetchUserInfo();
     } catch (error) {
       const err = error as { data?: { errorMessage?: string } };
-      setInviteError(err?.data?.errorMessage || 'An error occurred.');
+      setInviteError(err?.data?.errorMessage || tModals('errorOccurred'));
       setShowInviteError(true);
     }
-  }, [selectedPlayer, userTeamId, sendInvitation, refetchUserInfo]);
+  }, [selectedPlayer, userTeamId, sendInvitation, refetchUserInfo, tModals]);
 
   const handleConfirmMakeCaptain = useCallback(async () => {
     if (!selectedPlayer) return;
@@ -121,10 +125,10 @@ export const Squad: React.FC = () => {
       refetchSquad();
     } catch (error) {
       const err = error as { data?: { errorMessage?: string } };
-      setMakeCaptainError(err?.data?.errorMessage || 'An error occurred.');
+      setMakeCaptainError(err?.data?.errorMessage || tModals('errorOccurred'));
       setShowMakeCaptainError(true);
     }
-  }, [selectedPlayer, teamId, makeCaptain, tokens?.refreshToken, refetchUserInfo, refetchSquad]);
+  }, [selectedPlayer, teamId, makeCaptain, tokens?.refreshToken, refetchUserInfo, refetchSquad, tModals]);
 
   const handleConfirmRemove = useCallback(async () => {
     if (!selectedPlayer) return;
@@ -135,10 +139,10 @@ export const Squad: React.FC = () => {
       refetchSquad();
     } catch (error) {
       const err = error as { data?: { errorMessage?: string } };
-      setRemoveError(err?.data?.errorMessage || 'An error occurred.');
+      setRemoveError(err?.data?.errorMessage || tModals('errorOccurred'));
       setShowRemoveError(true);
     }
-  }, [selectedPlayer, teamId, removeMember, refetchSquad]);
+  }, [selectedPlayer, teamId, removeMember, refetchSquad, tModals]);
 
   const handleShirtNumberSubmit = useCallback(async (newShirtNumber: number) => {
     if (!selectedPlayer) return;
@@ -149,10 +153,10 @@ export const Squad: React.FC = () => {
       refetchSquad();
     } catch (error) {
       const err = error as { data?: { errorMessage?: string } };
-      setShirtNumberError(err?.data?.errorMessage || 'An error occurred.');
+      setShirtNumberError(err?.data?.errorMessage || tModals('errorOccurred'));
       setShowShirtNumberError(true);
     }
-  }, [selectedPlayer, teamId, updateShirtNumber, refetchSquad]);
+  }, [selectedPlayer, teamId, updateShirtNumber, refetchSquad, tModals]);
 
   if (isLoading) return null;
   if (!squad?.length) return null;
@@ -195,17 +199,17 @@ export const Squad: React.FC = () => {
       {/* Shirt Number Success / Error */}
       {showShirtNumberSuccess && (
         <PlayerInvitationCard
-          title="Shirt Number Updated Successfully"
-          description="The player's shirt number has been updated."
-          cancelButtonText="Close"
+          title={tSquadModals("shirtNumberUpdatedTitle")}
+          description={tSquadModals("shirtNumberUpdatedDescription")}
+          cancelButtonText={tCommon("close")}
           onCancelButtonClick={() => setShowShirtNumberSuccess(false)}
         />
       )}
       {showShirtNumberError && (
         <PlayerInvitationCard
-          title="Cannot Update Shirt Number"
-          description={shirtNumberError || 'An error occurred.'}
-          confirmButtonText="OK"
+          title={tSquadModals("cannotUpdateShirtNumber")}
+          description={shirtNumberError || tModals("errorOccurred")}
+          confirmButtonText={tCommon("ok")}
           onCancelButtonClick={() => setShowShirtNumberError(false)}
         />
       )}
@@ -213,83 +217,89 @@ export const Squad: React.FC = () => {
       {/* Invite Confirm */}
       {showInviteConfirm && (
         <PlayerInvitationCard
-          title="Invite Player"
+          title={tSquadModals("invitePlayerTitle")}
           playerName={selectedPlayerName}
-          confirmButtonText="Invite"
-          cancelButtonText="Cancel"
+          confirmButtonText={tSquadModals("inviteButton")}
+          cancelButtonText={tCommon("cancel")}
           onConfirmButtonClick={handleConfirmInvite}
           onCancelButtonClick={() => setShowInviteConfirm(false)}
         />
       )}
       {showInviteSuccess && (
         <PlayerInvitationCard
-          title="Invitation Sent Successfully"
-          description="The player has been invited to your team."
-          cancelButtonText="Close"
+          title={tModals("invitationSentTitle")}
+          description={tModals("invitationSentDescription")}
+          cancelButtonText={tCommon("close")}
           onCancelButtonClick={() => setShowInviteSuccess(false)}
         />
       )}
       {showInviteError && (
         <PlayerInvitationCard
-          title="Cannot Send Invitation"
-          description={inviteError || 'An error occurred.'}
-          confirmButtonText="OK"
+          title={tModals("cannotSendInvitation")}
+          description={inviteError || tModals("errorOccurred")}
+          confirmButtonText={tCommon("ok")}
           onCancelButtonClick={() => setShowInviteError(false)}
         />
       )}
 
       {/* Make Captain */}
-      {showMakeCaptainConfirm && (
+      {showMakeCaptainConfirm && selectedPlayer && (
         <PlayerInvitationCard
-          title="Make Team Captain"
-          description={`Are you sure you want to make ${selectedPlayerName} the team captain? You will lose your captain privileges.`}
-          confirmButtonText="Confirm"
-          cancelButtonText="Cancel"
+          title={tModals("makeCaptainTitle")}
+          description={tModals("makeCaptainDescription", {
+            firstName: selectedPlayer.firstName,
+            lastName: selectedPlayer.lastName,
+          })}
+          confirmButtonText={tCommon("confirm")}
+          cancelButtonText={tCommon("cancel")}
           onConfirmButtonClick={handleConfirmMakeCaptain}
           onCancelButtonClick={() => setShowMakeCaptainConfirm(false)}
         />
       )}
       {showMakeCaptainSuccess && (
         <PlayerInvitationCard
-          title="Captain Changed Successfully"
-          description="The team captain has been updated."
-          cancelButtonText="Close"
+          title={tModals("captainChangedTitle")}
+          description={tModals("captainChangedDescription")}
+          cancelButtonText={tCommon("close")}
           onCancelButtonClick={() => setShowMakeCaptainSuccess(false)}
         />
       )}
       {showMakeCaptainError && (
         <PlayerInvitationCard
-          title="Cannot Make Captain"
-          description={makeCaptainError || 'An error occurred.'}
-          confirmButtonText="OK"
+          title={tModals("cannotMakeCaptain")}
+          description={makeCaptainError || tModals("errorOccurred")}
+          confirmButtonText={tCommon("ok")}
           onCancelButtonClick={() => setShowMakeCaptainError(false)}
         />
       )}
 
       {/* Remove */}
-      {showRemoveConfirm && (
+      {showRemoveConfirm && selectedPlayer && (
         <PlayerInvitationCard
-          title="Remove Team Member"
-          description={`Are you sure you want to remove ${selectedPlayerName} from the team?`}
-          confirmButtonText="Confirm"
-          cancelButtonText="Cancel"
+          title={tModals("removeMemberTitle")}
+          description={tModals("removeMemberDescription", {
+            firstName: selectedPlayer.firstName,
+            lastName: selectedPlayer.lastName,
+          })}
+          confirmButtonText={tCommon("confirm")}
+          cancelButtonText={tCommon("cancel")}
           onConfirmButtonClick={handleConfirmRemove}
           onCancelButtonClick={() => setShowRemoveConfirm(false)}
         />
       )}
       {showRemoveSuccess && (
         <PlayerInvitationCard
-          title="Member Removed Successfully"
-          description="The team member has been removed."
-          cancelButtonText="Close"
+          title={tModals("memberRemovedTitle")}
+          description={tModals("memberRemovedDescription")}
+          cancelButtonText={tCommon("close")}
           onCancelButtonClick={() => setShowRemoveSuccess(false)}
         />
       )}
       {showRemoveError && (
         <PlayerInvitationCard
-          title="Cannot Remove Player"
-          description={removeError || 'An error occurred.'}
-          confirmButtonText="OK"
+          title={tModals("cannotRemovePlayer")}
+          description={removeError || tModals("errorOccurred")}
+          confirmButtonText={tCommon("ok")}
           onCancelButtonClick={() => setShowRemoveError(false)}
         />
       )}

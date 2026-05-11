@@ -9,6 +9,7 @@ import arrowRightIcon from '../../assets/pngs/arrowRightIcon.png';
 import { ISquadPlayer } from "@/types/api/squad";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
+import { useTranslations } from "next-intl";
 
 export interface IEditShirtNumberPopUpProps {
   player: ISquadPlayer;
@@ -27,6 +28,8 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
 }) => {
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
+  const t = useTranslations("editShirtNumber");
+  const tCommon = useTranslations("common");
   const [value, setValue] = useState('');
 
   const parsed = parseInt(value, 10);
@@ -39,13 +42,18 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
     : null;
 
   const message = isOutOfRange
-    ? 'Shirt number must be between 1 and 26'
+    ? t("outOfRange")
     : isSameAsCurrent
-    ? 'Please use a different number than Current'
+    ? t("sameAsCurrent")
     : isValid
     ? conflictPlayer
-      ? `${player.firstName} ${player.lastName} and ${conflictPlayer.firstName} ${conflictPlayer.lastName} will be switched`
-      : 'Chosen shirt number is free'
+      ? t("willBeSwitched", {
+          firstName1: player.firstName,
+          lastName1: player.lastName,
+          firstName2: conflictPlayer.firstName,
+          lastName2: conflictPlayer.lastName,
+        })
+      : t("numberIsFree")
     : '';
 
   const handleSubmit = () => {
@@ -56,14 +64,14 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
   return (
     <div className={`${styles.overlay} ${isMobile ? styles.mobile : ''}`} onClick={onClose}>
       <div className={styles.container} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeButton} onClick={onClose} type="button" aria-label="Close">×</button>
+        <button className={styles.closeButton} onClick={onClose} type="button" aria-label={tCommon("close")}>×</button>
         <div className={styles.titleWrapper}>
-          <div className={styles.title}>Edit Shirt Number</div>
-          <div className={styles.subTitle}>Your winning journey starts here!</div>
+          <div className={styles.title}>{t("title")}</div>
+          <div className={styles.subTitle}>{t("subtitle")}</div>
         </div>
 
         <div className={styles.inputsContainer}>
-          <div className={styles.editText}>Edit Shirt Number</div>
+          <div className={styles.editText}>{t("editLabel")}</div>
           <div className={styles.inputsWrapper}>
             <div className={styles.inputWrapper}>
               <input
@@ -72,7 +80,7 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
                 readOnly
                 className={styles.readOnly}
               />
-              <label>Current</label>
+              <label>{t("current")}</label>
             </div>
             <div> <Image src={redArrowRight} alt="" /></div>
             <div className={styles.inputWrapper}>
@@ -87,7 +95,7 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
                 }}
                 placeholder=" "
               />
-              <label>New</label>
+              <label>{t("new")}</label>
             </div>
           </div>
         </div>
@@ -107,14 +115,14 @@ export const EditShirtNumberPopUp: React.FC<IEditShirtNumberPopUpProps> = ({
           <Button
             className={isValid && !isLoading ? "gray_buttonIcon_active" : "gray_buttonIcon"}
             handleClick={handleSubmit}
-            content="Save"
+            content={tCommon("save")}
             icon={arrowRightIcon}
             disabled={!isValid || isLoading}
           />
           <Button
             className="red_button_transparant_white_text"
             handleClick={onClose}
-            content="Cancel"
+            content={tCommon("cancel")}
           />
         </div>
       </div>

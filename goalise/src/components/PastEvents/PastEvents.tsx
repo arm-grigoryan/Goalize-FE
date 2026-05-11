@@ -6,6 +6,7 @@ import { useGetEventsQuery } from "@/app/store/services/api";
 import { IEvent } from "@/types/api/events";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
+import { useTranslations } from "next-intl";
 
 const TAKE = 20;
 
@@ -14,6 +15,7 @@ export const PastEvents: React.FC = () => {
     const [events, setEvents] = useState<IEvent[]>([]);
     const [hasMore, setHasMore] = useState(true);
     const refreshKey = useSelector((state: RootState) => state.events.refreshKey);
+    const t = useTranslations("events");
 
     const { data, isFetching, isError } = useGetEventsQuery(
         { skip, take: TAKE, isUpcoming: false },
@@ -65,10 +67,10 @@ export const PastEvents: React.FC = () => {
             </div>
         )}
         {isError && (
-            <div className={styles.errorText}>Failed to load events.</div>
+            <div className={styles.errorText}>{t("failedToLoad")}</div>
         )}
         {!isFetching && !isError && events.length === 0 && (
-            <div className={styles.emptyText}>No past events.</div>
+            <div className={styles.emptyText}>{t("emptyPast")}</div>
         )}
     </>
 }

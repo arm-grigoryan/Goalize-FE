@@ -12,6 +12,7 @@ import winnerIconSwapped from '../../assets/pngs/winnerIconSwapped.svg';
 import drawSwappedIcon from '../../assets/pngs/drawIconSwapped.svg';
 import vsIcon from '../../assets/pngs/bigVsIcon.svg';
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 type TeamsPastMatchesVariants = "results" | "fixtures";
 
@@ -50,6 +51,7 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
 }) => {
       const { width } = useWindowSize();
       const isMobile = width <= MEDIA_TABLET_SMALL;
+      const t = useTranslations("teamsPastMatchesCard");
 
       const winner1 = matchResult === 'W';
       const winner2 = matchResult === 'L';
@@ -116,7 +118,7 @@ export const TeamsPastMatchesCard: React.FC<ITeamsPastMatchesCardProps> = ({
       </div>
         <CustomDivider orientation={isMobile ?  "horizontal" : "vertical"}flexItem />
         <Link className={styles.leagueName} href={leagueId ? `/leagues/${leagueId}` : '#'} onClick={(e) => e.stopPropagation()}>
-          {leagueName ?? 'League'}
+          {leagueName ?? t("leagueFallback")}
         </Link>
     </div>
 }
