@@ -163,10 +163,10 @@ export const MatchesHeader: React.FC = () => {
                 /> 
                 </div>
           <div className={styles.match_left_block_inner_wrapper}>
-            <Link href={`/teams/${match.homeTeam.id}`} style={{ textDecoration: "none" }} onClick={(e) => e.stopPropagation()}>
-              <span className={styles.team_name}>{match.homeTeam.name}</span>
+            <Link href={`/teams/${match.homeTeam.id}`} style={{ textDecoration: "none" }} onClick={(e) => e.stopPropagation()} className={styles.team_name} >
+              <span>{match.homeTeam.name}</span>
             </Link>
-            <Link href={`/teams/${match.homeTeam.id}`} style={{ textDecoration: "none" }} onClick={(e) => e.stopPropagation()}>
+            <Link href={`/teams/${match.homeTeam.id}`} style={{ textDecoration: "none" }} onClick={(e) => e.stopPropagation()} className={styles.team_logo} >
               {homeLogoUrl && (
                 <Image
                   src={homeLogoUrl}
@@ -193,7 +193,7 @@ export const MatchesHeader: React.FC = () => {
                 /> 
                 </div>
           <div className={styles.match_right_block_inner_wrapper}>
-            <Link href={`/teams/${match.awayTeam.id}`} style={{ textDecoration: "none" }} onClick={(e) => e.stopPropagation()}>
+            <Link href={`/teams/${match.awayTeam.id}`} style={{ textDecoration: "none" }} onClick={(e) => e.stopPropagation()} className={styles.team_logo}>
               {awayLogoUrl && (
                 <Image
                   src={awayLogoUrl}
@@ -205,8 +205,8 @@ export const MatchesHeader: React.FC = () => {
                 />
               )}
             </Link>
-            <Link href={`/teams/${match.awayTeam.id}`} style={{ textDecoration: "none" }} onClick={(e) => e.stopPropagation()}>
-              <span className={styles.team_name}>{match.awayTeam.name}</span>
+            <Link href={`/teams/${match.awayTeam.id}`} style={{ textDecoration: "none" }} onClick={(e) => e.stopPropagation()} className={styles.team_name}>
+              <span >{match.awayTeam.name}</span>
             </Link>
           </div>
         </div>
