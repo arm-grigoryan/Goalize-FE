@@ -5,7 +5,7 @@
   grid-template-columns:
    160px
     1px
-    auto; 
+    auto;
   align-items: center;
   width: 100%;
   margin: 0 auto;
@@ -40,6 +40,7 @@
 .wrapper {
   display: grid;
   grid-template-columns: 200px 1fr 200px auto;
+  align-items: center;
 }
 .redGlow::before {
   content: "";
@@ -184,7 +185,7 @@
 
 .team_info_mobile {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr 72px 1fr;
   align-items: center;
 }
 

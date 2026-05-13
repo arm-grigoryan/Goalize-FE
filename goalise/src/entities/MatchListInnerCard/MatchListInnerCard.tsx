@@ -34,10 +34,9 @@ export const MatchListInnerCard: FC<MatchListInnerCardProps> = ({
       <div className={styles.teams_info}>
         <div className={styles.team_inner_info}>
           <div className={styles.team_name}>{teamNameHome}</div>
-          <div className={styles.team_points}>
-            {homeTeamPoints !== null &&
-           `${homeTeamPoints} ${t("ptsUnit")}`}
-          </div>
+          {homeTeamPoints !== null && (
+            <div className={styles.team_points}>{homeTeamPoints} {t("ptsUnit")}</div>
+          )}
         </div>
         <div className={styles.vs_icon}>
           <Image src={vsIcon} alt="" />
@@ -45,15 +44,12 @@ export const MatchListInnerCard: FC<MatchListInnerCardProps> = ({
         <CustomDivider orientation="horizontal" />
         <div className={styles.team_inner_info}>
           <div className={styles.team_name}>{teamNameAway}</div>
-          <div className={styles.team_points}>
-            {awayTeamPoints !== null &&
-            `${awayTeamPoints} ${t("ptsUnit")}`
-          }</div>
+          {awayTeamPoints !== null && (
+            <div className={styles.team_points}>{awayTeamPoints} {t("ptsUnit")}</div>
+          )}
         </div>
       </div>
-      <div className={styles.divider}> 
-        <CustomDivider orientation="vertical" />
-      </div>
+      <div className={styles.divider} />
       <div className={styles.match_date_time}>
         <Image src={redCalendar} alt="" className={styles.icon}/>
         <div className={styles.date}>{matchDate}</div>
