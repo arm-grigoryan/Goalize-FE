@@ -31,6 +31,13 @@
   text-transform: uppercase;
   color: #ffff;
 }
+
+.finalTeamLogo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-bottom: 6px;
+}
 .winner {
   background-color: #2e2e2e3d;
 }

@@ -13,7 +13,7 @@ import { useParams, usePathname } from "next/navigation";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
 import { useTranslations } from "next-intl";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 6;
 
 export const LeaguesFixtures = () => {
   const { leagueId } = useParams();
@@ -70,13 +70,14 @@ export const LeaguesFixtures = () => {
       if (!container || isFetching) return;
 
       const { scrollTop, scrollHeight, clientHeight } = container;
-      if (scrollTop + clientHeight >= scrollHeight && hasMore) {
+      if (scrollTop + clientHeight >= scrollHeight - 1 && hasMore) {
         setOffset((prev) => prev + PAGE_SIZE);
       }
     };
 
     const container = scrollContainerRef.current;
     container?.addEventListener("scroll", handleScroll);
+    handleScroll();
 
     return () => {
       container?.removeEventListener("scroll", handleScroll);

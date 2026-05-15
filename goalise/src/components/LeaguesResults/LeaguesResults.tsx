@@ -16,7 +16,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useTranslations } from "next-intl";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 6;
 
 export const LeaguesResults = () => {
   const { leagueId } = useParams();
@@ -71,18 +71,20 @@ export const LeaguesResults = () => {
       if (!container || isFetching) return;
 
       const { scrollTop, scrollHeight, clientHeight } = container;
-      if (scrollTop + clientHeight >= scrollHeight && hasMore) {
+      if (scrollTop + clientHeight >= scrollHeight - 1 && hasMore) {
         setOffset((prev) => prev + PAGE_SIZE);
       }
     };
 
     const container = scrollContainerRef.current;
     container?.addEventListener("scroll", handleScroll);
+    handleScroll();
 
     return () => {
       container?.removeEventListener("scroll", handleScroll);
     };
   }, [isFetching, hasMore]);
+
  const { width } = useWindowSize();
    const isMobile = width <= MEDIA_TABLET_SMALL;
   return (

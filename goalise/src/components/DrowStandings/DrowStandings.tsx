@@ -60,6 +60,9 @@ export const DrowStandings = () => {
         )
       : null;
 
+  const finalHomeLogo = finalMatchData?.homeTeam?.logoUrl?.startsWith("http") ? finalMatchData.homeTeam.logoUrl : null;
+  const finalAwayLogo = finalMatchData?.awayTeam?.logoUrl?.startsWith("http") ? finalMatchData.awayTeam.logoUrl : null;
+
   const maxMatchCount =
     leftBlock.length > 0 ? Math.max(...leftBlock.map((m) => m.matchCount)) : 0;
 
@@ -321,6 +324,9 @@ export const DrowStandings = () => {
         <div className={styles.final}>
           <Link href={`/matches/${finalMatchData.id}`} className={styles.circle}>
             <div className={styles.finalTeam}>
+              {finalHomeLogo && (
+                <Image src={finalHomeLogo} alt="" width={32} height={32} className={styles.finalTeamLogo} />
+              )}
               {finalMatchData.homeTeam.abbreviation}
               <div>{finalMatchData.homeTeamScore}</div>
             </div>
@@ -328,6 +334,9 @@ export const DrowStandings = () => {
             <Image src={bigVsIcon} alt="VS" className={styles.vs} />
 
             <div className={styles.finalTeam}>
+              {finalAwayLogo && (
+                <Image src={finalAwayLogo} alt="" width={32} height={32} className={styles.finalTeamLogo} />
+              )}
               {finalMatchData.awayTeam.abbreviation}
               <div>{finalMatchData.awayTeamScore}</div>
             </div>
@@ -556,6 +565,9 @@ export const DrowStandings = () => {
           {finalMatchData ? (
             <Link href={`/matches/${finalMatchData.id}`} className={styles.circle}>
               <div className={styles.finalTeam}>
+                {finalHomeLogo && (
+                  <Image src={finalHomeLogo} alt="" width={32} height={32} className={styles.finalTeamLogo} />
+                )}
                 {finalMatchData.homeTeam.abbreviation}
                 <div>
                   {finalMatchData.homeTeamScore >= 0 &&
@@ -566,6 +578,9 @@ export const DrowStandings = () => {
                 <Image src={bigVsIcon} alt="VS" className={styles.vs} />
               </div>
               <div className={styles.finalTeam}>
+                {finalAwayLogo && (
+                  <Image src={finalAwayLogo} alt="" width={32} height={32} className={styles.finalTeamLogo} />
+                )}
                 {finalMatchData.awayTeam.abbreviation}
                 <div>
                   {finalMatchData.awayTeamScore >= 0 &&
