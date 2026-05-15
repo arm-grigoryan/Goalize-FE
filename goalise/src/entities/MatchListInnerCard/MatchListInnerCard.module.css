@@ -3,7 +3,7 @@
   align-items: center;
   border: solid 1px #ffffff1a;
   border-radius: 20px;
-  padding: 0 26px 14px;
+  padding: 14px 26px;
   background-color: #15191e;
   color: #fff;
 }
@@ -18,13 +18,13 @@
   height: 50%;
   align-items: flex-start;
   justify-content: center;
+  gap: 4px;
+  padding: 10px 0;
 }
 .team_name {
   display: flex;
-  margin-top: 14px;
 }
 .team_points {
-  margin-bottom: 11px;
 }
 .match_date_time {
   display: flex;
@@ -55,11 +55,13 @@
 
 .team_points {
   color: #a5a5a5;
-  height: 18px;
 }
 .divider {
-  height: 100%;
-  margin-top: 14px;
+  width: 1px;
+  align-self: stretch;
+  background-color: rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  margin: 8px 0;
 }
 .date {
   text-overflow: ellipsis;
@@ -77,6 +79,8 @@
   .match_date_time {
     gap: 4px;
     margin: 0;
+    width: 90px;
+    flex-shrink: 0;
   }
   /* .vs_icon {
     margin: 0 10px -14px 140px;
@@ -84,5 +88,4 @@
 }
 .mobile .teams_info {
   min-width: 12px;
-  border-right: 1px solid #ffffff1a;
 }

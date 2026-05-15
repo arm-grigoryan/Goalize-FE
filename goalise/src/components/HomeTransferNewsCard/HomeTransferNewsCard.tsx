@@ -6,7 +6,6 @@ import TransferInnerCard from "../../entities/TransferInnerCard";
 import { useGetTransferNewsQuery } from "@/app/store/services/api";
 import { useEffect, useRef, useState } from "react";
 import { ITransfers } from "@/types/api/transfers";
-import { handleLongStrings } from "@/helper/handleLongStrings";
 import { useTranslations } from "next-intl";
 import { formatUTCDate } from "@/helper/formatDateAndTime";
 import transferEmpty from '../../assets/pngs/transferEmpty.svg';
@@ -93,11 +92,11 @@ export const HomeTransferNewsCard = () => {
                 PlayerName={`${transfer.firstName} ${transfer.lastName}`}
                 transferDate={formatUTCDate(transfer.transferDate)}
                 teamLogoFrom={transfer.fromTeam.logoUrl}
-                teamNameFrom={handleLongStrings(transfer.fromTeam.name, 8)}
+                teamNameFrom={transfer.fromTeam.name}
                 teamNameFromTooltip={transfer.fromTeam.name}
                 fromTeamId={transfer.fromTeam.name?.toLowerCase() === 'free agent' ? undefined : transfer.fromTeam.id}
                 teamLogoTo={transfer.toTeam.logoUrl}
-                teamNameTo={handleLongStrings(transfer.toTeam.name, 8)}
+                teamNameTo={transfer.toTeam.name}
                 teamNameToTooltip={transfer.toTeam.name}
                 toTeamId={transfer.toTeam.name?.toLowerCase() === 'free agent' ? undefined : transfer.toTeam.id}
               />

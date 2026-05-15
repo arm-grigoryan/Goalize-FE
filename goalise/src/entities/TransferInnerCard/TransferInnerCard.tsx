@@ -51,7 +51,7 @@ export const TransferInnerCard: FC<TransferInnerCardProps> = ({
         <Image src={playerImage!} alt="" width={40} height={40} />
       )}
       <div className={styles.player_info_and_date}>
-        <span>{PlayerName}</span>
+        <span className={styles.player_name}>{PlayerName}</span>
         <span>{transferDate}</span>
       </div>
     </div>
@@ -71,7 +71,7 @@ export const TransferInnerCard: FC<TransferInnerCardProps> = ({
       {isValidImageSrc(teamLogoTo) && (
         <Image src={teamLogoTo!} alt="" width={20} height={20} className={styles.teamLogo} />
       )}
-      <span title={teamNameToTooltip}>{teamNameTo}</span>
+      <span title={teamNameToTooltip} className={styles.team_name}>{teamNameTo}</span>
     </div>
   );
 

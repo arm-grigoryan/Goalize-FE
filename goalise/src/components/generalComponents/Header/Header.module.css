@@ -346,12 +346,10 @@
 
 .profile_dropdown {
   position: absolute;
-  top: calc(70% + 8px);
-  display: flex;
-  justify-content: flex-end;
-  left: 0;
+  top: calc(100% + 8px);
+  right: 100px;
+  width: 234px;
   z-index: 1000;
-  width: 100%;
 }
 
 .notificationBadge {
