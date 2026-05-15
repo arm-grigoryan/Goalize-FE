@@ -297,7 +297,7 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
                     </div>
                     {isMobile && <CustomDivider orientation='horizontal' flexItem />}
                     <div className={isMobile ? styles.mobileDetailsWrapper : styles.details}>
-                        <div className={styles.detailsIconText}>
+                                                <div className={styles.detailsIconText}>
                             <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
                                 <Image src={dateIcon} alt='' className={styles.icon} />
                             </div>
@@ -305,15 +305,19 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
                         </div>
                         {isMobile && <CustomDivider orientation='vertical' flexItem />}
                         <div className={styles.detailsIconText}>
-                            <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
-                                <Image src={clockWhite} alt='' className={styles.icon} />
-                            </div>
-                            <div className={styles.detailsText}>{t("minSession", { duration: event.duration })}</div>
+                                <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
+                                    <Image src={clockWhite} alt='' className={styles.icon} />
+                                </div>
+                                <div className={styles.detailsText}>{t("minSession", { duration: event.duration })}</div>
                         </div>
                     </div>
                 </div>
                 <CustomDivider orientation='vertical' flexItem />
                 {renderRightSection()}
+                  {isMobile && <div className={styles.registrationDate}>
+                            registrations Will Be Closed On
+                            <span>13.06.26 14:34</span>
+                        </div>}
             </div>
             {isOpen && <CreateEventPopUp onClose={() => setIsOpen(false)} event={event} />}
 

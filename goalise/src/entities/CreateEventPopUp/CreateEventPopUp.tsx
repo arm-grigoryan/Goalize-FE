@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import styles from './CreateEventPopUp.module.css';
 import Image from "next/image";
-import redClipboard from '../../assets/pngs/redClipboard.svg';
+import clipboardGray from '../../assets/pngs/clipboardGray.svg';
 import addressGray from '../../assets/pngs/addressGray.svg';
 import startTimeIcon from '../../assets/pngs/startTime.svg';
 import dateGray from '../../assets/pngs/dateGray.svg';
@@ -21,6 +21,8 @@ import { Loader } from "@/shared/Loader/Loader";
 import PlayerInvitationCard from "@/entities/PlayerInvitationCard";
 import { IEventDetail } from "@/types/api/events";
 import { useTranslations } from "next-intl";
+import personIcon from '../../assets/pngs/personIcon.svg';
+import durationIcon from '../../assets/pngs/durationIcon.svg';
 
 type CreateEventFormData = {
   title: string;
@@ -218,7 +220,7 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
           <div className={styles.inputContainer}>
             <div className={styles.inputTitle}>{t("eventTitleLabel")}</div>
             <div className={styles.inputWithIcon}>
-              <Image src={redClipboard} alt="" className={styles.inputIcon} />
+              <Image src={clipboardGray} alt="" className={styles.inputIcon} />
               <input
                 className={`${styles.input} ${errors.title ? styles.inputError : ''}`}
                 placeholder={t("eventTitleLabel")}
@@ -292,7 +294,7 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
             <div className={styles.inputContainer}>
               <div className={styles.inputTitle}>{t("durationLabel")}</div>
               <div className={styles.inputWithIcon}>
-                <div className={styles.inputText}>{t("minLabel")}</div>
+                <Image src={durationIcon} alt="" className={styles.inputIcon} />
                 <input
                   type="number"
                   min={1}
@@ -331,18 +333,21 @@ export const CreateEventPopUp: React.FC<ICreateEventPopUpProps> = ({ onClose, ev
 
             <div className={styles.inputContainer}>
               <div className={styles.inputTitle}>{t("participantCountLabel")}</div>
-              <input
-                type="number"
-                min={1}
-                step={1}
-                className={`${styles.inputNoIcon} ${errors.participantsCount ? styles.inputError : ''}`}
-                placeholder="00"
-                {...register('participantsCount', {
-                  required: t('participantCountRequired'),
-                  valueAsNumber: true,
-                  validate: (v) => (Number.isInteger(v) && v > 0) || t('mustBePositiveInteger'),
-                })}
-              />
+              <div className={styles.inputWithIcon}>
+                <Image src={personIcon} alt="" className={styles.inputIcon} />
+                <input
+                  type="number"
+                  min={1}
+                  step={1}
+                  className={`${styles.input} ${errors.participantsCount ? styles.inputError : ''}`}
+                  placeholder="0"
+                  {...register('participantsCount', {
+                    required: t('participantCountRequired'),
+                    valueAsNumber: true,
+                    validate: (v) => (Number.isInteger(v) && v > 0) || t('mustBePositiveInteger'),
+                  })}
+                />
+                </div>
               {errors.participantsCount && (
                 <div className={styles.error}>{errors.participantsCount.message}</div>
               )}

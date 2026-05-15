@@ -198,6 +198,7 @@
 
 .datetimeInput {
     color-scheme: dark;
+    color: #7A7A7A;
 }
 
 .datetimeInput::-webkit-calendar-picker-indicator {
@@ -216,6 +217,7 @@
 .input[type="number"],
 .inputNoIcon[type="number"] {
     -moz-appearance: textfield;
+    color: white;
 }
 
 .loadingOverlay {
