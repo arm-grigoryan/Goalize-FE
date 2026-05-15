@@ -21,7 +21,7 @@ export const AppShell: FC<{ children: ReactNode }> = ({ children }) => {
       <Header />
       <GlobalErrorHandler />
       <main className="container">{children}</main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
