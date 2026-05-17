@@ -1,8 +1,8 @@
 {
   "common": {
     "ProfileComplition": {
-      "title": "Խնդրում ենք լրացնել ձեր պրոֆիլը՝ բոլոր հնարավորություններից օգտվելու համար",
-      "introduction": "Սեղմեք քայլի վրա՝ անմիջապես այնտեղ անցնելու համար։",
+      "title": "Խնդրում ենք լրացնել ձեր տվյալները՝ բոլոր հնարավորություններից օգտվելու համար",
+      "introduction": "Սեղմեք քայլի վրա՝ համապատասխան էջ տեղափոխվելու համար։",
       "buttonContent": "Կառավարել հաշիվը"
     },
     "playerProfile": {
@@ -11,7 +11,7 @@
         "inviteButtonText": "Հրավիրել",
         "invitedLabelText": "Հրավիրված է",
         "invitedTooltip": "Խաղացողն արդեն հրավիրված է ձեր թիմ։",
-        "makeCaptainButtonText": "Նշանակել կապիտան",
+        "makeCaptainButtonText": "Նշանակել ավագ",
         "quitTeamButtonText": "Լքել թիմը"
       }
     },
@@ -31,13 +31,13 @@
   "auth": {
     "signingIn": {
       "title": "Մուտք եք գործում",
-      "description": "Խնդրում ենք սպասել, մինչ մենք ապահով կերպով ավարտում ենք ձեր մուտքը։",
+      "description": "Խնդրում ենք սպասել համակարգ մուտք գործելուն:",
       "failed": "Չհաջողվեց մուտք գործել",
       "unexpectedError": "Տեղի ունեցավ անսպասելի սխալ։ Խնդրում ենք կրկին փորձել։"
     },
     "signingOut": {
       "title": "Ելք եք կատարում",
-      "description": "Պահեք մի պահ — մենք շուտով կուղղվենք ձեզ։",
+      "description": "Խնդրում ենք սպասել համակարգից դուրս գալուն։",
       "failed": "Չհաջողվեց դուրս գալ",
       "unexpectedError": "Տեղի ունեցավ անսպասելի սխալ։ Խնդրում ենք կրկին փորձել։"
     }
@@ -57,8 +57,8 @@
       "emptyState": "Ներկայումս առաջիկա խաղեր նախատեսված չեն"
     },
     "pastMatches": {
-      "title": "Անցած խաղեր",
-      "emptyState": "Ներկայումս անցած խաղեր չկան"
+      "title": "Կայացած խաղեր",
+      "emptyState": "Ներկայումս կայացած խաղեր չկան"
     },
     "transferNews": {
       "title": "Տրանսֆերային նորություններ",
@@ -76,11 +76,11 @@
         "playerInvited": "{firstName}-ը Ձեզ հրավիրում է {teamName} թիմ։ Կապի համար՝ {phoneNumber}",
         "playerApplied": "{firstName}-ը ցանկանում է անդամագրվել ձեր թիմին։ Կապի համար՝ {phoneNumber}",
         "playerQuit": "{firstName}-ը լքել է ձեր թիմը։",
-        "playerRemoved": "Դուք հեռացվել եք {teamName} թիմից կապիտանի կողմից։",
-        "playerPromoted": "Դուք նշանակվել եք {teamName} թիմի կապիտան",
+        "playerRemoved": "Դուք հեռացվել եք {teamName} թիմից ավագի կողմից։",
+        "playerPromoted": "Դուք նշանակվել եք {teamName} թիմի ավագ",
         "shirtNumberChangedTitle": "Վերնաշապիկի համարը փոխվել է",
         "playerShirtNumberChanged": "Ձեր վերնաշապիկի համարը {oldNumber}-ից փոխվել է {newNumber}-ի",
-        "teamCreationApproved": "Ձեր թիմի ստեղծումը հաստատվել է։ Հաջողություն։",
+        "teamCreationApproved": "Ձեր թիմի ստեղծումը հաստատվել է։ Մաղթում ենք Հաջողություն։",
         "teamCreationRejected": "Ձեր թիմի ստեղծումը մերժվել է հետևյալ պատճառով՝ {rejectionReason}",
         "profilePictureApprovedTitle": "Պրոֆիլի լուսանկարն ընդունված է",
         "profilePictureApproved": "Ձեր պրոֆիլի լուսանկարն ընդունվել է։",
@@ -93,13 +93,13 @@
       },
       "flow": {
         "acceptInvitationTitle": "Հրավերի ընդունում",
-        "acceptInvitationDescription": "Վստավահառ եք ընդունել այս հրավերը։ Դուք անմիջապես կօրանցվեք {teamName} թիմին։",
+        "acceptInvitationDescription": "Ցանկանում եք ընդունել այս հրավերը։ Դուք անմիջապես կգրանցվեք {teamName} թիմում։",
         "acceptApplicationTitle": "Հայտի ընդունում",
-        "acceptApplicationDescription": "Վստավահառ եք ընդունել այս հայտը։ {firstName} {lastName}-ը անմիջապես կօրանցվեք ձեր թիմին։",
+        "acceptApplicationDescription": "Ցանկանում եք ընդունել այս հայտը։ {firstName} {lastName}-ը անմիջապես կգրանցվի ձեր թիմում։",
         "declineInvitationTitle": "Հրավերի մերժում",
-        "declineInvitationDescription": "Վստավահառ եք մերժել այս հրավերը։ Այս գործողությունը հետ վերածել հնարավոր չէ։",
+        "declineInvitationDescription": "Ցանկանում եք մերժել այս հրավերը։ Այս գործողությունը չի կարող չեղարկվել ապագայում։",
         "declineApplicationTitle": "Հայտի մերժում",
-        "declineApplicationDescription": "Վստավահառ եք մերժել այս հայտը։ Այս գործողությունը հետ վերածել հնարավոր չէ։",
+        "declineApplicationDescription": "Ցանկանում եք մերժել այս հայտը։ Այս գործողությունը չի կարող չեղարկվել ապագայում։",
         "youAcceptedInvitation": "Դուք ընդունել եք այս հրավերը",
         "youAcceptedApplication": "Դուք ընդունել եք այս հայտը",
         "youDeclinedInvitation": "Դուք մերժել եք այս հրավերը",
@@ -162,17 +162,17 @@
     "title": "Թիմեր",
     "createTeam": "Ստեղծել թիմ",
     "failedToLoad": "Թիմերի բեռնումը ձախողվեց։ Խնդրում ենք նորից փորձել։",
-    "empty": "Ներկայումս ցուցադրելու թիմ չկա։",
-    "cannotCreateCaptain": "Դուք արդեն {teamName} թիմի կապիտանն եք։ Կապիտանի դերը փոխանցեք և լքեք, եթե ցանկանում եք ստեղծել նոր թիմ։",
-    "cannotCreateDraft": "Դուք արդեն ստեղծել եք թիմ, որն ստուգման փուլում է։ Կկտեղեկացվեք ստուգումից հետո։",
-    "cannotCreateInTeam": "Դուք արդեն {teamName} թիմի անդամ եք։ Լքեք, եթե ցանկանում եք ստեղծել նոր թիմ։",
+    "empty": "Ներկայումս ցուցադրման թիմ չկա։",
+    "cannotCreateCaptain": "Դուք արդեն {teamName} թիմի ավագն եք։ Փոխանցեք ավագի դերը թիմում և կրկին փորձեք, եթե ցանկանում եք ստեղծել նոր թիմ։",
+    "cannotCreateDraft": "Դուք արդեն ստեղծել եք թիմ, որն ստուգման փուլում է։ Արդյունքի մասին կստանաք ծանուցում։",
+    "cannotCreateInTeam": "Դուք արդեն {teamName} թիմի անդամ եք։ Լքեք ձեր թիմը, եթե ցանկանում եք ստեղծել նոր թիմ։",
     "appliedLabelText": "Հայտը ներկայացված է",
-    "appliedTooltip": "Դուք արդեն հայտ եք ներկայացրել այս թիմին։"
+    "appliedTooltip": "Դուք արդեն ունեք ներկայացրած հայտ այս թիմին։"
   },
   "playerProfile": {
     "title": "Խաղացողի պրոֆիլ",
     "buttons": {
-      "age": "տարիք",
+      "age": "Տարիք",
       "foot": "Ոտք",
       "contact": "Կապ"
     },
@@ -181,7 +181,7 @@
       "buttonText": "Խաղացած հանդիպումներ",
       "avergaePlayerRate": "Միջին գնահատական",
       "goals": "Գոլեր",
-      "assists": "Փոխանցումներ",
+      "assists": "Գոլային Փոխանցումներ",
       "shotsCompleted": "Հարվածներ",
       "passesCompleted": "Փոխանցումներ",
       "tackles": "Կասեցումներ",
@@ -190,29 +190,29 @@
       "yellowCards": "Դեղին քարտեր",
       "averageGoalKeeperRate": "Դարպասապահի միջին գնահատական",
       "goalsConceded": "Բաց թողած գոլեր",
-      "savedPenalties": "Կանխված տուգանայիններ",
-      "saves": "Փրկություններ"
+      "savedPenalties": "Որսած 11 մետրանոցներ",
+      "saves": "Սեյվեր"
     },
     "transferHistory": {
       "title": "Տրանսֆերային պատմություն",
       "label": "Խաղացողի տրանսֆերները կարիերայի ընթացքում",
       "from": "Ից",
       "to": "Դեպի",
-      "emptyStateText": "Տրանսֆերային նորություններ ներկայումս նախատեսված չեն"
+      "emptyStateText": "Տրանսֆերային նորություններ ներկայումս առկա չեն"
     },
     "pastMatches": {
-      "title": "Անցած խաղեր",
-      "label": "Խաղացողի հանդիպումները նրա մասնակցությամբ",
-      "emptyStateText": "Ներկայումս անցած խաղեր չկան։"
+      "title": "Կայացած խաղեր",
+      "label": "Հանդիպումները Խաղացողի մասնակցությամբ",
+      "emptyStateText": "Ներկայումս կայացած խաղեր չկան։"
     },
     "unassigned": {
       "title": "Ազատ գործակալ",
-      "label": "Խաղացողը ներկայումս ոչ մի թիմի չի պատկանում։",
+      "label": "Խաղացողը ներկայումս ոչ մի թիմում գրանցված չի։",
       "linkText": "Ուղարկել հրավեր"
     },
     "playerInvitationCard": {
       "title": "Խաղացողի հրավեր",
-      "label": "{playerName}-ին հրավիրե՞լ ձեր թիմ։ Ձեր հեռախոսի համարը տեսանելի կլինի խաղացողին կապի համար։",
+      "label": "Ցանկանում եք {playerName}-ին հրավիրե՞լ ձեր թիմ։ Ձեր հեռախոսի համարը տեսանելի կլինի խաղացողին, կապի համար։",
       "confirmButtonText": "Հաստատել",
       "cancelButtonText": "Չեղարկել",
       "loadingText": "Ուղարկվում է..."
@@ -220,23 +220,23 @@
     "modals": {
       "cannotSendInvitation": "Հնարավոր չէ ուղարկել հրավեր",
       "cannotRemovePlayer": "Հնարավոր չէ հեռացնել խաղացողին",
-      "cannotMakeCaptain": "Հնարավոր չէ նշանակել կապիտան",
+      "cannotMakeCaptain": "Հնարավոր չէ նշանակել ավագ",
       "cannotQuitTeam": "Հնարավոր չէ լքել թիմը",
       "actionNotAllowed": "Գործողությունն արգելված է",
-      "mustBeCaptain": "Հրավերներ ուղարկելու համար դուք պետք է լինեք կապիտան։",
+      "mustBeCaptain": "Հրավերներ ուղարկելու համար դուք պետք է լինեք ավագ։",
       "invitationSentTitle": "Հրավերն ուղարկված է",
       "invitationSentDescription": "Խաղացողը հրավիրված է ձեր թիմ։",
-      "makeCaptainTitle": "Նշանակել թիմի կապիտան",
-      "makeCaptainDescription": "Վստա՞հ եք, որ ցանկանում եք {firstName} {lastName}-ին նշանակել թիմի կապիտան։ Դուք կկորցնեք ձեր կապիտանի լիազորությունները։",
-      "captainChangedTitle": "Կապիտանն հաջողությամբ փոխվել է",
-      "captainChangedDescription": "Թիմի կապիտանը թարմացվել է։",
+      "makeCaptainTitle": "Նշանակել թիմի ավագ",
+      "makeCaptainDescription": "Վստա՞հ եք, որ ցանկանում եք {firstName} {lastName}-ին նշանակել թիմի ավագ։ Դուք կկորցնեք ձեր ավագի լիազորությունները։",
+      "captainChangedTitle": "Ավագը հաջողությամբ փոխվել է",
+      "captainChangedDescription": "Թիմի ավագը թարմացվել է։",
       "removeMemberTitle": "Հեռացնել թիմի անդամին",
       "removeMemberDescription": "Վստա՞հ եք, որ ցանկանում եք {firstName} {lastName}-ին հեռացնել թիմից։",
-      "memberRemovedTitle": "Անդամը հաջողությամբ հեռացվել է",
+      "memberRemovedTitle": "Խաղացողը հաջողությամբ հեռացվել է",
       "memberRemovedDescription": "Թիմի անդամը հեռացվել է։",
       "quitTeamTitle": "Լքել թիմը",
       "quitTeamDescription": "Վստա՞հ եք, որ ցանկանում եք լքել թիմը։",
-      "quitSuccessTitle": "Թիմը հաջողությամբ լքվել է",
+      "quitSuccessTitle": "Դուք հաջողությամբ լքեցիք թիմը",
       "quitSuccessDescription": "Դուք լքել եք թիմը։",
       "errorOccurred": "Տեղի ունեցավ սխալ։"
     }
@@ -245,33 +245,33 @@
     "networkError": "Ինչ-որ բան սխալ է գնացել։ Խնդրում ենք նորից փորձել ավելի ուշ։",
     "backButtonText": "Վերադառնալ գլխավոր",
     "notFound": "Ուպս! Այս էջը դուրս է եկել սահմաններից! ⚽",
-    "accessDenied": "Մուտքն արգելված է։ Դուք չունեք այս բովանդակությունը դիտելու թույլտվություն։",
+    "accessDenied": "Մուտքն արգելված է։ Դուք չունեք թույլտվություն այս էջին հասանելիության համար։",
     "actionNotAllowed": "Գործողությունն արգելված է",
-    "notAllowedDescription": "Ձեզ թույլ չի տրված կատարել այս գործողությունը"
+    "notAllowedDescription": "Դուք չունեք այս գործողությունը կատրելու թույլտվություն:"
   },
   "matches": {
     "tabs": {
-      "highlight": "Հիմնականներ",
+      "highlight": "Իրադարձություններ",
       "stats": "Վիճակագրություն",
       "lineup": "Կազմ"
     },
     "highlights": {
-      "title": "Հիմնական պահեր",
-      "empty": "Հիմնական պահեր այս պահին հասանելի չեն",
+      "title": "Իրադարձություններ",
+      "empty": "Իրադարձություններն այս պահին հասանելի չեն",
       "goal": "Գոլ",
       "ownGoal": "Ինքնագոլ",
       "redCard": "Կարմիր քարտ",
       "yellowCard": "Դեղին քարտ",
-      "assistBy": "Փոխանցումը՝"
+      "assistBy": "Գոլային Փոխանցումը՝"
     },
     "statistics": {
       "title": "Վիճակագրություն",
       "empty": "Վիճակագրությունն այս պահին հասանելի չէ",
       "home": "Տանտեր",
       "away": "Հյուր",
-      "totalShots": "Ընդհանուր հարվածներ",
-      "shotsOnTarget": "Հարվածներ թիրախի վրա",
-      "totalPasses": "Ընդհանուր փոխանցումներ",
+      "totalShots": "Հարվածներ",
+      "shotsOnTarget": "Հարվածներ դարպասին",
+      "totalPasses": "Փոխանցումներ",
       "passesCompleted": "Կատարված փոխանցումներ",
       "fouls": "Խախտումներ",
       "corners": "Անկյունային հարվածներ"
@@ -279,7 +279,7 @@
     "header": {
       "playoff": "Փլեյ-օֆ",
       "groupStage": "Խմբային փուլ",
-      "tba": "Կհայտնվի"
+      "tba": "Չհայտարարված"
     },
     "lineup": {
       "title": "Կազմ",
@@ -296,18 +296,18 @@
         "title": "Վիճակագրություն որպես խաղացող",
         "rating": "Գնահատական",
         "goals": "Գոլեր",
-        "assists": "Փոխանցումներ",
+        "assists": "Գոլային Փոխանցումներ",
         "tackles": "Կասեցումներ",
         "interceptions": "Ընդհատումներ",
-        "passes": "փոխանցումներ",
-        "shots": "հարվածներ"
+        "passes": "Փոխանցումներ",
+        "shots": "Հարվածներ"
       },
       "goalkeeperStats": {
         "title": "Վիճակագրություն որպես դարպասապահ",
         "rating": "Գնահատական",
-        "saves": "Փրկություններ",
+        "saves": "Սեյվեր",
         "goalsConceded": "Բաց թողած գոլեր",
-        "penaltiesSaved": "Կանխված տուգանայիններ"
+        "penaltiesSaved": "Որսած 11 մետրանոցներ"
       },
       "playerProfile": "Խաղացողի պրոֆիլ"
     }
@@ -315,11 +315,11 @@
   "events": {
     "tabs": {
       "upcoming": "Առաջիկա միջոցառումներ",
-      "past": "Անցած միջոցառումներ"
+      "past": "Կայացած միջոցառումներ"
     },
     "failedToLoad": "Չհաջողվեց բեռնել միջոցառումները։",
     "emptyUpcoming": "Առաջիկա միջոցառումներ չկան։",
-    "emptyPast": "Անցած միջոցառումներ չկան։",
+    "emptyPast": "Կայացած միջոցառումներ չկան։",
     "participants": "Մասնակիցներ",
     "registrationsWillBeClosedOn": "Գրանցումները կփակվեն",
     "create": {
@@ -331,10 +331,10 @@
       "addressLabel": "Հասցե",
       "addressRequired": "Հասցեն պարտադիր է",
       "max100Characters": "Առավելագույնը 100 նիշ",
-      "startTimeLabel": "Սկսելու ժամանակ",
+      "startTimeLabel": "Սկսելու ժամանակը",
       "startTimeRequired": "Սկսելու ժամանակը պարտադիր է",
       "mustBeInFuture": "Պետք է լինի ապագայում",
-      "registrationClosingTimeLabel": "Գրանցման փակման ժամանակ",
+      "registrationClosingTimeLabel": "Գրանցման փակման ժամանակը",
       "registrationClosingTimeRequired": "Գրանցման փակման ժամանակը պարտադիր է",
       "mustBeBeforeStartTime": "Պետք է լինի սկսելու ժամանակից առաջ",
       "durationLabel": "Տևողություն",
@@ -352,7 +352,7 @@
       "saveChangesButton": "Պահպանել փոփոխությունները",
       "cancelEventButton": "Չեղարկել միջոցառումը",
       "cancelEventTitle": "Չեղարկել միջոցառումը",
-      "cancelEventDescription": "Վստա՞հ եք, որ ցանկանում եք չեղարկել այս միջոցառումը։ Այս գործողությունը հնարավոր չէ հետ կանչել։",
+      "cancelEventDescription": "Վստա՞հ եք, որ ցանկանում եք չեղարկել այս միջոցառումը։ Այս գործողությունը չի կարող չեղարկվել ապագայում։",
       "eventCreatedTitle": "Միջոցառումը ստեղծվել է։",
       "eventCreatedDescription": "Ձեր միջոցառումը հաջողությամբ ստեղծվել է և այժմ տեսանելի է միջոցառումների ցանկում։",
       "eventUpdatedTitle": "Միջոցառումը թարմացվել է։",
@@ -366,7 +366,7 @@
     },
     "header": {
       "title": "Միջոցառումներ",
-      "description": "Մնացեք խաղի մեջ։ Բռնեք բոլոր վերջին հանդիպումները, մրցաշարերը և ուղիղ եթերի գործողությունները, որոնք տեղի են ունենում ձեր մոտակայքում կամ աշխարհի շուրջ։",
+      "description": "Մնացեք ակտիվ։ Հետևեք բոլոր իրադարձություններին, որոնք տեղի են ունենում ձեր մոտակայքում և ոչ միայն։",
       "createEvent": "Ստեղծել միջոցառում",
       "manageButton": "Կառավարել",
       "joinButton": "Միանալ",
@@ -380,7 +380,7 @@
       "joinEventDescription": "Վստա՞հ եք, որ ցանկանում եք միանալ այս միջոցառմանը։",
       "unjoinEventTitle": "Հեռանալ միջոցառումից",
       "unjoinEventDescription": "Վստա՞հ եք, որ ցանկանում եք լքել այս միջոցառումը։",
-      "successTitle": "Հաջողություն",
+      "successTitle": "Մաղթում ենք հաջողություն",
       "joinSuccess": "Դուք հաջողությամբ միացել եք միջոցառմանը։",
       "leaveSuccess": "Դուք հաջողությամբ լքել եք միջոցառումը։",
       "errorTitle": "Սխալ",
@@ -405,15 +405,15 @@
       "prizePool": "Մրցանակային ֆոնդ",
       "firstPlace": "1-ին տեղ",
       "secondPlace": "2-րդ տեղ",
-      "semiFinalist": "Կիսաեզրափակիչ",
-      "perGamePerTeam": "/մեկ խաղի /մեկ թիմի համար",
+      "semiFinalist": "Կիսաեզրափակչի մասնակից",
+      "perGamePerTeam": "/մեկ խաղը /մեկ թիմի համար",
       "canNoLongerRegister": "Այլևս չեք կարող գրանցվել",
-      "joined": "Միացած",
+      "joined": "Գրանցված",
       "joinLeague": "Միանալ լիգային",
       "registrationClosed": "Գրանցումը փակ է",
       "state": "Կարգավիճակ՝",
       "registrationsWillBeClosedOn": "Գրանցումները կփակվեն",
-      "joinedTeams": "Միացած թիմեր",
+      "joinedTeams": "Գրանցված թիմեր",
       "tabs": {
         "groups": "Խմբեր",
         "drawStandings": "Վիճակահանության աղյուսակ",
@@ -426,17 +426,17 @@
         "maxTeamsCountReached": "Թիմերի առավելագույն քանակը լրացված է",
         "registrationDateExpired": "Գրանցման ժամկետը լրացել է",
         "errorTitle": "Սխալ",
-        "needTeamFirst": "Լիգային միանալու համար նախ պետք է լինել թիմում",
-        "onlyCaptainCanRegister": "Միայն կապիտանը կարող է թիմը գրանցել լիգայում",
+        "needTeamFirst": "Լիգային միանալու համար նախ պետք է լինել թիմի կազմում",
+        "onlyCaptainCanRegister": "Միայն ավագը կարող է թիմը գրանցել լիգայում",
         "infoTitle": "Տեղեկություն",
         "teamAlreadyRegistered": "Ձեր թիմն արդեն գրանցված է",
         "joinLeagueTitle": "Միանալ լիգային",
         "joinLeagueDescription": "Վստա՞հ եք, որ ցանկանում եք միանալ այս լիգային։",
-        "contactSupport": "Լիգայից ապագրանցվելու համար դիմեք օգնության կենտրոն",
-        "onlyCaptainCanUnregister": "Միայն կապիտանը կարող է թիմը ապագրանցել լիգայից",
+        "contactSupport": "Լիգայից ապագրանցվելու համար դիմեք հաճախորդների աջակցության կենտրոն",
+        "onlyCaptainCanUnregister": "Միայն ավագը կարող է թիմը ապագրանցել լիգայից",
         "unjoinLeagueTitle": "Հեռանալ լիգայից",
         "unjoinLeagueDescription": "Վստա՞հ եք, որ ցանկանում եք լքել այս լիգան։",
-        "successTitle": "Հաջողություն",
+        "successTitle": "Մաղթում ենք հաջողություն",
         "joinSuccess": "Դուք հաջողությամբ միացել եք լիգային։",
         "leaveSuccess": "Դուք հաջողությամբ լքել եք լիգան։",
         "genericError": "Ինչ-որ բան սխալ ընթացավ։ Խնդրում ենք փորձել ավելի ուշ։",
@@ -454,7 +454,7 @@
   "leaguesStats": {
     "empty": "Վիճակագրությունը դեռ հասանելի չէ",
     "goals": "Գոլեր",
-    "assists": "Փոխանցումներ",
+    "assists": "Գոլային փոխանցումներ",
     "ratings": "Գնահատականներ",
     "yellowCards": "Դեղին քարտեր",
     "redCards": "Կարմիր քարտեր"
@@ -478,15 +478,15 @@
       "ageLabel": "Տարիք՝",
       "footLabel": "Ոտք՝",
       "teamApplicationTitle": "Թիմի դիմում",
-      "teamApplicationDescription": "Դիմե՞լ {teamName}-ին։ Ձեր հեռախոսահամարը տեսանելի կլինի կապիտանին կապի համար։",
+      "teamApplicationDescription": "Դիմե՞լ {teamName}-ին։ Ձեր հեռախոսահամարը տեսանելի կլինի ավագին, կապի համար։",
       "applicationSentTitle": "Դիմումը հաջողությամբ ուղարկվել է",
       "applicationSentDescription": "Ձեր դիմումը հաջողությամբ ուղարկվել է թիմին։",
       "cannotApplyTitle": "Հնարավոր չէ դիմել",
-      "captainWarningDescription": "Դուք թիմի կապիտանն եք։ Փոխանցեք կապիտանի դերն այլ խաղացողի կամ լքեք թիմը, եթե ցանկանում եք դիմել այլ թիմի։",
+      "captainWarningDescription": "Դուք թիմի ավագն եք։ Փոխանցեք ավագի դերն այլ խաղացողի կամ լքեք թիմը, եթե ցանկանում եք դիմել այլ թիմի։",
       "quitTeamAbandonedDescription": "Դուք լքել եք թիմը։ Թիմն այժմ լքված է։",
       "unexpectedError": "Տեղի ունեցավ անսպասելի սխալ։ Խնդրում ենք փորձել ավելի ուշ։",
       "tabs": {
-        "overview": "Ակնարկ",
+        "overview": "Գլխավոր",
         "results": "Արդյունքներ",
         "fixtures": "Խաղացանկ",
         "transfers": "Տրանսֆերներ",
@@ -497,23 +497,23 @@
     "nextMatch": {
       "title": "Հաջորդ խաղ",
       "empty": "Ներկայումս խաղ նախատեսված չէ",
-      "tbd": "Կհայտնվի"
+      "tbd": "Չհայտարարված"
     },
     "trophies": {
       "title": "Գավաթներ",
       "firstPlace": "1-ին տեղ",
       "secondPlace": "2-րդ տեղ",
-      "semifinalist": "Կիսաեզրափակիչ"
+      "semifinalist": "Կիսաեզրափակչի մասնակից"
     },
     "statistics": {
       "title": "Լավագույն խաղացողներ",
       "playerRating": "Խաղացողի գնահատական",
       "mostGoals": "Ամենաշատ գոլեր",
-      "mostAssists": "Ամենաշատ փոխանցումներ",
+      "mostAssists": "Ամենաշատ գոլային փոխանցումներ",
       "mostYellowCards": "Ամենաշատ դեղին քարտեր",
       "mostRedCards": "Ամենաշատ կարմիր քարտեր",
       "goalkeeperRating": "Դարպասապահի գնահատական",
-      "mostSaves": "Ամենաշատ փրկություններ"
+      "mostSaves": "Ամենաշատ սեյվեր"
     }
   },
   "teamPage": {
@@ -523,19 +523,19 @@
   "teamTransfer": {
     "tabs": {
       "all": "Բոլորը",
-      "playerIn": "Մուտքի խաղացողներ",
-      "playerOut": "Ելքի խաղացողներ"
+      "playerIn": "Միացած խաղացողներ",
+      "playerOut": "Լքած խաղացողներ"
     },
     "card": {
       "playerName": "Խաղացողի անուն",
-      "playerIn": "Ներս",
-      "playerOut": "Դուրս",
+      "playerIn": "Դեպի ներս",
+      "playerOut": "Դեպի դուրս",
       "in": "Ներս",
       "out": "Դուրս"
     }
   },
   "teamsCard": {
-    "captain": "Կապիտան՝",
+    "captain": "Ավագ՝",
     "nextMatch": "Հաջորդ խաղ՝",
     "opponent": "Հակառակորդ՝"
   },
@@ -549,16 +549,16 @@
     "pts": "Մ"
   },
   "showMoreCard": {
-    "makeCaptain": "Նշանակել կապիտան",
+    "makeCaptain": "Նշանակել ավագ",
     "remove": "Հեռացնել",
     "editShirtNumber": "Փոփոխել վերնաշապիկի համարը",
     "invite": "Հրավիրել"
   },
   "leaguesJoinedTeamCard": {
-    "captain": "կապիտան"
+    "captain": "Աավագ"
   },
   "draftTeamHeader": {
-    "cannotDeleteTitle": "Հնարավոր չէ ջնջել նախագիծ թիմը",
+    "cannotDeleteTitle": "Հնարավոր չէ ջնջել մշակվող թիմը",
     "errorFallback": "Տեղի ունեցավ անսպասելի սխալ։ Խնդրում ենք փորձել ավելի ուշ։"
   },
   "teamForm": {
@@ -578,7 +578,7 @@
   },
   "createTeam": {
     "title": "Ստեղծել թիմ",
-    "subtitle": "Ձեր հաղթական ճամփորդությունը սկսվում է այստեղ։",
+    "subtitle": "Ձեր հաղթարշավը սկսվում է այստեղ։",
     "inviteMembersLabel": "Հրավիրել անդամների",
     "searchPlayersPlaceholder": "Որոնել խաղացողներ...",
     "noPlayersFound": "Խաղացողներ չեն գտնվել։",
@@ -588,7 +588,7 @@
     "successTitle": "Թիմը հաջողությամբ ստեղծվել է",
     "successDescription": "Ձեր թիմը հաջողությամբ ստեղծվել է։",
     "cantSendInvite": "Հնարավոր չէ ուղարկել հրավեր",
-    "incompleteProfileDesc": "Այս խաղացողը չի կարող ստանալ հրավեր թերի պրոֆիլի պատճառով։",
+    "incompleteProfileDesc": "Այս խաղացողը չի կարող ստանալ հրավեր գրանցված թերի տվյալների պատճառով։",
     "completionStats": "Պահանջվում է՝ {required}% | Ընթացիկ՝ {current}%"
   },
   "updateTeam": {
@@ -599,11 +599,11 @@
     "successDescription": "Ձեր թիմը հաջողությամբ թարմացվել է։"
   },
   "updateDraftTeam": {
-    "title": "Թարմացնել նախագիծ թիմը",
-    "subtitle": "Խմբագրեք ձեր նախագիծ թիմի մանրամասները",
+    "title": "Թարմացնել մշակվող թիմը",
+    "subtitle": "Խմբագրեք ձեր մշակվող թիմի մանրամասները",
     "failedToUpdate": "Չհաջողվեց թարմացնել թիմը։ Խնդրում ենք նորից փորձել։",
-    "successTitle": "Նախագիծ թիմը թարմացվել է",
-    "successDescription": "Ձեր նախագիծ թիմը հաջողությամբ թարմացվել է։"
+    "successTitle": "Մշակվող թիմը թարմացվել է",
+    "successDescription": "Ձեր մշակվող թիմը հաջողությամբ թարմացվել է։"
   },
   "draftTeam": {
     "underReview": "Տվյալներ դեռ հասանելի չեն — ձեր թիմը դեռ ստուգման փուլում է։",
@@ -611,20 +611,20 @@
     "status": "Կարգավիճակ.",
     "reviewed": "Ստուգված.",
     "delete": "Ջնջել",
-    "deleteDraftTitle": "Ջնջել նախագիծ թիմը",
-    "deleteDraftDescription": "Վստա՞հ եք, որ ցանկանում եք ջնջել ձեր նախագիծ թիմը։ Այս գործողությունը հնարավոր չէ հետ կանչել։",
-    "deleteSuccessTitle": "Նախագիծ թիմը ջնջվել է",
-    "deleteSuccessDescription": "Ձեր նախագիծ թիմը հաջողությամբ ջնջվել է։",
+    "deleteDraftTitle": "Ջնջել մշակվող թիմը",
+    "deleteDraftDescription": "Վստա՞հ եք, որ ցանկանում եք ջնջել ձեր մշակվող թիմը։ Այս գործողությունը չի կարող չեղարկվել ապագայում։",
+    "deleteSuccessTitle": "Մշակվող թիմը ջնջվել է",
+    "deleteSuccessDescription": "Ձեր մշակվող թիմը հաջողությամբ ջնջվել է։",
     "age": "Տարիք.",
     "foot": "Ոտք.",
     "captainLabel": "(Կ)",
     "statusPending": "Այս թիմը ստուգման փուլում է և կհրապարակվի հաստատումից հետո։",
-    "statusRejected": "Այս թիմը մերժվել է ստուգման ժամանակ։ Խնդրում ենք թարմացնել տեղեկությունները և վերներկայացնել։",
+    "statusRejected": "Այս թիմը մերժվել է ստուգման ժամանակ։ Խնդրում ենք թարմացնել տեղեկությունները և վերաներկայացնել։",
     "failedToLoadTeamInfo": "Չհաջողվեց բեռնել թիմի տեղեկությունները"
   },
   "editShirtNumber": {
     "title": "Փոփոխել վերնաշապիկի համարը",
-    "subtitle": "Ձեր հաղթական ճամփորդությունը սկսվում է այստեղ։",
+    "subtitle": "Ձեր հաղթարշավը սկսվում է այստեղ։",
     "editLabel": "Փոփոխել վերնաշապիկի համարը",
     "current": "Ընթացիկ",
     "new": "Նոր",
