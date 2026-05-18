@@ -373,6 +373,7 @@
       "unjoinButton": "Հեռանալ",
       "payLabel": "Վճարել",
       "canceledLabel": "Չեղարկված",
+      "liveLabel": "Ուղիղ",
       "finishedLabel": "Ավարտված",
       "contactLabel": "Կապ՝",
       "minSession": "{duration} ր. տևողություն",

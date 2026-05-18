@@ -373,6 +373,7 @@
       "unjoinButton": "Unjoin",
       "payLabel": "Pay",
       "canceledLabel": "Canceled",
+      "liveLabel": "Live",
       "finishedLabel": "Finished",
       "contactLabel": "Contact:",
       "minSession": "{duration}min session",

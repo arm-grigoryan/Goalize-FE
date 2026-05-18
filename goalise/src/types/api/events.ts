@@ -64,7 +64,7 @@ export interface IEventDetail {
   participatedPlayersCount: number;
   registrationCloseDate: string | null;
   registrationAmount: number | null;
-  state: 'Upcoming' | 'Past' | 'Cancelled';
+  state: 'Upcoming' | 'Finished' | 'Cancelled';
   createDate: string;
   updateDate: string;
   participants: IEventParticipant[];
