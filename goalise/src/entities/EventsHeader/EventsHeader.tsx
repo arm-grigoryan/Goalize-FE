@@ -49,6 +49,7 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
     const [joinEvent] = useJoinEventMutation();
     const [unjoinEvent] = useUnjoinEventMutation();
     const t = useTranslations("events.header");
+    const tEvents = useTranslations("events");
     const tCommon = useTranslations("common");
 
     const showServerErrorToast = (message: string) => {
@@ -145,6 +146,9 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
         : noPhoto;
 
     const formattedStartTime = formatUTCDate(event.startTime, 'dd/mm/yyyy HH:MM');
+    const formattedRegClose = event.registrationCloseDate
+        ? formatUTCDate(event.registrationCloseDate, 'dd/mm/yyyy HH:MM')
+        : null;
 
     const handleJoin = () => {
         if (!isAuthenticated) {
@@ -314,10 +318,12 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
                 </div>
                 <CustomDivider orientation='vertical' flexItem />
                 {renderRightSection()}
-                  {isMobile && <div className={styles.registrationDate}>
-                            registrations Will Be Closed On
-                            <span>13.06.26 14:34</span>
-                        </div>}
+                  {isMobile && !isRegClosed && formattedRegClose && !isPast && event.state !== 'Cancelled' && (!isAuthenticated || !isParticipant || isHost) && (
+                        <div className={styles.registrationDate}>
+                            {tEvents("registrationsWillBeClosedOn")}
+                            <span>{formattedRegClose}</span>
+                        </div>
+                  )}
             </div>
             {isOpen && <CreateEventPopUp onClose={() => setIsOpen(false)} event={event} />}
 
