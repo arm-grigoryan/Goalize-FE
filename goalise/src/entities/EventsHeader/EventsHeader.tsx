@@ -107,14 +107,6 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
     if (type !== 'detailed') {
         return (
             <div className={`${styles.container} ${isMobile && styles.mobileContainer}`}>
-                <Image
-                    src="/pngs/nextMatchLeftInnerBackground.png"
-                    alt=""
-                    className={styles.bgImage}
-                    aria-hidden
-                    width={600}
-                    height={300}
-                />
                 <div className={styles.titleWrapper}>
                     <div className={styles.title}>{t("title")}</div>
                     {!isMobile &&
