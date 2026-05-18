@@ -8,9 +8,29 @@
     background: rgba(17, 19, 23, 0.70);
     z-index: 99;
     overflow: hidden;
+    position: relative;
     /* justify-content: space-between; */
     align-items: center;
     width: 100%;
+}
+
+.bgImage {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40%;
+    height: 130%;
+    object-fit: cover;
+    object-position: left center;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.15;
+}
+
+.container > *:not(.bgImage) {
+    position: relative;
+    z-index: 1;
 }
 .content {
     display: flex;
