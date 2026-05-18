@@ -16,20 +16,24 @@ export const EventsPlayersCard: React.FC<IEventsPlayersCardProps> = ({ participa
     const isMobile = width <= MEDIA_TABLET_SMALL;
 
     return <div className={styles.container}>
-        {participants.map((p) => (
-            <EventsPlayersInnerCard
-                key={p.id}
-                profilePic={p.userInfo.profilePic}
-                playerName={
+        {participants.map((p) => {
+            const isYou = myPlayerId !== undefined && myPlayerId === p.playerId;
+            return (
+                <EventsPlayersInnerCard
+                    key={p.id}
+                    profilePic={p.userInfo.profilePic}
+                    playerName={
                         isMobile
                             ? p.userInfo.firstName
                             : `${p.userInfo.firstName} ${p.userInfo.lastName}`
                     }
-                phoneNumber={p.userInfo.phoneNumber}
-                isYou={myPlayerId !== undefined && myPlayerId === p.playerId}
-                isHost={hostId !== undefined && hostId === p.playerId}
-                playerId={p.playerId}
-            />
-        ))}
+                    phoneNumber={p.userInfo.phoneNumber}
+                    isYou={isYou}
+                    isHost={hostId !== undefined && hostId === p.playerId}
+                    playerId={p.playerId}
+                    hidePhone={isMobile && isYou}
+                />
+            );
+        })}
     </div>;
 };

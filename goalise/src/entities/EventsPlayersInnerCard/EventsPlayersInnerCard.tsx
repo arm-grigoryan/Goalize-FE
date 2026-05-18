@@ -21,6 +21,7 @@ export interface IEventsPlayersInnerCardProps {
   isYou?: boolean;
   isHost?: boolean;
   playerId?: number;
+  hidePhone?: boolean;
 }
 
 export const EventsPlayersInnerCard: React.FC<IEventsPlayersInnerCardProps> = ({
@@ -30,6 +31,7 @@ export const EventsPlayersInnerCard: React.FC<IEventsPlayersInnerCardProps> = ({
   isYou,
   isHost,
   playerId,
+  hidePhone,
 }) => {
   const resolvedPic = profilePic && isValidUrl(profilePic) ? profilePic : profilePictureFallback;
   const isBlurred = phoneNumber === null || phoneNumber === undefined;
@@ -57,14 +59,16 @@ export const EventsPlayersInnerCard: React.FC<IEventsPlayersInnerCardProps> = ({
           </div>
         )}
       </div>
-      <div className={styles.phoneNumberWrapper}>
-        <div className={`${styles.phoneNumber} ${isBlurred ? styles.blurred : ''}`}>
-          {isBlurred ? DUMMY_PHONE : phoneNumber}
+      {!hidePhone && (
+        <div className={styles.phoneNumberWrapper}>
+          <div className={`${styles.phoneNumber} ${isBlurred ? styles.blurred : ''}`}>
+            {isBlurred ? DUMMY_PHONE : phoneNumber}
+          </div>
+          <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
+            <Image src={phoneLogo} alt="" className={styles.icon} />
+          </div>
         </div>
-        <div className={`${styles.iconWrapper} ${styles.redGlow}`}>
-          <Image src={phoneLogo} alt="" className={styles.icon} />
-        </div>
-      </div>
+      )}
     </div>
   );
 
