@@ -7,8 +7,6 @@ import ProfileComplitionsProgresbar from "../ProfileComplitionsProgresbar";
 import { useGetUserInfoQuery } from "@/app/store/services/api";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
-import Image from "next/image";
-
 export const ProfileComplitions = () => {
   const { data: userInfo } = useGetUserInfoQuery();
   const { width } = useWindowSize();
@@ -39,7 +37,6 @@ export const ProfileComplitions = () => {
         isMobile ? styles.mobile : ""
       }`}
     >
-      <Image src="/pngs/nextMatchLeftInnerBackground.png" alt="" className={styles.bgImage} aria-hidden width={600} height={300} />
       <div className={styles.info_wrapperS}>
         <div className={styles.textWrapper}>
           <div className={styles.title}>{t("ProfileComplition.title")}</div>
