@@ -208,12 +208,12 @@ export const HomeUpcomingMatchesCard = () => {
               })}
               <div ref={sentinelRef} style={{ height: 1 }} />
             </div>
+            {isFetching && (
+              <div className={styles.loader_container_mobile}>
+                <div className={styles.loader}></div>
+              </div>
+            )}
           </div>
-        </div>
-      )}
-      {isFetching && (
-        <div className={styles.loader_container}>
-          <div className={styles.loader}></div>
         </div>
       )}
     </>
