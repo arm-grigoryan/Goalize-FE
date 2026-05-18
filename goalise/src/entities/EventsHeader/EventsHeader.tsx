@@ -144,7 +144,8 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
     const isRegClosed = event.registrationCloseDate
         ? new Date(event.registrationCloseDate) <= now
         : false;
-    const isPast = event.state === 'Past' || new Date(event.startTime) <= now;
+    const isPast = event.state === 'Finished';
+    const isLive = event.state === 'Upcoming' && new Date(event.startTime) <= now;
 
     const isHost = myPlayerId !== undefined && myPlayerId === event.hostId;
     const isParticipant = participants.some((p) => p.playerId === myPlayerId);
@@ -182,6 +183,14 @@ export const EventsHeader: React.FC<IEventsHeaderProps> = ({ type, event, myPlay
                         <div>{t("payLabel")} ֏ {payAmount}</div>
                     </div>
                     <div className={styles.finishedLabel}>{t("finishedLabel")}</div>
+                </div>
+            );
+        }
+
+        if (isLive) {
+            return (
+                <div className={styles.joinedPaymentWrapper}>
+                    <div className={styles.cancelledLabel}>{t("liveLabel")}</div>
                 </div>
             );
         }
