@@ -74,6 +74,7 @@
   .transfer_inner_card {
     width: 90%;
     font-size: 12px;
+    padding: 6px;
   }
   .player_info_wrapper {
     flex-direction: column;

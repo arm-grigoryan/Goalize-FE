@@ -185,8 +185,9 @@
 
 .team_info_mobile {
   display: grid;
-  grid-template-columns: 1fr 72px 1fr;
+  grid-template-columns: 1fr 80px 1fr;
   align-items: center;
+  justify-content: center;
 }
 
 .home_team_info_mobile,
