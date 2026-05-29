@@ -121,6 +121,7 @@ const useNotificationTemplate = () => {
           };
         case "PlayerShirtNumberChanged":
           return {
+            icon: "/pngs/notifications/shirt-number-changed.svg",
             title: t("home.notifications.templates.shirtNumberChangedTitle"),
             description: t("home.notifications.templates.playerShirtNumberChanged", {
               oldNumber: data?.oldNumber,
@@ -176,6 +177,7 @@ const useNotificationTemplate = () => {
           };
         case "EventCancelled":
           return {
+            icon: "/pngs/notifications/event-cancelled.svg",
             title: data?.eventInfo?.name,
             description: t("home.notifications.templates.eventCancelled", {
               eventName: data?.eventInfo?.name,
@@ -183,6 +185,7 @@ const useNotificationTemplate = () => {
           };
         case "EventUpdated":
           return {
+            icon: "/pngs/notifications/event-updated.svg",
             title: data?.eventInfo?.name,
             description: t("home.notifications.templates.eventUpdated", {
               eventName: data?.eventInfo?.name,
