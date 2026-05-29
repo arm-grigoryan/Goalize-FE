@@ -24,7 +24,7 @@ export interface IUserInfo {
   profilePic: string;
   profilePicStatus: "Pending" | "Approved" | "Rejected";
   birthDate: string;
-  workingFoot: "Left" | "Right" | "Both";
+  workingFoot: "Left" | "Right";
   email: string;
   emailConfirmed: boolean;
   phoneNumber: string;
