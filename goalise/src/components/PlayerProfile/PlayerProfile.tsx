@@ -160,7 +160,7 @@ export const PlayerProfile = () => {
             profilePic={playerBasicInfo?.playerInfo.userInfo.profilePic}
             fullName={`${playerBasicInfo?.playerInfo.userInfo.firstName} ${playerBasicInfo?.playerInfo.userInfo.lastName}`}
             age={String(playerBasicInfo?.playerInfo.userInfo.age || "")}
-            foot={playerBasicInfo?.playerInfo.userInfo.workingFoot || ""}
+            foot={playerBasicInfo?.playerInfo.userInfo.workingFoot}
             onQuitTeamButtonClick={handleQuitTeamClick}
             quitTeamButtonText={t("quitTeamButtonText")}
             teamName={playerBasicInfo?.playerInfo.team?.name || ""}

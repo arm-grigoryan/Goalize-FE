@@ -26,7 +26,16 @@
     "saveCrop": "Save Crop",
     "uploadLogo": "Upload logo",
     "guest": "Guest",
-    "back": "Back"
+    "back": "Back",
+    "workingFoot": {
+      "Left": "Left",
+      "Right": "Right"
+    },
+    "leagueState": {
+      "Registration": "Registration",
+      "Playing": "Playing",
+      "Finished": "Finished"
+    }
   },
   "auth": {
     "signingIn": {
@@ -86,8 +95,10 @@
         "profilePictureApproved": "Your profile picture is approved.",
         "profilePictureRejectedTitle": "Profile Picture Rejected",
         "profilePictureRejected": "Your profile picture is rejected for the following reason: {rejectionReason}.",
-        "playerRespondedToInvitation": "{firstName} {response} your invitation to join to your team.",
-        "captainRespondedToApplication": "{firstName} {response} your application to join to {teamName}.",
+        "playerAcceptedInvitation": "{firstName} accepted your invitation to join your team.",
+        "playerRejectedInvitation": "{firstName} rejected your invitation to join your team.",
+        "captainAcceptedApplication": "{firstName} accepted your application to join {teamName}.",
+        "captainRejectedApplication": "{firstName} rejected your application to join {teamName}.",
         "eventCancelled": "{eventName} event is cancelled.",
         "eventUpdated": "{eventName}'s details are updated."
       },

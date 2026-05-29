@@ -1,3 +1,5 @@
+export type LeagueState = "Registration" | "Playing" | "Finished";
+
 export interface ILegues {
   id: string;
   name: string;
@@ -14,7 +16,7 @@ export interface ILeague {
     logoUrl: string;
     captainId: number;
   };
-  state: "Registration" | "Playing" | "Finished";
+  state: LeagueState;
   maxTeamsCount: number;
   registrationDate: string;
   paymentPerGame: number;

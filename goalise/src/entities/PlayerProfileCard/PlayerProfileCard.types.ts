@@ -1,5 +1,7 @@
 import { StaticImageData } from "next/image";
 
+export type WorkingFoot = "Left" | "Right";
+
 export interface IUsersProps {
   id?: string;
   email?: string;
@@ -13,7 +15,7 @@ export interface IUsersProps {
   profilePicUploadedAt?: string;
   profilePicReviewedAt?: string;
   birthDate?: string;
-  workingFoot?: string;
+  workingFoot?: WorkingFoot;
   profileCompletionInfo?: {
     steps?: [
       {
@@ -37,7 +39,7 @@ export interface IPlayerProfileProps {
   inviteButtonText?: string;
   fullName?: string;
   age?: string;
-  foot?: string;
+  foot?: WorkingFoot;
   makeCaptainButtonText?: string;
   onInviteButtonClick?: () => void;
   onMakeCaptainButtonClick?: () => void;
