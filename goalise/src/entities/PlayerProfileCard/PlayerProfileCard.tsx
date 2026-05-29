@@ -45,6 +45,7 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
   const { width } = useWindowSize();
   const isMobile = width <= MEDIA_TABLET_SMALL;
   const t = useTranslations("playerProfile.buttons");
+  const tCommon = useTranslations("common");
   const { playerId } = useParams();
   const { playerStats } = usePlayerProfile({ playerId: Number(playerId) });
 
@@ -144,7 +145,7 @@ export const PlayerProfileCard: React.FC<IPlayerProfileProps> = ({
                         {t("age")}: <span> {age} </span>
                       </div>
                       <div className={styles.button}>
-                        {t("foot")}: <span> {foot || "-"} </span>{" "}
+                        {t("foot")}: <span> {foot ? tCommon(`workingFoot.${foot}`) : "-"} </span>{" "}
                       </div>
                       {phoneNumber && (
                         <div className={styles.button}>

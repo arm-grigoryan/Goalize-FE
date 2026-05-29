@@ -181,7 +181,7 @@ export const LeaguesHeader = () => {
                 <div className={styles.stageButton}>
                   <div className={styles.stageButtonWrapper}>
                     <div className={styles.stageButtonName}> {t("state")} </div>
-                    <div className={styles.stage}>{leagueData?.state}</div>
+                    <div className={styles.stage}>{leagueData?.state ? tCommon(`leagueState.${leagueData.state}`) : ""}</div>
                   </div>
                 </div>
               </div>
@@ -228,7 +228,7 @@ export const LeaguesHeader = () => {
                 <div className={styles.stageButton}>
                   <div className={styles.stageButtonWrapper}>
                     <div className={styles.stageButtonName}> {t("state")} </div>
-                    <div className={styles.stage}>{leagueData?.state}</div>
+                    <div className={styles.stage}>{leagueData?.state ? tCommon(`leagueState.${leagueData.state}`) : ""}</div>
                   </div>
                 </div>
               </div>

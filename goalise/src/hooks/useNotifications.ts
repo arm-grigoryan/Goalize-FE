@@ -160,20 +160,26 @@ const useNotificationTemplate = () => {
           return {
             icon: data?.userInfo?.profilePic,
             title: `${data?.userInfo?.firstName ?? ""} ${data?.userInfo?.lastName ?? ""}`.trim(),
-            description: t("home.notifications.templates.playerRespondedToInvitation", {
-              firstName: data?.userInfo?.firstName,
-              response: data?.response,
-            }),
+            description: t(
+              data?.response === "Accepted"
+                ? "home.notifications.templates.playerAcceptedInvitation"
+                : "home.notifications.templates.playerRejectedInvitation",
+              { firstName: data?.userInfo?.firstName },
+            ),
           };
         case "CaptainRespondedToApplication":
           return {
             icon: data?.team?.logoUrl,
             title: data?.team?.name,
-            description: t("home.notifications.templates.captainRespondedToApplication", {
-              firstName: data?.captainInfo?.firstName,
-              response: data?.response,
-              teamName: data?.team?.name,
-            }),
+            description: t(
+              data?.response === "Accepted"
+                ? "home.notifications.templates.captainAcceptedApplication"
+                : "home.notifications.templates.captainRejectedApplication",
+              {
+                firstName: data?.captainInfo?.firstName,
+                teamName: data?.team?.name,
+              },
+            ),
           };
         case "EventCancelled":
           return {

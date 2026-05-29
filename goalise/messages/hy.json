@@ -26,7 +26,16 @@
     "saveCrop": "Պահել կտրվածքը",
     "uploadLogo": "Բեռնել լոգո",
     "guest": "Հյուր",
-    "back": "Հետ"
+    "back": "Հետ",
+    "workingFoot": {
+      "Left": "Ձախ",
+      "Right": "Աջ"
+    },
+    "leagueState": {
+      "Registration": "Գրանցում",
+      "Playing": "Ընթացքում",
+      "Finished": "Ավարտված"
+    }
   },
   "auth": {
     "signingIn": {
@@ -86,8 +95,10 @@
         "profilePictureApproved": "Ձեր պրոֆիլի լուսանկարն ընդունվել է։",
         "profilePictureRejectedTitle": "Պրոֆիլի լուսանկարը մերժվել է",
         "profilePictureRejected": "Ձեր պրոֆիլի լուսանկարը մերժվել է հետևյալ պատճառով՝ {rejectionReason}։",
-        "playerRespondedToInvitation": "{firstName}-ը {response} ձեր հրավերը թիմին անդամագրվելու համար։",
-        "captainRespondedToApplication": "{firstName}-ը {response} ձեր հայտը {teamName} թիմին անդամագրվելու համար։",
+        "playerAcceptedInvitation": "{firstName}-ը ընդունել է ձեր հրավերը թիմին անդամագրվելու համար։",
+        "playerRejectedInvitation": "{firstName}-ը մերժել է ձեր հրավերը թիմին անդամագրվելու համար։",
+        "captainAcceptedApplication": "{firstName}-ը ընդունել է ձեր հայտը {teamName} թիմին անդամագրվելու համար։",
+        "captainRejectedApplication": "{firstName}-ը մերժել է ձեր հայտը {teamName} թիմին անդամագրվելու համար։",
         "eventCancelled": "{eventName} իրադարձությունը չեղարկվել է։",
         "eventUpdated": "{eventName}-ի մանրամասները թարմացվել են։"
       },

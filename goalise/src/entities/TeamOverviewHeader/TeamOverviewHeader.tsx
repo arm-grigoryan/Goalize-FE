@@ -364,7 +364,7 @@ export const TeamOverviewHeader: React.FC = () => {
                 {teamInfo.captain.workingFoot && (
                   <div className={styles.button}>
                     <span>{t("footLabel")} </span>
-                    {teamInfo.captain.workingFoot}
+                    {tCommon(`workingFoot.${teamInfo.captain.workingFoot}`)}
                   </div>
                 )}
               </div>
