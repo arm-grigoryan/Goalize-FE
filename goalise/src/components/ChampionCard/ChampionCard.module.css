@@ -148,3 +148,20 @@
     padding: 4px 18px;
   }
 }
+
+@media (max-width: 460px) {
+  .content {
+    padding: 20px;
+  }
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
+  .logo img {
+    width: 60px;
+    height: 60px;
+  }
+  .teamName {
+    font-size: 14px;
+  }
+}

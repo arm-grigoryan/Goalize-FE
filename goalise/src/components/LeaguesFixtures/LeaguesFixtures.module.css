@@ -69,7 +69,29 @@
   height: 50px;
   animation: spin 1s linear infinite;
 }
-
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.emptyImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.emptyTitle {
+  display: flex;
+  font-size: 18px;
+  font-weight: 400;
+  color: #8d8c8c  ;
+  align-items: center;
+}
 @keyframes spin {
   0% {
     transform: rotate(0deg);

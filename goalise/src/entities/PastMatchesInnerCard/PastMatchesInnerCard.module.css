@@ -200,7 +200,11 @@
 .team_logo_mobile {
   max-width: 60px;
 }
-
+.past_matches_innerCard_fixtures_mobile .score_wrapper_mobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .score_wrapper_mobile {
   display: grid;
   grid-template-columns: 1fr 1px 1fr;
@@ -244,7 +248,7 @@
 /* ------------ results page ----------- */
 .past_matches_innerCard_results {
   display: grid;
-  grid-template-columns: 180px 1px auto;
+  grid-template-columns: 180px 1px auto 140px;
   align-items: center;
   padding: 7px 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -395,7 +399,7 @@
   grid-template-columns:
    160px
     1px
-    auto; 
+    auto 160px; 
   align-items: center;
   width: 100%;
   margin: 0 auto;

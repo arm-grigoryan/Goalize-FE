@@ -632,5 +632,8 @@
     "sameAsCurrent": "Please use a different number than Current",
     "willBeSwitched": "{firstName1} {lastName1} and {firstName2} {lastName2} will be switched",
     "numberIsFree": "Chosen shirt number is free"
+  },
+  "notes": {
+    "note": "Only rounds starting from the Round of 16 (1/8) are shown here. To view all matches, please visit the Results or Fixtures tabs."
   }
 }
