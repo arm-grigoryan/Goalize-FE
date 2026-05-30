@@ -15,8 +15,9 @@ import { formatUTCDate } from "@/helper/formatDateAndTime";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 import { useTranslations } from "next-intl";
-
-const PAGE_SIZE = 5;
+import Image from "next/image";
+import emptyImage from '../../assets/pngs/transferEmpty.svg';
+const PAGE_SIZE = 6;
 
 export const LeaguesResults = () => {
   const { leagueId } = useParams();
@@ -71,60 +72,92 @@ export const LeaguesResults = () => {
       if (!container || isFetching) return;
 
       const { scrollTop, scrollHeight, clientHeight } = container;
-      if (scrollTop + clientHeight >= scrollHeight && hasMore) {
+      if (scrollTop + clientHeight >= scrollHeight - 1 && hasMore) {
         setOffset((prev) => prev + PAGE_SIZE);
       }
     };
 
     const container = scrollContainerRef.current;
     container?.addEventListener("scroll", handleScroll);
+    handleScroll();
 
     return () => {
       container?.removeEventListener("scroll", handleScroll);
     };
   }, [isFetching, hasMore]);
+
  const { width } = useWindowSize();
    const isMobile = width <= MEDIA_TABLET_SMALL;
-  return (
-    <div className={`${isMobile ? styles.mobile : styles.leagues_results}`}>
-      <div className={styles.title_wrapper}>
-        <Title content={t("title")} />
-      </div>
-      <div
-        ref={scrollContainerRef}
-        className={styles.fixtures_scroll_container}
-      >
-        {Object.entries(results).map(([stage, matches]) => (
-          <div key={stage} className={styles.fixtures_list}>
-            <Title content={stage} />
-            {matches.map((match: ILeaguesResultsItem) => {
-              const homeLogo = match.homeTeam.logoUrl?.startsWith("http") ? match.homeTeam.logoUrl : teamLogo;
-              const awayLogo = match.awayTeam.logoUrl?.startsWith("http") ? match.awayTeam.logoUrl : teamLogo;
-              return (
-                <Link key={match.id} href={`/matches/${match.id}`} className={styles.match_link}>
-                  <PastMatchesInnerCard
-                    date={formatUTCDate(match.date)}
-                    winnerIcon={winnerIcon}
-                    drawIcon={drawIcon}
-                    teamLogo1={homeLogo}
-                    teamLogo2={awayLogo}
-                    teamName1={handleLongStrings(match.homeTeam.name, 8)}
-                    teamName2={handleLongStrings(match.awayTeam.name, 8)}
-                    teamScore1={match.homeTeamScore}
-                    teamScore2={match.awayTeamScore}
-                    variant={"results"}
-                  />
-                </Link>
-              );
-            })}
-          </div>
-        ))}
-        {isFetching && (
-          <div className={styles.loader_container}>
-            <div className={styles.loader}></div>
-          </div>
-        )}
-      </div>
+   const hasResults =
+  Object.keys(results).length > 0 &&
+  Object.values(results).some((matches) => matches.length > 0);
+  return !isFetching && !hasResults ? (
+  <div className={styles.emptyState}>
+    <Image
+      src={emptyImage}
+      alt="No results"
+      width={64}
+      height={64}
+      className={styles.emptyImage}
+    />
+
+    <div className={styles.emptyTitle}>
+      No match result available yet
     </div>
-  );
-};
+  </div>
+) : (
+  <div className={`${isMobile ? styles.mobile : styles.leagues_results}`}>
+    <div className={styles.title_wrapper}>
+      <Title content={t("title")} />
+    </div>
+
+    <div
+      ref={scrollContainerRef}
+      className={styles.fixtures_scroll_container}
+    >
+      {Object.entries(results).map(([stage, matches]) => (
+        <div key={stage} className={styles.fixtures_list}>
+          <Title content={stage} />
+
+          {matches.map((match: ILeaguesResultsItem) => {
+            const homeLogo = match.homeTeam.logoUrl?.startsWith("http")
+              ? match.homeTeam.logoUrl
+              : teamLogo;
+
+            const awayLogo = match.awayTeam.logoUrl?.startsWith("http")
+              ? match.awayTeam.logoUrl
+              : teamLogo;
+
+            return (
+              <Link
+                key={match.id}
+                href={`/matches/${match.id}`}
+                className={styles.match_link}
+              >
+                <PastMatchesInnerCard
+                  date={formatUTCDate(match.date)}
+                  winnerIcon={winnerIcon}
+                  drawIcon={drawIcon}
+                  teamLogo1={homeLogo}
+                  teamLogo2={awayLogo}
+                  teamName1={handleLongStrings(match.homeTeam.name, 8)}
+                  teamName2={handleLongStrings(match.awayTeam.name, 8)}
+                  teamScore1={match.homeTeamScore}
+                  teamScore2={match.awayTeamScore}
+                  variant={"results"}
+                />
+              </Link>
+            );
+          })}
+        </div>
+      ))}
+
+      {isFetching && (
+        <div className={styles.loader_container}>
+          <div className={styles.loader}></div>
+        </div>
+      )}
+    </div>
+  </div>
+);
+}

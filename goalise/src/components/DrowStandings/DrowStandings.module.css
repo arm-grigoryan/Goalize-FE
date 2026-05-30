@@ -31,6 +31,13 @@
   text-transform: uppercase;
   color: #ffff;
 }
+
+.finalTeamLogo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-bottom: 6px;
+}
 .winner {
   background-color: #2e2e2e3d;
 }
@@ -386,6 +393,22 @@
   height: 200px !important;
   transform: scaleY(2);
   transform-origin: top;
+}
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+  width: 100%;
+  height: 100%;
+}
+.emptyText {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #6f6f6fc7;
+  font-weight: 400;
 }
 @media (max-width: 1080px) {
   .separatorBigWrapperSwapped .separator {

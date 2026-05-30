@@ -1,0 +1,20 @@
+.note {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 400px;
+    padding: 10px;
+    border: 1px solid #f53a53;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 400px;
+    color: rgb(196, 195, 195);
+    margin-top: 20px;
+    justify-self: center;
+}
+.infoIcon {
+    margin-right: 10px;
+}
+.note span {
+    color: #f53a53;
+}
