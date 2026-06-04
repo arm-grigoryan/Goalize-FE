@@ -67,14 +67,14 @@
     },
     "pastMatches": {
       "title": "Past Matches",
-      "emptyState": "No past match to show at the moment"
+      "emptyState": "No past matches to show at the moment"
     },
     "transferNews": {
       "title": "Transfer News",
-      "emptyState": "No transfer news is scheduled at the moment"
+      "emptyState": "No transfers to show at the moment"
     },
     "notifications": {
-      "title": "Notification",
+      "title": "Notifications",
       "loading": "Loading notifications...",
       "empty": "No notifications yet.",
       "accept": "Accept",
@@ -82,12 +82,12 @@
       "defaultTitle": "Notification",
       "defaultDescription": "You have a new notification.",
       "templates": {
-        "playerInvited": "{firstName} invites you to join {teamName}. Contact number: {phoneNumber}",
-        "playerApplied": "{firstName} applied to join to your team. Contact number: {phoneNumber}",
+        "playerInvited": "{firstName} invites you to join {teamName}. Contact: {phoneNumber}",
+        "playerApplied": "{firstName} applied to join to your team. Contact: {phoneNumber}",
         "playerQuit": "{firstName} has quit your team.",
         "playerRemoved": "You were removed from team {teamName} by its captain.",
         "playerPromoted": "You were promoted to team captain of {teamName}",
-        "shirtNumberChangedTitle": "Changed Shirt Number",
+        "shirtNumberChangedTitle": "Shirt Number Change",
         "playerShirtNumberChanged": "Your shirt number changed from {oldNumber} to {newNumber}",
         "teamCreationApproved": "Your team creation is approved. Good Luck.",
         "teamCreationRejected": "Your team creation is rejected for the following reason: {rejectionReason}",
@@ -178,7 +178,7 @@
     "cannotCreateDraft": "You already created a team, which is under review. You will be notified once we review it.",
     "cannotCreateInTeam": "You are already in {teamName}. Quit if you want to create a new team.",
     "appliedLabelText": "Applied",
-    "appliedTooltip": "You already applied to this team."
+    "appliedTooltip": "You already have pending application to this team."
   },
   "playerProfile": {
     "title": "PlayerProfile",
@@ -209,30 +209,30 @@
       "label": "Transfers of the player during the career",
       "from": "From",
       "to": "To",
-      "emptyStateText": "No transfer news is scheduled at the moment"
+      "emptyStateText": "No transfers to show at the moment"
     },
     "pastMatches": {
       "title": "Past Matches",
       "label": "Player's matches with highlights associated with him",
-      "emptyStateText": "No past match to show at the moment."
+      "emptyStateText": "No past matches to show at the moment."
     },
     "unassigned": {
       "title": "Free Agent",
-      "label": "Player is not assigned to any team at this moment.",
+      "label": "Player is not a member of any team at this moment.",
       "linkText": "Send Invite"
     },
     "playerInvitationCard": {
       "title": "Player Invitation",
-      "label": "Invite {playerName} to your team? Your phone number will be visible to the player for contact.",
+      "label": "Invite {playerName} to your team? Your phone number will be visible to the player so they can contact you.",
       "confirmButtonText": "Confirm",
       "cancelButtonText": "Cancel",
       "loadingText": "Sending..."
     },
     "modals": {
-      "cannotSendInvitation": "Cannot Send Invitation",
-      "cannotRemovePlayer": "Cannot Remove Player",
-      "cannotMakeCaptain": "Cannot Make Captain",
-      "cannotQuitTeam": "Cannot Quit Team",
+      "cannotSendInvitation": "Failed to Send Invitation",
+      "cannotRemovePlayer": "Failed to Remove Player",
+      "cannotMakeCaptain": "Failed to Make Captain",
+      "cannotQuitTeam": "Failed to Quit Team",
       "actionNotAllowed": "Action Not Allowed",
       "mustBeCaptain": "You must be a captain to send invitations.",
       "invitationSentTitle": "Invitation Sent Successfully",
@@ -262,12 +262,12 @@
   },
   "matches": {
     "tabs": {
-      "highlight": "Highlight",
+      "highlight": "Highlights",
       "stats": "Stats",
-      "lineup": "Lineup"
+      "lineup": "Lineups"
     },
     "highlights": {
-      "title": "Highlight",
+      "title": "Highlights",
       "empty": "No highlights are available at the moment",
       "goal": "Goal",
       "ownGoal": "Own Goal",
@@ -293,8 +293,8 @@
       "tba": "To-Be-Announced"
     },
     "lineup": {
-      "title": "Lineup",
-      "empty": "No lineup are available at the moment",
+      "title": "Lineups",
+      "empty": "No lineups are available at the moment",
       "homeTeamFallback": "Team A",
       "awayTeamFallback": "Team B"
     },
@@ -310,8 +310,8 @@
         "assists": "Assists",
         "tackles": "Tackles",
         "interceptions": "Interceptions",
-        "passes": "passes",
-        "shots": "shots"
+        "passes": "Passes",
+        "shots": "Shots"
       },
       "goalkeeperStats": {
         "title": "Stats as Goalkeeper",
@@ -387,7 +387,7 @@
       "liveLabel": "Live",
       "finishedLabel": "Finished",
       "contactLabel": "Contact:",
-      "minSession": "{duration}min session",
+      "minSession": "{duration} min session",
       "joinEventTitle": "Join Event",
       "joinEventDescription": "Are you sure you want to join this event?",
       "unjoinEventTitle": "Unjoin Event",
@@ -443,14 +443,14 @@
         "infoTitle": "Info",
         "teamAlreadyRegistered": "Your team is already registered",
         "joinLeagueTitle": "Join League",
-        "joinLeagueDescription": "Are you sure you want to join this league?",
-        "contactSupport": "If you want to unregister from league contact support",
+        "joinLeagueDescription": "Are you sure you want to register your team to this league?",
+        "contactSupport": "If you want to unregister your team from the league contact support",
         "onlyCaptainCanUnregister": "Only Captain can unregister the team from the league",
         "unjoinLeagueTitle": "Unjoin League",
-        "unjoinLeagueDescription": "Are you sure you want to leave this league?",
+        "unjoinLeagueDescription": "Are you sure you want your team to leave this league?",
         "successTitle": "Success",
-        "joinSuccess": "You have successfully joined the league!",
-        "leaveSuccess": "You have successfully left the league.",
+        "joinSuccess": "Your team has successfully joined the league!",
+        "leaveSuccess": "You team has successfully left the league.",
         "genericError": "Something went wrong. Please try again later.",
         "errorOccurred": "An error occurred. Please try again."
       }
@@ -475,7 +475,7 @@
     "modals": {
       "shirtNumberUpdatedTitle": "Shirt Number Updated Successfully",
       "shirtNumberUpdatedDescription": "The player's shirt number has been updated.",
-      "cannotUpdateShirtNumber": "Cannot Update Shirt Number",
+      "cannotUpdateShirtNumber": "Failed to Update Shirt Number",
       "invitePlayerTitle": "Invite Player",
       "inviteButton": "Invite"
     },
@@ -490,12 +490,12 @@
       "ageLabel": "Age:",
       "footLabel": "Foot:",
       "teamApplicationTitle": "Team Application",
-      "teamApplicationDescription": "Apply to {teamName}? Your phone number will be visible to the captain for contact.",
+      "teamApplicationDescription": "Apply to {teamName}? Your phone number will be visible to the captain so they can contact you.",
       "applicationSentTitle": "Application Sent Successfully",
       "applicationSentDescription": "Your application was sent successfully to the team.",
-      "cannotApplyTitle": "Cannot Apply",
+      "cannotApplyTitle": "Failed to apply",
       "captainWarningDescription": "You are the captain of the team. Pass the captain role to another player or Quit the team if you want to apply to another team.",
-      "quitTeamAbandonedDescription": "You have left the team. The team is now abandoned.",
+      "quitTeamAbandonedDescription": "You have left the team as the only member. The team is now abandoned.",
       "unexpectedError": "An unexpected error occurred. Please try again later.",
       "tabs": {
         "overview": "Overview",
@@ -570,7 +570,7 @@
     "captain": "captain"
   },
   "draftTeamHeader": {
-    "cannotDeleteTitle": "Cannot Delete Draft Team",
+    "cannotDeleteTitle": "Failed to delete draft team",
     "errorFallback": "An unexpected error occurred. Please try again later."
   },
   "teamForm": {
