@@ -328,7 +328,7 @@
       "upcoming": "Upcoming Events",
       "past": "Past Events"
     },
-    "failedToLoad": "Failed to load events.",
+    "failedToLoad": "Failed to load events. Please try again.",
     "emptyUpcoming": "No upcoming events.",
     "emptyPast": "No past events.",
     "participants": "Participants",
@@ -371,8 +371,8 @@
       "eventCancelledTitle": "Event Cancelled",
       "eventCancelledDescription": "The event has been successfully cancelled.",
       "errorTitle": "Error",
-      "failedToCreate": "Failed to create event.",
-      "failedToUpdate": "Failed to update event.",
+      "failedToCreate": "Failed to create event. Please try again.",
+      "failedToUpdate": "Failed to update event. Please try again.",
       "failedToCancel": "Failed to cancel the event. Please try again."
     },
     "header": {
@@ -647,5 +647,11 @@
   },
   "notes": {
     "note": "Only rounds starting from the Round of 16 (1/8) are shown here. To view all matches, please visit the Results or Fixtures tabs."
+  },
+  "progressBar": {
+    "teamWinRate": "Team Win Rate",
+    "win": "Win",
+    "loss": "Loss",
+    "draw": "Draw"
   }
 }

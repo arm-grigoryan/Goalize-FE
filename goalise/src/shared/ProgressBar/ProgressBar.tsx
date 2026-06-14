@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 import styles from "./ProgressBar.module.css";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
@@ -11,12 +12,13 @@ interface ProgressBarProps {
 
 export const ProgressBar: React.FC<ProgressBarProps> = ({ wins, draws, losses }) => {
   const { width } = useWindowSize();
+  const t = useTranslations("progressBar");
   const isMobile = width <= MEDIA_TABLET_SMALL;
 
   const sections = [
-    { label: "Win", value: wins, color: "#4d7cffb6" },
-    { label: "Loss", value: losses, color: "#ff4d4dc3" },
-    { label: "Draw", value: draws, color: "#b0b0b0b0" },
+    { key: "win", label: t("win"), value: wins, color: "#4d7cffb6" },
+    { key: "loss", label: t("loss"), value: losses, color: "#ff4d4dc3" },
+    { key: "draw", label: t("draw"), value: draws, color: "#b0b0b0b0" },
   ];
 
   const total = sections.reduce((acc, item) => acc + item.value, 0);
@@ -99,7 +101,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ wins, draws, losses })
               const widthPercent = (item.value / total) * 100;
               return (
                 <div
-                  key={item.label}
+                  key={item.key}
                   className={styles.lineSegment}
                   style={{ width: `${widthPercent}%`, background: item.color }}
                 />
@@ -112,7 +114,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ wins, draws, losses })
           {sections.map((item) => {
             const percent = total > 0 ? Math.round((item.value / total) * 100) : 0;
             return (
-              <div key={item.label} className={styles.labelItem}>
+              <div key={item.key} className={styles.labelItem}>
                 <span className={styles.dot} style={{ background: item.color }} />
                 {item.label} - {item.value} ({percent}%)
               </div>
@@ -133,7 +135,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ wins, draws, losses })
         onMouseLeave={() => { setHovered(null); setShowEmptyTooltip(false); setCursorPos(null); }}
       >
         <div className={styles.innerCircle}>
-          <div className={styles.winRateText}>Team Win Rate</div>
+          <div className={styles.winRateText}>{t("teamWinRate")}</div>
         </div>
 
         {total === 0 && showEmptyTooltip && cursorPos && (
