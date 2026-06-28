@@ -461,7 +461,8 @@
     "results": {
       "title": "Արդյունքներ"
     },
-    "groupsUnavailable": "Խմբերի տվյալներն անհասանելի են։"
+    "groupsUnavailable": "Խմբերի տվյալներն անհասանելի են։",
+    "failedToLoad": "Չհաջողվեց բեռնել լիգայի տվյալները։ Խնդրում ենք կրկին փորձել։"
   },
   "leaguesStats": {
     "empty": "Վիճակագրությունը դեռ հասանելի չէ",
@@ -630,6 +631,8 @@
     "age": "Տարիք.",
     "foot": "Ոտք.",
     "captainLabel": "(Կ)",
+    "reviewStatusPending": "Ստուգվում է",
+    "reviewStatusRejected": "Մերժված",
     "statusPending": "Այս թիմը դեռ ստուգման փուլում է և կհրապարակվի հաստատումից հետո։",
     "statusRejected": "Այս թիմը մերժվել է ստուգման ժամանակ։ Խնդրում ենք խմբագրել տվյալները և նորից ուղարկել",
     "failedToLoadTeamInfo": "Չհաջողվեց բեռնել թիմի տեղեկությունները"
@@ -653,5 +656,11 @@
     "win": "Հաղթ.",
     "loss": "Պարտ.",
     "draw": "Ոչ-ոքի"
+  },
+  "profileCompletionSteps": {
+    "basicInfo": "Հիմնական տվյալներ",
+    "profilePicture": "Պրոֆիլի լուսանկար",
+    "footSpecification": "Ոտքի նախընտրությունը",
+    "emailConfirmation": "Էլ. փոստի հաստատում"
   }
 }

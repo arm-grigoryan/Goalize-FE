@@ -12,7 +12,7 @@ import type { RootState } from "@/app/store/store";
 
 const languages = [
   { code: "en" as Locale, name: "ENG", fullName: "English" },
-  { code: "hy" as Locale, name: "Հայ", fullName: "Հայերեն" },
+  { code: "hy" as Locale, name: "ՀԱՅ", fullName: "Հայերեն" },
 ];
 
 type LanguageSelectVariant = "headerMobile" | "default";

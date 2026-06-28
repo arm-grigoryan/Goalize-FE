@@ -7,14 +7,17 @@ import { useParams } from "next/navigation";
 import { useHandle404 } from "@/hooks/useErrorHandling";
 import { useEffect } from "react";
 import { Loader } from "@/shared/Loader/Loader";
+import { useTranslations } from "next-intl";
 
 export default function LeaguesGroupPage() {
   const { leagueId } = useParams();
   const handle404 = useHandle404();
+  const t = useTranslations("leagues");
   const {
     data: leagueInfo,
     error,
     isLoading,
+    isError,
   } = useGetLeaguesInfoQuery(Number(leagueId));
 
   useEffect(() => {
@@ -34,6 +37,21 @@ export default function LeaguesGroupPage() {
         }}
       >
         <Loader />
+      </div>
+    );
+  }
+
+  if (isError && !leagueInfo) {
+    return (
+      <div
+        style={{
+          color: "#a5a5a5",
+          fontSize: "14px",
+          textAlign: "center",
+          padding: "32px 0",
+        }}
+      >
+        {t("failedToLoad")}
       </div>
     );
   }
