@@ -3,12 +3,14 @@
 import { useGetUserInfoQuery } from "@/app/store/services/api";
 import styles from "./ProfileComplitionsProgresbar.module.css";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { MEDIA_TABLET_SMALL } from "@/constants/windowSizes";
 
 export const ProfileComplitionsProgresbar = () => {
   const { data: userInfo } = useGetUserInfoQuery();
+  const tSteps = useTranslations("profileCompletionSteps");
   const safeValue = userInfo?.profileCompletionInfo?.percentage || 0;
   let pointDistance = 0;
   const { width } = useWindowSize();
@@ -49,7 +51,9 @@ export const ProfileComplitionsProgresbar = () => {
                   safeValue >= pointDistance ? styles.active : ""
                 }`}
               />
-              <span className={styles.stepLabel}>{step.name}</span>
+              <span className={styles.stepLabel}>
+                {tSteps.has(step.key) ? tSteps(step.key) : step.name}
+              </span>
             </div>
           );
         })}

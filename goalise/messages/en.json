@@ -461,7 +461,8 @@
     "results": {
       "title": "Results"
     },
-    "groupsUnavailable": "Groups data unavailable."
+    "groupsUnavailable": "Groups data unavailable.",
+    "failedToLoad": "Failed to load league info. Please try again."
   },
   "leaguesStats": {
     "empty": "No Stats Available Yet",
@@ -630,6 +631,8 @@
     "age": "Age:",
     "foot": "Foot:",
     "captainLabel": "(C)",
+    "reviewStatusPending": "Pending",
+    "reviewStatusRejected": "Rejected",
     "statusPending": "This team is under review and will be published once approved.",
     "statusRejected": "This team was rejected during review. Please update the information and resubmit.",
     "failedToLoadTeamInfo": "Failed to load team info"
@@ -653,5 +656,11 @@
     "win": "Win",
     "loss": "Loss",
     "draw": "Draw"
+  },
+  "profileCompletionSteps": {
+    "basicInfo": "Basic Info",
+    "profilePicture": "Profile Picture",
+    "footSpecification": "Foot Specification",
+    "emailConfirmation": "Email Confirmation"
   }
 }

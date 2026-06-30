@@ -218,7 +218,11 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                                         }}
                                     />
                                     <div className={styles.abandonedText}>
-                                        {draftData?.reviewStatus ?? '—'}
+                                        {draftData?.reviewStatus
+                                            ? draftData.reviewStatus === "Pending"
+                                                ? t("reviewStatusPending")
+                                                : t("reviewStatusRejected")
+                                            : '—'}
                                     </div>
                                 </div>
                                 {!isMobile && reviewedDateStr && (
@@ -269,7 +273,7 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                 <div className={styles.infoImageWrapper}>
                     <div className={styles.nameButtonWrapper}>
                         <Link
-                            href={captainId ? `/players/${captainId}` : '#'}
+                            href={captainId ? `/profile/${captainId}` : '#'}
                             style={{ textDecoration: "none" }}
                         >
                             <div className={styles.playerName}>
@@ -282,7 +286,7 @@ export const DraftTeamHeader: React.FC<IDraftTeamHeaderProps> = ({
                     </div>
 
                     <Link
-                        href={captainId ? `/players/${captainId}` : '#'}
+                        href={captainId ? `/profile/${captainId}` : '#'}
                         style={{ textDecoration: "none" }}
                         className={styles.playerImageWrapper}
                     >

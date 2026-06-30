@@ -46,6 +46,7 @@ export interface IProfileCompletionInfo {
 }
 
 export interface IProfileStep {
+  key: string;
   name: string;
   iconUrl: string;
   percentage: number;
